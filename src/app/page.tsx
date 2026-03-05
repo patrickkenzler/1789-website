@@ -77,48 +77,138 @@ export default function Home() {
     <main>
 
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="min-h-screen flex flex-col justify-end pb-24 pt-40">
-        <Container>
-          <Grid>
-            <Col span={10}>
-              <Tag>Structure · Strategy · Gap Consulting</Tag>
-              <h1
-                className="mt-8 font-display font-light text-ink balance"
-                style={{ fontSize: 'clamp(2.75rem, 8vw, 7.5rem)', lineHeight: '0.95', letterSpacing: '-0.03em' }}
-              >
-                1789{' '}
-                <em className="not-italic font-display italic" style={{ color: 'var(--color-terra)' }}>
-                  Systemshifter
-                </em>
-              </h1>
-            </Col>
+      <section
+        style={{
+          minHeight: '100svh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          paddingTop: '7rem',
+          paddingBottom: '0',
+        }}
+      >
+        {/* Top bar */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingInline: 'var(--grid-margin)',
+          }}
+        >
+          <Tag>Structure · Strategy · Gap Consulting</Tag>
+          <div className="flex items-center gap-6">
+            <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
+            <Button variant="primary" size="sm">Shift starten</Button>
+          </div>
+        </div>
 
-            <Col span={5} start={8} className="mt-16">
-              <p
-                className="font-body text-ink-muted"
-                style={{ fontSize: 'var(--text-md)', lineHeight: '1.2', letterSpacing: '-0.02em' }}
-              >
-                Turning organisational friction<br />
-                into forward motion.
-              </p>
-              <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
-                Transformation hat kein Anfang und kein Ende —
-                sondern einen Auftakt und ein Ziel.
-              </p>
-              <div className="mt-10 flex items-center gap-6">
-                <Button variant="primary">Shift starten</Button>
-                <Button variant="text">Unser Ansatz →</Button>
-              </div>
-            </Col>
-          </Grid>
+        {/* 1789 — Massive Display */}
+        <div
+          style={{
+            paddingInline: 'var(--grid-margin)',
+            paddingTop: '2rem',
+          }}
+        >
+          <h1
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 700,
+              fontSize: 'clamp(7rem, 22vw, 26rem)',
+              lineHeight: '0.88',
+              letterSpacing: '-0.04em',
+              color: 'var(--color-ink)',
+              animation: 'weightIn 1.2s var(--ease-expressive) forwards',
+            }}
+          >
+            1789
+          </h1>
+        </div>
 
-          <div className="mt-24 flex items-center gap-4">
-            <div className="w-px h-12" style={{ backgroundColor: 'var(--color-border)' }} />
-            <span className="font-mono text-xs tracking-[0.15em] uppercase" style={{ color: 'var(--color-ink-subtle)' }}>
+        {/* Bottom row */}
+        <div
+          style={{
+            borderTop: '1px solid var(--color-border)',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
+            alignItems: 'end',
+          }}
+        >
+          {/* Left — Systemshifter */}
+          <div
+            style={{
+              paddingInline: 'var(--grid-margin)',
+              paddingBlock: '1.5rem',
+              borderRight: '1px solid var(--color-border)',
+            }}
+          >
+            <p
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontStyle: 'italic',
+                fontWeight: 300,
+                fontSize: 'clamp(1.25rem, 2.5vw, 2rem)',
+                color: 'var(--color-terra)',
+                letterSpacing: '-0.02em',
+                lineHeight: 1,
+              }}
+            >
+              Systemshifter
+            </p>
+          </div>
+
+          {/* Center — Tagline */}
+          <div
+            style={{
+              paddingInline: 'var(--grid-margin)',
+              paddingBlock: '1.5rem',
+              borderRight: '1px solid var(--color-border)',
+            }}
+          >
+            <p
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'var(--text-sub)',
+                color: 'var(--color-ink-muted)',
+                lineHeight: '1.5',
+              }}
+            >
+              Turning organisational friction<br />
+              into forward motion.
+            </p>
+          </div>
+
+          {/* Right — Scroll indicator */}
+          <div
+            style={{
+              paddingInline: 'var(--grid-margin)',
+              paddingBlock: '1.5rem',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              gap: '1rem',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'var(--text-xxs)',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: 'var(--color-ink-subtle)',
+              }}
+            >
               Scroll
             </span>
+            <div
+              style={{
+                width: '1px',
+                height: '2.5rem',
+                backgroundColor: 'var(--color-border)',
+              }}
+            />
           </div>
-        </Container>
+        </div>
       </section>
 
       {/* ─── Ticker ───────────────────────────────────────────────────────── */}
