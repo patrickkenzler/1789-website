@@ -21,6 +21,7 @@
 
     --color-white:       #FFFFFF;
     --color-black:       #0D0B0A;
+    --color-sand:        #E3DDD5;
 
     /* ─── Typografie ─────────────────────────────── */
     --font-display:  var(--font-cormorant), "Georgia", serif;

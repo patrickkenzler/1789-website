@@ -33,19 +33,50 @@ export default function Leistungen() {
   return (
     <main className="pt-40">
 
-      <section className="pb-24">
+      {/* ── Page Hero — staggered editorial h1 ── */}
+      <section style={{ paddingBottom: '6rem' }}>
         <Container>
-          <Grid>
-            <Col span={8}>
-              <Tag>Leistungen</Tag>
+          <Tag>Leistungen</Tag>
+
+          {/* Staggered h1 */}
+          <div style={{ marginTop: '3rem', overflow: 'hidden' }}>
+            <div>
               <h1
-                className="mt-8 font-display font-light text-ink balance"
-                style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: '1', letterSpacing: '-0.03em' }}
+                style={{
+                  display: 'inline',
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.92,
+                  color: 'var(--color-ink)',
+                  fontSize: 'clamp(3rem, 7vw, 6.5rem)',
+                  paddingLeft: '6%',
+                }}
               >
-                Structure · Strategy · Gap
+                Structure · Strategy ·
               </h1>
-            </Col>
-            <Col span={5} start={8} className="flex items-end mt-8">
+            </div>
+            <div style={{ marginTop: '0.08em', textAlign: 'right' }}>
+              <h1
+                style={{
+                  display: 'inline',
+                  fontFamily: 'var(--font-display)',
+                  fontStyle: 'italic',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.92,
+                  color: 'var(--color-terra)',
+                  fontSize: 'clamp(3rem, 7vw, 6.5rem)',
+                }}
+              >
+                Gap.
+              </h1>
+            </div>
+          </div>
+
+          {/* Lead copy */}
+          <Grid className="mt-16">
+            <Col span={5} start={8}>
               <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Unsere Leistungen sind keine Produkte. Sie sind Antworten auf den Gap, den jede
                 erfolgreiche Organisation kennt — aber selten benennen kann.
@@ -55,27 +86,39 @@ export default function Leistungen() {
         </Container>
       </section>
 
+      {/* ── Offerings — editorial list ── */}
       <section style={{ borderTop: '1px solid var(--color-border)' }}>
         <Container>
           {offerings.map((o) => (
             <div
               key={o.num}
-              className="py-20"
-              style={{ borderBottom: '1px solid var(--color-border)' }}
+              style={{ paddingBlock: '5rem', borderBottom: '1px solid var(--color-border)' }}
             >
               <Grid>
                 <Col span={1}>
-                  <span className="font-mono text-xs" style={{ color: 'var(--color-terra)' }}>{o.num}</span>
+                  <span
+                    className="font-mono text-xs"
+                    style={{ color: 'var(--color-terra)', paddingTop: '0.75rem', display: 'block' }}
+                  >
+                    {o.num}
+                  </span>
                 </Col>
-                <Col span={4}>
-                  <Tag className="mb-4">{o.category}</Tag>
+                <Col span={5}>
+                  <Tag className="mb-6">{o.category}</Tag>
+                  {/* Large editorial offering title */}
                   <h2
-                    className="font-display font-light text-ink"
-                    style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontWeight: 300,
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1,
+                      color: 'var(--color-ink)',
+                      fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+                    }}
                   >
                     {o.title}
                   </h2>
-                  <p className="mt-2 font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>
+                  <p className="mt-3 font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>
                     Dauer: {o.duration}
                   </p>
                 </Col>
@@ -103,17 +146,62 @@ export default function Leistungen() {
         </Container>
       </section>
 
-      <section className="py-32">
+      {/* ── Closing — staggered big question + CTA ── */}
+      <section style={{ paddingBlock: '8rem', overflow: 'hidden' }}>
         <Container>
-          <Grid>
-            <Col span={6} start={4} className="text-center">
-              <h2
-                className="font-display font-light text-ink balance"
-                style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
+
+          {/* Staggered closing question */}
+          <div style={{ marginBottom: '5rem' }}>
+            <div style={{ textAlign: 'right' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.9,
+                  color: 'var(--color-ink)',
+                  fontSize: 'clamp(2.5rem, 5.5vw, 5rem)',
+                }}
               >
-                Nicht sicher, wo der Gap bei euch liegt?
-              </h2>
-              <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
+                Nicht sicher,
+              </span>
+            </div>
+            <div style={{ marginTop: '0.1em' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.9,
+                  color: 'var(--color-ink)',
+                  fontSize: 'clamp(2.5rem, 5.5vw, 5rem)',
+                  paddingLeft: '12%',
+                }}
+              >
+                wo der Gap bei euch liegt?
+              </span>
+            </div>
+            <div style={{ marginTop: '0.1em', textAlign: 'right' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontStyle: 'italic',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.9,
+                  color: 'var(--color-terra)',
+                  fontSize: 'clamp(2.5rem, 5.5vw, 5rem)',
+                }}
+              >
+                Das Erstgespräch klärt das.
+              </span>
+            </div>
+          </div>
+
+          {/* Sub copy + CTA */}
+          <Grid>
+            <Col span={4}>
+              <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Das Erstgespräch dient der gegenseitigen Erkenntnis.
                 Kein Pitch. Kein Sales-Deck.
               </p>

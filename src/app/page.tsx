@@ -3,6 +3,7 @@ import { Button } from '@/components/atoms/Button'
 import { Tag } from '@/components/atoms/Tag'
 import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
+import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -22,15 +23,6 @@ const pillars = [
     title: 'Gap',
     body: 'Wir treten für erfolgreiche Organisationen an. Das, was andere als Problem sehen, sehen wir als Lösung.',
   },
-]
-
-const cases = [
-  { tag: 'Strategie',      title: 'Karrieremodell\nvs. Strategy Goals',     scope: 'Defining the Gap · 6 Monate' },
-  { tag: 'Transformation', title: 'Eigenverantwortung\nvs. Hierarchie',       scope: 'Operating Model · 8 Monate' },
-  { tag: 'Struktur',       title: 'Wertschöpfungs-\nfluss Redesign',          scope: 'Structure Workshop · 4 Monate' },
-  { tag: 'Benchmark',      title: 'Benchmark &\nGap Analyse',                 scope: 'Benchmark · 3 Monate' },
-  { tag: 'Pilotierung',    title: 'Mission Board\nMeeting Design',             scope: 'Artefakt-getrieben · laufend' },
-  { tag: 'Operating Model','title': 'Check &\nBalance Strukturen',             scope: 'Responsibility Model · 5 Monate' },
 ]
 
 const approach = [
@@ -71,6 +63,17 @@ const achievements = [
   },
 ]
 
+// ─── Shared style for staggered display headlines ────────────────────────────
+
+const displayStyle: React.CSSProperties = {
+  fontFamily: 'var(--font-display)',
+  fontWeight: 300,
+  letterSpacing: '-0.03em',
+  lineHeight: 0.92,
+  color: 'var(--color-ink)',
+  fontSize: 'clamp(2.5rem, 5.5vw, 5rem)',
+}
+
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function Home() {
@@ -101,8 +104,7 @@ export default function Home() {
           <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
         </div>
 
-        {/* ── 1789 + Systemshifter — centred, full-bleed ── */}
-        {/* ── HeroLogo: animated 1789 + static Systemshifter, scroll-exit ── */}
+        {/* ── HeroLogo ── */}
         <div
           style={{
             display: 'flex',
@@ -122,7 +124,6 @@ export default function Home() {
             gridTemplateColumns: '1fr 1fr 1fr',
           }}
         >
-          {/* Left — Systemshifter */}
           <div
             style={{
               paddingInline: 'var(--grid-margin)',
@@ -146,7 +147,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Center — Tagline */}
           <div
             style={{
               paddingInline: 'var(--grid-margin)',
@@ -168,7 +168,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Right — Scroll */}
           <div
             style={{
               paddingInline: 'var(--grid-margin)',
@@ -212,19 +211,27 @@ export default function Home() {
       </div>
 
       {/* ─── Dafür stehen wir ─────────────────────────────────────────────── */}
-      <section className="py-32">
+      <section style={{ paddingBlock: '7rem 5rem' }}>
         <Container>
+
+          {/* ── Staggered editorial headline ── */}
+          <div style={{ marginBottom: '5rem' }}>
+            <Tag>Dafür stehen wir</Tag>
+            <div style={{ marginTop: '3rem', overflow: 'hidden' }}>
+              <div style={{ textAlign: 'right' }}>
+                <span style={displayStyle}>Ein neues Organisations&shy;verständnis —</span>
+              </div>
+              <div style={{ marginTop: '0.15em' }}>
+                <span style={{ ...displayStyle, paddingLeft: '8%', fontStyle: 'italic', color: 'var(--color-terra)' }}>
+                  auf Struktur- und Strategieebene.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Intro copy ── */}
           <Grid>
-            <Col span={5}>
-              <Tag>Dafür stehen wir</Tag>
-              <h2
-                className="mt-6 font-heading font-normal text-ink balance"
-                style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
-              >
-                Ein neues Organisationsverständnis — auf Struktur- und Strategieebene.
-              </h2>
-            </Col>
-            <Col span={5} start={8} className="flex items-end">
+            <Col span={5} start={8}>
               <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
                 Durch Erkenntnis und Vokabular entsteht eine neue Möglichkeit,
@@ -233,6 +240,7 @@ export default function Home() {
             </Col>
           </Grid>
 
+          {/* ── Pillars ── */}
           <Grid className="mt-20">
             {pillars.map((p) => (
               <Col key={p.num} span={4}>
@@ -263,7 +271,7 @@ export default function Home() {
       </section>
 
       {/* ─── Highlight Cases ──────────────────────────────────────────────── */}
-      <section className="py-32" style={{ backgroundColor: 'var(--color-ink)' }}>
+      <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-ink)' }}>
         <Container>
           <Grid>
             <Col span={6}>
@@ -337,14 +345,17 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* ─── Questions Ticker ─────────────────────────────────────────────── */}
+      <QuestionsTicker />
+
       {/* ─── Denk Labor ───────────────────────────────────────────────────── */}
-      <section className="py-32" style={{ backgroundColor: 'var(--color-surface)' }}>
+      <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
         <Container>
           <Grid>
             <Col span={5}>
               <Tag>Denk Labor</Tag>
               <h2
-                className="mt-6 font-heading font-normal text-ink balance"
+                className="mt-6 font-display font-light text-ink balance"
                 style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
               >
                 Podcast, Publikationen & Talks
@@ -356,7 +367,6 @@ export default function Home() {
           </Grid>
 
           <Grid className="mt-16">
-            {/* Podcast — featured */}
             <Col span={6}>
               <div
                 className="group p-10 h-full cursor-pointer hover:-translate-y-1 transition-transform duration-300"
@@ -391,7 +401,6 @@ export default function Home() {
               </div>
             </Col>
 
-            {/* Publikation + Talk */}
             <Col span={6}>
               <div className="flex flex-col gap-6 h-full">
                 {[
@@ -424,13 +433,13 @@ export default function Home() {
       </section>
 
       {/* ─── Unser Ansatz ─────────────────────────────────────────────────── */}
-      <section className="py-32">
+      <section style={{ paddingBlock: '7rem' }}>
         <Container>
           <Grid>
             <Col span={5}>
               <Tag>Unser Ansatz</Tag>
               <h2
-                className="mt-6 font-heading font-normal text-ink balance"
+                className="mt-6 font-display font-light text-ink balance"
                 style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
               >
                 Der Systemshift Cycle
@@ -480,18 +489,28 @@ export default function Home() {
       </section>
 
       {/* ─── Was wir erreichen ────────────────────────────────────────────── */}
-      <section className="py-32" style={{ backgroundColor: 'var(--color-surface)' }}>
+      <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
         <Container>
+
+          {/* ── Staggered editorial headline ── */}
+          <div style={{ marginBottom: '5rem' }}>
+            <Tag>Was wir erreichen</Tag>
+            <div style={{ marginTop: '3rem', overflow: 'hidden' }}>
+              <div>
+                <span style={{ ...displayStyle, paddingLeft: '4%' }}>Drei Dinge,</span>
+              </div>
+              <div style={{ marginTop: '0.15em', textAlign: 'right' }}>
+                <span style={{ ...displayStyle, fontStyle: 'italic' }}>
+                  die jede Transformation braucht.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Intro copy ── */}
           <Grid>
-            <Col span={6}>
-              <Tag>Was wir erreichen</Tag>
-              <h2
-                className="mt-6 font-heading font-normal text-ink balance"
-                style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
-              >
-                Mit uns erleben Sie 3 Dinge
-              </h2>
-              <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
+            <Col span={5} start={8}>
+              <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
                 Wir setzen Transformation prototypisch, zielgetrieben, pragmatisch,
                 partizipativ und effektiv um.
@@ -535,7 +554,7 @@ export default function Home() {
       </section>
 
       {/* ─── Calendar / Newsletter ────────────────────────────────────────── */}
-      <section className="py-32">
+      <section style={{ paddingBlock: '7rem' }}>
         <Container>
           <Grid>
             <Col span={6}>
@@ -572,12 +591,11 @@ export default function Home() {
             </Col>
           </Grid>
 
-          {/* Event Placeholders */}
           <div className="mt-16" style={{ borderTop: '1px solid var(--color-border)' }}>
             {[
-              { date: '[TT.MM.JJJJ]', type: 'Talk',        title: '[Event-Titel Platzhalter]',      location: '[Ort]' },
-              { date: '[TT.MM.JJJJ]', type: 'Workshop',    title: '[Workshop-Titel Platzhalter]',   location: '[Ort]' },
-              { date: '[TT.MM.JJJJ]', type: 'Podcast',     title: '[Neue Episode Platzhalter]',     location: 'Online' },
+              { date: '[TT.MM.JJJJ]', type: 'Talk',     title: '[Event-Titel Platzhalter]',    location: '[Ort]' },
+              { date: '[TT.MM.JJJJ]', type: 'Workshop', title: '[Workshop-Titel Platzhalter]', location: '[Ort]' },
+              { date: '[TT.MM.JJJJ]', type: 'Podcast',  title: '[Neue Episode Platzhalter]',   location: 'Online' },
             ].map((e, i) => (
               <div
                 key={i}
@@ -598,8 +616,74 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ─── CTA: Let's shift your system ────────────────────────────────── */}
-      <section className="py-48" style={{ backgroundColor: 'var(--color-terra)' }}>
+      {/* ─── Big typographic statement ────────────────────────────────────── */}
+      {/*
+        Inspired by diffferent's full-width staggered footer statement.
+        Three lines alternating left/right, spanning full container width.
+        No grid constraint — deliberately uses the full max-width.
+      */}
+      <section
+        style={{
+          paddingBlock: '8rem',
+          borderTop: '1px solid var(--color-border)',
+          overflow: 'hidden',
+        }}
+      >
+        <Container>
+          <div>
+            {/* Line 1 — right */}
+            <div style={{ textAlign: 'right' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 0.88,
+                  color: 'var(--color-ink)',
+                  fontSize: 'clamp(3rem, 8vw, 8rem)',
+                }}
+              >
+                Transformation beginnt
+              </span>
+            </div>
+            {/* Line 2 — left, indented */}
+            <div style={{ marginTop: '0.08em' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 0.88,
+                  color: 'var(--color-ink)',
+                  fontSize: 'clamp(3rem, 8vw, 8rem)',
+                  paddingLeft: '12%',
+                }}
+              >
+                mit der Benennung
+              </span>
+            </div>
+            {/* Line 3 — right, italic terra */}
+            <div style={{ marginTop: '0.08em', textAlign: 'right' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontStyle: 'italic',
+                  fontWeight: 300,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 0.88,
+                  color: 'var(--color-terra)',
+                  fontSize: 'clamp(3rem, 8vw, 8rem)',
+                }}
+              >
+                des Gaps.
+              </span>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ─── CTA ──────────────────────────────────────────────────────────── */}
+      <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-terra)' }}>
         <Container>
           <Grid>
             <Col span={8} start={3} className="text-center">

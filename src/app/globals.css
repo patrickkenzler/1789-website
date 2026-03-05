@@ -133,6 +133,15 @@
   80%       { gap: 0.01em; }
 }
 
+/*
+ * marqueeSlide — infinite horizontal scroll for the questions ticker.
+ * Duplicate the items in JSX so the loop is seamless.
+ */
+@keyframes marqueeSlide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @keyframes heroFadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
