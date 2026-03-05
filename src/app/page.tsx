@@ -2,6 +2,7 @@ import { Container, Grid, Col } from '@/components/layout/Grid'
 import { Button } from '@/components/atoms/Button'
 import { Tag } from '@/components/atoms/Tag'
 import { featuredCases } from '@/data/cases'
+import { HeroLogo } from '@/components/organisms/HeroLogo'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -101,7 +102,7 @@ export default function Home() {
         </div>
 
         {/* ── 1789 + Systemshifter — centred, full-bleed ── */}
-        {/* Outer: centres the column block; overflow clips symmetrically */}
+        {/* ── HeroLogo: animated 1789 + static Systemshifter, scroll-exit ── */}
         <div
           style={{
             display: 'flex',
@@ -110,73 +111,7 @@ export default function Home() {
             overflow: 'hidden',
           }}
         >
-          {/*
-           * Column wrapper — its width is set by the h1 (the wider child).
-           * The Systemshifter label below inherits that width and stretches
-           * its letters across it with justify-content: space-between.
-           * As the variable font animates wdth, both rows resize in sync.
-           */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-
-            <h1
-              style={{
-                fontFamily: 'var(--font-variable), var(--font-display), sans-serif',
-                fontSize: 'clamp(4rem, 30vw, 72svh)',
-                lineHeight: '0.9',
-                color: 'var(--color-ink)',
-                userSelect: 'none',
-                display: 'flex',
-                animation: 'morphGap 21s ease-in-out -7s infinite',
-              }}
-            >
-              {/* "1" — Anchor: narrow+black → wide+thin (19 s) */}
-              <span style={{
-                flex: 'none',
-                willChange: 'font-variation-settings',
-                animation: 'morph1 19s ease-in-out 0s infinite',
-              }}>1</span>
-
-              {/* "7" — Opposite: wide+thin → narrow+heavy, mirror of "1" (19 s) */}
-              <span style={{
-                flex: 'none',
-                willChange: 'font-variation-settings',
-                animation: 'morph7 19s ease-in-out 0s infinite',
-              }}>7</span>
-
-              {/* "8" — Transformer: extreme width swings, fastest (14 s) */}
-              <span style={{
-                flex: 'none',
-                willChange: 'font-variation-settings',
-                animation: 'morph8 14s ease-in-out -3s infinite',
-              }}>8</span>
-
-              {/* "9" — Wanderer: slowest independent arc (26 s) */}
-              <span style={{
-                flex: 'none',
-                willChange: 'font-variation-settings',
-                animation: 'morph9 26s ease-in-out -10s infinite',
-              }}>9</span>
-            </h1>
-
-            {/* Systemshifter — body font, letters spread to match 1789 width */}
-            <p
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: 'clamp(1.95rem, 3.6vw, 3rem)',
-                fontWeight: 400,
-                color: 'var(--color-ink-muted)',
-                userSelect: 'none',
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '50%',
-              }}
-            >
-              {Array.from('Systemshifter').map((char, i) => (
-                <span key={i}>{char}</span>
-              ))}
-            </p>
-
-          </div>
+          <HeroLogo />
         </div>
 
         {/* ── Bottom strip ── */}
