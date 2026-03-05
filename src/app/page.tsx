@@ -121,7 +121,7 @@ export default function Home() {
             <h1
               style={{
                 fontFamily: 'var(--font-variable), var(--font-display), sans-serif',
-                fontSize: 'clamp(4rem, 40vw, 72svh)',
+                fontSize: 'clamp(4rem, 30vw, 72svh)',
                 lineHeight: '0.9',
                 color: 'var(--color-ink)',
                 userSelect: 'none',
@@ -168,6 +168,7 @@ export default function Home() {
                 userSelect: 'none',
                 display: 'flex',
                 justifyContent: 'space-between',
+                width: '50%',
               }}
             >
               {Array.from('Systemshifter').map((char, i) => (
