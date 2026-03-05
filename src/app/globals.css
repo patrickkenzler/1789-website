@@ -81,20 +81,42 @@
 
 /* ─── Keyframes ───────────────────────────────────────────────────────────── */
 
-@keyframes weightIn {
-  from {
-    font-weight: 100;
+/*
+ * heroMorph — GT Standard inspired variable font animation
+ * Axes: wdth (75 compressed → 125 expanded) + wght (900 black → 100 thin)
+ * The font breathes: heavy+narrow ↔ light+wide in alternating loop
+ */
+@keyframes heroMorph {
+  0% {
+    font-variation-settings: 'wdth' 75, 'wght' 900;
+    letter-spacing: -0.06em;
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px);
   }
-  to {
-    font-weight: 700;
+  8% {
     opacity: 1;
     transform: translateY(0);
+  }
+  45% {
+    font-variation-settings: 'wdth' 125, 'wght' 100;
+    letter-spacing: 0.04em;
+  }
+  55% {
+    font-variation-settings: 'wdth' 125, 'wght' 100;
+    letter-spacing: 0.04em;
+  }
+  100% {
+    font-variation-settings: 'wdth' 75, 'wght' 900;
+    letter-spacing: -0.06em;
   }
 }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInBottom {
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }

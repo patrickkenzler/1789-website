@@ -79,67 +79,69 @@ export default function Home() {
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
       <section
         style={{
-          minHeight: '100svh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          paddingTop: '7rem',
-          paddingBottom: '0',
+          height: '100svh',
+          display: 'grid',
+          gridTemplateRows: 'auto 1fr auto',
+          overflow: 'hidden',
         }}
       >
-        {/* Top bar */}
+        {/* ── Top bar ── */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingInline: 'var(--grid-margin)',
+            paddingTop: '7rem',
+            paddingBottom: '2rem',
           }}
         >
           <Tag>Structure · Strategy · Gap Consulting</Tag>
-          <div className="flex items-center gap-6">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
             <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
             <Button variant="primary" size="sm">Shift starten</Button>
           </div>
         </div>
 
-        {/* 1789 — Massive Display */}
+        {/* ── 1789 — Variable Font, almost fullscreen ── */}
         <div
           style={{
+            display: 'flex',
+            alignItems: 'center',
             paddingInline: 'var(--grid-margin)',
-            paddingTop: '2rem',
+            overflow: 'hidden',
           }}
         >
           <h1
             style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 700,
-              fontSize: 'clamp(7rem, 22vw, 26rem)',
-              lineHeight: '0.88',
-              letterSpacing: '-0.04em',
+              fontFamily: 'var(--font-variable), var(--font-display), sans-serif',
+              fontSize: 'clamp(6rem, 27vw, 30rem)',
+              lineHeight: '0.85',
               color: 'var(--color-ink)',
-              animation: 'weightIn 1.2s var(--ease-expressive) forwards',
+              animation: 'heroMorph 7s cubic-bezier(0.45, 0, 0.55, 1) infinite',
+              willChange: 'font-variation-settings, letter-spacing',
+              userSelect: 'none',
             }}
           >
             1789
           </h1>
         </div>
 
-        {/* Bottom row */}
+        {/* ── Bottom strip ── */}
         <div
           style={{
             borderTop: '1px solid var(--color-border)',
             display: 'grid',
             gridTemplateColumns: '1fr 1fr 1fr',
-            alignItems: 'end',
           }}
         >
           {/* Left — Systemshifter */}
           <div
             style={{
               paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.5rem',
+              paddingBlock: '1.25rem',
               borderRight: '1px solid var(--color-border)',
+              animation: 'slideInBottom 0.9s 0.4s var(--ease-expressive) both',
             }}
           >
             <p
@@ -147,7 +149,7 @@ export default function Home() {
                 fontFamily: 'var(--font-display)',
                 fontStyle: 'italic',
                 fontWeight: 300,
-                fontSize: 'clamp(1.25rem, 2.5vw, 2rem)',
+                fontSize: 'clamp(1rem, 2vw, 1.625rem)',
                 color: 'var(--color-terra)',
                 letterSpacing: '-0.02em',
                 lineHeight: 1,
@@ -161,8 +163,9 @@ export default function Home() {
           <div
             style={{
               paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.5rem',
+              paddingBlock: '1.25rem',
               borderRight: '1px solid var(--color-border)',
+              animation: 'slideInBottom 0.9s 0.55s var(--ease-expressive) both',
             }}
           >
             <p
@@ -178,15 +181,16 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Right — Scroll indicator */}
+          {/* Right — Scroll */}
           <div
             style={{
               paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.5rem',
+              paddingBlock: '1.25rem',
               display: 'flex',
               justifyContent: 'flex-end',
               alignItems: 'center',
               gap: '1rem',
+              animation: 'slideInBottom 0.9s 0.7s var(--ease-expressive) both',
             }}
           >
             <span
@@ -200,13 +204,7 @@ export default function Home() {
             >
               Scroll
             </span>
-            <div
-              style={{
-                width: '1px',
-                height: '2.5rem',
-                backgroundColor: 'var(--color-border)',
-              }}
-            />
+            <div style={{ width: '1px', height: '2.5rem', backgroundColor: 'var(--color-border)' }} />
           </div>
         </div>
       </section>
