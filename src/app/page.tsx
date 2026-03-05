@@ -69,9 +69,9 @@ const displayStyle: React.CSSProperties = {
   fontFamily: 'var(--font-display)',
   fontWeight: 300,
   letterSpacing: '-0.03em',
-  lineHeight: 0.88,
+  lineHeight: 0.92,
   color: 'var(--color-ink)',
-  fontSize: 'clamp(3rem, 6.5vw, 7rem)',
+  fontSize: 'clamp(2.5rem, 5.5vw, 5rem)',
 }
 
 // ─── Page ────────────────────────────────────────────────────────────────────
@@ -104,98 +104,70 @@ export default function Home() {
           <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
         </div>
 
-        {/* ── 2-column hero body ── */}
+        {/* ── HeroLogo ── */}
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
+            display: 'flex',
             alignItems: 'center',
-            paddingInline: 'var(--grid-margin)',
-            gap: 'clamp(2rem, 5vw, 6rem)',
+            justifyContent: 'center',
             overflow: 'hidden',
           }}
         >
-          {/* Left: animated 1789 + bold Systemshifter */}
-          <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-            <HeroLogo />
-          </div>
+          <HeroLogo />
+        </div>
 
-          {/* Right: tagline copy */}
+        {/* ── Bottom strip ── */}
+        <div
+          style={{
+            borderTop: '1px solid var(--color-border)',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
+          }}
+        >
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              animation: 'heroFadeIn 0.9s 0.5s var(--ease-entry) both',
+              paddingInline: 'var(--grid-margin)',
+              paddingBlock: '1.25rem',
+              borderRight: '1px solid var(--color-border)',
+              animation: 'slideInBottom 0.9s 0.4s var(--ease-expressive) both',
             }}
           >
             <p
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2rem, 4vw, 4.75rem)',
-                fontWeight: 300,
                 fontStyle: 'italic',
+                fontWeight: 300,
+                fontSize: 'clamp(1rem, 2vw, 1.625rem)',
+                color: 'var(--color-terra)',
                 letterSpacing: '-0.02em',
-                lineHeight: 1.05,
-                color: 'var(--color-ink)',
+                lineHeight: 1,
+              }}
+            >
+              Systemshifter
+            </p>
+          </div>
+
+          <div
+            style={{
+              paddingInline: 'var(--grid-margin)',
+              paddingBlock: '1.25rem',
+              borderRight: '1px solid var(--color-border)',
+              animation: 'slideInBottom 0.9s 0.55s var(--ease-expressive) both',
+            }}
+          >
+            <p
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'var(--text-sub)',
+                color: 'var(--color-ink-muted)',
+                lineHeight: '1.5',
               }}
             >
               Turning organisational friction<br />
               into forward motion.
             </p>
           </div>
-        </div>
 
-        {/* ── Bottom strip — 4 columns ── */}
-        <div
-          style={{
-            borderTop: '1px solid var(--color-border)',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr 1fr',
-          }}
-        >
-          {/* Col 1: Structure */}
-          <div
-            style={{
-              paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.25rem',
-              borderRight: '1px solid var(--color-border)',
-              animation: 'slideInBottom 0.9s 0.35s var(--ease-expressive) both',
-            }}
-          >
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xxs)', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-ink-subtle)' }}>
-              Structure
-            </p>
-          </div>
-
-          {/* Col 2: Strategy */}
-          <div
-            style={{
-              paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.25rem',
-              borderRight: '1px solid var(--color-border)',
-              animation: 'slideInBottom 0.9s 0.48s var(--ease-expressive) both',
-            }}
-          >
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xxs)', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-ink-subtle)' }}>
-              Strategy
-            </p>
-          </div>
-
-          {/* Col 3: Gap Consulting */}
-          <div
-            style={{
-              paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.25rem',
-              borderRight: '1px solid var(--color-border)',
-              animation: 'slideInBottom 0.9s 0.61s var(--ease-expressive) both',
-            }}
-          >
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xxs)', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-ink-subtle)' }}>
-              Gap Consulting
-            </p>
-          </div>
-
-          {/* Col 4: Scroll — right-aligned */}
           <div
             style={{
               paddingInline: 'var(--grid-margin)',
@@ -204,7 +176,7 @@ export default function Home() {
               justifyContent: 'flex-end',
               alignItems: 'center',
               gap: '1rem',
-              animation: 'slideInBottom 0.9s 0.74s var(--ease-expressive) both',
+              animation: 'slideInBottom 0.9s 0.7s var(--ease-expressive) both',
             }}
           >
             <span
@@ -666,9 +638,9 @@ export default function Home() {
                   fontFamily: 'var(--font-display)',
                   fontWeight: 300,
                   letterSpacing: '-0.04em',
-                  lineHeight: 0.86,
+                  lineHeight: 0.88,
                   color: 'var(--color-ink)',
-                  fontSize: 'clamp(3.5rem, 9vw, 10rem)',
+                  fontSize: 'clamp(3rem, 8vw, 8rem)',
                 }}
               >
                 Transformation beginnt
@@ -681,9 +653,9 @@ export default function Home() {
                   fontFamily: 'var(--font-display)',
                   fontWeight: 300,
                   letterSpacing: '-0.04em',
-                  lineHeight: 0.86,
+                  lineHeight: 0.88,
                   color: 'var(--color-ink)',
-                  fontSize: 'clamp(3.5rem, 9vw, 10rem)',
+                  fontSize: 'clamp(3rem, 8vw, 8rem)',
                   paddingLeft: '12%',
                 }}
               >
@@ -698,9 +670,9 @@ export default function Home() {
                   fontStyle: 'italic',
                   fontWeight: 300,
                   letterSpacing: '-0.04em',
-                  lineHeight: 0.86,
+                  lineHeight: 0.88,
                   color: 'var(--color-terra)',
-                  fontSize: 'clamp(3.5rem, 9vw, 10rem)',
+                  fontSize: 'clamp(3rem, 8vw, 8rem)',
                 }}
               >
                 des Gaps.
