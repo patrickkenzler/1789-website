@@ -162,7 +162,7 @@ export default function Home() {
             <p
               style={{
                 fontFamily: 'var(--font-body)',
-                fontSize: 'clamp(0.65rem, 1.2vw, 1rem)',
+                fontSize: 'clamp(1.95rem, 3.6vw, 3rem)',
                 fontWeight: 400,
                 color: 'var(--color-ink-muted)',
                 userSelect: 'none',
