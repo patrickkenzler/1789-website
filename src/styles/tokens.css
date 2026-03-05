@@ -29,20 +29,21 @@
     --font-body:     var(--font-inter), "Helvetica Neue", sans-serif;
     --font-mono:     "Courier New", monospace;
 
+    /* Scale inspired by foreverday.one: H2 48px : body 20px = 2.4 : 1 ratio */
     --text-xxl:   7.5rem;
     --text-xl:    5rem;
     --text-lg:    3.5rem;
-    --text-md:    2.25rem;
-    --text-sm:    1.5rem;
-    --text-base:  1.125rem;
-    --text-sub:   1rem;
+    --text-md:    3rem;      /* was 2.25rem — section h2s now at 48px */
+    --text-sm:    2rem;      /* was 1.5rem  — card/list h3s now at 32px */
+    --text-base:  1.25rem;   /* was 1.125rem — body now at 20px (foreverday exact) */
+    --text-sub:   1.0625rem; /* was 1rem    — secondary body at 17px */
     --text-xs:    0.8125rem;
     --text-xxs:   0.6875rem;
 
-    --leading-tight:  0.95;
-    --leading-snug:   1.1;
-    --leading-base:   1.5;
-    --leading-loose:  1.75;
+    --leading-tight:  0.82;  /* was 0.95 — matches foreverday's 43.2/54 ≈ 0.8 */
+    --leading-snug:   1.05;  /* was 1.1  */
+    --leading-base:   1.6;
+    --leading-loose:  1.8;
 
     --tracking-tight:  -0.03em;
     --tracking-base:   0em;
@@ -98,6 +99,8 @@
       --text-xxl: 3.5rem;
       --text-xl:  2.75rem;
       --text-lg:  2.25rem;
+      --text-md:  2rem;
+      --text-sm:  1.5rem;
     }
   }
 }

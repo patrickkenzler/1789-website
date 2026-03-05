@@ -4,6 +4,7 @@ import { Tag } from '@/components/atoms/Tag'
 import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
 import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
+import { CollagePanel } from '@/components/molecules/CollagePanel'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -104,16 +105,47 @@ export default function Home() {
           <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
         </div>
 
-        {/* ── HeroLogo ── */}
+        {/* ── HeroLogo + abstract background shapes ── */}
         <div
           style={{
+            position: 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden',
           }}
         >
-          <HeroLogo />
+          {/* Background geometric shapes — very low opacity, evoke collage */}
+          <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+            {/* Large circle — bottom right */}
+            <div style={{
+              position: 'absolute', width: '45vw', aspectRatio: '1', borderRadius: '50%',
+              backgroundColor: 'var(--color-terra)', opacity: 0.07,
+              bottom: '-15%', right: '-8%',
+            }} />
+            {/* Rectangle — top left */}
+            <div style={{
+              position: 'absolute', width: '22vw', height: '35%',
+              backgroundColor: 'var(--color-sage)', opacity: 0.12,
+              top: 0, left: '5%',
+            }} />
+            {/* Circle outline — centre */}
+            <div style={{
+              position: 'absolute', width: '30vw', aspectRatio: '1', borderRadius: '50%',
+              border: '1px solid var(--color-ink)', opacity: 0.06,
+              top: '20%', left: '35%',
+            }} />
+            {/* Small filled circle — left mid */}
+            <div style={{
+              position: 'absolute', width: '10vw', aspectRatio: '1', borderRadius: '50%',
+              backgroundColor: 'var(--color-terra)', opacity: 0.09,
+              top: '55%', left: '8%',
+            }} />
+          </div>
+          {/* Logo sits above shapes */}
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <HeroLogo />
+          </div>
         </div>
 
         {/* ── Bottom strip ── */}
@@ -432,60 +464,92 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ─── Unser Ansatz ─────────────────────────────────────────────────── */}
-      <section style={{ paddingBlock: '7rem' }}>
+      {/* ─── Unser Ansatz — sticky 2-col (foreverday pattern) ──────────── */}
+      <section>
+        {/* Section header inside container */}
         <Container>
-          <Grid>
-            <Col span={5}>
-              <Tag>Unser Ansatz</Tag>
-              <h2
-                className="mt-6 font-display font-light text-ink balance"
-                style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
-              >
-                Der Systemshift Cycle
-              </h2>
-              <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
-                Wertschöpfungsfluss ist der Herzschlag unserer Projekte.
-                Wie organisiert man die Arbeit um die Wertschöpfung herum?
-              </p>
-              <div className="mt-8">
-                <Button variant="ghost">Ansatz im Detail →</Button>
-              </div>
-            </Col>
-          </Grid>
-
-          <div className="mt-16" style={{ borderTop: '1px solid var(--color-border)' }}>
-            {approach.map((a, i) => (
-              <div
-                key={a.title}
-                className="group grid py-10 hover:pl-6 transition-all duration-300"
-                style={{
-                  gridTemplateColumns: '4rem 1fr 1fr',
-                  gap: '2rem',
-                  borderBottom: '1px solid var(--color-border)',
-                }}
-              >
-                <span
-                  className="text-2xl group-hover:scale-110 transition-transform duration-300 inline-block"
-                  style={{ color: 'var(--color-terra)', lineHeight: 1 }}
+          <div style={{ paddingBlock: '7rem 4rem' }}>
+            <Grid>
+              <Col span={5}>
+                <Tag>Unser Ansatz</Tag>
+                <h2
+                  className="mt-6 font-display font-light text-ink balance"
+                  style={{ fontSize: 'var(--text-md)', lineHeight: '1.0', letterSpacing: '-0.02em' }}
                 >
-                  {a.icon}
-                </span>
-                <div>
-                  <p className="font-mono text-xs tracking-[0.15em] uppercase mb-2" style={{ color: 'var(--color-ink-subtle)' }}>
-                    0{i + 1}
-                  </p>
-                  <h3 className="font-heading font-normal text-ink" style={{ fontSize: 'var(--text-sm)' }}>
-                    {a.title}
-                  </h3>
-                </div>
-                <p className="font-body text-ink-muted self-center" style={{ fontSize: 'var(--text-sub)', lineHeight: '1.6' }}>
-                  {a.body}
+                  Der Systemshift Cycle
+                </h2>
+                <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.7' }}>
+                  Wertschöpfungsfluss ist der Herzschlag unserer Projekte.
+                  Wie organisiert man die Arbeit um die Wertschöpfung herum?
                 </p>
-              </div>
-            ))}
+              </Col>
+            </Grid>
           </div>
         </Container>
+
+        {/* Full-bleed sticky 2-col — collage left, items right */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+
+          {/* LEFT: sticky abstract collage panel */}
+          <div style={{ position: 'sticky', top: 0, height: '100svh' }}>
+            <CollagePanel variant="analyse" />
+          </div>
+
+          {/* RIGHT: approach items, scrolls past the sticky panel */}
+          <div style={{ paddingRight: 'var(--grid-margin)', paddingLeft: 'clamp(2rem, 4vw, 5rem)' }}>
+            {approach.map((a, i) => {
+              const variants = ['analyse', 'change', 'responsibility', 'iterate'] as const
+              return (
+                <div
+                  key={a.title}
+                  style={{ borderTop: '1px solid var(--color-border)', paddingBlock: 'clamp(3rem, 5vw, 5rem)' }}
+                >
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 'var(--text-xxs)',
+                      letterSpacing: '0.18em',
+                      textTransform: 'uppercase',
+                      color: 'var(--color-terra)',
+                      marginBottom: '1.5rem',
+                    }}
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </p>
+                  <h3
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'var(--text-md)',
+                      fontWeight: 300,
+                      lineHeight: 1.0,
+                      letterSpacing: '-0.02em',
+                      color: 'var(--color-ink)',
+                      marginBottom: '1.5rem',
+                    }}
+                  >
+                    {a.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-body)',
+                      fontSize: 'var(--text-base)',
+                      color: 'var(--color-ink-muted)',
+                      lineHeight: '1.7',
+                      maxWidth: '38ch',
+                    }}
+                  >
+                    {a.body}
+                  </p>
+                </div>
+              )
+            })}
+            {/* CTA row below the last item */}
+            <div style={{ borderTop: '1px solid var(--color-border)', paddingBlock: '3rem' }}>
+              <Button variant="ghost">Ansatz im Detail →</Button>
+            </div>
+          </div>
+
+        </div>
       </section>
 
       {/* ─── Was wir erreichen ────────────────────────────────────────────── */}
