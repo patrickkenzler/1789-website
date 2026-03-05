@@ -1,6 +1,7 @@
 import { Container, Grid, Col } from '@/components/layout/Grid'
 import { Button } from '@/components/atoms/Button'
 import { Tag } from '@/components/atoms/Tag'
+import { featuredCases } from '@/data/cases'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -196,45 +197,67 @@ export default function Home() {
                 className="mt-6 font-heading font-normal balance"
                 style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em', color: 'var(--color-background)' }}
               >
-                Aktuelle Kunden.<br />
-                Echte Veränderung.
+                Organisationen,<br />die den Shift gewagt haben.
               </h2>
             </Col>
             <Col span={2} start={11} className="flex items-end justify-end">
-              <Button variant="ghost" size="sm" style={{ borderColor: 'var(--color-border)', color: 'var(--color-background)' }}>
-                Alle Cases
-              </Button>
+              <a href="/projekte">
+                <Button variant="ghost" size="sm" style={{ borderColor: 'rgba(255,255,255,0.3)', color: 'var(--color-background)' }}>
+                  Alle Cases →
+                </Button>
+              </a>
             </Col>
           </Grid>
 
           <Grid className="mt-16">
-            {cases.map((c, i) => (
-              <Col key={i} span={4}>
-                <div
-                  className="group p-8 flex flex-col justify-between aspect-square cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+            {featuredCases.map((c, i) => {
+              const bgColors = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
+              const textColors = ['var(--color-background)', 'var(--color-background)', 'var(--color-ink)']
+              const bg = bgColors[i % 3]
+              const fg = textColors[i % 3]
+              return (
+                <a
+                  key={c.slug}
+                  href={`/projekte/${c.slug}`}
+                  className="group p-8 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:scale-[1.02]"
                   style={{
-                    backgroundColor: i % 3 === 1 ? 'var(--color-terra)' : 'rgba(255,255,255,0.06)',
+                    gridColumn: 'span 4',
+                    backgroundColor: bg,
                     borderRadius: 'var(--radius-md)',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    minHeight: '340px',
+                    textDecoration: 'none',
                   }}
                 >
-                  <Tag variant={i % 3 === 1 ? 'default' : 'accent'} className="self-start">
-                    {c.tag}
-                  </Tag>
+                  <div className="flex gap-2 flex-wrap">
+                    {c.tags.slice(0, 1).map((t) => (
+                      <span
+                        key={t}
+                        className="font-mono text-[0.6875rem] tracking-[0.08em] uppercase px-3 py-1 rounded-full"
+                        style={{ border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.7)' }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                   <div>
+                    <p className="font-mono text-[0.6rem] tracking-widest uppercase mb-2"
+                      style={{ color: 'rgba(255,255,255,0.45)' }}>
+                      {c.client}
+                    </p>
                     <h3
-                      className="font-display font-light whitespace-pre-line"
-                      style={{ fontSize: 'var(--text-sm)', lineHeight: '1.15', color: 'var(--color-background)' }}
+                      className="font-display font-light"
+                      style={{ fontSize: 'var(--text-sm)', lineHeight: '1.15', color: fg }}
                     >
                       {c.title}
                     </h3>
-                    <p className="mt-3 font-mono text-xs" style={{ color: 'rgba(242,237,230,0.5)' }}>
-                      {c.scope}
+                    <p className="mt-3 font-mono text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                      {c.duration} · {c.scale}
                     </p>
                   </div>
-                </div>
-              </Col>
-            ))}
+                </a>
+              )
+            })}
           </Grid>
         </Container>
       </section>
