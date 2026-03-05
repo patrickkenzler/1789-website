@@ -82,17 +82,44 @@
 /* ─── Keyframes ───────────────────────────────────────────────────────────── */
 
 /*
- * heroMorph — GT Standard inspired variable font animation
- * Axes: wdth (75 compressed → 125 expanded) + wght (900 black → 100 thin)
- * The font breathes: heavy+narrow ↔ light+wide in alternating loop
+ * Per-character animations for "1789"
+ *
+ * Design intent — constant transformation:
+ *   "1"  The Anchor      — compressed+black ↔ expanded+thin
+ *   "7"  The Opposite    — wide+thin ↔ narrow+heavy  (mirror phase of "1")
+ *   "8"  The Transformer — extreme width swings, symbolises endless cycles
+ *   "9"  The Wanderer    — slow independent arc, its own rhythm
+ *
+ * Durations are deliberately mismatched (9 / 12 / 12 / 16 s) so the
+ * characters never lock into the same phase twice — endless variation.
+ * Negative delays start each character mid-cycle on first paint.
  */
-@keyframes heroMorph {
-  0%, 100% {
-    font-variation-settings: 'wdth' 100, 'wght' 700;
-  }
-  50% {
-    font-variation-settings: 'wdth' 100, 'wght' 1000;
-  }
+
+/* "1" — starts narrow+black, opens to wide+thin */
+@keyframes morph1 {
+  0%, 100% { font-variation-settings: 'wdth' 80,  'wght' 950; }
+  50%       { font-variation-settings: 'wdth' 115, 'wght' 200; }
+}
+
+/* "7" — mirror of "1": starts wide+thin, compresses to narrow+heavy */
+@keyframes morph7 {
+  0%, 100% { font-variation-settings: 'wdth' 120, 'wght' 200; }
+  50%       { font-variation-settings: 'wdth' 80,  'wght' 900; }
+}
+
+/* "8" — the transformer: swings to super-wide, then collapses */
+@keyframes morph8 {
+  0%   { font-variation-settings: 'wdth' 80,  'wght' 600; }
+  30%  { font-variation-settings: 'wdth' 130, 'wght' 900; }
+  65%  { font-variation-settings: 'wdth' 75,  'wght' 200; }
+  100% { font-variation-settings: 'wdth' 80,  'wght' 600; }
+}
+
+/* "9" — the wanderer: slow independent arc */
+@keyframes morph9 {
+  0%, 100% { font-variation-settings: 'wdth' 100, 'wght' 500; }
+  35%       { font-variation-settings: 'wdth' 80,  'wght' 900; }
+  70%       { font-variation-settings: 'wdth' 125, 'wght' 250; }
 }
 
 @keyframes heroFadeIn {

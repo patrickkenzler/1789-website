@@ -112,18 +112,47 @@ export default function Home() {
             overflow: 'hidden',
           }}
         >
+          {/* Each digit gets its own animation — independent wdth+wght morphing.
+              flex layout so gap can be added later to visualise "the Gap". */}
           <h1
             style={{
               fontFamily: 'var(--font-variable), var(--font-display), sans-serif',
-              fontSize: '75svh',
-              lineHeight: '0.85',
+              /* clamp: floor 6rem | scale with vw | cap at 72 % svh */
+              fontSize: 'clamp(6rem, 55vw, 72svh)',
+              lineHeight: '0.9',
               color: 'var(--color-ink)',
-              animation: 'heroMorph 12s ease-in-out infinite',
-              willChange: 'font-variation-settings',
               userSelect: 'none',
+              display: 'flex',
+              gap: 0,
             }}
           >
-            1789
+            {/* "1" — Anchor: narrow+black → wide+thin */}
+            <span style={{
+              flex: 'none',
+              willChange: 'font-variation-settings',
+              animation: 'morph1 12s ease-in-out infinite',
+            }}>1</span>
+
+            {/* "7" — Opposite: wide+thin → narrow+heavy (mirror of "1") */}
+            <span style={{
+              flex: 'none',
+              willChange: 'font-variation-settings',
+              animation: 'morph7 12s ease-in-out infinite',
+            }}>7</span>
+
+            {/* "8" — Transformer: extreme width swings, fastest cycle */}
+            <span style={{
+              flex: 'none',
+              willChange: 'font-variation-settings',
+              animation: 'morph8 9s ease-in-out infinite -2s',
+            }}>8</span>
+
+            {/* "9" — Wanderer: slowest, independent arc */}
+            <span style={{
+              flex: 'none',
+              willChange: 'font-variation-settings',
+              animation: 'morph9 16s ease-in-out infinite -6s',
+            }}>9</span>
           </h1>
         </div>
 
