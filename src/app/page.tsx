@@ -103,55 +103,60 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── 1789 — Variable Font, almost fullscreen ── */}
+        {/* ── 1789 — Variable Font, centred, full-bleed ── */}
+        {/* No paddingInline: overflow clips symmetrically on both sides */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            paddingInline: 'var(--grid-margin)',
+            justifyContent: 'center',
             overflow: 'hidden',
           }}
         >
-          {/* Each digit gets its own animation — independent wdth+wght morphing.
-              flex layout so gap can be added later to visualise "the Gap". */}
+          {/*
+           * Each digit has its own wdth+wght animation.
+           * h1 is flex so gap can be animated (morphGap).
+           * font-size: 40vw makes 4 chars fill ~100 % width at normal wdth;
+           * 72svh caps it on tall screens. Centred layout means expansion
+           * goes equally left AND right — "expands in both directions".
+           */}
           <h1
             style={{
               fontFamily: 'var(--font-variable), var(--font-display), sans-serif',
-              /* clamp: floor 6rem | scale with vw | cap at 72 % svh */
-              fontSize: 'clamp(6rem, 55vw, 72svh)',
+              fontSize: 'clamp(4rem, 40vw, 72svh)',
               lineHeight: '0.9',
               color: 'var(--color-ink)',
               userSelect: 'none',
               display: 'flex',
-              gap: 0,
+              animation: 'morphGap 21s ease-in-out -7s infinite',
             }}
           >
-            {/* "1" — Anchor: narrow+black → wide+thin */}
+            {/* "1" — Anchor: narrow+black → wide+thin (19 s) */}
             <span style={{
               flex: 'none',
               willChange: 'font-variation-settings',
-              animation: 'morph1 12s ease-in-out infinite',
+              animation: 'morph1 19s ease-in-out 0s infinite',
             }}>1</span>
 
-            {/* "7" — Opposite: wide+thin → narrow+heavy (mirror of "1") */}
+            {/* "7" — Opposite: wide+thin → narrow+heavy, mirror of "1" (19 s) */}
             <span style={{
               flex: 'none',
               willChange: 'font-variation-settings',
-              animation: 'morph7 12s ease-in-out infinite',
+              animation: 'morph7 19s ease-in-out 0s infinite',
             }}>7</span>
 
-            {/* "8" — Transformer: extreme width swings, fastest cycle */}
+            {/* "8" — Transformer: extreme width swings, fastest (14 s) */}
             <span style={{
               flex: 'none',
               willChange: 'font-variation-settings',
-              animation: 'morph8 9s ease-in-out infinite -2s',
+              animation: 'morph8 14s ease-in-out -3s infinite',
             }}>8</span>
 
-            {/* "9" — Wanderer: slowest, independent arc */}
+            {/* "9" — Wanderer: slowest independent arc (26 s) */}
             <span style={{
               flex: 'none',
               willChange: 'font-variation-settings',
-              animation: 'morph9 16s ease-in-out infinite -6s',
+              animation: 'morph9 26s ease-in-out -10s infinite',
             }}>9</span>
           </h1>
         </div>
