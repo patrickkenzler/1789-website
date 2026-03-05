@@ -97,14 +97,11 @@ export default function Home() {
           }}
         >
           <Tag>Structure · Strategy · Gap Consulting</Tag>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
-            <Button variant="primary" size="sm">Shift starten</Button>
-          </div>
+          <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
         </div>
 
-        {/* ── 1789 — Variable Font, centred, full-bleed ── */}
-        {/* No paddingInline: overflow clips symmetrically on both sides */}
+        {/* ── 1789 + Systemshifter — centred, full-bleed ── */}
+        {/* Outer: centres the column block; overflow clips symmetrically */}
         <div
           style={{
             display: 'flex',
@@ -114,51 +111,71 @@ export default function Home() {
           }}
         >
           {/*
-           * Each digit has its own wdth+wght animation.
-           * h1 is flex so gap can be animated (morphGap).
-           * font-size: 40vw makes 4 chars fill ~100 % width at normal wdth;
-           * 72svh caps it on tall screens. Centred layout means expansion
-           * goes equally left AND right — "expands in both directions".
+           * Column wrapper — its width is set by the h1 (the wider child).
+           * The Systemshifter label below inherits that width and stretches
+           * its letters across it with justify-content: space-between.
+           * As the variable font animates wdth, both rows resize in sync.
            */}
-          <h1
-            style={{
-              fontFamily: 'var(--font-variable), var(--font-display), sans-serif',
-              fontSize: 'clamp(4rem, 40vw, 72svh)',
-              lineHeight: '0.9',
-              color: 'var(--color-ink)',
-              userSelect: 'none',
-              display: 'flex',
-              animation: 'morphGap 21s ease-in-out -7s infinite',
-            }}
-          >
-            {/* "1" — Anchor: narrow+black → wide+thin (19 s) */}
-            <span style={{
-              flex: 'none',
-              willChange: 'font-variation-settings',
-              animation: 'morph1 19s ease-in-out 0s infinite',
-            }}>1</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 
-            {/* "7" — Opposite: wide+thin → narrow+heavy, mirror of "1" (19 s) */}
-            <span style={{
-              flex: 'none',
-              willChange: 'font-variation-settings',
-              animation: 'morph7 19s ease-in-out 0s infinite',
-            }}>7</span>
+            <h1
+              style={{
+                fontFamily: 'var(--font-variable), var(--font-display), sans-serif',
+                fontSize: 'clamp(4rem, 40vw, 72svh)',
+                lineHeight: '0.9',
+                color: 'var(--color-ink)',
+                userSelect: 'none',
+                display: 'flex',
+                animation: 'morphGap 21s ease-in-out -7s infinite',
+              }}
+            >
+              {/* "1" — Anchor: narrow+black → wide+thin (19 s) */}
+              <span style={{
+                flex: 'none',
+                willChange: 'font-variation-settings',
+                animation: 'morph1 19s ease-in-out 0s infinite',
+              }}>1</span>
 
-            {/* "8" — Transformer: extreme width swings, fastest (14 s) */}
-            <span style={{
-              flex: 'none',
-              willChange: 'font-variation-settings',
-              animation: 'morph8 14s ease-in-out -3s infinite',
-            }}>8</span>
+              {/* "7" — Opposite: wide+thin → narrow+heavy, mirror of "1" (19 s) */}
+              <span style={{
+                flex: 'none',
+                willChange: 'font-variation-settings',
+                animation: 'morph7 19s ease-in-out 0s infinite',
+              }}>7</span>
 
-            {/* "9" — Wanderer: slowest independent arc (26 s) */}
-            <span style={{
-              flex: 'none',
-              willChange: 'font-variation-settings',
-              animation: 'morph9 26s ease-in-out -10s infinite',
-            }}>9</span>
-          </h1>
+              {/* "8" — Transformer: extreme width swings, fastest (14 s) */}
+              <span style={{
+                flex: 'none',
+                willChange: 'font-variation-settings',
+                animation: 'morph8 14s ease-in-out -3s infinite',
+              }}>8</span>
+
+              {/* "9" — Wanderer: slowest independent arc (26 s) */}
+              <span style={{
+                flex: 'none',
+                willChange: 'font-variation-settings',
+                animation: 'morph9 26s ease-in-out -10s infinite',
+              }}>9</span>
+            </h1>
+
+            {/* Systemshifter — body font, letters spread to match 1789 width */}
+            <p
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'clamp(0.65rem, 1.2vw, 1rem)',
+                fontWeight: 400,
+                color: 'var(--color-ink-muted)',
+                userSelect: 'none',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              {Array.from('Systemshifter').map((char, i) => (
+                <span key={i}>{char}</span>
+              ))}
+            </p>
+
+          </div>
         </div>
 
         {/* ── Bottom strip ── */}

@@ -12,10 +12,16 @@ const navItems = [
 ]
 
 export function Header() {
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled,  setScrolled]  = useState(false)
+  const [pastHero,  setPastHero]  = useState(false)
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40)
+    const handler = () => {
+      const y = window.scrollY
+      setScrolled(y > 40)
+      // CTA only appears once the user has scrolled past the full-screen hero
+      setPastHero(y > window.innerHeight * 0.85)
+    }
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
@@ -94,9 +100,10 @@ export function Header() {
             ))}
           </nav>
 
-          {/* CTA */}
+          {/* CTA — fades in only after scrolling past the hero */}
           <a
             href="/kontakt"
+            aria-hidden={!pastHero}
             style={{
               fontFamily: 'var(--font-body)',
               fontSize: 'var(--text-xs)',
@@ -105,7 +112,9 @@ export function Header() {
               textTransform: 'uppercase',
               color: 'var(--color-terra)',
               textDecoration: 'none',
-              transition: 'opacity 150ms',
+              opacity: pastHero ? 1 : 0,
+              pointerEvents: pastHero ? 'auto' : 'none',
+              transition: 'opacity 400ms ease',
             }}
           >
             Shift starten →
