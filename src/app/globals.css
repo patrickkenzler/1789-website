@@ -1,0 +1,80 @@
+@import "../styles/tokens.css";
+@import "../styles/typography.css";
+
+@import "tailwindcss";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  ::selection {
+    background-color: var(--color-terra);
+    color: var(--color-white);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img, video {
+    max-width: 100%;
+    display: block;
+  }
+}
+
+@layer utilities {
+  /* Grid Container */
+  .container-grid {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: var(--grid-margin);
+  }
+
+  /* Textbalance */
+  .balance { text-wrap: balance; }
+  .pretty  { text-wrap: pretty; }
+
+  /* Reveal Animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity var(--duration-slow) var(--ease-entry),
+      transform var(--duration-slow) var(--ease-expressive);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Hover Underline */
+  .hover-line {
+    position: relative;
+    display: inline-block;
+  }
+
+  .hover-line::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: width var(--duration-base) var(--ease-expressive);
+  }
+
+  .hover-line:hover::after {
+    width: 100%;
+  }
+}
