@@ -115,11 +115,11 @@ export default function Home() {
           <h1
             style={{
               fontFamily: 'var(--font-variable), var(--font-display), sans-serif',
-              fontSize: 'clamp(6rem, 27vw, 30rem)',
+              fontSize: '75svh',
               lineHeight: '0.85',
               color: 'var(--color-ink)',
-              animation: 'heroMorph 7s cubic-bezier(0.45, 0, 0.55, 1) infinite',
-              willChange: 'font-variation-settings, letter-spacing',
+              animation: 'heroMorph 12s ease-in-out infinite',
+              willChange: 'font-variation-settings',
               userSelect: 'none',
             }}
           >
