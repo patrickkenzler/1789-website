@@ -67,13 +67,12 @@ export function HeroLogo() {
       */}
       <p
         style={{
-          fontFamily: 'var(--font-body)',
+          fontFamily: 'var(--font-display)',
+          fontStyle: 'italic',
           fontSize: 'clamp(1.95rem, 3.6vw, 3rem)',
           fontWeight: 300,
-          letterSpacing: '0.12em',
-          paddingLeft: '0.12em',
-          textTransform: 'uppercase',
-          color: 'var(--color-ink-muted)',
+          letterSpacing: '-0.02em',
+          color: 'var(--color-terra)',
           userSelect: 'none',
           whiteSpace: 'nowrap',
         }}
