@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Container } from '@/components/layout/Grid'
+import { useScrollProgress } from '@/hooks/useScrollProgress'
 
 const navItems = [
   { label: 'Ansatz',     href: '/ansatz' },
@@ -24,30 +24,16 @@ const navItems = [
  * the hero into the nav bar as the user scrolls.
  */
 
-const SCROLL_THRESHOLD_VH = 0.6   // must match HeroLogo.tsx
-
 export function Header() {
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [scrolled,       setScrolled]       = useState(false)
-
-  useEffect(() => {
-    const handler = () => {
-      const y = window.scrollY
-      setScrolled(y > 40)
-      const threshold = window.innerHeight * SCROLL_THRESHOLD_VH
-      setScrollProgress(Math.min(1, Math.max(0, y / threshold)))
-    }
-    window.addEventListener('scroll', handler, { passive: true })
-    return () => window.removeEventListener('scroll', handler)
-  }, [])
+  const { progress: scrollProgress, scrolled } = useScrollProgress()
 
   // Logo grows from 65 % → 100 % and fades 0 → 1 as you scroll
   const logoOpacity = scrollProgress
   const logoScale   = 0.65 + 0.35 * scrollProgress
 
-  // CTA appears in the final stretch
-  const pastHero    = scrollProgress > 0.85
-  const ctaOpacity  = Math.min(1, Math.max(0, (scrollProgress - 0.7) / 0.3))
+  // CTA appears in the final stretch (last 30 % of the transition)
+  const pastHero   = scrollProgress > 0.85
+  const ctaOpacity = Math.min(1, Math.max(0, (scrollProgress - 0.7) / 0.3))
 
   return (
     <header

@@ -241,8 +241,8 @@ export default function Home() {
 
           {/* ── Pillars ── */}
           <Grid className="mt-20">
-            {pillars.map((p) => (
-              <Col key={p.num} span={4}>
+            {pillars.map((pillar) => (
+              <Col key={pillar.num} span={4}>
                 <div
                   className="p-10 h-full flex flex-col gap-8 group hover:-translate-y-1 transition-transform duration-300"
                   style={{
@@ -251,16 +251,16 @@ export default function Home() {
                   }}
                 >
                   <span className="font-mono text-xs tracking-[0.15em]" style={{ color: 'var(--color-terra)' }}>
-                    {p.num}
+                    {pillar.num}
                   </span>
                   <h3
                     className="font-display font-light text-ink"
                     style={{ fontSize: 'var(--text-lg)', lineHeight: '1', letterSpacing: '-0.03em' }}
                   >
-                    {p.title}
+                    {pillar.title}
                   </h3>
                   <p className="font-body text-ink-muted mt-auto" style={{ fontSize: 'var(--text-sub)', lineHeight: '1.6' }}>
-                    {p.body}
+                    {pillar.body}
                   </p>
                 </div>
               </Col>
@@ -720,7 +720,7 @@ export default function Home() {
             <Col span={8} start={3} className="text-center">
               <p
                 className="font-mono text-xs tracking-[0.2em] uppercase mb-8"
-                style={{ color: 'rgba(242,237,230,0.6)' }}
+                style={{ color: 'rgba(242,242,242,0.6)' }}
               >
                 Bereit für den Shift?
               </p>
@@ -741,7 +741,7 @@ export default function Home() {
               </h2>
               <p
                 className="mt-8 font-body mx-auto max-w-lg"
-                style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', color: 'rgba(242,237,230,0.75)' }}
+                style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', color: 'rgba(242,242,242,0.75)' }}
               >
                 Wir haben es uns zum Anspruch gemacht, unseren Kunden ein neues Verständnis
                 ihrer Organisation aufzuzeigen und gemeinsam wirksame Veränderungen zu entwerfen.

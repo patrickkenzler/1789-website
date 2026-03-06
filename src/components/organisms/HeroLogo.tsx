@@ -1,32 +1,20 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useScrollProgress } from '@/hooks/useScrollProgress'
 
 /**
  * HeroLogo
  *
- * Renders the large animated "1789 / Systemshifter" hero block and drives
- * a scroll-linked exit so it fades + drifts upward as the user scrolls —
+ * Renders the large animated "1789 / Management Consulting" hero block and
+ * drives a scroll-linked exit so it fades + drifts upward as the user scrolls —
  * visually "becoming" the small nav wordmark that fades in at the same time.
  *
  * Progress 0 = at the top (hero fully visible)
  * Progress 1 = scrolled 60 % of viewport height (hero fully gone)
  */
 
-const SCROLL_THRESHOLD_VH = 0.6   // fraction of innerHeight over which transition runs
-
 export function HeroLogo() {
-  const [p, setP] = useState(0)
-
-  useEffect(() => {
-    const update = () => {
-      const threshold = window.innerHeight * SCROLL_THRESHOLD_VH
-      setP(Math.min(1, Math.max(0, window.scrollY / threshold)))
-    }
-    window.addEventListener('scroll', update, { passive: true })
-    update()
-    return () => window.removeEventListener('scroll', update)
-  }, [])
+  const { progress: scrollProgress } = useScrollProgress()
 
   return (
     <div
@@ -36,8 +24,8 @@ export function HeroLogo() {
         alignItems: 'center',
         gap: '1.5rem',
         // Scroll-linked exit: fades out and drifts upward toward the nav
-        opacity: 1 - p,
-        transform: `translateY(${-50 * p}px) scale(${1 - 0.06 * p})`,
+        opacity: 1 - scrollProgress,
+        transform: `translateY(${-50 * scrollProgress}px) scale(${1 - 0.06 * scrollProgress})`,
         willChange: 'opacity, transform',
       }}
     >
@@ -59,12 +47,7 @@ export function HeroLogo() {
         <span style={{ flex: 'none', willChange: 'font-variation-settings', animation: 'morph9 26s ease-in-out -10s infinite' }}>9</span>
       </h1>
 
-      {/* ── Static Systemshifter — professional tracked subtitle ── */}
-      {/*
-        Static: fixed width, no dependency on the animated h1 width.
-        paddingLeft compensates for trailing letter-spacing so the word
-        is visually centred (standard typographic correction).
-      */}
+      {/* ── Management Consulting subtitle — mirrors bottom-strip style ── */}
       <p
         style={{
           fontFamily: 'var(--font-display)',
