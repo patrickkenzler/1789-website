@@ -105,16 +105,8 @@ export default function Home() {
           <a href="/ansatz"><Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button></a>
         </div>
 
-        {/* ── HeroLogo ── */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <HeroLogo />
-        </div>
+        {/* ── HeroLogo + Claim (fills the 1fr row) ── */}
+        <HeroLogo />
 
         {/* ── Bottom strip ── */}
         <div
