@@ -6,8 +6,8 @@
 @layer base {
   :root {
     /* ─── Farbe ─────────────────────────────────── */
-    --color-background:  #F2EDE6;
-    --color-surface:     #EBE5DC;
+    --color-background:  #F2F2F2;
+    --color-surface:     #E8E8E8;
     --color-border:      #2E2B28;
 
     --color-ink:         #1A1714;

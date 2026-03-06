@@ -102,50 +102,18 @@ export default function Home() {
           }}
         >
           <Tag>Structure · Strategy · Gap Consulting</Tag>
-          <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
+          <a href="/ansatz"><Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button></a>
         </div>
 
-        {/* ── HeroLogo + abstract background shapes ── */}
+        {/* ── HeroLogo ── */}
         <div
           style={{
-            position: 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            overflow: 'hidden',
           }}
         >
-          {/* Background geometric shapes — very low opacity, evoke collage */}
-          <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-            {/* Large circle — bottom right */}
-            <div style={{
-              position: 'absolute', width: '45vw', aspectRatio: '1', borderRadius: '50%',
-              backgroundColor: 'var(--color-terra)', opacity: 0.07,
-              bottom: '-15%', right: '-8%',
-            }} />
-            {/* Rectangle — top left */}
-            <div style={{
-              position: 'absolute', width: '22vw', height: '35%',
-              backgroundColor: 'var(--color-sage)', opacity: 0.12,
-              top: 0, left: '5%',
-            }} />
-            {/* Circle outline — centre */}
-            <div style={{
-              position: 'absolute', width: '30vw', aspectRatio: '1', borderRadius: '50%',
-              border: '1px solid var(--color-ink)', opacity: 0.06,
-              top: '20%', left: '35%',
-            }} />
-            {/* Small filled circle — left mid */}
-            <div style={{
-              position: 'absolute', width: '10vw', aspectRatio: '1', borderRadius: '50%',
-              backgroundColor: 'var(--color-terra)', opacity: 0.09,
-              top: '55%', left: '8%',
-            }} />
-          </div>
-          {/* Logo sits above shapes */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <HeroLogo />
-          </div>
+          <HeroLogo />
         </div>
 
         {/* ── Bottom strip ── */}
@@ -175,7 +143,7 @@ export default function Home() {
                 lineHeight: 1,
               }}
             >
-              Systemshifter
+              Management Consulting
             </p>
           </div>
 
@@ -195,8 +163,7 @@ export default function Home() {
                 lineHeight: '1.5',
               }}
             >
-              Turning organisational friction<br />
-              into forward motion.
+              Wie verändern Systeme für die Zukunft
             </p>
           </div>
 
@@ -545,7 +512,7 @@ export default function Home() {
             })}
             {/* CTA row below the last item */}
             <div style={{ borderTop: '1px solid var(--color-border)', paddingBlock: '3rem' }}>
-              <Button variant="ghost">Ansatz im Detail →</Button>
+              <a href="/ansatz"><Button variant="ghost">Ansatz im Detail →</Button></a>
             </div>
           </div>
 
@@ -780,13 +747,15 @@ export default function Home() {
                 ihrer Organisation aufzuzeigen und gemeinsam wirksame Veränderungen zu entwerfen.
               </p>
               <div className="mt-12 flex items-center justify-center gap-6">
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  style={{ borderColor: 'var(--color-background)', color: 'var(--color-background)' }}
-                >
-                  Erstgespräch vereinbaren
-                </Button>
+                <a href="/ansatz">
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    style={{ borderColor: 'var(--color-background)', color: 'var(--color-background)' }}
+                  >
+                    Erstgespräch vereinbaren
+                  </Button>
+                </a>
               </div>
             </Col>
           </Grid>

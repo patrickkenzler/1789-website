@@ -58,7 +58,7 @@ export function Header() {
         right: 0,
         zIndex: 50,
         transition: 'background 300ms, border-color 300ms',
-        backgroundColor: scrolled ? 'rgba(242,237,230,0.92)' : 'transparent',
+        backgroundColor: scrolled ? 'rgba(242,242,242,0.92)' : 'transparent',
         backdropFilter:  scrolled ? 'blur(12px)' : 'none',
         borderBottom:    scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
       }}
@@ -104,13 +104,13 @@ export function Header() {
 
           {/* ── Centre: wordmark — scroll-driven scale + fade ── */}
           {/*
-            Mirrors the hero logo layout (1789 stacked above Systemshifter)
+            Mirrors the hero logo layout (1789 stacked above Management Consulting)
             so the brain perceives them as the same object at two scales.
             No CSS transition — tracks scroll directly for physical feel.
           */}
           <a
             href="/"
-            aria-label="1789 Systemshifter — zur Startseite"
+            aria-label="1789 Management Consulting — zur Startseite"
             style={{
               display:        'flex',
               flexDirection:  'column',
@@ -149,7 +149,7 @@ export function Header() {
                 whiteSpace:    'nowrap',
               }}
             >
-              Systemshifter
+              Management Consulting
             </span>
           </a>
 

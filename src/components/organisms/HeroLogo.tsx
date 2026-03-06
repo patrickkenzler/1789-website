@@ -70,15 +70,15 @@ export function HeroLogo() {
           fontFamily: 'var(--font-body)',
           fontSize: 'clamp(1.95rem, 3.6vw, 3rem)',
           fontWeight: 300,
-          letterSpacing: '0.3em',
-          paddingLeft: '0.3em',
+          letterSpacing: '0.12em',
+          paddingLeft: '0.12em',
           textTransform: 'uppercase',
           color: 'var(--color-ink-muted)',
           userSelect: 'none',
           whiteSpace: 'nowrap',
         }}
       >
-        Systemshifter
+        Management Consulting
       </p>
     </div>
   )
