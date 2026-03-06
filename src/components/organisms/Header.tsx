@@ -88,54 +88,36 @@ export function Header() {
             ))}
           </nav>
 
-          {/* ── Centre: wordmark — scroll-driven scale + fade ── */}
+          {/* ── Centre: minimal "1789" wordmark — scroll-driven scale + fade ── */}
           {/*
-            Mirrors the hero logo layout (1789 stacked above Management Consulting)
-            so the brain perceives them as the same object at two scales.
+            Uses the same variable font as the hero so the brain perceives
+            the nav mark as the hero logo arriving at a smaller scale.
             No CSS transition — tracks scroll directly for physical feel.
           */}
           <a
             href="/"
             aria-label="1789 Management Consulting — zur Startseite"
             style={{
-              display:        'flex',
-              flexDirection:  'column',
-              alignItems:     'center',
-              gap:            '0.15rem',
-              textDecoration: 'none',
-              opacity:        logoOpacity,
-              transform:      `scale(${logoScale})`,
-              transformOrigin:'center center',
-              pointerEvents:  logoOpacity > 0.05 ? 'auto' : 'none',
-              willChange:     'opacity, transform',
+              textDecoration:  'none',
+              opacity:         logoOpacity,
+              transform:       `scale(${logoScale})`,
+              transformOrigin: 'center center',
+              pointerEvents:   logoOpacity > 0.05 ? 'auto' : 'none',
+              willChange:      'opacity, transform',
             }}
           >
             <span
               style={{
-                fontFamily:    'var(--font-display)',
-                fontSize:      '1.35rem',
-                fontWeight:    300,
-                letterSpacing: '-0.02em',
-                lineHeight:    1,
-                color:         'var(--color-ink)',
+                fontFamily:           'var(--font-variable), var(--font-display), sans-serif',
+                fontSize:             '1.75rem',
+                fontWeight:           500,
+                letterSpacing:        '-0.04em',
+                lineHeight:           1,
+                color:                'var(--color-ink)',
+                fontVariationSettings: "'wdth' 100",
               }}
             >
               1789
-            </span>
-            <span
-              style={{
-                fontFamily:    'var(--font-body)',
-                fontSize:      '0.45rem',
-                fontWeight:    400,
-                letterSpacing: '0.25em',
-                paddingLeft:   '0.25em',
-                textTransform: 'uppercase',
-                color:         'var(--color-terra)',
-                lineHeight:    1,
-                whiteSpace:    'nowrap',
-              }}
-            >
-              Management Consulting
             </span>
           </a>
 
