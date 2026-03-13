@@ -6,7 +6,7 @@ export function Footer() {
       <Container>
         <Grid>
           <Col span={4} className="py-16">
-            <p className="text-label text-ink mb-4">1789 Management Consulting</p>
+            <p className="text-label text-ink mb-4">1789 Consulting</p>
             <p className="text-body-sm text-ink-muted pretty">
               Wir gestalten Stratgien und entwickeln Organisationen in die Zukunft.
             </p>

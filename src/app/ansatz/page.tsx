@@ -37,20 +37,52 @@ export default function Ansatz() {
   return (
     <main className="pt-40">
 
-      {/* Hero */}
-      <section className="pb-24">
+      {/* ── Page Hero — staggered editorial headline ── */}
+      <section style={{ paddingBottom: '6rem' }}>
         <Container>
-          <Grid>
-            <Col span={8}>
-              <Tag>Unser Ansatz</Tag>
+
+          {/* Tag */}
+          <Tag>Unser Ansatz</Tag>
+
+          {/* Staggered h1 — two lines alternating right / left */}
+          <div style={{ marginTop: '3rem', overflow: 'hidden' }}>
+            <div style={{ textAlign: 'right' }}>
               <h1
-                className="mt-8 font-display font-light text-ink balance"
-                style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: '1', letterSpacing: '-0.03em' }}
+                style={{
+                  display: 'inline',
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.92,
+                  color: 'var(--color-ink)',
+                  fontSize: 'clamp(3rem, 7vw, 6.5rem)',
+                }}
               >
-                Der Systemshift Cycle
+                Der Systemshift
               </h1>
-            </Col>
-            <Col span={5} start={8} className="flex items-end mt-8">
+            </div>
+            <div style={{ marginTop: '0.08em' }}>
+              <h1
+                style={{
+                  display: 'inline',
+                  fontFamily: 'var(--font-display)',
+                  fontStyle: 'italic',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.92,
+                  color: 'var(--color-terra)',
+                  fontSize: 'clamp(3rem, 7vw, 6.5rem)',
+                  paddingLeft: '10%',
+                }}
+              >
+                Cycle.
+              </h1>
+            </div>
+          </div>
+
+          {/* Lead copy — aligned right, offset from headline */}
+          <Grid className="mt-16">
+            <Col span={5} start={8}>
               <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Wertschöpfungsfluss ist der Herzschlag unserer Projekte.
                 Wie organisiert man die Arbeit um die Wertschöpfung herum?
@@ -61,10 +93,10 @@ export default function Ansatz() {
         </Container>
       </section>
 
-      {/* Cycle Steps */}
-      <section className="py-24" style={{ borderTop: '1px solid var(--color-border)' }}>
+      {/* ── Cycle Steps ── */}
+      <section style={{ borderTop: '1px solid var(--color-border)' }}>
         <Container>
-          {cycle.map((step, i) => (
+          {cycle.map((step) => (
             <Grid
               key={step.num}
               className="py-16"
@@ -74,13 +106,23 @@ export default function Ansatz() {
                 <span className="font-mono text-xs" style={{ color: 'var(--color-terra)' }}>{step.num}</span>
               </Col>
               <Col span={4}>
+                {/* Large editorial h2 for each cycle step */}
                 <h2
-                  className="font-display font-light text-ink"
-                  style={{ fontSize: 'var(--text-md)', lineHeight: '1', letterSpacing: '-0.02em' }}
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontWeight: 300,
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1,
+                    color: 'var(--color-ink)',
+                    fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                  }}
                 >
                   {step.title}
                 </h2>
-                <p className="mt-2 font-heading italic font-light" style={{ fontSize: 'var(--text-base)', color: 'var(--color-terra)' }}>
+                <p
+                  className="mt-3 font-heading italic font-light"
+                  style={{ fontSize: 'var(--text-base)', color: 'var(--color-terra)' }}
+                >
                   {step.sub}
                 </p>
               </Col>
@@ -97,20 +139,68 @@ export default function Ansatz() {
         </Container>
       </section>
 
-      {/* Org Mindset */}
-      <section className="py-32" style={{ backgroundColor: 'var(--color-surface)' }}>
+      {/* ── Org Mindset — staggered closing statement ── */}
+      <section style={{ paddingBlock: '8rem', backgroundColor: 'var(--color-surface)', overflow: 'hidden' }}>
         <Container>
-          <Grid>
-            <Col span={6} start={4} className="text-center">
-              <Tag>Organisationales Mindset</Tag>
-              <p
-                className="mt-8 font-display font-light text-ink balance"
-                style={{ fontSize: 'var(--text-md)', lineHeight: '1.2', letterSpacing: '-0.02em' }}
+
+          {/* Staggered editorial statement */}
+          <div style={{ marginBottom: '4rem' }}>
+            <div>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.9,
+                  color: 'var(--color-ink)',
+                  fontSize: 'clamp(2.5rem, 5.5vw, 5rem)',
+                  paddingLeft: '5%',
+                }}
               >
+                Die Organisation lernt,
+              </span>
+            </div>
+            <div style={{ marginTop: '0.1em', textAlign: 'right' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.9,
+                  color: 'var(--color-ink)',
+                  fontSize: 'clamp(2.5rem, 5.5vw, 5rem)',
+                }}
+              >
+                sich selbst neu zu sehen —
+              </span>
+            </div>
+            <div style={{ marginTop: '0.1em' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontStyle: 'italic',
+                  fontWeight: 300,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 0.9,
+                  color: 'var(--color-terra)',
+                  fontSize: 'clamp(2.5rem, 5.5vw, 5rem)',
+                  paddingLeft: '18%',
+                }}
+              >
+                und sich eigenständig weiterzuentwickeln.
+              </span>
+            </div>
+          </div>
+
+          {/* Tag label + CTA below */}
+          <Grid className="mt-20">
+            <Col span={4}>
+              <Tag>Organisationales Mindset</Tag>
+              <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Die Organisation bekommt eine Arbeitsweise und Methoden vermittelt,
                 neu mit ihren Spannungen umzugehen und sich selbst weiterzuentwickeln.
               </p>
-              <div className="mt-12">
+              <div className="mt-10">
                 <Button variant="primary">Shift starten</Button>
               </div>
             </Col>

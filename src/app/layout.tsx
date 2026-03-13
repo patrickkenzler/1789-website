@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Inter } from 'next/font/google'
+import { Cormorant_Garamond, Inter, Roboto_Flex } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/organisms/Header'
 import { Footer } from '@/components/organisms/Footer'
@@ -19,9 +19,18 @@ const inter = Inter({
   display: 'swap',
 })
 
+// Variable font — wdth (75–125) + wght (100–1000) axes
+// Used exclusively for the hero "1789" display
+const robotoFlex = Roboto_Flex({
+  variable: '--font-variable',
+  subsets: ['latin'],
+  axes: ['wdth', 'opsz'],
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'Studio · Name — Beratung mit Haltung',
-  description: 'Eine Beratung, die denkt wie eine Designagentur. Strategie, Markenentwicklung und digitale Erfahrung.',
+  title: '1789 Systemshifter — Turning organisational friction into forward motion.',
+  description: 'Structure · Strategy · Gap Consulting. Wir begleiten Organisationen durch Wandel — strukturell, strategisch, wirksam.',
 }
 
 export default function RootLayout({
@@ -30,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="de" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="de" className={`${cormorant.variable} ${inter.variable} ${robotoFlex.variable}`}>
       <body className="antialiased bg-background text-ink">
         <Header />
         {children}

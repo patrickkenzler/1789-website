@@ -78,3 +78,81 @@
     width: 100%;
   }
 }
+
+/* ─── Keyframes ───────────────────────────────────────────────────────────── */
+
+/*
+ * Per-character animations for "1789"
+ *
+ * Design intent — constant transformation:
+ *   "1"  The Anchor      — compressed+black ↔ expanded+thin
+ *   "7"  The Opposite    — wide+thin ↔ narrow+heavy  (mirror phase of "1")
+ *   "8"  The Transformer — extreme width swings, symbolises endless cycles
+ *   "9"  The Wanderer    — slow independent arc, its own rhythm
+ *
+ * Durations are deliberately mismatched (9 / 12 / 12 / 16 s) so the
+ * characters never lock into the same phase twice — endless variation.
+ * Negative delays start each character mid-cycle on first paint.
+ */
+
+/* "1" — starts narrow+black, opens to wide+thin */
+@keyframes morph1 {
+  0%, 100% { font-variation-settings: 'wdth' 80,  'wght' 950; }
+  50%       { font-variation-settings: 'wdth' 115, 'wght' 200; }
+}
+
+/* "7" — mirror of "1": starts wide+thin, compresses to narrow+heavy */
+@keyframes morph7 {
+  0%, 100% { font-variation-settings: 'wdth' 120, 'wght' 200; }
+  50%       { font-variation-settings: 'wdth' 80,  'wght' 900; }
+}
+
+/* "8" — the transformer: swings to super-wide, then collapses */
+@keyframes morph8 {
+  0%   { font-variation-settings: 'wdth' 80,  'wght' 600; }
+  30%  { font-variation-settings: 'wdth' 130, 'wght' 900; }
+  65%  { font-variation-settings: 'wdth' 75,  'wght' 200; }
+  100% { font-variation-settings: 'wdth' 80,  'wght' 600; }
+}
+
+/* "9" — the wanderer: slow independent arc */
+@keyframes morph9 {
+  0%, 100% { font-variation-settings: 'wdth' 100, 'wght' 500; }
+  35%       { font-variation-settings: 'wdth' 80,  'wght' 900; }
+  70%       { font-variation-settings: 'wdth' 125, 'wght' 250; }
+}
+
+/*
+ * morphGap — animates the space between the four characters.
+ * Conceptually: the Gap opens wide, then gets bridged (closes).
+ * Applied to the flex h1 so all inter-character gaps move together.
+ */
+@keyframes morphGap {
+  0%, 100% { gap: 0; }
+  45%       { gap: 0.08em; }
+  80%       { gap: 0.01em; }
+}
+
+/*
+ * marqueeSlide — infinite horizontal scroll for the questions ticker.
+ * Duplicate the items in JSX so the loop is seamless.
+ */
+@keyframes marqueeSlide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInBottom {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
