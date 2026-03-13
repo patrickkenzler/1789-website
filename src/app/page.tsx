@@ -4,6 +4,7 @@ import { Tag } from '@/components/atoms/Tag'
 import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
 import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
+import { ClientLogoCarousel } from '@/components/molecules/ClientLogoCarousel'
 import { CollagePanel } from '@/components/molecules/CollagePanel'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -51,7 +52,7 @@ const approach = [
 
 const achievements = [
   {
-    phase: 'Planing',
+    phase: 'Planning',
     items: ['Erkenntnis über den Gap', 'Vokabular für die Organisation', 'Operating Model Entwurf'],
   },
   {
@@ -261,6 +262,9 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* ─── Client Logo Carousel ─────────────────────────────────────────── */}
+      <ClientLogoCarousel />
+
       {/* ─── Highlight Cases ──────────────────────────────────────────────── */}
       <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-ink)' }}>
         <Container>
@@ -285,7 +289,7 @@ export default function Home() {
 
           <Grid className="mt-16">
             {featuredCases.map((c, i) => {
-              const bgColors = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
+              const bgColors   = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
               const textColors = ['var(--color-background)', 'var(--color-background)', 'var(--color-ink)']
               const bg = bgColors[i % 3]
               const fg = textColors[i % 3]
@@ -295,12 +299,12 @@ export default function Home() {
                   href={`/projekte/${c.slug}`}
                   className="group p-8 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:scale-[1.02]"
                   style={{
-                    gridColumn: 'span 4',
+                    gridColumn:      'span 4',
                     backgroundColor: bg,
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    minHeight: '340px',
-                    textDecoration: 'none',
+                    borderRadius:    'var(--radius-md)',
+                    border:          '1px solid rgba(255,255,255,0.08)',
+                    minHeight:       '340px',
+                    textDecoration:  'none',
                   }}
                 >
                   <div className="flex gap-2 flex-wrap">
@@ -739,7 +743,7 @@ export default function Home() {
                 ihrer Organisation aufzuzeigen und gemeinsam wirksame Veränderungen zu entwerfen.
               </p>
               <div className="mt-12 flex items-center justify-center gap-6">
-                <a href="/ansatz">
+                <a href="/kontakt">
                   <Button
                     variant="ghost"
                     size="lg"
