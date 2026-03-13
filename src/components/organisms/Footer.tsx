@@ -6,9 +6,9 @@ export function Footer() {
       <Container>
         <Grid>
           <Col span={4} className="py-16">
-            <p className="text-label text-ink mb-4">Studio·Name</p>
+            <p className="text-label text-ink mb-4">1789 Management Consulting</p>
             <p className="text-body-sm text-ink-muted pretty">
-              Wir gestalten Marken und digitale Erfahrungen, die bleiben.
+              Wir gestalten Stratgien und entwickeln Organisationen in die Zukunft.
             </p>
           </Col>
 
@@ -28,7 +28,7 @@ export function Footer() {
           <Col span={2} start={10} className="py-16">
             <p className="text-label text-ink-subtle mb-4">Kontakt</p>
             <ul className="flex flex-col gap-2">
-              <li><a href="mailto:hello@studio.de" className="text-body-sm text-ink-muted hover:text-terra transition-colors duration-fast">hello@studio.de</a></li>
+              <li><a href="mailto:hello@studio.de" className="text-body-sm text-ink-muted hover:text-terra transition-colors duration-fast">hello@1789.com</a></li>
               <li><a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-body-sm text-ink-muted hover:text-ink hover-line transition-colors duration-fast">Instagram</a></li>
               <li><a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-body-sm text-ink-muted hover:text-ink hover-line transition-colors duration-fast">LinkedIn</a></li>
             </ul>
