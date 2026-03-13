@@ -6,16 +6,16 @@
 @layer base {
   :root {
     /* ─── Farbe ─────────────────────────────────── */
-    --color-background:  #F2EDE6;
-    --color-surface:     #EBE5DC;
+    --color-background:  #F2F2F2;
+    --color-surface:     #E8E8E8;
     --color-border:      #2E2B28;
 
     --color-ink:         #1A1714;
     --color-ink-muted:   #6B6560;
     --color-ink-subtle:  #A39E99;
 
-    --color-terra:       #D4522A;
-    --color-terra-dark:  #A33D1A;
+    --color-terra:       #F44D0B;
+    --color-terra-dark:  #C13A06;
     --color-sage:        #B8CC8A;
     --color-sage-dark:   #8FA66A;
 

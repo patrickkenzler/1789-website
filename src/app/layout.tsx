@@ -29,7 +29,7 @@ const robotoFlex = Roboto_Flex({
 })
 
 export const metadata: Metadata = {
-  title: '1789 Systemshifter — Turning organisational friction into forward motion.',
+  title: '1789 Management Consulting — Wie verändern Systeme für die Zukunft',
   description: 'Structure · Strategy · Gap Consulting. Wir begleiten Organisationen durch Wandel — strukturell, strategisch, wirksam.',
 }
 

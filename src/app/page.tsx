@@ -4,6 +4,7 @@ import { Tag } from '@/components/atoms/Tag'
 import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
 import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
+import { ClientLogoCarousel } from '@/components/molecules/ClientLogoCarousel'
 import { CollagePanel } from '@/components/molecules/CollagePanel'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -51,7 +52,7 @@ const approach = [
 
 const achievements = [
   {
-    phase: 'Planing',
+    phase: 'Planning',
     items: ['Erkenntnis über den Gap', 'Vokabular für die Organisation', 'Operating Model Entwurf'],
   },
   {
@@ -102,51 +103,11 @@ export default function Home() {
           }}
         >
           <Tag>Structure · Strategy · Gap Consulting</Tag>
-          <Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button>
+          <a href="/ansatz"><Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button></a>
         </div>
 
-        {/* ── HeroLogo + abstract background shapes ── */}
-        <div
-          style={{
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-          }}
-        >
-          {/* Background geometric shapes — very low opacity, evoke collage */}
-          <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-            {/* Large circle — bottom right */}
-            <div style={{
-              position: 'absolute', width: '45vw', aspectRatio: '1', borderRadius: '50%',
-              backgroundColor: 'var(--color-terra)', opacity: 0.07,
-              bottom: '-15%', right: '-8%',
-            }} />
-            {/* Rectangle — top left */}
-            <div style={{
-              position: 'absolute', width: '22vw', height: '35%',
-              backgroundColor: 'var(--color-sage)', opacity: 0.12,
-              top: 0, left: '5%',
-            }} />
-            {/* Circle outline — centre */}
-            <div style={{
-              position: 'absolute', width: '30vw', aspectRatio: '1', borderRadius: '50%',
-              border: '1px solid var(--color-ink)', opacity: 0.06,
-              top: '20%', left: '35%',
-            }} />
-            {/* Small filled circle — left mid */}
-            <div style={{
-              position: 'absolute', width: '10vw', aspectRatio: '1', borderRadius: '50%',
-              backgroundColor: 'var(--color-terra)', opacity: 0.09,
-              top: '55%', left: '8%',
-            }} />
-          </div>
-          {/* Logo sits above shapes */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <HeroLogo />
-          </div>
-        </div>
+        {/* ── HeroLogo + Claim (fills the 1fr row) ── */}
+        <HeroLogo />
 
         {/* ── Bottom strip ── */}
         <div
@@ -175,7 +136,7 @@ export default function Home() {
                 lineHeight: 1,
               }}
             >
-              Systemshifter
+              Management Consulting
             </p>
           </div>
 
@@ -195,8 +156,7 @@ export default function Home() {
                 lineHeight: '1.5',
               }}
             >
-              Turning organisational friction<br />
-              into forward motion.
+              Wie verändern Systeme für die Zukunft
             </p>
           </div>
 
@@ -274,8 +234,8 @@ export default function Home() {
 
           {/* ── Pillars ── */}
           <Grid className="mt-20">
-            {pillars.map((p) => (
-              <Col key={p.num} span={4}>
+            {pillars.map((pillar) => (
+              <Col key={pillar.num} span={4}>
                 <div
                   className="p-10 h-full flex flex-col gap-8 group hover:-translate-y-1 transition-transform duration-300"
                   style={{
@@ -284,16 +244,16 @@ export default function Home() {
                   }}
                 >
                   <span className="font-mono text-xs tracking-[0.15em]" style={{ color: 'var(--color-terra)' }}>
-                    {p.num}
+                    {pillar.num}
                   </span>
                   <h3
                     className="font-display font-light text-ink"
                     style={{ fontSize: 'var(--text-lg)', lineHeight: '1', letterSpacing: '-0.03em' }}
                   >
-                    {p.title}
+                    {pillar.title}
                   </h3>
                   <p className="font-body text-ink-muted mt-auto" style={{ fontSize: 'var(--text-sub)', lineHeight: '1.6' }}>
-                    {p.body}
+                    {pillar.body}
                   </p>
                 </div>
               </Col>
@@ -301,6 +261,9 @@ export default function Home() {
           </Grid>
         </Container>
       </section>
+
+      {/* ─── Client Logo Carousel ─────────────────────────────────────────── */}
+      <ClientLogoCarousel />
 
       {/* ─── Highlight Cases ──────────────────────────────────────────────── */}
       <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-ink)' }}>
@@ -326,7 +289,7 @@ export default function Home() {
 
           <Grid className="mt-16">
             {featuredCases.map((c, i) => {
-              const bgColors = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
+              const bgColors   = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
               const textColors = ['var(--color-background)', 'var(--color-background)', 'var(--color-ink)']
               const bg = bgColors[i % 3]
               const fg = textColors[i % 3]
@@ -336,12 +299,12 @@ export default function Home() {
                   href={`/projekte/${c.slug}`}
                   className="group p-8 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:scale-[1.02]"
                   style={{
-                    gridColumn: 'span 4',
+                    gridColumn:      'span 4',
                     backgroundColor: bg,
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    minHeight: '340px',
-                    textDecoration: 'none',
+                    borderRadius:    'var(--radius-md)',
+                    border:          '1px solid rgba(255,255,255,0.08)',
+                    minHeight:       '340px',
+                    textDecoration:  'none',
                   }}
                 >
                   <div className="flex gap-2 flex-wrap">
@@ -545,7 +508,7 @@ export default function Home() {
             })}
             {/* CTA row below the last item */}
             <div style={{ borderTop: '1px solid var(--color-border)', paddingBlock: '3rem' }}>
-              <Button variant="ghost">Ansatz im Detail →</Button>
+              <a href="/ansatz"><Button variant="ghost">Ansatz im Detail →</Button></a>
             </div>
           </div>
 
@@ -753,7 +716,7 @@ export default function Home() {
             <Col span={8} start={3} className="text-center">
               <p
                 className="font-mono text-xs tracking-[0.2em] uppercase mb-8"
-                style={{ color: 'rgba(242,237,230,0.6)' }}
+                style={{ color: 'rgba(242,242,242,0.6)' }}
               >
                 Bereit für den Shift?
               </p>
@@ -774,19 +737,21 @@ export default function Home() {
               </h2>
               <p
                 className="mt-8 font-body mx-auto max-w-lg"
-                style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', color: 'rgba(242,237,230,0.75)' }}
+                style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', color: 'rgba(242,242,242,0.75)' }}
               >
                 Wir haben es uns zum Anspruch gemacht, unseren Kunden ein neues Verständnis
                 ihrer Organisation aufzuzeigen und gemeinsam wirksame Veränderungen zu entwerfen.
               </p>
               <div className="mt-12 flex items-center justify-center gap-6">
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  style={{ borderColor: 'var(--color-background)', color: 'var(--color-background)' }}
-                >
-                  Erstgespräch vereinbaren
-                </Button>
+                <a href="/kontakt">
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    style={{ borderColor: 'var(--color-background)', color: 'var(--color-background)' }}
+                  >
+                    Erstgespräch vereinbaren
+                  </Button>
+                </a>
               </div>
             </Col>
           </Grid>
