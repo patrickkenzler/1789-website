@@ -358,69 +358,131 @@ export default function Home() {
               <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Unser Denklabor — wo Organisationstheorie auf Praxis trifft.
               </p>
+              <a
+                href="/labor"
+                className="hover-line inline-block mt-8 font-body uppercase tracking-widest"
+                style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--color-ink-muted)' }}
+              >
+                Alle Inhalte →
+              </a>
             </Col>
           </Grid>
 
           <Grid className="mt-16">
+            {/* ── Left: latest podcast episode with embedded player ── */}
             <Col span={6}>
               <div
-                className="group p-10 h-full cursor-pointer hover:-translate-y-1 transition-transform duration-300"
-                style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)' }}
+                style={{
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-md)',
+                  overflow: 'hidden',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
               >
-                <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-terra)' }}>
-                  Podcast · Aktuelle Folge
-                </span>
-                <h3
-                  className="mt-4 font-display font-light text-ink"
-                  style={{ fontSize: 'var(--text-sm)', lineHeight: '1.2' }}
-                >
-                  [Podcast-Titel]<br />
-                  <em className="font-heading italic text-ink-muted" style={{ fontSize: 'var(--text-base)' }}>
-                    mit [Co-Podcaster Name]
-                  </em>
-                </h3>
-                <div className="mt-8 flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: 'var(--color-terra)', color: 'white', fontSize: '0.75rem' }}
-                  >
-                    ▶
+                <div className="p-8 pb-5">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-terra)' }}>
+                      ★ Aktuelle Folge · #142
+                    </span>
                   </div>
-                  <span className="font-body text-ink-muted" style={{ fontSize: 'var(--text-sub)' }}>
-                    Jetzt anhören
-                  </span>
+                  <h3
+                    className="font-display font-light text-ink"
+                    style={{ fontSize: 'var(--text-sm)', lineHeight: '1.2' }}
+                  >
+                    Das Internet: Utopie, Infrastruktur, Schlachtfeld
+                  </h3>
+                  <p className="mt-2 font-body italic" style={{ fontSize: 'var(--text-sub)', color: 'var(--color-ink-subtle)' }}>
+                    mit Marie Kilg
+                  </p>
+                  <div className="flex gap-2 mt-4">
+                    {['Digital', 'Gesellschaft'].map((t) => <Tag key={t}>{t}</Tag>)}
+                  </div>
                 </div>
-                <p className="mt-6 font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--color-terra)' }}>
-                  Von uns empfohlen ★
-                </p>
+                <div className="px-4 pb-4 mt-auto">
+                  <iframe
+                    src="https://open.spotify.com/embed/episode/5rW7kTMsBrpdNdeyRorwX9?utm_source=generator"
+                    width="100%"
+                    height="152"
+                    frameBorder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                    style={{ display: 'block', borderRadius: '8px' }}
+                  />
+                </div>
+                <div className="px-8 pb-6">
+                  <a
+                    href="/podcast"
+                    className="hover-line font-body uppercase tracking-widest"
+                    style={{ fontSize: 'var(--text-xxs)', fontWeight: 500, color: 'var(--color-terra)' }}
+                  >
+                    Alle Folgen →
+                  </a>
+                </div>
               </div>
             </Col>
 
+            {/* ── Right: essay + upcoming event ── */}
             <Col span={6}>
               <div className="flex flex-col gap-6 h-full">
-                {[
-                  { type: 'Publikation', title: '[Titel der aktuellen Publikation]', meta: 'Essay · Veröffentlicht 2025' },
-                  { type: 'Talk',        title: '[Nächster Talk / Event-Name]',       meta: 'Vortrag · [Ort] · [Datum]' },
-                ].map((item) => (
-                  <div
-                    key={item.type}
-                    className="group flex-1 p-8 cursor-pointer hover:-translate-y-0.5 transition-transform duration-300"
-                    style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)' }}
+
+                {/* Essay by Human Nagafi */}
+                <a
+                  href="/labor"
+                  className="group flex-1 p-8 cursor-pointer hover:-translate-y-0.5 transition-transform duration-300 block"
+                  style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', textDecoration: 'none' }}
+                >
+                  <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-ink-subtle)' }}>
+                    Essay
+                  </span>
+                  <h3
+                    className="mt-3 font-heading font-normal text-ink"
+                    style={{ fontSize: 'var(--text-base)', lineHeight: '1.4' }}
                   >
-                    <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-ink-subtle)' }}>
-                      {item.type}
+                    Nähe als Organisationsprinzip — warum wir Corporate Therapy auf die Bühne bringen
+                  </h3>
+                  <p className="mt-3 font-body italic" style={{ fontSize: 'var(--text-sub)', color: 'var(--color-ink-subtle)' }}>
+                    Human Nagafi
+                  </p>
+                  <p className="mt-2 font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>
+                    Essay · 8 Min · 2024
+                  </p>
+                </a>
+
+                {/* Upcoming live event */}
+                <a
+                  href="/labor"
+                  className="group flex-1 p-8 cursor-pointer hover:-translate-y-0.5 transition-transform duration-300 block"
+                  style={{
+                    border: '1px solid var(--color-terra)',
+                    borderRadius: 'var(--radius-md)',
+                    textDecoration: 'none',
+                    backgroundColor: 'rgba(244,77,11,0.04)',
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-terra)' }}>
+                      Live · Talk
                     </span>
-                    <h3
-                      className="mt-3 font-heading font-normal text-ink"
-                      style={{ fontSize: 'var(--text-base)', lineHeight: '1.4' }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>
-                      {item.meta}
-                    </p>
+                    <span className="font-mono text-xs" style={{ color: 'var(--color-terra)' }}>
+                      25.06.2024
+                    </span>
                   </div>
-                ))}
+                  <h3
+                    className="mt-3 font-heading font-normal text-ink"
+                    style={{ fontSize: 'var(--text-base)', lineHeight: '1.4' }}
+                  >
+                    Corporate Therapy — Live in Frankfurt
+                  </h3>
+                  <p className="mt-2 font-body" style={{ fontSize: 'var(--text-sub)', color: 'var(--color-ink-muted)', lineHeight: '1.5' }}>
+                    Live-Folge mit Human, Patrick & Gast. Einlass ab 18 Uhr, Start 18:30 Uhr. Gespräche, Snacks & Drinks.
+                  </p>
+                  <p className="mt-3 font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>
+                    Frankfurt am Main
+                  </p>
+                </a>
+
               </div>
             </Col>
           </Grid>
@@ -620,9 +682,9 @@ export default function Home() {
 
           <div className="mt-16" style={{ borderTop: '1px solid var(--color-border)' }}>
             {[
-              { date: '[TT.MM.JJJJ]', type: 'Talk',     title: '[Event-Titel Platzhalter]',    location: '[Ort]' },
-              { date: '[TT.MM.JJJJ]', type: 'Workshop', title: '[Workshop-Titel Platzhalter]', location: '[Ort]' },
-              { date: '[TT.MM.JJJJ]', type: 'Podcast',  title: '[Neue Episode Platzhalter]',   location: 'Online' },
+              { date: '25.06.2024', type: 'Live Talk', title: 'Corporate Therapy — Live Episode mit Human, Patrick & Gast', location: 'Frankfurt a.M.' },
+              { date: 'Laufend',    type: 'Podcast',   title: '#142 Das Internet: Utopie, Infrastruktur, Schlachtfeld',     location: 'Spotify' },
+              { date: '2024',       type: 'Essay',     title: 'Nähe als Organisationsprinzip — Human Nagafi',               location: 'Labor' },
             ].map((e, i) => (
               <div
                 key={i}
