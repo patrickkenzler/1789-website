@@ -1,6 +1,7 @@
 'use client'
 
-import { Container } from '@/components/layout/Grid'
+import { Container }  from '@/components/layout/Grid'
+import { Logo1789 }   from '@/components/atoms/Logo1789'
 import { useScrollProgress } from '@/hooks/useScrollProgress'
 
 const navItems = [
@@ -106,19 +107,7 @@ export function Header() {
               willChange:      'opacity, transform',
             }}
           >
-            <span
-              style={{
-                fontFamily:           'var(--font-variable), var(--font-display), sans-serif',
-                fontSize:             '1.75rem',
-                fontWeight:           500,
-                letterSpacing:        '-0.04em',
-                lineHeight:           1,
-                color:                'var(--color-ink)',
-                fontVariationSettings: "'wdth' 100",
-              }}
-            >
-              1789
-            </span>
+            <Logo1789 height={36} showSub={false} />
           </a>
 
           {/* ── Right: CTA ── */}
