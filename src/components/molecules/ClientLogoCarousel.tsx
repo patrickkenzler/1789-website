@@ -52,14 +52,14 @@ const logos: { name: string; svg: string }[] = [
   },
   {
     name: 'Metro Digital',
-    svg: `<svg viewBox="0 0 148 48" xmlns="http://www.w3.org/2000/svg">
+    svg: `<svg viewBox="0 0 200 48" xmlns="http://www.w3.org/2000/svg">
       <text x="0" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="800" letter-spacing="-0.5" fill="black">METRO</text>
-      <text x="106" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="300" fill="black">digital</text>
+      <text x="108" y="36" font-family="Arial,sans-serif" font-size="30" font-weight="300" fill="black">digital</text>
     </svg>`,
   },
   {
     name: 'Gelsenwasser',
-    svg: `<svg viewBox="0 0 168 48" xmlns="http://www.w3.org/2000/svg">
+    svg: `<svg viewBox="0 0 220 48" xmlns="http://www.w3.org/2000/svg">
       <text x="0" y="36" font-family="Arial,sans-serif" font-size="26" font-weight="400" fill="black">Gelsenwasser</text>
     </svg>`,
   },
@@ -94,7 +94,7 @@ const logos: { name: string; svg: string }[] = [
   },
   {
     name: 'teccle group',
-    svg: `<svg viewBox="0 0 140 48" xmlns="http://www.w3.org/2000/svg">
+    svg: `<svg viewBox="0 0 180 48" xmlns="http://www.w3.org/2000/svg">
       <text x="0" y="34" font-family="Arial,sans-serif" font-size="24" font-weight="300" letter-spacing="0.5" fill="black">teccle group</text>
     </svg>`,
   },
@@ -158,16 +158,17 @@ export function ClientLogoCarousel() {
             aria-label={logo.name}
             title={logo.name}
             style={{
-              display:    'inline-flex',
-              alignItems: 'center',
-              height:     '40px',
-              opacity:    0.45,
-              flexShrink: 0,
-              transition: 'opacity 300ms',
+              display:       'inline-flex',
+              alignItems:    'center',
+              height:        '40px',
+              opacity:       0.45,
+              flexShrink:    0,
+              transition:    'opacity 300ms',
+              paddingInline: '0.5rem',
             }}
             onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
             onMouseLeave={e => (e.currentTarget.style.opacity = '0.45')}
-            dangerouslySetInnerHTML={{ __html: logo.svg.replace(/<svg /, '<svg height="40" style="height:40px;width:auto;display:block;" ') }}
+            dangerouslySetInnerHTML={{ __html: logo.svg.replace(/<svg /, '<svg height="40" overflow="visible" style="height:40px;width:auto;display:block;overflow:visible;" ') }}
           />
         ))}
       </div>
