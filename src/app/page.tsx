@@ -85,105 +85,41 @@ export default function Home() {
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
       <section
         style={{
-          height: '100svh',
-          display: 'grid',
-          gridTemplateRows: 'auto 1fr auto',
-          overflow: 'hidden',
+          minHeight:     '100svh',
+          display:       'flex',
+          flexDirection: 'column',
+          paddingTop:    '7rem',
+          overflow:      'hidden',
         }}
       >
-        {/* ── Top bar ── */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingInline: 'var(--grid-margin)',
-            paddingTop: '7rem',
-            paddingBottom: '2rem',
-          }}
-        >
-          <Tag>Structure · Strategy · Gap Consulting</Tag>
-          <a href="/ansatz"><Button variant="text" style={{ fontSize: 'var(--text-xs)' }}>Unser Ansatz →</Button></a>
-        </div>
-
-        {/* ── HeroLogo + Claim (fills the 1fr row) ── */}
+        {/* ── Main hero content ── */}
         <HeroLogo />
 
-        {/* ── Bottom strip ── */}
+        {/* ── Bottom scroll indicator ── */}
         <div
           style={{
-            borderTop: '1px solid var(--color-border)',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
+            marginTop:   'auto',
+            borderTop:   '1px solid var(--color-border)',
+            paddingInline: 'var(--grid-margin)',
+            paddingBlock:  '1.25rem',
+            display:     'flex',
+            justifyContent: 'flex-end',
+            alignItems:  'center',
+            gap:         '1rem',
           }}
         >
-          <div
+          <span
             style={{
-              paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.25rem',
-              borderRight: '1px solid var(--color-border)',
-              animation: 'slideInBottom 0.9s 0.4s var(--ease-expressive) both',
+              fontFamily:    'var(--font-mono)',
+              fontSize:      'var(--text-xxs)',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              color:         'var(--color-ink-subtle)',
             }}
           >
-            <p
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontStyle: 'italic',
-                fontWeight: 300,
-                fontSize: 'clamp(1rem, 2vw, 1.625rem)',
-                color: 'var(--color-terra)',
-                letterSpacing: '-0.02em',
-                lineHeight: 1,
-              }}
-            >
-              Management Consulting
-            </p>
-          </div>
-
-          <div
-            style={{
-              paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.25rem',
-              borderRight: '1px solid var(--color-border)',
-              animation: 'slideInBottom 0.9s 0.55s var(--ease-expressive) both',
-            }}
-          >
-            <p
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: 'var(--text-sub)',
-                color: 'var(--color-ink-muted)',
-                lineHeight: '1.5',
-              }}
-            >
-              Wie verändern Systeme für die Zukunft
-            </p>
-          </div>
-
-          <div
-            style={{
-              paddingInline: 'var(--grid-margin)',
-              paddingBlock: '1.25rem',
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              gap: '1rem',
-              animation: 'slideInBottom 0.9s 0.7s var(--ease-expressive) both',
-            }}
-          >
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 'var(--text-xxs)',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                color: 'var(--color-ink-subtle)',
-              }}
-            >
-              Scroll
-            </span>
-            <div style={{ width: '1px', height: '2.5rem', backgroundColor: 'var(--color-border)' }} />
-          </div>
+            Scroll
+          </span>
+          <div style={{ width: '1px', height: '2.5rem', backgroundColor: 'var(--color-border)' }} />
         </div>
       </section>
 
