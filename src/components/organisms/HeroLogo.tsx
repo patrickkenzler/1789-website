@@ -55,8 +55,14 @@ export function HeroLogo() {
             color:         'var(--color-ink)',
           }}
         >
-          {/* Each line: outer = clip mask, inner = animated element */}
-          <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.08em' }}>
+          {/*
+           * Each line: outer = clip mask, inner = animated element.
+           * paddingBottom: '0.3em' gives descenders (g, y, p…) room so
+           * they aren't clipped by overflow:hidden.
+           * marginBottom: '-0.3em' pulls the next line back up so the
+           * extra padding doesn't create unwanted gap between lines.
+           */}
+          <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.3em', marginBottom: '-0.3em' }}>
             <span
               style={{
                 display:   'block',
@@ -66,7 +72,7 @@ export function HeroLogo() {
               Organisationen, die sich
             </span>
           </span>
-          <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.08em' }}>
+          <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.3em', marginBottom: '-0.3em' }}>
             <span
               style={{
                 display:   'block',
