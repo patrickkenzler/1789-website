@@ -156,3 +156,39 @@
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/*
+ * lineReveal — editorial per-line wipe-up for the hero H1.
+ * Each line is wrapped in overflow:hidden; the inner span slides up
+ * from below the clip boundary. Inspired by high-end editorial sites.
+ */
+@keyframes lineReveal {
+  from { opacity: 0; transform: translateY(72%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/*
+ * growLine — terra accent line expands from 0 → full width
+ */
+@keyframes growLine {
+  from { width: 0; opacity: 0; }
+  to   { width: 3rem; opacity: 1; }
+}
+
+/*
+ * heroLogoReveal — brand mark lands: scale up + fade in
+ */
+@keyframes heroLogoReveal {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/*
+ * floatLogo — after landing, the logo breathes with a slow vertical drift.
+ * Paired with heroLogoReveal via animation-delay so it starts only after
+ * the reveal finishes (delay ≈ reveal-duration + reveal-delay).
+ */
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
