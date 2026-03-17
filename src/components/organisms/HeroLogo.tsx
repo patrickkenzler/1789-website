@@ -25,20 +25,6 @@ export function HeroLogo() {
       {/* ── LEFT: Content hierarchy ── */}
       <div>
 
-        {/* Label */}
-        <p
-          style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      'var(--text-xxs)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color:         'var(--color-terra)',
-            marginBottom:  '2.5rem',
-          }}
-        >
-          Management Consulting
-        </p>
-
         {/* H1 — Level 1 claim */}
         <h1
           style={{
@@ -145,8 +131,8 @@ export function HeroLogo() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/logo-1789.svg"
-          alt="1789 Consulting"
+          src="/logo-1789-innovation.svg"
+          alt="1789 Innovation"
           style={{
             width:     '100%',
             maxWidth:  '520px',
