@@ -5,6 +5,7 @@ import { Logo1789 }   from '@/components/atoms/Logo1789'
 import { useScrollProgress } from '@/hooks/useScrollProgress'
 
 const navItems = [
+  { label: 'Home',       href: '/' },
   { label: 'Ansatz',     href: '/ansatz' },
   { label: 'Cases',      href: '/projekte' },
   { label: 'Leistungen', href: '/leistungen' },
@@ -23,6 +24,10 @@ const navItems = [
 
 export function Header() {
   const { progress: scrollProgress, scrolled } = useScrollProgress()
+
+  // Logo fades in as you scroll (0 → 1)
+  const logoOpacity = scrollProgress
+  const logoScale   = 0.65 + 0.35 * scrollProgress
 
   // CTA appears in the final stretch (last 30 % of the transition)
   const pastHero   = scrollProgress > 0.85
@@ -59,11 +64,20 @@ export function Header() {
           }}
         >
 
-          {/* ── Left: logo ── */}
+          {/* ── Left: logo — fades in on scroll ── */}
           <a
             href="/"
             aria-label="1789 Innovation — zur Startseite"
-            style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
+            style={{
+              textDecoration:  'none',
+              display:         'flex',
+              alignItems:      'center',
+              opacity:         logoOpacity,
+              transform:       `scale(${logoScale})`,
+              transformOrigin: 'left center',
+              pointerEvents:   logoOpacity > 0.05 ? 'auto' : 'none',
+              willChange:      'opacity, transform',
+            }}
           >
             <Logo1789 height={36} showSub={false} />
           </a>
