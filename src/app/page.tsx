@@ -5,7 +5,7 @@ import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
 import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
 import { ClientLogoCarousel } from '@/components/molecules/ClientLogoCarousel'
-import { CollagePanel } from '@/components/molecules/CollagePanel'
+import { SystemshiftAccordion } from '@/components/organisms/SystemshiftAccordion'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -27,28 +27,6 @@ const pillars = [
   },
 ]
 
-const approach = [
-  {
-    icon: '◎',
-    title: 'Analyse & Erkenntnis',
-    body: 'Eine Organisation kann nur Dinge erkennen und ändern, um die sie weiß. Wir setzen sie in die Lage, sich in ihrem System zu erkennen.',
-  },
-  {
-    icon: '⟳',
-    title: 'Change by Action',
-    body: 'Veränderung wird sofort Teil des Vorgehens. Die Transformation beginnt während – nicht nach – unserem Prozess.',
-  },
-  {
-    icon: '◈',
-    title: 'Responsibility',
-    body: 'Wir gestalten verantwortungsgetriebene Operating Modelle. Verbindlichkeitsstrukturen als Basis nachhaltiger Wirkung.',
-  },
-  {
-    icon: '↗',
-    title: 'Iterate',
-    body: 'Artefaktgetrieben, pragmatisch, partizipativ. Wir strapazieren Organisationen und fordern ihre Fähigkeit zur Veränderung.',
-  },
-]
 
 const achievements = [
   {
@@ -448,69 +426,8 @@ export default function Home() {
           </div>
         </Container>
 
-        {/* Full-bleed sticky 2-col — collage left, items right */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-
-          {/* LEFT: sticky abstract collage panel */}
-          <div style={{ position: 'sticky', top: 0, height: '100svh' }}>
-            <CollagePanel variant="analyse" />
-          </div>
-
-          {/* RIGHT: approach items, scrolls past the sticky panel */}
-          <div style={{ paddingRight: 'var(--grid-margin)', paddingLeft: 'clamp(2rem, 4vw, 5rem)' }}>
-            {approach.map((a, i) => {
-              const variants = ['analyse', 'change', 'responsibility', 'iterate'] as const
-              return (
-                <div
-                  key={a.title}
-                  style={{ borderTop: '1px solid var(--color-border)', paddingBlock: 'clamp(3rem, 5vw, 5rem)' }}
-                >
-                  <p
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 'var(--text-xxs)',
-                      letterSpacing: '0.18em',
-                      textTransform: 'uppercase',
-                      color: 'var(--color-terra)',
-                      marginBottom: '1.5rem',
-                    }}
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </p>
-                  <h3
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: 'var(--text-md)',
-                      fontWeight: 300,
-                      lineHeight: 1.0,
-                      letterSpacing: '-0.02em',
-                      color: 'var(--color-ink)',
-                      marginBottom: '1.5rem',
-                    }}
-                  >
-                    {a.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: 'var(--font-body)',
-                      fontSize: 'var(--text-base)',
-                      color: 'var(--color-ink-muted)',
-                      lineHeight: '1.7',
-                      maxWidth: '38ch',
-                    }}
-                  >
-                    {a.body}
-                  </p>
-                </div>
-              )
-            })}
-            {/* CTA row below the last item */}
-            <div style={{ borderTop: '1px solid var(--color-border)', paddingBlock: '3rem' }}>
-              <a href="/ansatz"><Button variant="ghost">Ansatz im Detail →</Button></a>
-            </div>
-          </div>
-
-        </div>
+        {/* Full-bleed accordion — collage crossfades left, items expand right */}
+        <SystemshiftAccordion />
       </section>
 
       {/* ─── Was wir erreichen ────────────────────────────────────────────── */}
