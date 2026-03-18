@@ -158,7 +158,7 @@ export function HeroLogo() {
           }}
         >
           <a href="/kontakt">
-            <Button variant="primary">Erstgespräch vereinbaren</Button>
+            <Button variant="terra">Erstgespräch vereinbaren</Button>
           </a>
           <a href="/ansatz">
             <Button variant="ghost">Unser Ansatz →</Button>
