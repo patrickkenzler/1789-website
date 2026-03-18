@@ -11,6 +11,7 @@ const navItems = [
   { label: 'Cases',      href: '/projekte' },
   { label: 'Labor',      href: '/labor' },
   { label: 'Podcast',    href: '/podcast' },
+  { label: 'Kontakt',    href: '/kontakt' },
 ]
 
 /**
