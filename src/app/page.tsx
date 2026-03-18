@@ -123,7 +123,7 @@ export default function Home() {
           {/* ── Staggered editorial headline ── */}
           <div style={{ marginBottom: '5rem' }}>
             <Tag>Dafür stehen wir</Tag>
-            <div style={{ marginTop: '3rem', overflow: 'hidden' }}>
+            <div style={{ marginTop: '3rem', overflow: 'hidden', paddingBottom: '0.3em', marginBottom: '-0.3em' }}>
               <div style={{ textAlign: 'right' }}>
                 <span style={displayStyle}>Ein neues Organisations&shy;verständnis —</span>
               </div>
@@ -437,7 +437,7 @@ export default function Home() {
           {/* ── Staggered editorial headline ── */}
           <div style={{ marginBottom: '5rem' }}>
             <Tag>Was wir erreichen</Tag>
-            <div style={{ marginTop: '3rem', overflow: 'hidden' }}>
+            <div style={{ marginTop: '3rem', overflow: 'hidden', paddingBottom: '0.3em', marginBottom: '-0.3em' }}>
               <div>
                 <span style={{ ...displayStyle, paddingLeft: '4%' }}>Drei Dinge,</span>
               </div>
