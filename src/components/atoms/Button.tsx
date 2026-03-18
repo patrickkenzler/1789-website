@@ -20,26 +20,15 @@ const base = `
 `
 
 const variants: Record<ButtonVariant, string> = {
-  primary: `
-    bg-ink text-background
-    px-8 py-4
-    hover:bg-terra
-  `,
-  terra: `
-    bg-terra text-white
-    px-8 py-4
-    hover:bg-terra-dark
-  `,
-  ghost: `
-    border border-ink text-ink
-    px-8 py-4
-    hover:bg-ink hover:text-background
-  `,
-  text: `
-    text-ink underline-offset-4
-    hover:text-terra
-    p-0
-  `,
+  primary: 'bg-ink text-background px-8 py-4 hover:bg-terra',
+  terra:   'px-8 py-4',   /* background applied via inlineStyle below */
+  ghost:   'border border-ink text-ink px-8 py-4 hover:bg-ink hover:text-background',
+  text:    'text-ink underline-offset-4 hover:text-terra p-0',
+}
+
+/* Inline style overrides — used for variants whose colours escape Tailwind's scanner */
+const variantStyles: Partial<Record<ButtonVariant, React.CSSProperties>> = {
+  terra: { backgroundColor: 'var(--color-terra)', color: '#ffffff' },
 }
 
 const sizes: Record<ButtonSize, string> = {
@@ -49,11 +38,26 @@ const sizes: Record<ButtonSize, string> = {
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'md', className = '', children, ...props }, ref) => {
+  ({ variant = 'primary', size = 'md', className = '', style, children, ...props }, ref) => {
+    const baseStyle = variantStyles[variant] ?? {}
+
     return (
       <button
         ref={ref}
         className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
+        style={{ ...baseStyle, ...style }}
+        onMouseEnter={(e) => {
+          if (variant === 'terra') {
+            (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--color-terra-dark)'
+          }
+          props.onMouseEnter?.(e)
+        }}
+        onMouseLeave={(e) => {
+          if (variant === 'terra') {
+            (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--color-terra)'
+          }
+          props.onMouseLeave?.(e)
+        }}
         {...props}
       >
         {children}
