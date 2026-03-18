@@ -2,7 +2,7 @@
 
 import { forwardRef } from 'react'
 
-type ButtonVariant = 'primary' | 'ghost' | 'text'
+type ButtonVariant = 'primary' | 'terra' | 'ghost' | 'text'
 type ButtonSize    = 'sm' | 'md' | 'lg'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -24,6 +24,11 @@ const variants: Record<ButtonVariant, string> = {
     bg-ink text-background
     px-8 py-4
     hover:bg-terra
+  `,
+  terra: `
+    bg-terra text-white
+    px-8 py-4
+    hover:bg-terra-dark
   `,
   ghost: `
     border border-ink text-ink
