@@ -96,8 +96,8 @@ export function HeroLogo() {
           </span>
         </div>
 
-        {/* S1 Line 2 — "nicht an schlechten Strategien." — offset right */}
-        <div style={{ overflow: 'hidden', paddingBottom: '0.3em', marginBottom: '-0.3em', paddingLeft: '10%' }}>
+        {/* S1 Line 2 — "nicht an schlechten Strategien." — offset right on desktop */}
+        <div style={{ overflow: 'hidden', paddingBottom: '0.3em', marginBottom: '-0.3em' }} className="hero-indent">
           <span
             style={{
               display:       'block',
@@ -191,10 +191,11 @@ export function HeroLogo() {
 
         {/* 2-col: mono metadata left | body text + CTAs right */}
         <div
+          className="stack-cols"
           style={{
             display:             'grid',
             gridTemplateColumns: '14ch 1fr',
-            gap:                 '3rem',
+            gap:                 '2rem',
             animation:           a('fadeUp', '700ms', '1400ms'),
           }}
         >

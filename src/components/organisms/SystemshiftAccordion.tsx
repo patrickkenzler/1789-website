@@ -62,10 +62,11 @@ export function SystemshiftAccordion() {
   const [active, setActive] = useState<number>(0)
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+    <div className="systemshift-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 
-      {/* ── LEFT: sticky visual panel, crossfades between variants ── */}
+      {/* ── LEFT: sticky visual panel — hidden on mobile ── */}
       <div
+        className="systemshift-panel"
         style={{
           position: 'sticky',
           top: 0,
@@ -94,7 +95,7 @@ export function SystemshiftAccordion() {
       <div
         style={{
           paddingRight: 'var(--grid-margin)',
-          paddingLeft:  'clamp(2rem, 4vw, 5rem)',
+          paddingLeft:  'var(--grid-margin)',
         }}
       >
         {ITEMS.map((item, i) => {
