@@ -57,6 +57,49 @@
     transform: translateY(0);
   }
 
+  /* ─── Mobile responsive utilities ─────────────────────────────── */
+
+  /* Hide / show by breakpoint */
+  .hide-mobile      { display: none; }
+  .show-mobile      { display: block; }
+  .show-mobile-flex { display: flex; }
+
+  @media (min-width: 768px) {
+    .hide-mobile      { display: revert; }
+    .show-mobile      { display: none; }
+    .show-mobile-flex { display: none; }
+  }
+
+  /* Collapse a CSS grid to single column on mobile */
+  @media (max-width: 767px) {
+    .stack-cols     { grid-template-columns: 1fr !important; }
+    .stack-cols > * { grid-column: 1 / -1 !important; }
+
+    /* Logo in header always fully visible on mobile */
+    .header-logo-link {
+      opacity:        1 !important;
+      transform:      scale(1) !important;
+      pointer-events: auto !important;
+    }
+
+    /* Hero H1 line 2 — remove desktop indent on mobile */
+    .hero-indent { padding-left: 0 !important; }
+
+    /* Systemshift accordion — single column on mobile */
+    .systemshift-layout { grid-template-columns: 1fr !important; }
+    .systemshift-panel  { display: none !important; }
+
+    /* Page section paddings — reduce on mobile */
+    .section-pad { padding-block: 4rem !important; }
+
+    /* News event rows — collapse to 2-col on mobile */
+    .event-row {
+      grid-template-columns: auto 1fr !important;
+      gap: 0.75rem !important;
+    }
+    .event-row .event-location { display: none !important; }
+  }
+
   /* Hover Underline */
   .hover-line {
     position: relative;

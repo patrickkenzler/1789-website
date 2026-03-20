@@ -136,7 +136,7 @@ export default function Home() {
           </div>
 
           {/* ── Intro copy ── */}
-          <Grid>
+          <Grid className="stack-cols">
             <Col span={5} start={8}>
               <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
@@ -147,7 +147,7 @@ export default function Home() {
           </Grid>
 
           {/* ── Pillars ── */}
-          <Grid className="mt-20">
+          <Grid className="stack-cols mt-20">
             {pillars.map((pillar) => (
               <Col key={pillar.num} span={4}>
                 <div
@@ -201,7 +201,7 @@ export default function Home() {
             </Col>
           </Grid>
 
-          <Grid className="mt-16">
+          <Grid className="stack-cols mt-16">
             {featuredCases.map((c, i) => {
               const bgColors   = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
               const textColors = ['var(--color-background)', 'var(--color-background)', 'var(--color-ink)']
@@ -282,7 +282,7 @@ export default function Home() {
             </Col>
           </Grid>
 
-          <Grid className="mt-16">
+          <Grid className="stack-cols mt-16">
             {/* ── Left: latest podcast episode with embedded player ── */}
             <Col span={6}>
               <div
@@ -450,7 +450,7 @@ export default function Home() {
           </div>
 
           {/* ── Intro copy ── */}
-          <Grid>
+          <Grid className="stack-cols">
             <Col span={5} start={8}>
               <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
@@ -460,7 +460,7 @@ export default function Home() {
             </Col>
           </Grid>
 
-          <Grid className="mt-16">
+          <Grid className="stack-cols mt-16">
             {achievements.map((a, i) => (
               <Col key={a.phase} span={4}>
                 <div
@@ -498,7 +498,7 @@ export default function Home() {
       {/* ─── Calendar / Newsletter ────────────────────────────────────────── */}
       <section style={{ paddingBlock: '7rem' }}>
         <Container>
-          <Grid>
+          <Grid className="stack-cols">
             <Col span={6}>
               <Tag>News & Termine</Tag>
               <h2
@@ -541,8 +541,9 @@ export default function Home() {
             ].map((e, i) => (
               <div
                 key={i}
-                className="grid items-center py-6 hover:pl-4 transition-all duration-300 cursor-pointer group"
+                className="event-row items-center py-6 hover:pl-4 transition-all duration-300 cursor-pointer group"
                 style={{
+                  display: 'grid',
                   gridTemplateColumns: '10rem 6rem 1fr 8rem',
                   gap: '2rem',
                   borderBottom: '1px solid var(--color-border)',
@@ -551,7 +552,7 @@ export default function Home() {
                 <span className="font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>{e.date}</span>
                 <Tag>{e.type}</Tag>
                 <span className="font-heading font-normal text-ink" style={{ fontSize: 'var(--text-base)' }}>{e.title}</span>
-                <span className="font-mono text-xs text-right" style={{ color: 'var(--color-ink-subtle)' }}>{e.location}</span>
+                <span className="font-mono text-xs text-right event-location" style={{ color: 'var(--color-ink-subtle)' }}>{e.location}</span>
               </div>
             ))}
           </div>
