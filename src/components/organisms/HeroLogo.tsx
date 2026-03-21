@@ -38,7 +38,7 @@ export function HeroLogo() {
         flexDirection: 'column',
         paddingInline: 'var(--grid-margin)',
         paddingBottom: '4rem',
-        maxWidth:      '1440px',
+        maxWidth:      '1920px',
         margin:        '0 auto',
         width:         '100%',
       }}
@@ -84,7 +84,7 @@ export function HeroLogo() {
             style={{
               display:       'block',
               fontFamily:    'var(--font-display)',
-              fontSize:      'clamp(2rem, 4.2vw, 5rem)',
+              fontSize:      'clamp(2rem, 4.2vw, 6.5rem)',
               fontWeight:    300,
               lineHeight:    1.0,
               letterSpacing: '-0.025em',
@@ -102,7 +102,7 @@ export function HeroLogo() {
             style={{
               display:       'block',
               fontFamily:    'var(--font-display)',
-              fontSize:      'clamp(2rem, 4.2vw, 5rem)',
+              fontSize:      'clamp(2rem, 4.2vw, 6.5rem)',
               fontWeight:    300,
               lineHeight:    1.0,
               letterSpacing: '-0.025em',
@@ -119,7 +119,7 @@ export function HeroLogo() {
           style={{
             fontFamily:    'var(--font-display)',
             fontStyle:     'italic',
-            fontSize:      'clamp(1.1rem, 2vw, 2rem)',
+            fontSize:      'clamp(1.1rem, 2vw, 2.75rem)',
             fontWeight:    300,
             lineHeight:    1.1,
             letterSpacing: '-0.02em',
@@ -145,7 +145,7 @@ export function HeroLogo() {
             style={{
               fontFamily:    'var(--font-display)',
               fontStyle:     'italic',
-              fontSize:      'clamp(5.5rem, 13vw, 15rem)',
+              fontSize:      'clamp(5.5rem, 13vw, 20rem)',
               fontWeight:    300,
               lineHeight:    0.88,
               letterSpacing: '-0.04em',
@@ -161,7 +161,7 @@ export function HeroLogo() {
         <p
           style={{
             fontFamily:    'var(--font-display)',
-            fontSize:      'clamp(1.1rem, 2vw, 2rem)',
+            fontSize:      'clamp(1.1rem, 2vw, 2.75rem)',
             fontWeight:    300,
             lineHeight:    1.1,
             letterSpacing: '-0.02em',
