@@ -89,6 +89,31 @@
     --grid-margin:   5rem;
   }
 
+  /* ── Large screens: 27"+ / 4K ──────────────────────────────────────────
+   * Above 1440 px the margin scales proportionally so content fills the
+   * wider container instead of only the outer gutters growing.
+   * clamp(5rem, 5.5vw, 10rem):
+   *   – locks at 5 rem up to ~1454 px (same as today)
+   *   – scales linearly to ~6.6 rem @ 1920 px, ~8.8 rem @ 2560 px
+   *   – caps at 10 rem (~160 px) on 5K displays
+   * Text tokens get a proportional bump so type stays visually balanced. */
+  @media (min-width: 1441px) {
+    :root {
+      --grid-margin: clamp(5rem, 5.5vw, 10rem);
+    }
+  }
+
+  @media (min-width: 1921px) {
+    :root {
+      --text-xxl:  9rem;      /* 144 px  (was 7.5 rem / 120 px) */
+      --text-xl:   6rem;      /* 96 px   (was 5 rem   / 80 px)  */
+      --text-lg:   4.5rem;    /* 72 px   (was 3.5 rem / 56 px)  */
+      --text-md:   3.5rem;    /* 56 px   (was 3 rem   / 48 px)  */
+      --text-sm:   2.5rem;    /* 40 px   (was 2 rem   / 32 px)  */
+      --text-base: 1.375rem;  /* 22 px   (was 1.25 rem/ 20 px)  */
+    }
+  }
+
   @media (max-width: 1024px) {
     :root { --grid-margin: 2rem; }
   }
