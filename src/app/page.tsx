@@ -6,6 +6,7 @@ import { HeroLogo } from '@/components/organisms/HeroLogo'
 import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
 import { ClientLogoCarousel } from '@/components/molecules/ClientLogoCarousel'
 import { SystemshiftAccordion } from '@/components/organisms/SystemshiftAccordion'
+import { TestimonialsSection } from '@/components/organisms/TestimonialsSection'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -253,6 +254,9 @@ export default function Home() {
           </Grid>
         </Container>
       </section>
+
+      {/* ─── Testimonials ────────────────────────────────────────────────── */}
+      <TestimonialsSection />
 
       {/* ─── Questions Ticker ─────────────────────────────────────────────── */}
       <QuestionsTicker />
