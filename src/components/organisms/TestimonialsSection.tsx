@@ -33,7 +33,7 @@ const TESTIMONIALS = [
       'Mit einem tiefen Verständnis für die Herausforderungen eines Konzerns und für die Notwendigkeit, sich an neue Gegebenheiten anzupassen, wurde 1789 ausgewählt, um von strategischer Planung über Konzeption bis hin zur Implementierung als Partner zu fungieren.',
     name:     'Timo Salzsieder',
     title:    'Chief Information Officer',
-    company:  '',
+    company:  'Müller Holding GmbH & Co. KG',
     photo:    '/testimonials/timo-salzsieder.jpeg',
     linkedin: 'https://www.linkedin.com/in/timo-salzsieder-88993514',
   },
