@@ -24,8 +24,8 @@ const TESTIMONIALS = [
       'Es war sehr beeindruckend, wie schnell uns 1789 bereits nach dem ersten Kennenlernen vollends durchdrungen hat. 1789 hat uns gechallenged — immer anpackend, partnerschaftlich und stets mit Blick auf klaren Resultaten und Actions.',
     name:     'Daniel Kalisch',
     title:    'Geschäftsführer',
-    company:  '',
-    photo:    null,
+    company:  'WD-40 Company',
+    photo:    '/testimonials/daniel-kalisch.jpg',
     linkedin: 'https://www.linkedin.com/in/daniel-kalisch-3b21a651',
   },
   {
@@ -34,7 +34,7 @@ const TESTIMONIALS = [
     name:     'Timo Salzsieder',
     title:    'Chief Information Officer',
     company:  '',
-    photo:    null,
+    photo:    '/testimonials/timo-salzsieder.jpg',
     linkedin: 'https://www.linkedin.com/in/timo-salzsieder-88993514',
   },
   {
