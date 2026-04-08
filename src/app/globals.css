@@ -102,6 +102,23 @@
     .event-row .event-location { display: none !important; }
   }
 
+  /* LinkedIn icon hover */
+  .linkedin-hover:hover {
+    color: var(--color-terra) !important;
+    border-color: var(--color-terra) !important;
+  }
+
+  /* Testimonials — responsive grid */
+  @media (max-width: 1023px) {
+    /* tablet: 2 columns */
+    .testimonials-grid > * { grid-column: span 6 !important; }
+  }
+
+  @media (max-width: 767px) {
+    /* mobile: single column */
+    .testimonials-grid > * { grid-column: 1 / -1 !important; }
+  }
+
   /* Hover Underline */
   .hover-line {
     position: relative;
