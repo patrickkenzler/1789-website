@@ -108,6 +108,33 @@
     border-color: var(--color-terra) !important;
   }
 
+  /* ── Testimonial card animations ──────────────────────────────────────────
+   * Default: invisible + shifted down.
+   * .testimonials-section.in-view → transitions to visible with per-card
+   * stagger via --card-delay CSS custom property set inline on each card.
+   * Hover: lift 5px + subtle shadow + terra border accent.             */
+  .testimonial-card {
+    opacity:    0;
+    transform:  translateY(28px);
+    transition:
+      opacity   600ms var(--ease-entry)      var(--card-delay, 0ms),
+      transform 700ms var(--ease-expressive) var(--card-delay, 0ms),
+      box-shadow  300ms var(--ease-standard),
+      border-color 300ms var(--ease-standard);
+    will-change: opacity, transform;
+  }
+
+  .testimonials-section.in-view .testimonial-card {
+    opacity:   1;
+    transform: translateY(0);
+  }
+
+  .testimonial-card:hover {
+    transform:    translateY(-5px) !important;
+    box-shadow:   0 12px 40px rgba(26, 23, 20, 0.09);
+    border-color: var(--color-terra) !important;
+  }
+
   /* Testimonials — responsive grid */
   @media (max-width: 1023px) {
     /* tablet: 2 columns */

@@ -1,13 +1,21 @@
+'use client'
+
 /**
  * TestimonialsSection
  *
- * 5 client quotes arranged in a 3+2 editorial grid.
- * Row 1: three equal-width cards (span 4)
- * Row 2: two wider cards (span 6) — longer quotes get more room
+ * 5 client quotes in a 3+2 editorial grid.
  *
- * Avatars: photo where available, terra initials circle as fallback.
- * LinkedIn links open in a new tab.
+ * Animations:
+ *  – Entrance: IntersectionObserver adds .in-view to the section;
+ *    CSS transitions fade+slide each card up with a 120 ms stagger
+ *    (driven by a --card-delay CSS custom property per card).
+ *  – Hover: CSS class .testimonial-card handles lift + terra border
+ *    (pure CSS, zero JS, composited transform only).
  */
+
+import { useEffect, useRef } from 'react'
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
 
 const TESTIMONIALS = [
   {
@@ -60,12 +68,7 @@ const TESTIMONIALS = [
 // ─── Avatar ───────────────────────────────────────────────────────────────────
 
 function Avatar({ name, photo }: { name: string; photo: string | null }) {
-  const initials = name
-    .split(' ')
-    .map((w) => w[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
+  const initials = name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()
 
   if (photo) {
     return (
@@ -113,33 +116,36 @@ function Avatar({ name, photo }: { name: string; photo: string | null }) {
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
 function TestimonialCard({
-  quote, name, title, company, photo, linkedin, wide,
-}: (typeof TESTIMONIALS)[number] & { wide?: boolean }) {
+  quote, name, title, company, photo, linkedin, wide, index,
+}: (typeof TESTIMONIALS)[number] & { wide?: boolean; index: number }) {
   return (
     <div
+      className="testimonial-card"
       style={{
-        gridColumn:    wide ? 'span 6' : 'span 4',
-        display:       'flex',
-        flexDirection: 'column',
-        justifyContent:'space-between',
-        padding:       'clamp(1.75rem, 2.5vw, 2.5rem)',
-        border:        '1px solid var(--color-border)',
-        borderRadius:  'var(--radius-md)',
+        gridColumn:      wide ? 'span 6' : 'span 4',
+        display:         'flex',
+        flexDirection:   'column',
+        justifyContent:  'space-between',
+        padding:         'clamp(1.75rem, 2.5vw, 2.5rem)',
+        border:          '1px solid var(--color-border)',
+        borderRadius:    'var(--radius-md)',
         backgroundColor: 'var(--color-background)',
+        /* stagger via CSS custom property — read by .in-view rule */
+        ['--card-delay' as string]: `${index * 120}ms`,
       }}
     >
       {/* Opening quotation mark */}
       <span
         aria-hidden
         style={{
-          fontFamily:    'var(--font-display)',
-          fontStyle:     'italic',
-          fontSize:      'clamp(3.5rem, 5vw, 6rem)',
-          lineHeight:    0.8,
-          color:         'var(--color-terra)',
-          marginBottom:  '1rem',
-          display:       'block',
-          userSelect:    'none',
+          fontFamily:   'var(--font-display)',
+          fontStyle:    'italic',
+          fontSize:     'clamp(3.5rem, 5vw, 6rem)',
+          lineHeight:   0.8,
+          color:        'var(--color-terra)',
+          marginBottom: '1rem',
+          display:      'block',
+          userSelect:   'none',
         }}
       >
         "
@@ -178,13 +184,13 @@ function TestimonialCard({
         <div style={{ flex: 1, minWidth: 0 }}>
           <p
             style={{
-              fontFamily:    'var(--font-body)',
-              fontSize:      'var(--text-xs)',
-              fontWeight:    500,
-              color:         'var(--color-ink)',
-              whiteSpace:    'nowrap',
-              overflow:      'hidden',
-              textOverflow:  'ellipsis',
+              fontFamily:   'var(--font-body)',
+              fontSize:     'var(--text-xs)',
+              fontWeight:   500,
+              color:        'var(--color-ink)',
+              whiteSpace:   'nowrap',
+              overflow:     'hidden',
+              textOverflow: 'ellipsis',
             }}
           >
             {name}
@@ -208,12 +214,13 @@ function TestimonialCard({
           )}
         </div>
 
-        {/* LinkedIn icon link */}
+        {/* LinkedIn icon */}
         <a
           href={linkedin}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${name} auf LinkedIn`}
+          className="linkedin-hover"
           style={{
             display:        'inline-flex',
             alignItems:     'center',
@@ -226,9 +233,8 @@ function TestimonialCard({
             flexShrink:     0,
             transition:     'color 200ms, border-color 200ms',
           }}
-          className="linkedin-hover"
+          onClick={(e) => e.stopPropagation()}
         >
-          {/* LinkedIn "in" icon — inline SVG, no external dependency */}
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z" />
           </svg>
@@ -241,11 +247,35 @@ function TestimonialCard({
 // ─── Section ──────────────────────────────────────────────────────────────────
 
 export function TestimonialsSection() {
-  const row1 = TESTIMONIALS.slice(0, 3) // span 4 each
-  const row2 = TESTIMONIALS.slice(3, 5) // span 6 each
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('in-view')
+          observer.disconnect() // fire once
+        }
+      },
+      { threshold: 0.08 },
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const row1 = TESTIMONIALS.slice(0, 3)
+  const row2 = TESTIMONIALS.slice(3, 5)
 
   return (
-    <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
+    <section
+      ref={sectionRef}
+      className="testimonials-section"
+      style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}
+    >
       <div
         style={{
           maxWidth:      '1920px',
@@ -253,7 +283,6 @@ export function TestimonialsSection() {
           paddingInline: 'var(--grid-margin)',
         }}
       >
-
         {/* Section header */}
         <div style={{ marginBottom: '4rem' }}>
           <span
@@ -297,8 +326,8 @@ export function TestimonialsSection() {
             marginBottom:        'clamp(1rem, 1.5vw, 1.5rem)',
           }}
         >
-          {row1.map((t) => (
-            <TestimonialCard key={t.name} {...t} />
+          {row1.map((t, i) => (
+            <TestimonialCard key={t.name} {...t} index={i} />
           ))}
         </div>
 
@@ -311,11 +340,10 @@ export function TestimonialsSection() {
             gap:                 'clamp(1rem, 1.5vw, 1.5rem)',
           }}
         >
-          {row2.map((t) => (
-            <TestimonialCard key={t.name} {...t} wide />
+          {row2.map((t, i) => (
+            <TestimonialCard key={t.name} {...t} wide index={i + 3} />
           ))}
         </div>
-
       </div>
     </section>
   )
