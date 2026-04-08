@@ -25,7 +25,7 @@ const TESTIMONIALS = [
     name:     'Daniel Kalisch',
     title:    'Geschäftsführer',
     company:  'WD-40 Company',
-    photo:    '/testimonials/daniel-kalisch.jpg',
+    photo:    '/testimonials/daniel-kalisch.jpeg',
     linkedin: 'https://www.linkedin.com/in/daniel-kalisch-3b21a651',
   },
   {
@@ -34,7 +34,7 @@ const TESTIMONIALS = [
     name:     'Timo Salzsieder',
     title:    'Chief Information Officer',
     company:  '',
-    photo:    '/testimonials/timo-salzsieder.jpg',
+    photo:    '/testimonials/timo-salzsieder.jpeg',
     linkedin: 'https://www.linkedin.com/in/timo-salzsieder-88993514',
   },
   {
