@@ -32,7 +32,7 @@ const TESTIMONIALS = [
     quote:
       'Mit einem tiefen Verständnis für die Herausforderungen eines Konzerns und für die Notwendigkeit, sich an neue Gegebenheiten anzupassen, wurde 1789 ausgewählt, um von strategischer Planung über Konzeption bis hin zur Implementierung als Partner zu fungieren.',
     name:     'Timo Salzsieder',
-    title:    'Führungskraft',
+    title:    'Chief Information Officer',
     company:  '',
     photo:    null,
     linkedin: 'https://www.linkedin.com/in/timo-salzsieder-88993514',
@@ -41,7 +41,7 @@ const TESTIMONIALS = [
     quote:
       'Besonders wertvoll war für uns die Unterstützung seitens 1789 beim Workshopdesign und der Moderation großer Gruppen, einerseits im Managementteam aber auch mit ausgewählten Mitarbeitenden. So ist es uns gelungen, unterschiedliche Zielgruppen aktiv in den Prozess einzubinden. Außerdem war die Zusammenarbeit geprägt von großem Vertrauen und hat zu jedem Zeitpunkt Spaß gemacht.',
     name:     'Viola Krauss',
-    title:    'Führungskraft',
+    title:    'Chief People and Culture Officer',
     company:  'WTS Deutschland',
     photo:    '/testimonials/viola-krauss.jpg',
     linkedin: 'https://www.linkedin.com/in/viola-krauss-3a09254b',
