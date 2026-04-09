@@ -243,13 +243,13 @@ export function HeroLogo() {
               }}
             >
               Wir nennen diese Lücke <strong>den Gap</strong><br />
-              Er ist kein Defizit, sondern der produktivste Ort Ihrer
-              Organisation. <strong>1789 macht den Gap verhandelbar:</strong> durch
+              Er ist kein Defizit, sondern der produktivste Ort Ihrer Organisation.<br />
+              <strong>1789 macht den Gap verhandelbar:</strong> durch
               Organisationsarchitekturen, die Strategie und Struktur als das
               behandeln, was sie sind – zwei Seiten derselben Bewegung.
             </p>
 
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'space-between' }}>
               <a href="/ansatz">
                 <Button variant="ghost">Unser Ansatz →</Button>
               </a>
