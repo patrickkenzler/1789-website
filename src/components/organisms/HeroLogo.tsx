@@ -126,7 +126,7 @@ export function HeroLogo() {
           <p
             style={{
               fontFamily:    'var(--font-display)',
-              fontWeight:    700,
+              fontWeight:    400,
               fontStyle:     'normal',
               fontSize:      'clamp(1.5rem, min(6vw, 8.5svh), 9rem)',
               lineHeight:    0.93,
