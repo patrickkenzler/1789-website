@@ -27,59 +27,76 @@ const a = (
   easing  = 'var(--ease-entry)',
 ) => `${name} ${duration} ${easing} ${delay} both`
 
-// ─── Gap Graphic ─────────────────────────────────────────────────────────────
+// ─── Gap Graphic — morphing SVG ──────────────────────────────────────────────
 /**
- * Two organic blob shapes representing the two halves of the Gap:
- *   Left  (terra)  — Struktur
- *   Right (sage)   — Strategie
- *   Negative space — der Gap
+ * Two organic blobs that continuously morph between 3 states via SVG <animate>.
  *
- * viewBox 0 0 560 470 — proportioned to fill the right column.
- * Paths are cubic-bezier blobs; the facing edges are irregular to
- * evoke territories that almost fit but don't.
+ * Rules:
+ *  – Both shapes use the SAME command sequence (M C C C C C C Z) in every
+ *    stage so SVG can interpolate smoothly between them.
+ *  – The facing edges (terra right / sage left) shift independently but
+ *    always maintain a minimum gap of ~50 viewBox units — they never touch.
+ *  – The outer edges (terra left / sage right) are stable; only the inner
+ *    facing edges morph, as shown in the concept sketch.
+ *
+ * Stage 1 → gentle S-curves, wide gap
+ * Stage 2 → terra expands with large lobes, sage responds
+ * Stage 3 → narrow peninsulas, complex interdigitation, tighter gap
  */
+
+// Terra (Struktur — left shape) — 3 keyframe paths
+// Command sequence: M · C(top) · C(R1) · C(R2) · C(R3) · C(R4) · C(bottom) · Z
+const T1 = 'M 0,0 C 70,0 175,0 210,0 C 230,35 238,82 235,118 C 232,155 202,195 195,235 C 188,275 218,315 225,352 C 232,390 210,440 200,470 C 160,470 70,470 0,470 Z'
+const T2 = 'M 0,0 C 70,0 180,0 215,0 C 248,30 300,88 285,128 C 272,165 218,205 210,242 C 200,280 268,315 275,358 C 280,398 218,448 208,470 C 165,470 70,470 0,470 Z'
+const T3 = 'M 0,0 C 70,0 182,0 218,0 C 238,42 278,98 262,135 C 246,172 232,212 228,248 C 224,285 265,328 270,362 C 275,402 222,448 212,470 C 168,470 70,470 0,470 Z'
+
+// Sage (Strategie — right shape)
+// Minimum gap at each stage: S1 ≥70px · S2 ≥57px · S3 ≥54px
+const S1 = 'M 560,0 C 488,0 362,0 330,0 C 325,35 308,82 305,118 C 302,155 345,195 348,235 C 355,275 322,315 318,352 C 314,390 328,440 330,470 C 362,470 488,470 560,470 Z'
+const S2 = 'M 560,0 C 488,0 370,0 348,0 C 350,30 345,88 342,128 C 340,165 368,205 370,242 C 372,280 345,315 342,358 C 340,398 352,448 350,470 C 372,470 488,470 560,470 Z'
+const S3 = 'M 560,0 C 488,0 358,0 325,0 C 328,42 325,95 322,135 C 320,172 285,212 282,248 C 280,285 328,325 325,362 C 322,402 280,448 278,470 C 338,470 488,470 560,470 Z'
+
+// Looping: append stage 1 at the end so the cycle is seamless
+const TERRA_VALS  = [T1, T2, T3, T1].join(';')
+const SAGE_VALS   = [S1, S2, S3, S1].join(';')
+const KEY_TIMES   = '0; 0.33; 0.66; 1'
+const KEY_SPLINES = '0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1'  // ease-in-out per segment
+
 function GapGraphic() {
   return (
     <svg
       viewBox="0 0 560 470"
       width="100%"
       height="100%"
-      aria-label="Der Gap: Struktur (orange) und Strategie (grün) durch eine Lücke getrennt"
+      aria-label="Der Gap: Struktur und Strategie getrennt durch eine sich verändernde Lücke"
       style={{ display: 'block' }}
       preserveAspectRatio="xMidYMid meet"
     >
-      {/* ── Struktur — terra (left blob) ── */}
-      <path
-        fill="var(--color-terra)"
-        d={[
-          'M 0,28',
-          'C 62,4    178,2   205,10',   // top sweep left → right
-          'C 228,16  224,50  212,86',   // right edge — slight outward
-          'C 200,122 176,138 174,168',  // right edge — first concave notch
-          'C 172,198 212,216 212,252',  // right edge — outward bulge
-          'C 212,286 192,302 190,334',  // right edge — second concave
-          'C 188,365 210,385 196,416',  // right edge — slight outward at base
-          'C 184,436 122,448 0,444',    // bottom sweep right → left
-          'Z',
-        ].join(' ')}
-      />
+      {/* ── Struktur — terra (left) ── */}
+      <path fill="var(--color-terra)" d={T1}>
+        <animate
+          attributeName="d"
+          dur="10s"
+          repeatCount="indefinite"
+          values={TERRA_VALS}
+          calcMode="spline"
+          keyTimes={KEY_TIMES}
+          keySplines={KEY_SPLINES}
+        />
+      </path>
 
-      {/* ── Strategie — sage (right blob) ── */}
-      <path
-        fill="var(--color-sage)"
-        d={[
-          'M 285,6',
-          'C 352,-4   468,8   545,26',   // top sweep left → right
-          'C 560,70   548,186 544,282',  // right edge — smooth
-          'C 540,375  528,448 460,456',  // bottom-right
-          'C 400,462  285,440 270,402',  // bottom sweep right → left
-          'C 254,360  285,332 283,298',  // left (facing) edge — first notch
-          'C 281,264  255,240 258,206',  // left edge — inward concave
-          'C 261,172  285,152 278,118',  // left edge — outward
-          'C 270,84   252,52  285,6',    // close to top
-          'Z',
-        ].join(' ')}
-      />
+      {/* ── Strategie — sage (right) ── */}
+      <path fill="var(--color-sage)" d={S1}>
+        <animate
+          attributeName="d"
+          dur="10s"
+          repeatCount="indefinite"
+          values={SAGE_VALS}
+          calcMode="spline"
+          keyTimes={KEY_TIMES}
+          keySplines={KEY_SPLINES}
+        />
+      </path>
     </svg>
   )
 }
