@@ -137,6 +137,9 @@
 
   .case-link:hover { opacity: 1 !important; }
 
+  /* Project card — colour overlay fades on parent hover to reveal more of the photo */
+  .group:hover .case-img-overlay { opacity: 0.28 !important; }
+
   /* Testimonials — responsive grid */
   @media (max-width: 1023px) {
     /* tablet: 2 columns */
