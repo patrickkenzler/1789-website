@@ -239,7 +239,6 @@ export function HeroLogo() {
                 color:        'var(--color-ink)',
                 lineHeight:   1.7,
                 marginBottom: 'clamp(1rem, 2svh, 2rem)',
-                maxWidth:     '44ch',
               }}
             >
               Wir nennen diese Lücke <strong>den Gap</strong><br />
