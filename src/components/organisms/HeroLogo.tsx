@@ -88,7 +88,7 @@ function GapGraphic() {
       height="100%"
       aria-label="Der Gap: Struktur und Strategie getrennt durch eine sich verändernde Lücke"
       style={{ display: 'block' }}
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="none"
     >
       {/* ── Struktur — terra (left) · 15 s cycle ── */}
       <path fill="var(--color-terra)" d={T1}>
