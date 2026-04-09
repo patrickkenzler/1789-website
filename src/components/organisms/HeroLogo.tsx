@@ -1,22 +1,20 @@
 'use client'
 
 /**
- * HeroLogo — v4: Dripos-inspired editorial split
+ * HeroLogo — v5: Figma editorial split
  *
- * Layout:
- *   LEFT  (7fr) — massive headline, bottom-aligned, fills the column
- *   RIGHT (5fr) — supporting body copy + CTAs, bottom-aligned
+ * Left  (7fr):  Two-part bold headline
+ *               1. Ink bold:    "Organisationen scheitern nicht an schlechten Strategien"
+ *               2. Terra italic bold: "Sie scheitern an der Lücke zwischen Strategie und Struktur."
  *
- * Design references (Dripos):
- *  – Full-height section; content bottom-anchored so the headline
- *    appears to rise from the bottom of the viewport.
- *  – Subtle 12-column grid lines as editorial texture.
- *  – Clean vertical separator between left and right.
- *  – No centred masthead — logo lives in the header only.
+ * Right (5fr):  Upper — GapGraphic: two abstract SVG shapes
+ *                         orange (terra)  = Struktur
+ *                         sage            = Strategie
+ *                         white gap       = der Gap
+ *               Lower — body copy with bold emphasis + CTA row
  *
- * Animations:
- *  – Headline:  fadeUp 900ms, 100ms delay
- *  – Right col: fadeUp 700ms, 350ms delay (slightly after headline)
+ * Font weights: 700 (bold) for both headline blocks.
+ * Cormorant Garamond 700 is declared in layout.tsx.
  */
 
 import { Button } from '@/components/atoms/Button'
@@ -29,116 +27,195 @@ const a = (
   easing  = 'var(--ease-entry)',
 ) => `${name} ${duration} ${easing} ${delay} both`
 
+// ─── Gap Graphic ─────────────────────────────────────────────────────────────
+/**
+ * Two organic blob shapes representing the two halves of the Gap:
+ *   Left  (terra)  — Struktur
+ *   Right (sage)   — Strategie
+ *   Negative space — der Gap
+ *
+ * viewBox 0 0 560 470 — proportioned to fill the right column.
+ * Paths are cubic-bezier blobs; the facing edges are irregular to
+ * evoke territories that almost fit but don't.
+ */
+function GapGraphic() {
+  return (
+    <svg
+      viewBox="0 0 560 470"
+      width="100%"
+      height="100%"
+      aria-label="Der Gap: Struktur (orange) und Strategie (grün) durch eine Lücke getrennt"
+      style={{ display: 'block' }}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      {/* ── Struktur — terra (left blob) ── */}
+      <path
+        fill="var(--color-terra)"
+        d={[
+          'M 0,28',
+          'C 62,4    178,2   205,10',   // top sweep left → right
+          'C 228,16  224,50  212,86',   // right edge — slight outward
+          'C 200,122 176,138 174,168',  // right edge — first concave notch
+          'C 172,198 212,216 212,252',  // right edge — outward bulge
+          'C 212,286 192,302 190,334',  // right edge — second concave
+          'C 188,365 210,385 196,416',  // right edge — slight outward at base
+          'C 184,436 122,448 0,444',    // bottom sweep right → left
+          'Z',
+        ].join(' ')}
+      />
+
+      {/* ── Strategie — sage (right blob) ── */}
+      <path
+        fill="var(--color-sage)"
+        d={[
+          'M 285,6',
+          'C 352,-4   468,8   545,26',   // top sweep left → right
+          'C 560,70   548,186 544,282',  // right edge — smooth
+          'C 540,375  528,448 460,456',  // bottom-right
+          'C 400,462  285,440 270,402',  // bottom sweep right → left
+          'C 254,360  285,332 283,298',  // left (facing) edge — first notch
+          'C 281,264  255,240 258,206',  // left edge — inward concave
+          'C 261,172  285,152 278,118',  // left edge — outward
+          'C 270,84   252,52  285,6',    // close to top
+          'Z',
+        ].join(' ')}
+      />
+    </svg>
+  )
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
 export function HeroLogo() {
   return (
     <div
       style={{
-        flex:     '1',
-        display:  'flex',
+        flex:    '1',
+        display: 'flex',
         flexDirection: 'column',
-        position: 'relative',
-        // Subtle 12-column editorial grid lines
-        backgroundImage: 'linear-gradient(90deg, rgba(46,43,40,0.05) 1px, transparent 1px)',
-        backgroundSize:  'calc(100% / 12) 100%',
-        backgroundPosition: 'calc(var(--grid-margin) * -1) 0',
       }}
     >
 
-      {/* ── Eyebrow — top-left label ── */}
-      <div
-        style={{
-          paddingInline: 'var(--grid-margin)',
-          paddingTop:    'clamp(1.5rem, 2.5vw, 2.5rem)',
-          animation:     a('fadeUp', '600ms', '0ms'),
-        }}
-      >
-        <span
-          style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      'var(--text-xxs)',
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color:         'var(--color-terra)',
-            border:        '1px solid var(--color-terra)',
-            borderRadius:  'var(--radius-full)',
-            padding:       '0.3rem 0.9rem',
-            display:       'inline-block',
-          }}
-        >
-          Organisationsarchitektur
-        </span>
-      </div>
-
-      {/* ── MAIN SPLIT — headline left / body right ── */}
+      {/* ── MAIN SPLIT ── */}
       <div
         className="hero-split"
         style={{
           flex:                '1',
           display:             'grid',
           gridTemplateColumns: '7fr 5fr',
-          alignItems:          'flex-end',
         }}
       >
 
-        {/* LEFT — massive headline, bottom-aligned */}
+        {/* ─────────────────────────────────────────────────────────────
+            LEFT — two headline blocks stacked, top-aligned
+        ──────────────────────────────────────────────────────────────── */}
         <div
           style={{
-            padding:       'clamp(2rem, 3vw, 4rem) var(--grid-margin)',
+            padding:    'clamp(2rem, 3vw, 3.5rem) var(--grid-margin)',
             paddingBottom: 'clamp(2.5rem, 4vw, 5rem)',
-            animation:     a('fadeUp', '900ms', '100ms', 'var(--ease-expressive)'),
+            display:    'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            animation:  a('fadeUp', '900ms', '80ms', 'var(--ease-expressive)'),
           }}
         >
-          <h1
+          {/* Block 1 — ink, bold */}
+          <p
             style={{
               fontFamily:    'var(--font-display)',
-              fontWeight:    400,
-              fontSize:      'clamp(3.25rem, 6.5vw, 10.5rem)',
-              lineHeight:    0.92,
-              letterSpacing: '-0.025em',
+              fontWeight:    700,
+              fontStyle:     'normal',
+              fontSize:      'clamp(2.75rem, 5.5vw, 8.75rem)',
+              lineHeight:    0.93,
+              letterSpacing: '-0.028em',
               color:         'var(--color-ink)',
+              marginBottom:  'clamp(0.75rem, 1.2vw, 1.75rem)',
             }}
           >
             Organisationen<br />
-            scheitern nicht<br />
-            an schlechten<br />
-            Strategien.
-          </h1>
-        </div>
+            scheitern nicht an<br />
+            schlechten Strategien
+          </p>
 
-        {/* RIGHT — body text + CTAs, bottom-aligned */}
-        <div
-          style={{
-            padding:       'clamp(2rem, 3vw, 4rem) var(--grid-margin)',
-            paddingBottom: 'clamp(2.5rem, 4vw, 5rem)',
-            borderLeft:    '1px solid rgba(46,43,40,0.1)',
-            animation:     a('fadeUp', '700ms', '350ms'),
-          }}
-        >
+          {/* Block 2 — terra, italic bold */}
           <p
             style={{
-              fontFamily:   'var(--font-body)',
-              fontSize:     'var(--text-base)',
-              color:        'var(--color-ink-muted)',
-              lineHeight:   1.75,
-              maxWidth:     '42ch',
-              marginBottom: '2.5rem',
+              fontFamily:    'var(--font-display)',
+              fontWeight:    700,
+              fontStyle:     'italic',
+              fontSize:      'clamp(2.75rem, 5.5vw, 8.75rem)',
+              lineHeight:    0.93,
+              letterSpacing: '-0.028em',
+              color:         'var(--color-terra)',
             }}
           >
-            Wir nennen diese Lücke den Gap — und er ist kein Defizit,
-            sondern der produktivste Ort Ihrer Organisation. 1789 macht
-            den Gap verhandelbar: durch Organisationsarchitekturen, die
-            Strategie und Struktur als zwei Seiten derselben Bewegung behandeln.
+            Sie scheitern an der<br />
+            Lücke zwischen<br />
+            Strategie und Struktur.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            <a href="/kontakt">
-              <Button variant="terra">Erstgespräch vereinbaren</Button>
-            </a>
-            <a href="/ansatz">
-              <Button variant="ghost">Unser Ansatz →</Button>
-            </a>
-          </div>
         </div>
 
+        {/* ─────────────────────────────────────────────────────────────
+            RIGHT — graphic (flex-grow) + body copy + CTAs
+        ──────────────────────────────────────────────────────────────── */}
+        <div
+          style={{
+            display:       'flex',
+            flexDirection: 'column',
+            borderLeft:    '1px solid rgba(46,43,40,0.08)',
+          }}
+        >
+
+          {/* Graphic — fills remaining space above body copy */}
+          <div
+            style={{
+              flex:    '1',
+              padding: 'clamp(1.5rem, 2vw, 2.5rem) clamp(1.5rem, 3vw, 3rem)',
+              display: 'flex',
+              alignItems: 'stretch',
+              animation: a('fadeUp', '1000ms', '200ms', 'var(--ease-expressive)'),
+            }}
+          >
+            <GapGraphic />
+          </div>
+
+          {/* Body copy + CTAs — anchored to bottom */}
+          <div
+            style={{
+              padding:      'clamp(1.5rem, 2vw, 2rem) clamp(1.5rem, 3vw, 3rem)',
+              paddingBottom: 'clamp(2rem, 3.5vw, 4rem)',
+              borderTop:    '1px solid rgba(46,43,40,0.08)',
+              animation:    a('fadeUp', '700ms', '350ms'),
+            }}
+          >
+            <p
+              style={{
+                fontFamily:   'var(--font-body)',
+                fontSize:     'clamp(0.875rem, 1.05vw, 1.05rem)',
+                color:        'var(--color-ink)',
+                lineHeight:   1.7,
+                marginBottom: 'clamp(1.5rem, 2.5vw, 2.5rem)',
+                maxWidth:     '44ch',
+              }}
+            >
+              Wir nennen diese Lücke <strong>den Gap</strong><br />
+              Er ist kein Defizit, sondern der produktivste Ort Ihrer
+              Organisation. <strong>1789 macht den Gap verhandelbar:</strong> durch
+              Organisationsarchitekturen, die Strategie und Struktur als das
+              behandeln, was sie sind – zwei Seiten derselben Bewegung.
+            </p>
+
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <a href="/ansatz">
+                <Button variant="ghost">Unser Ansatz →</Button>
+              </a>
+              <a href="/kontakt">
+                <Button variant="terra">Erstgespräch vereinbaren</Button>
+              </a>
+            </div>
+          </div>
+
+        </div>
       </div>
 
     </div>

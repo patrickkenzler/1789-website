@@ -93,7 +93,12 @@
 
     /* Hero split — stack on mobile */
     .hero-split { grid-template-columns: 1fr !important; }
-    .hero-split > *:last-child { border-left: none !important; padding-top: 0 !important; }
+    .hero-split > *:last-child {
+      border-left: none !important;
+      border-top: 1px solid rgba(46,43,40,0.08) !important;
+    }
+    /* On mobile, graphic in right col gets a fixed height instead of flex-grow */
+    .hero-split > *:last-child > *:first-child { min-height: 240px; }
 
     /* Page section paddings — reduce on mobile */
     .section-pad { padding-block: 4rem !important; }
