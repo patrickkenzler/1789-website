@@ -50,24 +50,29 @@ const a = (
 // Terra (Struktur — left shape) — 3 keyframe paths
 // Command sequence: M · C(top) · C(R1) · C(R2) · C(R3) · C(R4) · C(bottom) · Z
 //
-// T1 — retracted: thin strip, right edge ~115px
-// T2 — expanded:  dramatic lobes push right edge to ~400px
-// T3 — complex:   asymmetric bulges, right edge ~385px
-const T1 = 'M 0,0 C 38,0 88,0 115,0 C 122,38 102,85 98,128 C 94,172 108,215 105,262 C 102,308 95,352 100,398 C 100,435 98,458 105,470 C 68,470 30,470 0,470 Z'
-const T2 = 'M 0,0 C 70,0 178,0 210,0 C 248,35 412,82 400,118 C 385,155 215,198 205,238 C 195,278 395,322 385,358 C 370,398 210,442 195,470 C 155,470 70,470 0,470 Z'
-const T3 = 'M 0,0 C 65,0 168,0 195,0 C 240,40 295,85 282,118 C 268,152 172,195 168,238 C 164,282 385,325 375,358 C 362,398 195,442 180,470 C 142,470 62,470 0,470 Z'
+// T1 — retracted:   thin strip,   right edge ≈ 150 px
+// T2 — expanded:    two lobes,    right edge ≈ 315 px
+// T3 — asymmetric:  medium,       right edge ≈ 250 px
+const T1 = 'M 0,0 C 45,0 105,0 150,0 C 155,40 142,88 138,130 C 134,172 148,215 144,262 C 140,308 136,352 140,400 C 142,438 148,458 150,470 C 100,470 42,470 0,470 Z'
+const T2 = 'M 0,0 C 62,0 155,0 195,0 C 235,35 318,82 300,120 C 282,158 205,200 200,240 C 195,280 295,320 288,358 C 278,398 205,445 195,470 C 152,470 60,470 0,470 Z'
+const T3 = 'M 0,0 C 55,0 132,0 168,0 C 195,38 255,88 245,128 C 235,168 188,205 185,245 C 182,285 248,328 240,365 C 230,402 188,445 178,470 C 136,470 52,470 0,470 Z'
 
-// Sage (Strategie — right shape) — independent timing
-// S1 — medium:      left edge ~480px  (gap ≥80px from T1 max)
-// S2 — thin/right:  left edge ~510px  (retreats while terra might be expanding)
-// S3 — complex:     left edge ~455px  (still ≥55px clear of T2/T3 max ~400)
-const S1 = 'M 560,0 C 520,0 502,0 480,0 C 478,38 470,85 472,128 C 474,172 490,215 488,262 C 486,308 468,352 470,398 C 472,435 478,458 478,470 C 505,470 528,470 560,470 Z'
-const S2 = 'M 560,0 C 545,0 525,0 510,0 C 514,38 518,85 515,128 C 514,172 505,215 505,262 C 505,308 520,352 518,398 C 516,435 512,458 512,470 C 530,470 548,470 560,470 Z'
-const S3 = 'M 560,0 C 522,0 482,0 455,0 C 462,38 455,85 458,128 C 460,172 498,215 496,262 C 494,308 452,352 455,398 C 458,435 468,458 468,470 C 492,470 527,470 560,470 Z'
+// Sage (Strategie — right shape) — equally dynamic, independent timing
+//
+// S1 — moderate:    left edge ≈ 416 px  gap vs T2 ≈ 101 px
+// S2 — advanced:    left edge ≈ 376 px  gap vs T2 ≈  61 px  ← narrowest (tension)
+// S3 — retracted:   left edge ≈ 480 px  gap vs T1 ≈ 330 px  ← widest (open)
+//
+// Total sage swing: ~104 px  ·  Total terra swing: ~165 px  → both clearly dramatic
+// Guaranteed minimum gap (T2 + S2 worst case): 376 − 315 = 61 px — never overlap
+const S1 = 'M 560,0 C 515,0 470,0 420,0 C 418,40 426,88 428,130 C 430,172 420,215 418,262 C 416,308 428,352 426,400 C 428,438 424,458 422,470 C 472,470 518,470 560,470 Z'
+const S2 = 'M 560,0 C 525,0 480,0 438,0 C 430,38 395,85 385,128 C 376,168 390,210 388,250 C 386,290 382,328 380,365 C 378,402 388,445 385,470 C 438,470 525,470 560,470 Z'
+const S3 = 'M 560,0 C 538,0 512,0 480,0 C 482,40 490,88 488,130 C 486,172 492,215 490,262 C 488,308 482,352 484,400 C 486,438 490,458 488,470 C 514,470 540,470 560,470 Z'
 
-// Looping: append stage 1 at the end so each cycle is seamless
-// Terra: 15 s · Sage: 11 s  →  LCM = 165 s before phase repeat
-// begin="4s" on sage offsets the two clocks so they rarely align
+// Looping: append stage 1 at the end so each cycle is seamless.
+// Terra: 15 s · Sage: 11 s  →  LCM = 165 s before the phase combination repeats.
+// The 4 s begin-offset means they start out of phase and drift continuously —
+// the gap breathes wide, narrows to ~60 px, opens again, never the same twice.
 const TERRA_VALS  = [T1, T2, T3, T1].join(';')
 const SAGE_VALS   = [S1, S2, S3, S1].join(';')
 const KEY_TIMES   = '0; 0.33; 0.66; 1'
