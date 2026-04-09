@@ -369,11 +369,10 @@ export function TestimonialsSection() {
             Stimmen
           </span>
           <h2
+            className="font-heading font-normal"
             style={{
-              fontFamily:    'var(--font-display)',
               fontSize:      'var(--text-md)',
-              fontWeight:    300,
-              lineHeight:    1.0,
+              lineHeight:    1.1,
               letterSpacing: '-0.02em',
               color:         'var(--color-ink)',
             }}
