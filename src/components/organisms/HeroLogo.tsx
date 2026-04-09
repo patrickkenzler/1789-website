@@ -198,14 +198,16 @@ export function HeroLogo() {
 
         {/* ─────────────────────────────────────────────────────────────
             RIGHT — graphic (flex-grow) + body copy + CTAs
-            Horizontal padding lives on the outer wrapper so both the
-            graphic and the text share an identical content width.
+            ALL padding lives on the outer wrapper — graphic and text
+            share one identical content box, so their widths always match.
         ──────────────────────────────────────────────────────────────── */}
         <div
           style={{
-            display:       'flex',
-            flexDirection: 'column',
-            paddingInline: 'clamp(1.25rem, 2.5vw, 3rem)',
+            display:        'flex',
+            flexDirection:  'column',
+            paddingInline:  'clamp(1.25rem, 2.5vw, 3rem)',
+            paddingTop:     'clamp(1rem, 1.5svh, 2.5rem)',
+            paddingBottom:  'clamp(1.25rem, 2.5svh, 3.5rem)',
           }}
         >
 
@@ -215,7 +217,6 @@ export function HeroLogo() {
               flex:      '1 1 0',
               minHeight: 0,
               overflow:  'hidden',
-              paddingBlock: 'clamp(1rem, 1.5svh, 2.5rem)',
               display:   'flex',
               alignItems:'stretch',
               animation: a('fadeUp', '1000ms', '200ms', 'var(--ease-expressive)'),
@@ -227,10 +228,9 @@ export function HeroLogo() {
           {/* Body copy + CTAs — fixed height, never hidden */}
           <div
             style={{
-              flexShrink:    0,
-              paddingTop:    'clamp(1rem, 1.5svh, 2rem)',
-              paddingBottom: 'clamp(1.25rem, 2.5svh, 3.5rem)',
-              animation:     a('fadeUp', '700ms', '350ms'),
+              flexShrink: 0,
+              paddingTop: 'clamp(1rem, 1.5svh, 2rem)',
+              animation:  a('fadeUp', '700ms', '350ms'),
             }}
           >
             <p
