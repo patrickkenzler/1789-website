@@ -107,16 +107,16 @@ export function HeroLogo() {
       >
 
         {/* ─────────────────────────────────────────────────────────────
-            LEFT — two headline blocks stacked, top-aligned
+            LEFT — two headline blocks spread across full column height
         ──────────────────────────────────────────────────────────────── */}
         <div
           style={{
-            padding:    'clamp(2rem, 3vw, 3.5rem) var(--grid-margin)',
-            paddingBottom: 'clamp(2.5rem, 4vw, 5rem)',
-            display:    'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            animation:  a('fadeUp', '900ms', '80ms', 'var(--ease-expressive)'),
+            paddingInline:  'var(--grid-margin)',
+            paddingBlock:   'clamp(2rem, 3vw, 3.5rem)',
+            display:        'flex',
+            flexDirection:  'column',
+            justifyContent: 'space-between',  // ← blocks touch top + bottom
+            animation:      a('fadeUp', '900ms', '80ms', 'var(--ease-expressive)'),
           }}
         >
           {/* Block 1 — ink, bold */}
@@ -125,11 +125,13 @@ export function HeroLogo() {
               fontFamily:    'var(--font-display)',
               fontWeight:    700,
               fontStyle:     'normal',
-              fontSize:      'clamp(2.75rem, 5.5vw, 8.75rem)',
+              fontSize:      'clamp(2.75rem, 6.5vw, 9.5rem)',
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-ink)',
-              marginBottom:  'clamp(0.75rem, 1.2vw, 1.75rem)',
+              // paddingBottom guards the "g" descender in "Strategien"
+              // from being clipped by the tight line-height on the last line
+              paddingBottom: '0.22em',
             }}
           >
             Organisationen<br />
@@ -143,10 +145,12 @@ export function HeroLogo() {
               fontFamily:    'var(--font-display)',
               fontWeight:    700,
               fontStyle:     'italic',
-              fontSize:      'clamp(2.75rem, 5.5vw, 8.75rem)',
+              fontSize:      'clamp(2.75rem, 6.5vw, 9.5rem)',
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-terra)',
+              // paddingBottom guards "g" descenders in "Strategie" + "Struktur."
+              paddingBottom: '0.22em',
             }}
           >
             Sie scheitern an der<br />
