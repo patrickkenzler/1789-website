@@ -377,8 +377,7 @@ export function TestimonialsSection() {
               color:         'var(--color-ink)',
             }}
           >
-            Was Kunden{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>sagen.</em>
+            Was Kunden sagen.
           </h2>
         </div>
 
