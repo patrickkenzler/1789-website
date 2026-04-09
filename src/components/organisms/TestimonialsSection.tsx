@@ -7,61 +7,108 @@
  *
  * Animations:
  *  – Entrance: IntersectionObserver adds .in-view to the section;
- *    CSS transitions fade+slide each card up with a 120 ms stagger
- *    (driven by a --card-delay CSS custom property per card).
- *  – Hover: CSS class .testimonial-card handles lift + terra border
- *    (pure CSS, zero JS, composited transform only).
+ *    CSS transitions fade+slide each card up with a 120 ms stagger.
+ *  – Hover: CSS .testimonial-card handles lift + terra border.
+ *
+ * Quotes use ReactNode so key phrases can be emphasised inline:
+ *  – <strong> renders upright (fontStyle:normal) within the italic body,
+ *    a classic typographic contrast technique that draws the eye without
+ *    breaking the quote's voice.
  */
 
 import { useEffect, useRef } from 'react'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const TESTIMONIALS = [
+const em = (text: string) => (
+  <strong style={{ fontStyle: 'normal', fontWeight: 600, color: 'var(--color-ink)' }}>
+    {text}
+  </strong>
+)
+
+const TESTIMONIALS: {
+  quote:    React.ReactNode
+  name:     string
+  title:    string
+  company:  string
+  photo:    string | null
+  linkedin: string
+  caseHref: string | null
+  caseLabel: string | null
+}[] = [
   {
-    quote:
-      '1789 führt uns bei der Gestaltung eines Target-Operating-Models, das den Anforderungen unseres schnelllebigen, dynamischen Marktes gerecht wird. 1789 geht weit über die traditionelle Beratung hinaus: Es handelt sich um einen gemeinsamen Entwicklungsprozess auf Augenhöhe – sie sind Innovatoren mit herausragender Expertise.',
-    name:     'Sven Kalisch',
-    title:    'CEO',
-    company:  'teccle group',
-    photo:    '/testimonials/sven-kalisch.jpg',
-    linkedin: 'https://www.linkedin.com/in/sven-kalisch-b4113610b/',
+    quote: <>
+      1789 führt uns bei der Gestaltung eines {em('Target-Operating-Models')}, das den Anforderungen
+      unseres schnelllebigen, dynamischen Marktes gerecht wird. 1789 geht weit über die traditionelle
+      Beratung hinaus: Es handelt sich um einen {em('gemeinsamen Entwicklungsprozess auf Augenhöhe')} –
+      sie sind {em('Innovatoren mit herausragender Expertise')}.
+    </>,
+    name:      'Sven Kalisch',
+    title:     'CEO',
+    company:   'teccle group',
+    photo:     '/testimonials/sven-kalisch.jpg',
+    linkedin:  'https://www.linkedin.com/in/sven-kalisch-b4113610b/',
+    caseHref:  '/projekte/integration',
+    caseLabel: 'Integration: 15 Firmen, eine Organisation',
   },
   {
-    quote:
-      'Es war sehr beeindruckend, wie schnell uns 1789 bereits nach dem ersten Kennenlernen vollends durchdrungen hat. 1789 hat uns gechallenged — immer anpackend, partnerschaftlich und stets mit Blick auf klaren Resultaten und Actions.',
-    name:     'Daniel Kalisch',
-    title:    'General Manager D.A.CH.',
-    company:  'WD-40 Company',
-    photo:    '/testimonials/daniel-kalisch.jpeg',
-    linkedin: 'https://www.linkedin.com/in/daniel-kalisch-3b21a651',
+    quote: <>
+      Es war sehr beeindruckend, {em('wie schnell uns 1789 bereits nach dem ersten Kennenlernen vollends durchdrungen hat')}. 1789 hat uns {em('gechallenged')} — immer anpackend,
+      partnerschaftlich und stets {em('mit Blick auf klare Resultate und Actions')}.
+    </>,
+    name:      'Daniel Kalisch',
+    title:     'General Manager D.A.CH.',
+    company:   'WD-40 Company',
+    photo:     '/testimonials/daniel-kalisch.jpeg',
+    linkedin:  'https://www.linkedin.com/in/daniel-kalisch-3b21a651',
+    caseHref:  '/projekte/innovationskraft-durch-zusammenarbeit',
+    caseLabel: 'Innovationskraft durch Zusammenarbeit',
   },
   {
-    quote:
-      'Mit einem tiefen Verständnis für die Herausforderungen eines Konzerns und für die Notwendigkeit, sich an neue Gegebenheiten anzupassen, wurde 1789 ausgewählt, um von strategischer Planung über Konzeption bis hin zur Implementierung als Partner zu fungieren.',
-    name:     'Timo Salzsieder',
-    title:    'Chief Information Officer',
-    company:  'Müller Holding GmbH & Co. KG',
-    photo:    '/testimonials/timo-salzsieder.jpeg',
-    linkedin: 'https://www.linkedin.com/in/timo-salzsieder-88993514',
+    quote: <>
+      Mit einem {em('tiefen Verständnis für die Herausforderungen eines Konzerns')} und für die
+      Notwendigkeit, sich an neue Gegebenheiten anzupassen, wurde 1789 ausgewählt, um von{' '}
+      {em('strategischer Planung über Konzeption bis hin zur Implementierung')} als Partner zu fungieren.
+    </>,
+    name:      'Timo Salzsieder',
+    title:     'Chief Information Officer',
+    company:   'Müller Holding GmbH & Co. KG',
+    photo:     '/testimonials/timo-salzsieder.jpeg',
+    linkedin:  'https://www.linkedin.com/in/timo-salzsieder-88993514',
+    caseHref:  null,
+    caseLabel: null,
   },
   {
-    quote:
-      'Besonders wertvoll war für uns die Unterstützung seitens 1789 beim Workshopdesign und der Moderation großer Gruppen, einerseits im Managementteam aber auch mit ausgewählten Mitarbeitenden. So ist es uns gelungen, unterschiedliche Zielgruppen aktiv in den Prozess einzubinden. Außerdem war die Zusammenarbeit geprägt von großem Vertrauen und hat zu jedem Zeitpunkt Spaß gemacht.',
-    name:     'Viola Krauss',
-    title:    'Chief People and Culture Officer',
-    company:  'WTS Deutschland',
-    photo:    '/testimonials/viola-krauss.jpg',
-    linkedin: 'https://www.linkedin.com/in/viola-krauss-3a09254b',
+    quote: <>
+      Besonders wertvoll war für uns die Unterstützung seitens 1789 beim{' '}
+      {em('Workshopdesign und der Moderation großer Gruppen')}, einerseits im Managementteam aber
+      auch mit ausgewählten Mitarbeitenden. So ist es uns gelungen,{' '}
+      {em('unterschiedliche Zielgruppen aktiv in den Prozess einzubinden')}. Außerdem war die
+      Zusammenarbeit geprägt von {em('großem Vertrauen')} und hat zu jedem Zeitpunkt Spaß gemacht.
+    </>,
+    name:      'Viola Krauss',
+    title:     'Chief People and Culture Officer',
+    company:   'WTS Deutschland',
+    photo:     '/testimonials/viola-krauss.jpg',
+    linkedin:  'https://www.linkedin.com/in/viola-krauss-3a09254b',
+    caseHref:  '/projekte/motivieren-und-entwickeln',
+    caseLabel: 'Motivieren und Entwickeln',
   },
   {
-    quote:
-      'Gemeinsam mit 1789 haben wir, angepasst an unsere junge Kultur und Leistungsorientiertheit, ein Operating Model geschaffen, unbeeinflusst von Erfahrungen in leistungsbeschneidenden Strukturen anderer Unternehmen. Zentral war für uns, die Verantwortungsfähigkeit der Mitarbeiter zu erhöhen, um ihre Schaffenskräfte zu fördern, was 1789 in der „Selbstorganisierenden Organisation" realisieren konnte.',
-    name:     'Henrik Ekstrand',
-    title:    'Founder',
-    company:  'greyt.',
-    photo:    '/testimonials/henrik-ekstrand.jpg',
-    linkedin: 'https://www.linkedin.com/in/henrikekstrand/',
+    quote: <>
+      Gemeinsam mit 1789 haben wir ein {em('Operating Model geschaffen')}, angepasst an unsere
+      junge Kultur und Leistungsorientiertheit — unbeeinflusst von leistungsbeschneidenden
+      Strukturen anderer Unternehmen. Zentral war für uns,{' '}
+      {em('die Verantwortungsfähigkeit der Mitarbeiter zu erhöhen')}, um ihre Schaffenskräfte
+      zu fördern, was 1789 in der {em('„Selbstorganisierenden Organisation"')} realisieren konnte.
+    </>,
+    name:      'Henrik Ekstrand',
+    title:     'Founder',
+    company:   'greyt.',
+    photo:     '/testimonials/henrik-ekstrand.jpg',
+    linkedin:  'https://www.linkedin.com/in/henrikekstrand/',
+    caseHref:  '/projekte/skalierung-und-qualitaet',
+    caseLabel: 'Skalierung und Qualität durch Struktur',
   },
 ]
 
@@ -116,7 +163,7 @@ function Avatar({ name, photo }: { name: string; photo: string | null }) {
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
 function TestimonialCard({
-  quote, name, title, company, photo, linkedin, wide, index,
+  quote, name, title, company, photo, linkedin, caseHref, caseLabel, wide, index,
 }: (typeof TESTIMONIALS)[number] & { wide?: boolean; index: number }) {
   return (
     <div
@@ -130,7 +177,6 @@ function TestimonialCard({
         border:          '1px solid var(--color-border)',
         borderRadius:    'var(--radius-md)',
         backgroundColor: 'var(--color-background)',
-        /* stagger via CSS custom property — read by .in-view rule */
         ['--card-delay' as string]: `${index * 120}ms`,
       }}
     >
@@ -151,15 +197,15 @@ function TestimonialCard({
         "
       </span>
 
-      {/* Quote body */}
+      {/* Quote body — ReactNode with inline emphasis */}
       <p
         style={{
           fontFamily:    'var(--font-display)',
           fontStyle:     'italic',
           fontSize:      'clamp(1rem, 1.4vw, 1.375rem)',
-          lineHeight:    1.55,
+          lineHeight:    1.6,
           letterSpacing: '-0.01em',
-          color:         'var(--color-ink)',
+          color:         'var(--color-ink-muted)',
           flex:          1,
           marginBottom:  '2rem',
         }}
@@ -240,6 +286,39 @@ function TestimonialCard({
           </svg>
         </a>
       </div>
+
+      {/* Case link — only shown when a case exists */}
+      {caseHref && caseLabel && (
+        <a
+          href={caseHref}
+          style={{
+            display:       'flex',
+            alignItems:    'center',
+            gap:           '0.4rem',
+            marginTop:     '1rem',
+            fontFamily:    'var(--font-mono)',
+            fontSize:      'var(--text-xxs)',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color:         'var(--color-terra)',
+            textDecoration:'none',
+            transition:    'opacity 200ms',
+            opacity:       0.8,
+          }}
+          className="case-link"
+        >
+          <span
+            style={{
+              display:         'inline-block',
+              width:           '1rem',
+              height:          '1px',
+              backgroundColor: 'currentColor',
+              flexShrink:      0,
+            }}
+          />
+          {caseLabel}
+        </a>
+      )}
     </div>
   )
 }
@@ -252,17 +331,10 @@ export function TestimonialsSection() {
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
-
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add('in-view')
-          observer.disconnect() // fire once
-        }
-      },
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add('in-view'); observer.disconnect() } },
       { threshold: 0.08 },
     )
-
     observer.observe(el)
     return () => observer.disconnect()
   }, [])
@@ -276,13 +348,8 @@ export function TestimonialsSection() {
       className="testimonials-section"
       style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}
     >
-      <div
-        style={{
-          maxWidth:      '1920px',
-          margin:        '0 auto',
-          paddingInline: 'var(--grid-margin)',
-        }}
-      >
+      <div style={{ maxWidth: '1920px', margin: '0 auto', paddingInline: 'var(--grid-margin)' }}>
+
         {/* Section header */}
         <div style={{ marginBottom: '4rem' }}>
           <span
@@ -326,9 +393,7 @@ export function TestimonialsSection() {
             marginBottom:        'clamp(1rem, 1.5vw, 1.5rem)',
           }}
         >
-          {row1.map((t, i) => (
-            <TestimonialCard key={t.name} {...t} index={i} />
-          ))}
+          {row1.map((t, i) => <TestimonialCard key={t.name} {...t} index={i} />)}
         </div>
 
         {/* Row 2 — 2 cards */}
@@ -340,10 +405,9 @@ export function TestimonialsSection() {
             gap:                 'clamp(1rem, 1.5vw, 1.5rem)',
           }}
         >
-          {row2.map((t, i) => (
-            <TestimonialCard key={t.name} {...t} wide index={i + 3} />
-          ))}
+          {row2.map((t, i) => <TestimonialCard key={t.name} {...t} wide index={i + 3} />)}
         </div>
+
       </div>
     </section>
   )
