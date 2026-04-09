@@ -91,6 +91,10 @@
     .systemshift-layout { grid-template-columns: 1fr !important; }
     .systemshift-panel  { display: none !important; }
 
+    /* Hero split — stack on mobile */
+    .hero-split { grid-template-columns: 1fr !important; }
+    .hero-split > *:last-child { border-left: none !important; padding-top: 0 !important; }
+
     /* Page section paddings — reduce on mobile */
     .section-pad { padding-block: 4rem !important; }
 
