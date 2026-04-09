@@ -7,7 +7,7 @@ import { Footer } from '@/components/organisms/Footer'
 const cormorant = Cormorant_Garamond({
   variable: '--font-cormorant',
   subsets: ['latin'],
-  weight: ['300', '400', '600'],
+  weight: ['300', '400', '600', '700'],
   style: ['normal', 'italic'],
   display: 'swap',
 })
