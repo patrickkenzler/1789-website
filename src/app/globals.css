@@ -135,6 +135,8 @@
     border-color: var(--color-terra) !important;
   }
 
+  .case-link:hover { opacity: 1 !important; }
+
   /* Testimonials — responsive grid */
   @media (max-width: 1023px) {
     /* tablet: 2 columns */
