@@ -51,28 +51,30 @@ const a = (
 // Command sequence: M · C(top) · C(R1) · C(R2) · C(R3) · C(R4) · C(bottom) · Z
 //
 // T1 — retracted:   thin strip,   right edge ≈ 150 px
-// T2 — expanded:    two lobes,    right edge ≈ 315 px
-// T3 — asymmetric:  medium,       right edge ≈ 250 px
+// T2 — expanded:    two lobes,    right edge ≈ 270 px
+// T3 — asymmetric:  medium,       right edge ≈ 245 px
+// Terra swing: 150 → 270 px  =  ~120 px range
 const T1 = 'M 0,0 C 45,0 105,0 150,0 C 155,40 142,88 138,130 C 134,172 148,215 144,262 C 140,308 136,352 140,400 C 142,438 148,458 150,470 C 100,470 42,470 0,470 Z'
-const T2 = 'M 0,0 C 62,0 155,0 195,0 C 235,35 318,82 300,120 C 282,158 205,200 200,240 C 195,280 295,320 288,358 C 278,398 205,445 195,470 C 152,470 60,470 0,470 Z'
+const T2 = 'M 0,0 C 58,0 142,0 178,0 C 212,35 278,80 265,118 C 250,155 192,198 188,238 C 184,278 265,318 258,355 C 248,395 192,442 182,470 C 140,470 55,470 0,470 Z'
 const T3 = 'M 0,0 C 55,0 132,0 168,0 C 195,38 255,88 245,128 C 235,168 188,205 185,245 C 182,285 248,328 240,365 C 230,402 188,445 178,470 C 136,470 52,470 0,470 Z'
 
-// Sage (Strategie — right shape) — equally dynamic, independent timing
+// Sage (Strategie — right shape) — independent timing, equally dramatic
 //
-// S1 — moderate:    left edge ≈ 416 px  gap vs T2 ≈ 101 px
-// S2 — advanced:    left edge ≈ 376 px  gap vs T2 ≈  61 px  ← narrowest (tension)
-// S3 — retracted:   left edge ≈ 480 px  gap vs T1 ≈ 330 px  ← widest (open)
+// S1 — moderate:    left edge ≈ 416 px  →  covers 26 % of canvas from the right
+// S2 — advanced:    left edge ≈ 335 px  →  covers 40 % of canvas from the right  ← KEY
+// S3 — retracted:   left edge ≈ 480 px  →  thin strip on the right
+// Sage swing: 335 → 480 px  =  ~145 px range  (sage is slightly MORE dynamic than terra)
 //
-// Total sage swing: ~104 px  ·  Total terra swing: ~165 px  → both clearly dramatic
-// Guaranteed minimum gap (T2 + S2 worst case): 376 − 315 = 61 px — never overlap
+// Guaranteed minimum gap (T2 max ≈ 270 + S2 min ≈ 335): ~65 px — shapes never touch.
+// Gap range: ~65 px (both inward, maximum tension) → ~330 px (both retracted, open air).
 const S1 = 'M 560,0 C 515,0 470,0 420,0 C 418,40 426,88 428,130 C 430,172 420,215 418,262 C 416,308 428,352 426,400 C 428,438 424,458 422,470 C 472,470 518,470 560,470 Z'
-const S2 = 'M 560,0 C 525,0 480,0 438,0 C 430,38 395,85 385,128 C 376,168 390,210 388,250 C 386,290 382,328 380,365 C 378,402 388,445 385,470 C 438,470 525,470 560,470 Z'
+const S2 = 'M 560,0 C 516,0 468,0 405,0 C 390,40 352,88 340,128 C 330,168 346,212 344,252 C 342,292 340,330 338,368 C 336,405 348,445 342,470 C 402,470 515,470 560,470 Z'
 const S3 = 'M 560,0 C 538,0 512,0 480,0 C 482,40 490,88 488,130 C 486,172 492,215 490,262 C 488,308 482,352 484,400 C 486,438 490,458 488,470 C 514,470 540,470 560,470 Z'
 
 // Looping: append stage 1 at the end so each cycle is seamless.
 // Terra: 15 s · Sage: 11 s  →  LCM = 165 s before the phase combination repeats.
 // The 4 s begin-offset means they start out of phase and drift continuously —
-// the gap breathes wide, narrows to ~60 px, opens again, never the same twice.
+// the gap breathes wide, narrows to ~65 px, opens again, never the same twice.
 const TERRA_VALS  = [T1, T2, T3, T1].join(';')
 const SAGE_VALS   = [S1, S2, S3, S1].join(';')
 const KEY_TIMES   = '0; 0.33; 0.66; 1'
