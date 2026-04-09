@@ -112,26 +112,27 @@ export function HeroLogo() {
         <div
           style={{
             paddingInline:  'var(--grid-margin)',
-            paddingBlock:   'clamp(2rem, 3vw, 3.5rem)',
+            paddingBlock:   'clamp(1rem, 2svh, 2.5rem)',
             display:        'flex',
             flexDirection:  'column',
-            justifyContent: 'space-between',  // ← blocks touch top + bottom
+            justifyContent: 'space-between',
             animation:      a('fadeUp', '900ms', '80ms', 'var(--ease-expressive)'),
           }}
         >
-          {/* Block 1 — ink, bold */}
+          {/* Block 1 — ink, bold
+              font-size uses min(vw, svh) so it scales down whichever
+              viewport dimension is the bottleneck (width OR height).
+              On a 13" MBP (~1280×800) svh wins and keeps 6 lines inside the viewport. */}
           <p
             style={{
               fontFamily:    'var(--font-display)',
               fontWeight:    700,
               fontStyle:     'normal',
-              fontSize:      'clamp(2.75rem, 6.5vw, 9.5rem)',
+              fontSize:      'clamp(1.5rem, min(6vw, 8.5svh), 9rem)',
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-ink)',
-              // paddingBottom guards the "g" descender in "Strategien"
-              // from being clipped by the tight line-height on the last line
-              paddingBottom: '0.22em',
+              paddingBottom: '0.22em',   // descender clearance for "g" in "Strategien"
             }}
           >
             Organisationen<br />
@@ -145,12 +146,11 @@ export function HeroLogo() {
               fontFamily:    'var(--font-display)',
               fontWeight:    700,
               fontStyle:     'italic',
-              fontSize:      'clamp(2.75rem, 6.5vw, 9.5rem)',
+              fontSize:      'clamp(1.5rem, min(6vw, 8.5svh), 9rem)',
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-terra)',
-              // paddingBottom guards "g" descenders in "Strategie" + "Struktur."
-              paddingBottom: '0.22em',
+              paddingBottom: '0.22em',   // descender clearance for "g" in "Strategie"
             }}
           >
             Sie scheitern an der<br />
@@ -170,24 +170,27 @@ export function HeroLogo() {
           }}
         >
 
-          {/* Graphic — fills remaining space above body copy */}
+          {/* Graphic — fills remaining space; minHeight:0 lets it shrink on small screens */}
           <div
             style={{
-              flex:    '1',
-              padding: 'clamp(1.5rem, 2vw, 2.5rem) clamp(1.5rem, 3vw, 3rem)',
-              display: 'flex',
-              alignItems: 'stretch',
+              flex:      '1 1 0',
+              minHeight: 0,
+              overflow:  'hidden',
+              padding:   'clamp(1rem, 1.5svh, 2.5rem) clamp(1.25rem, 2.5vw, 3rem)',
+              display:   'flex',
+              alignItems:'stretch',
               animation: a('fadeUp', '1000ms', '200ms', 'var(--ease-expressive)'),
             }}
           >
             <GapGraphic />
           </div>
 
-          {/* Body copy + CTAs — anchored to bottom */}
+          {/* Body copy + CTAs — fixed height, never hidden */}
           <div
             style={{
-              padding:      'clamp(1.5rem, 2vw, 2rem) clamp(1.5rem, 3vw, 3rem)',
-              paddingBottom: 'clamp(2rem, 3.5vw, 4rem)',
+              flexShrink:   0,
+              padding:      'clamp(1rem, 1.5svh, 2rem) clamp(1.25rem, 2.5vw, 3rem)',
+              paddingBottom: 'clamp(1.25rem, 2.5svh, 3.5rem)',
               borderTop:    '1px solid rgba(46,43,40,0.08)',
               animation:    a('fadeUp', '700ms', '350ms'),
             }}
@@ -198,7 +201,7 @@ export function HeroLogo() {
                 fontSize:     'clamp(0.875rem, 1.05vw, 1.05rem)',
                 color:        'var(--color-ink)',
                 lineHeight:   1.7,
-                marginBottom: 'clamp(1.5rem, 2.5vw, 2.5rem)',
+                marginBottom: 'clamp(1rem, 2svh, 2rem)',
                 maxWidth:     '44ch',
               }}
             >

@@ -64,7 +64,7 @@ export default function Home() {
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
       <section
         style={{
-          minHeight:     '100svh',
+          height:        '100svh',   // hard cap — hero never exceeds the viewport
           display:       'flex',
           flexDirection: 'column',
           paddingTop:    '7rem',
