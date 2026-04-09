@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * HeroLogo — v5: Figma editorial split
+ * HeroLogo — v6: independent morphing animation
  *
  * Left  (7fr):  Two-part bold headline
  *               1. Ink bold:    "Organisationen scheitern nicht an schlechten Strategien"
@@ -36,27 +36,38 @@ const a = (
  *    stage so SVG can interpolate smoothly between them.
  *  – The facing edges (terra right / sage left) shift independently but
  *    always maintain a minimum gap of ~50 viewBox units — they never touch.
- *  – The outer edges (terra left / sage right) are stable; only the inner
- *    facing edges morph, as shown in the concept sketch.
+ *  – Terra and sage run on DIFFERENT clocks (15 s / 11 s, 4 s phase offset)
+ *    so they never lock into the same phase twice — LCM = 165 s before repeat.
+ *  – Terra swings dramatically: retracted to ~115 px (left strip) up to ~400 px
+ *    (covering 71 % of canvas). Sage oscillates between ~510 px (thin) and
+ *    ~455 px (moderate), always staying at least 55 px clear of terra's max.
  *
- * Stage 1 → gentle S-curves, wide gap
- * Stage 2 → terra expands with large lobes, sage responds
- * Stage 3 → narrow peninsulas, complex interdigitation, tighter gap
+ * Stage 1 — terra: retracted thin strip   | sage: medium presence
+ * Stage 2 — terra: dramatic wide lobes    | sage: retreated thin strip
+ * Stage 3 — terra: asymmetric bulges      | sage: complex interdigitation
  */
 
 // Terra (Struktur — left shape) — 3 keyframe paths
 // Command sequence: M · C(top) · C(R1) · C(R2) · C(R3) · C(R4) · C(bottom) · Z
-const T1 = 'M 0,0 C 70,0 175,0 210,0 C 230,35 238,82 235,118 C 232,155 202,195 195,235 C 188,275 218,315 225,352 C 232,390 210,440 200,470 C 160,470 70,470 0,470 Z'
-const T2 = 'M 0,0 C 70,0 180,0 215,0 C 248,30 300,88 285,128 C 272,165 218,205 210,242 C 200,280 268,315 275,358 C 280,398 218,448 208,470 C 165,470 70,470 0,470 Z'
-const T3 = 'M 0,0 C 70,0 182,0 218,0 C 238,42 278,98 262,135 C 246,172 232,212 228,248 C 224,285 265,328 270,362 C 275,402 222,448 212,470 C 168,470 70,470 0,470 Z'
+//
+// T1 — retracted: thin strip, right edge ~115px
+// T2 — expanded:  dramatic lobes push right edge to ~400px
+// T3 — complex:   asymmetric bulges, right edge ~385px
+const T1 = 'M 0,0 C 38,0 88,0 115,0 C 122,38 102,85 98,128 C 94,172 108,215 105,262 C 102,308 95,352 100,398 C 100,435 98,458 105,470 C 68,470 30,470 0,470 Z'
+const T2 = 'M 0,0 C 70,0 178,0 210,0 C 248,35 412,82 400,118 C 385,155 215,198 205,238 C 195,278 395,322 385,358 C 370,398 210,442 195,470 C 155,470 70,470 0,470 Z'
+const T3 = 'M 0,0 C 65,0 168,0 195,0 C 240,40 295,85 282,118 C 268,152 172,195 168,238 C 164,282 385,325 375,358 C 362,398 195,442 180,470 C 142,470 62,470 0,470 Z'
 
-// Sage (Strategie — right shape)
-// Minimum gap at each stage: S1 ≥70px · S2 ≥57px · S3 ≥54px
-const S1 = 'M 560,0 C 488,0 362,0 330,0 C 325,35 308,82 305,118 C 302,155 345,195 348,235 C 355,275 322,315 318,352 C 314,390 328,440 330,470 C 362,470 488,470 560,470 Z'
-const S2 = 'M 560,0 C 488,0 370,0 348,0 C 350,30 345,88 342,128 C 340,165 368,205 370,242 C 372,280 345,315 342,358 C 340,398 352,448 350,470 C 372,470 488,470 560,470 Z'
-const S3 = 'M 560,0 C 488,0 358,0 325,0 C 328,42 325,95 322,135 C 320,172 285,212 282,248 C 280,285 328,325 325,362 C 322,402 280,448 278,470 C 338,470 488,470 560,470 Z'
+// Sage (Strategie — right shape) — independent timing
+// S1 — medium:      left edge ~480px  (gap ≥80px from T1 max)
+// S2 — thin/right:  left edge ~510px  (retreats while terra might be expanding)
+// S3 — complex:     left edge ~455px  (still ≥55px clear of T2/T3 max ~400)
+const S1 = 'M 560,0 C 520,0 502,0 480,0 C 478,38 470,85 472,128 C 474,172 490,215 488,262 C 486,308 468,352 470,398 C 472,435 478,458 478,470 C 505,470 528,470 560,470 Z'
+const S2 = 'M 560,0 C 545,0 525,0 510,0 C 514,38 518,85 515,128 C 514,172 505,215 505,262 C 505,308 520,352 518,398 C 516,435 512,458 512,470 C 530,470 548,470 560,470 Z'
+const S3 = 'M 560,0 C 522,0 482,0 455,0 C 462,38 455,85 458,128 C 460,172 498,215 496,262 C 494,308 452,352 455,398 C 458,435 468,458 468,470 C 492,470 527,470 560,470 Z'
 
-// Looping: append stage 1 at the end so the cycle is seamless
+// Looping: append stage 1 at the end so each cycle is seamless
+// Terra: 15 s · Sage: 11 s  →  LCM = 165 s before phase repeat
+// begin="4s" on sage offsets the two clocks so they rarely align
 const TERRA_VALS  = [T1, T2, T3, T1].join(';')
 const SAGE_VALS   = [S1, S2, S3, S1].join(';')
 const KEY_TIMES   = '0; 0.33; 0.66; 1'
@@ -72,11 +83,12 @@ function GapGraphic() {
       style={{ display: 'block' }}
       preserveAspectRatio="xMidYMid meet"
     >
-      {/* ── Struktur — terra (left) ── */}
+      {/* ── Struktur — terra (left) · 15 s cycle ── */}
       <path fill="var(--color-terra)" d={T1}>
         <animate
           attributeName="d"
-          dur="10s"
+          dur="15s"
+          begin="0s"
           repeatCount="indefinite"
           values={TERRA_VALS}
           calcMode="spline"
@@ -85,11 +97,12 @@ function GapGraphic() {
         />
       </path>
 
-      {/* ── Strategie — sage (right) ── */}
+      {/* ── Strategie — sage (right) · 11 s cycle, offset by 4 s ── */}
       <path fill="var(--color-sage)" d={S1}>
         <animate
           attributeName="d"
-          dur="10s"
+          dur="11s"
+          begin="4s"
           repeatCount="indefinite"
           values={SAGE_VALS}
           calcMode="spline"
