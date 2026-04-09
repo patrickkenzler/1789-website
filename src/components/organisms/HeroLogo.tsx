@@ -203,7 +203,7 @@ export function HeroLogo() {
           style={{
             display:       'flex',
             flexDirection: 'column',
-            borderLeft:    '1px solid rgba(46,43,40,0.08)',
+            borderLeft:    'none',
           }}
         >
 
@@ -228,7 +228,7 @@ export function HeroLogo() {
               flexShrink:   0,
               padding:      'clamp(1rem, 1.5svh, 2rem) clamp(1.25rem, 2.5vw, 3rem)',
               paddingBottom: 'clamp(1.25rem, 2.5svh, 3.5rem)',
-              borderTop:    '1px solid rgba(46,43,40,0.08)',
+              borderTop:    'none',
               animation:    a('fadeUp', '700ms', '350ms'),
             }}
           >

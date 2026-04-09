@@ -95,7 +95,7 @@
     .hero-split { grid-template-columns: 1fr !important; }
     .hero-split > *:last-child {
       border-left: none !important;
-      border-top: 1px solid rgba(46,43,40,0.08) !important;
+      border-top: none !important;
     }
     /* On mobile, graphic in right col gets a fixed height instead of flex-grow */
     .hero-split > *:last-child > *:first-child { min-height: 240px; }
