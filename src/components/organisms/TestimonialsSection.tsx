@@ -346,7 +346,7 @@ export function TestimonialsSection() {
     <section
       ref={sectionRef}
       className="testimonials-section"
-      style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}
+      style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-terra)' }}
     >
       <div style={{ maxWidth: '1920px', margin: '0 auto', paddingInline: 'var(--grid-margin)' }}>
 
@@ -359,8 +359,8 @@ export function TestimonialsSection() {
               fontSize:      'var(--text-xxs)',
               letterSpacing: '0.18em',
               textTransform: 'uppercase',
-              color:         'var(--color-terra)',
-              border:        '1px solid var(--color-terra)',
+              color:         'var(--color-white)',
+              border:        '1px solid rgba(255,255,255,0.5)',
               borderRadius:  'var(--radius-full)',
               padding:       '0.3rem 0.9rem',
               marginBottom:  '1.5rem',
@@ -374,7 +374,7 @@ export function TestimonialsSection() {
               fontSize:      'var(--text-md)',
               lineHeight:    1.1,
               letterSpacing: '-0.02em',
-              color:         'var(--color-ink)',
+              color:         'var(--color-white)',
             }}
           >
             Was Kunden sagen.
