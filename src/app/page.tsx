@@ -255,11 +255,11 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ─── Testimonials ────────────────────────────────────────────────── */}
-      <TestimonialsSection />
-
       {/* ─── Questions Ticker ─────────────────────────────────────────────── */}
       <QuestionsTicker />
+
+      {/* ─── Testimonials ────────────────────────────────────────────────── */}
+      <TestimonialsSection />
 
       {/* ─── Denk Labor ───────────────────────────────────────────────────── */}
       <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
