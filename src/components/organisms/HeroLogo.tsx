@@ -50,31 +50,47 @@ const a = (
 // Terra (Struktur — left shape) — 3 keyframe paths
 // Command sequence: M · C(top) · C×8(right contour) · C(bottom) · Z  =  10 C commands
 //
-// Each of the 8 contour anchor points has its OWN phase so the edge ripples
-// rather than scaling uniformly:
-//   Odd points  (y≈59,177,294,412): peak in T2, small in T3
-//   Even points (y≈118,235,353,470): peak in T3, small in T2
-// This makes every point feel independent as the animation cycles.
+// Every contour anchor point has a UNIQUE trajectory across the 3 stages.
+// Points 3 (y≈177) and 6 (y≈353) are LARGEST in T1 and SHRINK during T1→T2,
+// while points 1, 4, 7 grow. This means in every transition some points move
+// rightward while others move leftward simultaneously → no group behaviour.
 //
-// T1 — all points retracted (108–145 px)
-// T2 — odd points BIG (252–262 px), even points small (175–195 px)
-// T3 — even points BIG (240–255 px), odd points small (172–195 px)
-const T1 = 'M 0,0 C 28,0 82,0 118,0 C 118,25 115,45 112,59 C 118,80 140,100 138,118 C 132,135 105,152 108,177 C 112,198 148,218 145,235 C 140,252 112,270 115,294 C 118,312 145,332 142,353 C 138,372 108,392 112,412 C 115,432 130,452 128,470 C 92,470 32,470 0,470 Z'
-const T2 = 'M 0,0 C 55,0 132,0 185,0 C 208,20 272,42 252,59 C 238,76 192,98 195,118 C 202,138 268,158 258,177 C 248,196 178,218 182,235 C 186,252 272,272 262,294 C 252,315 172,335 175,353 C 180,372 258,392 248,412 C 238,432 188,452 192,470 C 145,470 52,470 0,470 Z'
-const T3 = 'M 0,0 C 45,0 118,0 168,0 C 172,20 188,42 185,59 C 188,76 252,98 248,118 C 242,138 168,158 172,177 C 176,196 262,218 255,235 C 248,252 188,272 195,294 C 202,312 245,332 240,353 C 234,372 178,392 182,412 C 178,432 162,452 165,470 C 120,470 40,470 0,470 Z'
+//   Point x-values  (T1 / T2 / T3):
+//   y≈ 59:  191 / 255 / 135   peaks T2
+//   y≈118:  135 / 195 / 245   peaks T3
+//   y≈177:  258 / 152 / 195   peaks T1  ← contracts during T1→T2
+//   y≈235:  145 / 248 / 178   peaks T2
+//   y≈294:  112 / 165 / 252   peaks T3
+//   y≈353:  240 / 148 / 205   peaks T1  ← contracts during T1→T2
+//   y≈412:  155 / 245 / 112   peaks T2
+//   y≈470:  112 / 182 / 258   peaks T3
+//
+// Terra max x ≈ 258; gap to sage min ≈ 340 → guaranteed ~82 px clearance
+const T1 = 'M 0,0 C 61,0 112,0 160,0 C 172,20 182,40 191,59 C 170,79 152,99 135,118 C 182,138 221,158 258,177 C 215,197 179,217 145,235 C 132,255 122,275 112,294 C 161,314 202,334 240,353 C 208,373 180,393 155,412 C 139,432 125,452 112,470 C 69,470 34,470 0,470 Z'
+const T2 = 'M 0,0 C 82,0 151,0 215,0 C 230,20 243,40 255,59 C 232,79 213,99 195,118 C 179,138 165,158 152,177 C 188,197 219,217 248,235 C 216,255 190,275 165,294 C 159,314 153,334 148,353 C 185,373 216,393 245,412 C 221,432 201,452 182,470 C 113,470 55,470 0,470 Z'
+const T3 = 'M 0,0 C 58,0 106,0 152,0 C 146,20 140,40 135,59 C 177,79 212,99 245,118 C 226,138 210,158 195,177 C 189,197 183,217 178,235 C 206,255 230,275 252,294 C 234,314 219,334 205,353 C 170,373 140,393 112,412 C 167,432 214,452 258,470 C 160,470 77,470 0,470 Z'
 
 // Sage (Strategie — right shape) — independent timing, equally dramatic
 // Command sequence: M · C(top) · C×8(left contour) · C(bottom) · Z  =  10 C commands
 //
-// Same staggered-phase principle as terra — each contour point has its own
-// expansion rhythm, preventing the edge from breathing as one uniform mass.
+// Same independent-trajectory principle — each of the 8 left-edge anchor
+// points peaks in a different stage, so S1→S2 has 4 points expanding while
+// 4 contract, and S2→S3 is similarly mixed.
 //
-// S1 — moderate, varied  (412–445 px)
-// S2 — most expanded     (338–415 px)  gap vs T2 odd peaks ≈ 65 px ← narrowest
-// S3 — retracted, varied (480–492 px)  gap vs T1         ≈ 340 px ← widest
-const S1 = 'M 560,0 C 530,0 488,0 445,0 C 435,20 418,38 422,59 C 426,80 440,100 438,118 C 432,138 412,158 415,177 C 418,198 438,218 435,235 C 432,252 415,272 418,294 C 421,314 440,334 438,353 C 436,372 418,392 420,412 C 422,432 440,452 438,470 C 492,470 532,470 560,470 Z'
-const S2 = 'M 560,0 C 505,0 458,0 415,0 C 388,20 340,42 352,59 C 364,76 408,98 398,118 C 388,138 335,158 342,177 C 349,196 402,218 392,235 C 382,252 330,272 338,294 C 346,316 392,336 388,353 C 384,370 342,392 348,412 C 354,432 402,452 395,470 C 448,470 510,470 560,470 Z'
-const S3 = 'M 560,0 C 545,0 515,0 482,0 C 488,20 498,38 492,59 C 486,80 478,98 480,118 C 476,138 496,158 490,177 C 484,196 478,218 482,235 C 486,252 494,272 490,294 C 486,316 478,338 480,353 C 482,370 492,390 488,412 C 484,432 480,452 484,470 C 515,470 545,470 560,470 Z'
+//   Point x-values  (S1 / S2 / S3):
+//   y≈ 59:  380 / 358 / 482   peaks S2 (most expanded)
+//   y≈118:  440 / 395 / 480   peaks S2
+//   y≈177:  362 / 480 / 420   peaks S1  ← expands during S1, contracts S1→S2
+//   y≈235:  462 / 345 / 485   peaks S2
+//   y≈294:  485 / 375 / 342   peaks S3  ← most expanded in S3!
+//   y≈353:  355 / 478 / 430   peaks S1  ← contracts during S1→S2
+//   y≈412:  465 / 340 / 490   peaks S2
+//   y≈470:  432 / 465 / 358   peaks S3
+//
+// Sage min x ≈ 340 (gap to terra max 258 → ~82 px guaranteed clearance)
+const S1 = 'M 560,0 C 505,0 458,0 415,0 C 402,20 390,40 380,59 C 403,79 422,99 440,118 C 410,138 385,158 362,177 C 400,197 432,217 462,235 C 471,255 478,275 485,294 C 436,314 394,334 355,353 C 397,373 432,393 465,412 C 452,432 442,452 432,470 C 481,470 522,470 560,470 Z'
+const S2 = 'M 560,0 C 492,0 434,0 380,0 C 372,20 365,40 358,59 C 372,79 384,99 395,118 C 427,138 455,158 480,177 C 429,197 385,217 345,235 C 356,255 366,275 375,294 C 414,314 447,334 478,353 C 426,373 381,393 340,412 C 388,432 428,452 465,470 C 501,470 532,470 560,470 Z'
+const S3 = 'M 560,0 C 530,0 504,0 480,0 C 480,20 481,40 482,59 C 482,79 481,99 480,118 C 457,138 438,158 420,177 C 445,197 466,217 485,235 C 431,255 385,275 342,294 C 375,314 404,334 430,353 C 453,373 472,393 490,412 C 440,432 398,452 358,470 C 435,470 499,470 560,470 Z'
 
 // Looping: append stage 1 at the end so each cycle is seamless.
 // Terra: 15 s · Sage: 11 s  →  LCM = 165 s before the phase combination repeats.
