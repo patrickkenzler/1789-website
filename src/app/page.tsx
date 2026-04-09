@@ -208,45 +208,122 @@ export default function Home() {
               const textColors = ['var(--color-background)', 'var(--color-background)', 'var(--color-ink)']
               const bg = bgColors[i % 3]
               const fg = textColors[i % 3]
+
+              // Image overlay colours — applied over photo when image is present
+              const overlayColors = ['#F44D0B', '#1A1714', '#B8CC8A']
+              // Placeholder accent colours — diagonal gradient + label
+              const placeholderAccents = ['rgba(244,77,11,0.55)', 'rgba(227,221,213,0.2)', 'rgba(184,204,138,0.55)']
+              const placeholderLines   = ['rgba(244,77,11,0.07)', 'rgba(227,221,213,0.04)', 'rgba(184,204,138,0.07)']
+              const accentLabel        = ['#F44D0B', 'rgba(227,221,213,0.5)', '#B8CC8A']
+
+              const placeholderBg = [
+                `linear-gradient(135deg, ${placeholderAccents[i % 3]} 0%, transparent 65%), repeating-linear-gradient(135deg, transparent 0px, transparent 20px, ${placeholderLines[i % 3]} 20px, ${placeholderLines[i % 3]} 21px), #0D0B0A`,
+              ][0]
+
               return (
                 <a
                   key={c.slug}
                   href={`/projekte/${c.slug}`}
-                  className="group p-8 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+                  className="group flex flex-col cursor-pointer transition-all duration-300 hover:scale-[1.02]"
                   style={{
-                    gridColumn:      'span 4',
+                    gridColumn:     'span 4',
                     backgroundColor: bg,
-                    borderRadius:    'var(--radius-md)',
-                    border:          '1px solid rgba(255,255,255,0.08)',
-                    minHeight:       '340px',
-                    textDecoration:  'none',
+                    borderRadius:   'var(--radius-md)',
+                    border:         '1px solid rgba(255,255,255,0.08)',
+                    minHeight:      '460px',
+                    textDecoration: 'none',
+                    overflow:       'hidden',
                   }}
                 >
-                  <div className="flex gap-2 flex-wrap">
-                    {c.tags.slice(0, 1).map((t) => (
-                      <span
-                        key={t}
-                        className="font-mono text-[0.6875rem] tracking-[0.08em] uppercase px-3 py-1 rounded-full"
-                        style={{ border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.7)' }}
+                  {/* ── Title image slot (200px) ── */}
+                  <div style={{ position: 'relative', height: '200px', flexShrink: 0, overflow: 'hidden' }}>
+                    {c.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={c.image}
+                        alt={c.title}
+                        style={{
+                          width:     '100%',
+                          height:    '100%',
+                          objectFit: 'cover',
+                          filter:    'grayscale(0.65) brightness(0.82)',
+                          display:   'block',
+                        }}
+                      />
+                    ) : (
+                      // Placeholder — diagonal texture + accent gradient
+                      <div
+                        style={{
+                          width:    '100%',
+                          height:   '100%',
+                          background: placeholderBg,
+                          display:  'flex',
+                          alignItems:    'flex-end',
+                          justifyContent:'flex-end',
+                          padding:  '1rem 1.25rem',
+                        }}
                       >
-                        {t}
-                      </span>
-                    ))}
+                        <span style={{
+                          fontFamily:    'var(--font-mono)',
+                          fontSize:      '0.6rem',
+                          letterSpacing: '0.18em',
+                          textTransform: 'uppercase',
+                          color:         accentLabel[i % 3],
+                          opacity:       0.7,
+                        }}>
+                          ↗ {c.client}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Colour overlay — sits above the photo, fades on hover */}
+                    {c.image && (
+                      <div
+                        className="case-img-overlay"
+                        style={{
+                          position:        'absolute',
+                          inset:           0,
+                          backgroundColor: overlayColors[i % 3],
+                          opacity:         0.5,
+                          transition:      'opacity 300ms var(--ease-standard)',
+                        }}
+                      />
+                    )}
                   </div>
-                  <div>
-                    <p className="font-mono text-[0.6rem] tracking-widest uppercase mb-2"
-                      style={{ color: 'rgba(255,255,255,0.45)' }}>
-                      {c.client}
-                    </p>
-                    <h3
-                      className="font-display font-light"
-                      style={{ fontSize: 'var(--text-sm)', lineHeight: '1.15', color: fg }}
-                    >
-                      {c.title}
-                    </h3>
-                    <p className="mt-3 font-mono text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                      {c.duration} · {c.scale}
-                    </p>
+
+                  {/* ── Card content ── */}
+                  <div
+                    className="p-8 flex flex-col justify-between"
+                    style={{ flex: 1 }}
+                  >
+                    <div className="flex gap-2 flex-wrap">
+                      {c.tags.slice(0, 1).map((t) => (
+                        <span
+                          key={t}
+                          className="font-mono text-[0.6875rem] tracking-[0.08em] uppercase px-3 py-1 rounded-full"
+                          style={{ border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.7)' }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <div>
+                      <p
+                        className="font-mono text-[0.6rem] tracking-widest uppercase mb-2"
+                        style={{ color: 'rgba(255,255,255,0.45)' }}
+                      >
+                        {c.client}
+                      </p>
+                      <h3
+                        className="font-display font-light"
+                        style={{ fontSize: 'var(--text-sm)', lineHeight: '1.15', color: fg }}
+                      >
+                        {c.title}
+                      </h3>
+                      <p className="mt-3 font-mono text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                        {c.duration} · {c.scale}
+                      </p>
+                    </div>
                   </div>
                 </a>
               )

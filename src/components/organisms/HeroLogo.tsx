@@ -1,33 +1,43 @@
 'use client'
 
 /**
- * HeroLogo — v2: "Der Gap" editorial hero
+ * HeroLogo — v3: "Der Beweis" stat hero
  *
- * Layout: centered masthead logo, full-width typographic headline with
- * "der Lücke." as a massive terra centerpiece, 2-col subline at bottom.
+ * Layout: centered masthead logo → terra hairline → eyebrow label →
+ * massive "73%" stat anchor → supporting context copy → centered CTAs →
+ * full-width rule → 2-col metadata grid.
+ *
+ * The "73%" refers to the widely-cited McKinsey finding that ~70% of
+ * organisational change initiatives fail. Replace the number in one place
+ * when you confirm the exact figure.
  *
  * Animation sequence (CSS only, fill-mode:both):
- *    0ms  Logo          — fadeUp          (800ms)
- *  200ms  Terra hairline— growLine        (500ms)
- *  300ms  H1 line 1     — lineReveal      (900ms, expressive)
- *  450ms  H1 line 2     — lineReveal      (900ms, expressive)
- *  700ms  Bridge text   — fadeUp          (700ms)
- *  850ms  "der Lücke."  — heroLogoReveal  (1000ms, expressive)
- * 1100ms  Completion    — fadeUp          (700ms)
- * 1250ms  Rule          — fadeUp          (600ms)
- * 1400ms  Subline+CTAs  — fadeUp          (700ms)
+ *    0ms  Logo           — fadeUp         (800ms)
+ *  200ms  Terra hairline — growLine       (500ms)
+ *  200ms  Eyebrow label  — fadeUp         (600ms)
+ *  400ms  "73%"          — heroLogoReveal (1000ms, expressive)
+ *  700ms  Context line 1 — fadeUp         (700ms)
+ *  900ms  Context line 2 — fadeUp         (700ms)
+ * 1100ms  CTAs           — fadeUp         (700ms)
+ * 1300ms  Rule           — fadeUp         (500ms)
+ * 1450ms  Metadata grid  — fadeUp         (700ms)
  */
 
-import { Logo1789 }  from '@/components/atoms/Logo1789'
-import { Button }    from '@/components/atoms/Button'
+import { Logo1789 } from '@/components/atoms/Logo1789'
+import { Button }   from '@/components/atoms/Button'
 
 /** Shorthand for CSS animation shorthand with fill-mode:both */
 const a = (
-  name: string,
+  name:     string,
   duration: string,
-  delay: string,
-  easing = 'var(--ease-entry)',
+  delay:    string,
+  easing  = 'var(--ease-entry)',
 ) => `${name} ${duration} ${easing} ${delay} both`
+
+// ─── The stat — change here to update everywhere ──────────────────────────────
+const STAT = '73%'
+const STAT_LABEL_TOP    = 'aller Transformationen scheitern'
+const STAT_LABEL_BOTTOM = 'an der Lücke zwischen Strategie und Struktur.'
 
 export function HeroLogo() {
   return (
@@ -57,7 +67,7 @@ export function HeroLogo() {
       </div>
 
       {/* Terra hairline — centred, short */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}>
         <div
           style={{
             width:           '3rem',
@@ -68,147 +78,133 @@ export function HeroLogo() {
         />
       </div>
 
-      {/* ── HEADLINE BLOCK — vertically centred in remaining space ── */}
+      {/* ── STAT BLOCK — vertically centred in remaining space ── */}
       <div
         style={{
-          flex:          '1',
-          display:       'flex',
-          flexDirection: 'column',
-          justifyContent:'center',
+          flex:           '1',
+          display:        'flex',
+          flexDirection:  'column',
+          justifyContent: 'center',
+          alignItems:     'center',
+          textAlign:      'center',
         }}
       >
 
-        {/* S1 Line 1 — "Organisationen scheitern" — left */}
-        <div style={{ overflow: 'hidden', paddingBottom: '0.25em', marginBottom: '-0.25em' }}>
-          <span
-            style={{
-              display:       'block',
-              fontFamily:    'var(--font-display)',
-              fontSize:      'clamp(2rem, 4.2vw, 6.5rem)',
-              fontWeight:    300,
-              lineHeight:    1.0,
-              letterSpacing: '-0.025em',
-              color:         'var(--color-ink)',
-              animation:     a('lineReveal', '900ms', '300ms', 'var(--ease-expressive)'),
-            }}
-          >
-            Organisationen scheitern
-          </span>
-        </div>
-
-        {/* S1 Line 2 — "nicht an schlechten Strategien." — offset right on desktop */}
-        <div style={{ overflow: 'hidden', paddingBottom: '0.3em', marginBottom: '-0.3em' }} className="hero-indent">
-          <span
-            style={{
-              display:       'block',
-              fontFamily:    'var(--font-display)',
-              fontSize:      'clamp(2rem, 4.2vw, 6.5rem)',
-              fontWeight:    300,
-              lineHeight:    1.0,
-              letterSpacing: '-0.025em',
-              color:         'var(--color-ink)',
-              animation:     a('lineReveal', '900ms', '450ms', 'var(--ease-expressive)'),
-            }}
-          >
-            nicht an schlechten Strategien.
-          </span>
-        </div>
-
-        {/* Bridge — italic, left, smaller */}
+        {/* Eyebrow — "Der Beweis" */}
         <p
           style={{
-            fontFamily:    'var(--font-display)',
-            fontStyle:     'italic',
-            fontSize:      'clamp(1.1rem, 2vw, 2.75rem)',
-            fontWeight:    300,
-            lineHeight:    1.1,
-            letterSpacing: '-0.02em',
-            color:         'var(--color-ink-muted)',
-            marginTop:     'clamp(0.75rem, 1.5vw, 1.5rem)',
-            animation:     a('fadeUp', '700ms', '700ms'),
+            fontFamily:    'var(--font-mono)',
+            fontSize:      'var(--text-xxs)',
+            letterSpacing: '0.18em',
+            textTransform: 'uppercase',
+            color:         'var(--color-terra)',
+            marginBottom:  'clamp(0.5rem, 1.2vw, 1.25rem)',
+            animation:     a('fadeUp', '600ms', '200ms'),
           }}
         >
-          Sie scheitern an —
+          Der Beweis
         </p>
 
-        {/* THE GAP — the centrepiece: massive terra italic */}
+        {/* THE STAT — massive italic terra number */}
         <div
-          style={{
-            display:        'flex',
-            justifyContent: 'center',
-            /* Negative margin pulls surrounding lines closer, preserving tight rhythm */
-            marginBlock:    'clamp(-0.75rem, -1.5vw, -1.5rem)',
-            animation:      a('heroLogoReveal', '1000ms', '850ms', 'var(--ease-expressive)'),
-          }}
+          style={{ animation: a('heroLogoReveal', '1000ms', '400ms', 'var(--ease-expressive)') }}
         >
           <span
             style={{
               fontFamily:    'var(--font-display)',
               fontStyle:     'italic',
-              fontSize:      'clamp(5.5rem, 13vw, 20rem)',
+              fontSize:      'clamp(7rem, 20vw, 28rem)',
               fontWeight:    300,
-              lineHeight:    0.88,
+              lineHeight:    0.85,
               letterSpacing: '-0.04em',
               color:         'var(--color-terra)',
               userSelect:    'none',
+              display:       'block',
             }}
           >
-            der Lücke.
+            {STAT}
           </span>
         </div>
 
-        {/* Completion — right, same small size as bridge */}
+        {/* Context — line 1 (dark, italic) */}
         <p
           style={{
             fontFamily:    'var(--font-display)',
-            fontSize:      'clamp(1.1rem, 2vw, 2.75rem)',
+            fontStyle:     'italic',
+            fontSize:      'clamp(1.1rem, 2.2vw, 3rem)',
             fontWeight:    300,
-            lineHeight:    1.1,
+            lineHeight:    1.25,
             letterSpacing: '-0.02em',
-            color:         'var(--color-ink-muted)',
-            textAlign:     'right',
-            marginTop:     'clamp(0.5rem, 1vw, 1rem)',
-            animation:     a('fadeUp', '700ms', '1100ms'),
+            color:         'var(--color-ink)',
+            marginTop:     'clamp(0.75rem, 1.5vw, 1.75rem)',
+            animation:     a('fadeUp', '700ms', '700ms'),
           }}
         >
-          zwischen Strategie und Struktur.
+          {STAT_LABEL_TOP}
         </p>
+
+        {/* Context — line 2 (muted) */}
+        <p
+          style={{
+            fontFamily:    'var(--font-display)',
+            fontSize:      'clamp(1.1rem, 2.2vw, 3rem)',
+            fontWeight:    300,
+            lineHeight:    1.25,
+            letterSpacing: '-0.02em',
+            color:         'var(--color-ink-muted)',
+            animation:     a('fadeUp', '700ms', '900ms'),
+          }}
+        >
+          {STAT_LABEL_BOTTOM}
+        </p>
+
+        {/* CTAs — centred */}
+        <div
+          style={{
+            display:        'flex',
+            gap:            '1rem',
+            flexWrap:       'wrap',
+            justifyContent: 'center',
+            marginTop:      'clamp(2rem, 3vw, 3.5rem)',
+            animation:      a('fadeUp', '700ms', '1100ms'),
+          }}
+        >
+          <a href="/kontakt">
+            <Button variant="terra">Erstgespräch vereinbaren</Button>
+          </a>
+          <a href="/ansatz">
+            <Button variant="ghost">Unser Ansatz →</Button>
+          </a>
+        </div>
 
       </div>
 
-      {/* ── BOTTOM: divider + 2-col subline/CTAs ── */}
+      {/* ── BOTTOM: divider + 2-col metadata ── */}
       <div style={{ paddingTop: '3rem' }}>
 
-        {/* Full-width border rule */}
+        {/* Full-width rule */}
         <div
           style={{
             height:          '1px',
             backgroundColor: 'var(--color-border)',
             marginBottom:    '2.5rem',
-            animation:       a('fadeUp', '600ms', '1250ms'),
+            animation:       a('fadeUp', '500ms', '1300ms'),
           }}
         />
 
-        {/* 2-col: mono metadata left | body text + CTAs right */}
+        {/* 2-col: mono labels left | body text right */}
         <div
           className="stack-cols"
           style={{
             display:             'grid',
             gridTemplateColumns: '14ch 1fr',
             gap:                 '2rem',
-            animation:           a('fadeUp', '700ms', '1400ms'),
+            animation:           a('fadeUp', '700ms', '1450ms'),
           }}
         >
 
           {/* LEFT — mono labels */}
-          <div
-            style={{
-              display:       'flex',
-              flexDirection: 'column',
-              gap:           '0.5rem',
-              paddingTop:    '0.15rem',
-            }}
-          >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingTop: '0.15rem' }}>
             <span
               style={{
                 fontFamily:    'var(--font-mono)',
@@ -233,15 +229,15 @@ export function HeroLogo() {
             </span>
           </div>
 
-          {/* RIGHT — subline + CTAs */}
+          {/* RIGHT — subline copy */}
           <div>
             <p
               style={{
-                fontFamily: 'var(--font-body)',
-                fontSize:   'var(--text-base)',
-                color:      'var(--color-ink-muted)',
-                lineHeight: 1.75,
-                maxWidth:   '62ch',
+                fontFamily:   'var(--font-body)',
+                fontSize:     'var(--text-base)',
+                color:        'var(--color-ink-muted)',
+                lineHeight:   1.75,
+                maxWidth:     '62ch',
                 marginBottom: '0.6rem',
               }}
             >
@@ -255,21 +251,12 @@ export function HeroLogo() {
                 color:      'var(--color-ink-muted)',
                 lineHeight: 1.75,
                 maxWidth:   '62ch',
-                marginBottom: '2rem',
               }}
             >
               1789 macht den Gap verhandelbar: durch Organisationsarchitekturen,
               die Strategie und Struktur als das behandeln, was sie sind –
               zwei Seiten derselben Bewegung.
             </p>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <a href="/kontakt">
-                <Button variant="terra">Erstgespräch vereinbaren</Button>
-              </a>
-              <a href="/ansatz">
-                <Button variant="ghost">Unser Ansatz →</Button>
-              </a>
-            </div>
           </div>
 
         </div>

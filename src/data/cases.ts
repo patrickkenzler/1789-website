@@ -14,6 +14,8 @@ export type CaseStudy = {
   quote?: { text: string; author: string; role: string }
   color: 'terra' | 'sage' | 'ink' | 'neutral'
   featured?: boolean
+  /** Path relative to /public — e.g. '/projects/wd40.jpg'. Omit to show placeholder. */
+  image?: string
 }
 
 export const cases: CaseStudy[] = [
