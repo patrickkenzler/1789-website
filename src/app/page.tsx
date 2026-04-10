@@ -137,7 +137,7 @@ export default function Home() {
         }}
       >
         {/* Section grows to fill the space above the carousel */}
-        <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3.5rem 2rem' }}>
+        <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '6rem 2rem' }}>
           <Container>
 
             {/* ── Staggered editorial headline ── */}
@@ -211,7 +211,7 @@ export default function Home() {
           overflow:        'hidden',
         }}
       >
-      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3.5rem 2rem' }}>
+      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '6rem 2rem' }}>
         <Container>
           <Grid>
             <Col span={6}>
