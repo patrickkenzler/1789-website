@@ -258,14 +258,15 @@ export function HeroLogo() {
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
-            RIGHT — SVG animation only, full column height, no padding
+            RIGHT — SVG animation, left-aligned with equal right margin
         ──────────────────────────────────────────────────────────────── */}
         <div
           style={{
-            display:   'flex',
-            alignItems: 'stretch',
-            overflow:  'hidden',
-            animation: a('fadeUp', '1000ms', '200ms', 'var(--ease-expressive)'),
+            display:      'flex',
+            alignItems:   'stretch',
+            overflow:     'hidden',
+            paddingRight: 'var(--grid-margin)',
+            animation:    a('fadeUp', '1000ms', '200ms', 'var(--ease-expressive)'),
           }}
         >
           <GapGraphic />
