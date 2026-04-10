@@ -130,14 +130,20 @@ export default function Home() {
         className="scroll-card"
         style={{
           backgroundColor: 'var(--color-background)',
-          height:          '100svh',
+          /*
+           * Inline top override: dock the card flush under the fixed nav (5rem)
+           * so no content is ever behind it. Height shrinks to the remaining
+           * viewport so the carousel stays pinned at the exact bottom edge.
+           */
+          top:             '5rem',
+          height:          'calc(100svh - 5rem)',
           display:         'flex',
           flexDirection:   'column',
           overflow:        'hidden',
         }}
       >
         {/* Section grows to fill the space above the carousel */}
-        <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '6rem 2rem' }}>
+        <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem 2rem' }}>
           <Container>
 
             {/* ── Staggered editorial headline ── */}
@@ -205,13 +211,14 @@ export default function Home() {
         className="scroll-card"
         style={{
           backgroundColor: 'var(--color-ink)',
-          height:          '100svh',
+          top:             '5rem',
+          height:          'calc(100svh - 5rem)',
           display:         'flex',
           flexDirection:   'column',
           overflow:        'hidden',
         }}
       >
-      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '6rem 2rem' }}>
+      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem 2rem' }}>
         <Container>
           <Grid>
             <Col span={6}>
