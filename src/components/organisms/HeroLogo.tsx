@@ -82,8 +82,8 @@ function sageContour(xs: readonly number[], δ: number): string {
   return `M 560,0 L ${tx},0 Q ${a1},94 ${m1},141 Q ${a2},188 ${m2},235 Q ${a3},282 ${m3},329 Q ${a4},376 ${bx},470 L 560,470 Z`
 }
 
-// 6 layers; rendered largest→smallest so overlap areas stack opacity naturally
-const CONTOUR_OFFSETS = [0, 28, 56, 84, 112, 140]
+// 9 layers; rendered largest→smallest so overlap areas stack opacity naturally
+const CONTOUR_OFFSETS = [0, 20, 40, 60, 80, 100, 120, 140, 160]
 const KEY_TIMES   = '0; 0.25; 0.5; 0.75; 1'
 const KEY_SPLINES = '0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1'
 
