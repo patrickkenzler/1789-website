@@ -29,54 +29,57 @@ const a = (
 
 // ─── Gap Graphic — morphing SVG ──────────────────────────────────────────────
 /**
- * Two organic blobs that continuously morph between 4 states via SVG <animate>.
+ * Two organic blobs morphing through 4 states via SVG <animate>.
  *
- * Shape design:
- *  – All paths use the SAME command sequence: M · C×5 · Z (5 cubic segments).
- *    SVG SMIL requires identical commands in every keyframe for smooth morphing.
- *  – Control points are derived via Catmull-Rom → cubic bezier conversion,
- *    guaranteeing C1 continuity (smooth tangent at every anchor) — no kinks.
- *  – Each shape has 4 right/left-edge anchor points at y = [100, 200, 300, 400].
- *    One anchor (y=200) has a small oscillation range (~30 px) so the edge
- *    reads as a slow-breathing wave rather than a uniform pulse.
- *  – Terra and sage run on DIFFERENT clocks (20 s / 13 s, 5 s begin-offset)
- *    so they drift continuously — LCM = 260 s before the phase repeats.
- *  – Terra max x ≈ 240; sage min x ≈ 350 → guaranteed ~110 px gap clearance.
+ * Smoothness technique — quadratic bezier midpoint chaining:
+ *   Each stage defines 5 "anchor" points on the organic edge. The SVG path
+ *   places Q-bezier ENDPOINTS at the midpoints between adjacent anchors, and
+ *   uses the anchors themselves as Q control points. Because quadratic beziers
+ *   are always within the convex hull of (start, control, end), the curve
+ *   NEVER overshoots or spikes — it flows smoothly through every anchor
+ *   neighbourhood. Adjacent segments automatically share a smooth tangent at
+ *   every midpoint endpoint, giving C1 continuity with no kinks.
+ *
+ *   Path structure (terra):  M 0,0 · Q A0 m01 · Q A1 m12 · Q A2 m23 · Q A3 m34 · Q A4 0,470 · Z
+ *   Path structure (sage):   M 560,0 · Q A0 m01 · …same… · Q A4 560,470 · Z
+ *
+ *  – Terra max control-point x ≤ 240; sage min ≥ 350 → ≥ 110 px gap always.
+ *  – Terra: 20 s · Sage: 13 s (5 s offset) → LCM 260 s before phase repeats.
  */
 
 // Terra (Struktur — left shape) — 4 keyframe paths
-// Path: M 0,0 → CR-bezier down right edge → 0,470 → Z (left edge implicit)
 //
-// Anchor x-values (TA / TB / TC / TD):
-//   y=100:  80 / 220 / 130 / 230   large swing (150 px)
-//   y=200: 215 / 190 / 225 / 180   small swing  (45 px) ← wave anchor
-//   y=300: 240 /  70 / 200 /  80   large swing (170 px)
-//   y=400: 100 / 210 /  80 / 220   large swing (140 px)
+// Anchor x-values at y = [50, 160, 250, 360, 440]  (TA / TB / TC / TD):
+//   A0 y=50:   60 / 230 /  80 / 200   rising ↔ falling
+//   A1 y=160: 120 / 210 / 200 /  80   varied
+//   A2 y=250: 190 / 150 / 240 /  60   bell ↔ valley
+//   A3 y=360: 240 /  80 / 180 / 130   large swing
+//   A4 y=440: 200 /  60 /  80 / 220   varied
 //
-// Catmull-Rom formula: CP1 = Pi + (Pi+1 − Pi−1)/6
-//                      CP2 = Pi+1 − (Pi+2 − Pi)/6
-// (virtual P−1 = start, virtual Pn = end for boundary segments)
-const TA = 'M 0,0 C 13,17 44,67 80,100 C 116,133 188,167 215,200 C 242,233 259,267 240,300 C 221,333 140,372 100,400 C 60,428 17,458 0,470 Z'
-const TB = 'M 0,0 C 37,17 188,67 220,100 C 252,133 215,167 190,200 C 165,233 67,267 70,300 C 73,333 222,372 210,400 C 198,428 35,458 0,470 Z'
-const TC = 'M 0,0 C 22,17 92,67 130,100 C 168,133 213,167 225,200 C 237,233 224,267 200,300 C 176,333 113,372 80,400 C 47,428 13,458 0,470 Z'
-const TD = 'M 0,0 C 38,17 200,67 230,100 C 260,133 205,167 180,200 C 155,233 73,267 80,300 C 87,333 233,372 220,400 C 207,428 37,458 0,470 Z'
+// Midpoints (Q endpoints) = avg of adjacent anchor x/y coords.
+// Convex-hull guarantee: curve x ≤ max(anchor, midpoint) ≤ 240 for all stages.
+const TA = 'M 0,0 Q 60,50 90,105 Q 120,160 155,205 Q 190,250 215,305 Q 240,360 220,400 Q 200,440 0,470 Z'
+const TB = 'M 0,0 Q 230,50 220,105 Q 210,160 180,205 Q 150,250 115,305 Q 80,360 70,400 Q 60,440 0,470 Z'
+const TC = 'M 0,0 Q 80,50 140,105 Q 200,160 220,205 Q 240,250 210,305 Q 180,360 130,400 Q 80,440 0,470 Z'
+const TD = 'M 0,0 Q 200,50 140,105 Q 80,160 70,205 Q 60,250 95,305 Q 130,360 175,400 Q 220,440 0,470 Z'
 
-// Sage (Strategie — right shape) — independent timing, equally organic
-// Path: M 560,0 → CR-bezier down left edge → 560,470 → Z (right edge implicit)
+// Sage (Strategie — right shape) — independent timing
 //
-// Anchor x-values (SA / SB / SC / SD):
-//   y=100: 500 / 370 / 470 / 360   large swing (140 px)
-//   y=200: 460 / 480 / 455 / 475   small swing  (25 px) ← wave anchor
-//   y=300: 350 / 500 / 380 / 510   large swing (160 px)
-//   y=400: 490 / 370 / 510 / 360   large swing (150 px)
-const SA = 'M 560,0 C 550,17 517,67 500,100 C 483,133 485,167 460,200 C 435,233 345,267 350,300 C 355,333 455,372 490,400 C 525,428 548,458 560,470 Z'
-const SB = 'M 560,0 C 528,17 383,67 370,100 C 357,133 458,167 480,200 C 502,233 518,267 500,300 C 482,333 360,372 370,400 C 380,428 528,458 560,470 Z'
-const SC = 'M 560,0 C 545,17 488,67 470,100 C 452,133 470,167 455,200 C 440,233 371,267 380,300 C 389,333 480,372 510,400 C 540,428 552,458 560,470 Z'
-const SD = 'M 560,0 C 527,17 374,67 360,100 C 346,133 450,167 475,200 C 500,233 529,267 510,300 C 491,333 352,372 360,400 C 368,428 527,458 560,470 Z'
+// Anchor x-values at y = [50, 160, 250, 360, 440]  (SA / SB / SC / SD):
+//   A0 y=50:  490 / 370 / 480 / 360   large swing
+//   A1 y=160: 360 / 450 / 380 / 490   large swing
+//   A2 y=250: 380 / 510 / 350 / 500   large swing
+//   A3 y=360: 470 / 380 / 440 / 360   varied
+//   A4 y=440: 520 / 360 / 500 / 380   varied
+//
+// Sage min control-point x ≥ 350 (SC A2) → gap from terra max 240 = 110 px.
+const SA = 'M 560,0 Q 490,50 425,105 Q 360,160 370,205 Q 380,250 425,305 Q 470,360 495,400 Q 520,440 560,470 Z'
+const SB = 'M 560,0 Q 370,50 410,105 Q 450,160 480,205 Q 510,250 445,305 Q 380,360 370,400 Q 360,440 560,470 Z'
+const SC = 'M 560,0 Q 480,50 430,105 Q 380,160 365,205 Q 350,250 395,305 Q 440,360 470,400 Q 500,440 560,470 Z'
+const SD = 'M 560,0 Q 360,50 425,105 Q 490,160 495,205 Q 500,250 430,305 Q 360,360 370,400 Q 380,440 560,470 Z'
 
 // Looping: append stage A at the end so each cycle is seamless.
-// Terra: 20 s · Sage: 13 s  →  LCM = 260 s before the phase repeats.
-// The 5 s begin-offset ensures they start drifted and never lock in phase.
+// Terra: 20 s · Sage: 13 s  →  LCM = 260 s before the phase combination repeats.
 const TERRA_VALS  = [TA, TB, TC, TD, TA].join(';')
 const SAGE_VALS   = [SA, SB, SC, SD, SA].join(';')
 const KEY_TIMES   = '0; 0.25; 0.5; 0.75; 1'
@@ -93,7 +96,7 @@ function GapGraphic() {
       preserveAspectRatio="none"
     >
       {/* ── Struktur — terra (left) · 15 s cycle ── */}
-      <path fill="var(--color-terra)" d={T1}>
+      <path fill="var(--color-terra)" d={TA}>
         <animate
           attributeName="d"
           dur="20s"
@@ -107,7 +110,7 @@ function GapGraphic() {
       </path>
 
       {/* ── Strategie — sage (right) · 11 s cycle, offset by 4 s ── */}
-      <path fill="var(--color-sage)" d={S1}>
+      <path fill="var(--color-sage)" d={SA}>
         <animate
           attributeName="d"
           dur="13s"
