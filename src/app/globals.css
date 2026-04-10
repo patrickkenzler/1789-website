@@ -194,13 +194,9 @@
 .scroll-card {
   position: sticky;
   top: 0;
-  /* z-index: 1 ensures sticky cards always paint above the static ticker/
-   * carousel strips that sit between them in the DOM. Cards in later DOM
-   * position still stack on top of earlier ones via paint order. */
-  z-index: 1;
   border-radius: 1.5rem 1.5rem 0 0;
-  /* Inset shadow — depth hint at the top of each card, stays inside the
-   * card bounds so it never bleeds over adjacent ticker strips. */
+  /* Inset shadow — subtle depth at the top edge of each card.
+   * Stays inside the card bounds, never bleeds over adjacent strips. */
   box-shadow: inset 0 6px 20px rgba(26, 23, 20, 0.05);
 }
 

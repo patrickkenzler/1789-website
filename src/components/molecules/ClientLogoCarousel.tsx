@@ -114,8 +114,6 @@ export function ClientLogoCarousel() {
         borderBottom:    '1px solid var(--color-border)',
         paddingBlock:    '2.5rem',
         backgroundColor: 'var(--color-background)',
-        position:        'relative',
-        zIndex:          0,
       }}
     >
       {/* Label */}
