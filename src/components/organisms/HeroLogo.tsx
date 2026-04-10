@@ -228,7 +228,7 @@ export function HeroLogo() {
               fontSize:   'clamp(0.875rem, 1.05vw, 1.05rem)',
               color:      'var(--color-ink)',
               lineHeight: 1.7,
-              maxWidth:   'calc(50vw - var(--grid-margin) * 2)',
+              maxWidth:   'clamp(260px, 34vw, 480px)',
             }}
           >
             Wir sind <strong style={{ color: 'var(--color-terra)' }}>1789 Innovation</strong>, mit unserem <strong>innovativen
@@ -244,7 +244,7 @@ export function HeroLogo() {
               display:   'flex',
               gap:       '1rem',
               flexWrap:  'wrap',
-              maxWidth:  'calc(50vw - var(--grid-margin) * 2)',
+              maxWidth:  'clamp(260px, 34vw, 480px)',
               animation: a('fadeUp', '700ms', '350ms'),
             }}
           >
