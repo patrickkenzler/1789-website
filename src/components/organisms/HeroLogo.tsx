@@ -221,39 +221,45 @@ export function HeroLogo() {
             Strategie &amp; Struktur
           </p>
 
-          {/* Body copy — constrained to page midpoint with equal left/right spacing */}
-          <p
-            style={{
-              fontFamily:   'var(--font-body)',
-              fontSize:     'clamp(0.875rem, 1.05vw, 1.05rem)',
-              color:        'var(--color-ink)',
-              lineHeight:   1.7,
-              maxWidth:     'calc(50vw - var(--grid-margin) * 2)',
-            }}
-          >
-            Wir sind <strong style={{ color: 'var(--color-terra)' }}>1789 Innovation</strong>, mit unserem <strong>innovativen
-            Beratungsansatz</strong> begleiten wir Organisationen in der <strong>Veränderung
-            ihrer Strukturen und Unternehmensstrategie.</strong> Dabei verknüpfen wir
-            wissenschaftliche <strong>systemtheoretische Ansätze</strong> mit sofortigen <strong>pragmatischen
-            Pilotierungen</strong> von Veränderungsprozessen.
-          </p>
-
-          {/* CTAs */}
+          {/* Body copy + CTAs — grid trick: column width = button row width */}
           <div
             style={{
-              display:  'flex',
-              gap:      '1rem',
-              flexWrap: 'wrap',
-              maxWidth: 'calc(50vw - var(--grid-margin) * 2)',
-              animation: a('fadeUp', '700ms', '350ms'),
+              display:             'grid',
+              gridTemplateColumns: 'min-content',
+              rowGap:              'clamp(0.75rem, 1.5svh, 1.5rem)',
             }}
           >
-            <a href="/ansatz">
-              <Button variant="ghost">Unser Ansatz →</Button>
-            </a>
-            <a href="/kontakt">
-              <Button variant="terra">Erstgespräch vereinbaren</Button>
-            </a>
+            <p
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize:   'clamp(0.875rem, 1.05vw, 1.05rem)',
+                color:      'var(--color-ink)',
+                lineHeight: 1.7,
+                minWidth:   0,
+              }}
+            >
+              Wir sind <strong style={{ color: 'var(--color-terra)' }}>1789 Innovation</strong>, mit unserem <strong>innovativen
+              Beratungsansatz</strong> begleiten wir Organisationen in der <strong>Veränderung
+              ihrer Strukturen und Unternehmensstrategie.</strong> Dabei verknüpfen wir
+              wissenschaftliche <strong>systemtheoretische Ansätze</strong> mit sofortigen <strong>pragmatischen
+              Pilotierungen</strong> von Veränderungsprozessen.
+            </p>
+
+            {/* CTAs */}
+            <div
+              style={{
+                display:  'flex',
+                gap:      '1rem',
+                animation: a('fadeUp', '700ms', '350ms'),
+              }}
+            >
+              <a href="/ansatz">
+                <Button variant="ghost">Unser Ansatz →</Button>
+              </a>
+              <a href="/kontakt">
+                <Button variant="terra">Erstgespräch vereinbaren</Button>
+              </a>
+            </div>
           </div>
         </div>
 
