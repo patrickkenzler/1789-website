@@ -105,7 +105,7 @@ export default function Home() {
       </section>
 
       {/* ─── Ticker ───────────────────────────────────────────────────────── */}
-      <div className="overflow-hidden py-4" style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}>
+      <div className="overflow-hidden py-4" style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)', position: 'relative', zIndex: 0 }}>
         <div className="flex gap-16 whitespace-nowrap">
           {Array(4).fill([
             'Structure', 'Strategy', 'Gap Consulting', 'Operating Model',
@@ -487,7 +487,10 @@ export default function Home() {
       </section>
 
       {/* ─── Unser Ansatz — sticky 2-col (foreverday pattern) ──────────── */}
-      <section className="scroll-card" style={{ backgroundColor: 'var(--color-background)' }}>
+      {/* NOTE: no scroll-card here — the inner SystemshiftAccordion has its
+          own position:sticky left panel; nesting two sticky contexts causes
+          the accordion to mis-behave. This section scrolls normally. */}
+      <section style={{ backgroundColor: 'var(--color-background)', position: 'relative', zIndex: 0 }}>
         {/* Section header inside container */}
         <Container>
           <div style={{ paddingBlock: '7rem 4rem' }}>

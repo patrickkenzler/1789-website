@@ -33,6 +33,8 @@ export function QuestionsTicker() {
         borderBottom: '1px solid var(--color-border)',
         paddingBlock: '2rem',
         backgroundColor: 'var(--color-sand)',
+        position: 'relative',
+        zIndex: 0,
       }}
     >
       {/* Label — sits above the ticker */}
