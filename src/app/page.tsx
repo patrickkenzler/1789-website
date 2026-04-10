@@ -119,71 +119,74 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ─── Dafür stehen wir ─────────────────────────────────────────────── */}
-      <section className="scroll-card" style={{ paddingBlock: '7rem 5rem', backgroundColor: 'var(--color-background)' }}>
-        <Container>
+      {/* ─── Dafür stehen wir + Logo Carousel (one sticky card) ────────────── */}
+      <div className="scroll-card" style={{ backgroundColor: 'var(--color-background)', overflow: 'hidden' }}>
+        <section style={{ paddingBlock: '7rem 5rem' }}>
+          <Container>
 
-          {/* ── Staggered editorial headline ── */}
-          <div style={{ marginBottom: '5rem' }}>
-            <Tag>Dafür stehen wir</Tag>
-            <div style={{ marginTop: '3rem' }}>
-              <div style={{ textAlign: 'right' }}>
-                <span style={displayStyle}>Ein neues Organisations&shy;verständnis —</span>
-              </div>
-              <div style={{ marginTop: '0.15em' }}>
-                <span style={{ ...displayStyle, paddingLeft: '8%', fontStyle: 'italic', color: 'var(--color-terra)' }}>
-                  auf Struktur- und Strategieebene.
-                </span>
+            {/* ── Staggered editorial headline ── */}
+            <div style={{ marginBottom: '5rem' }}>
+              <Tag>Dafür stehen wir</Tag>
+              <div style={{ marginTop: '3rem' }}>
+                <div style={{ textAlign: 'right' }}>
+                  <span style={displayStyle}>Ein neues Organisations&shy;verständnis —</span>
+                </div>
+                <div style={{ marginTop: '0.15em' }}>
+                  <span style={{ ...displayStyle, paddingLeft: '8%', fontStyle: 'italic', color: 'var(--color-terra)' }}>
+                    auf Struktur- und Strategieebene.
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* ── Intro copy ── */}
-          <Grid className="stack-cols">
-            <Col span={5} start={8}>
-              <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
-                Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
-                Durch Erkenntnis und Vokabular entsteht eine neue Möglichkeit,
-                sich mit Problemen und Lösungen auseinanderzusetzen.
-              </p>
-            </Col>
-          </Grid>
-
-          {/* ── Pillars ── */}
-          <Grid className="stack-cols mt-20">
-            {pillars.map((pillar) => (
-              <Col key={pillar.num} span={4}>
-                <div
-                  className="p-10 h-full flex flex-col gap-8 group hover:-translate-y-1 transition-transform duration-300"
-                  style={{
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-md)',
-                  }}
-                >
-                  <span className="font-mono text-xs tracking-[0.15em]" style={{ color: 'var(--color-terra)' }}>
-                    {pillar.num}
-                  </span>
-                  <h3
-                    className="font-display font-light text-ink"
-                    style={{ fontSize: 'var(--text-lg)', lineHeight: '1', letterSpacing: '-0.03em' }}
-                  >
-                    {pillar.title}
-                  </h3>
-                  <p className="font-body text-ink-muted mt-auto" style={{ fontSize: 'var(--text-sub)', lineHeight: '1.6' }}>
-                    {pillar.body}
-                  </p>
-                </div>
+            {/* ── Intro copy ── */}
+            <Grid className="stack-cols">
+              <Col span={5} start={8}>
+                <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
+                  Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
+                  Durch Erkenntnis und Vokabular entsteht eine neue Möglichkeit,
+                  sich mit Problemen und Lösungen auseinanderzusetzen.
+                </p>
               </Col>
-            ))}
-          </Grid>
-        </Container>
-      </section>
+            </Grid>
 
-      {/* ─── Client Logo Carousel ─────────────────────────────────────────── */}
-      <ClientLogoCarousel />
+            {/* ── Pillars ── */}
+            <Grid className="stack-cols mt-20">
+              {pillars.map((pillar) => (
+                <Col key={pillar.num} span={4}>
+                  <div
+                    className="p-10 h-full flex flex-col gap-8 group hover:-translate-y-1 transition-transform duration-300"
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-md)',
+                    }}
+                  >
+                    <span className="font-mono text-xs tracking-[0.15em]" style={{ color: 'var(--color-terra)' }}>
+                      {pillar.num}
+                    </span>
+                    <h3
+                      className="font-display font-light text-ink"
+                      style={{ fontSize: 'var(--text-lg)', lineHeight: '1', letterSpacing: '-0.03em' }}
+                    >
+                      {pillar.title}
+                    </h3>
+                    <p className="font-body text-ink-muted mt-auto" style={{ fontSize: 'var(--text-sub)', lineHeight: '1.6' }}>
+                      {pillar.body}
+                    </p>
+                  </div>
+                </Col>
+              ))}
+            </Grid>
+          </Container>
+        </section>
 
-      {/* ─── Highlight Cases ──────────────────────────────────────────────── */}
-      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-ink)' }}>
+        {/* Carousel travels with this card — covered together by Highlight Cases */}
+        <ClientLogoCarousel />
+      </div>
+
+      {/* ─── Highlight Cases + Questions Ticker (one sticky card) ───────────── */}
+      <div className="scroll-card" style={{ backgroundColor: 'var(--color-ink)', overflow: 'hidden' }}>
+      <section style={{ paddingBlock: '7rem' }}>
         <Container>
           <Grid>
             <Col span={6}>
@@ -334,8 +337,9 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ─── Questions Ticker ─────────────────────────────────────────────── */}
-      <QuestionsTicker />
+        {/* Ticker travels with this card — covered together by Testimonials */}
+        <QuestionsTicker />
+      </div>
 
       {/* ─── Testimonials ────────────────────────────────────────────────── */}
       <TestimonialsSection />
