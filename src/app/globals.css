@@ -182,6 +182,51 @@
   }
 }
 
+/* ─── Scroll-stack cards ──────────────────────────────────────────────────── */
+/*
+ * Each .scroll-card section sticks at the top of the viewport while the next
+ * card slides over it from below — creating an app-switcher / card-deck feel.
+ *
+ * The scale-down animation (progressive enhancement via @supports) shrinks the
+ * card slightly as it exits, giving depth to the stack. Requires Chrome 115+ /
+ * Edge 115+ for the scroll-driven animation; all browsers get sticky stacking.
+ */
+.scroll-card {
+  position: sticky;
+  top: 0;
+  border-radius: 1.5rem 1.5rem 0 0;
+  box-shadow: 0 -2px 24px rgba(26, 23, 20, 0.07);
+}
+
+@keyframes scroll-card-recede {
+  from {
+    transform: scale(1);
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
+  to {
+    transform: scale(0.94) translateY(-0.5rem);
+    border-radius: 1.5rem;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-card {
+    transform-origin: top center;
+    animation: scroll-card-recede linear both;
+    animation-timeline: view(block);
+    animation-range: exit 0% exit 30%;
+  }
+}
+
+/* Disable on mobile — too small to be meaningful */
+@media (max-width: 767px) {
+  .scroll-card {
+    position: static;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
 /* ─── Keyframes ───────────────────────────────────────────────────────────── */
 
 /*
