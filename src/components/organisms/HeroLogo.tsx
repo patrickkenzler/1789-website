@@ -31,52 +31,56 @@ const a = (
 /**
  * Two organic blobs morphing through 4 states via SVG <animate>.
  *
- * Smoothness technique — quadratic bezier midpoint chaining:
- *   Each stage defines 5 "anchor" points on the organic edge. The SVG path
- *   places Q-bezier ENDPOINTS at the midpoints between adjacent anchors, and
- *   uses the anchors themselves as Q control points. Because quadratic beziers
- *   are always within the convex hull of (start, control, end), the curve
- *   NEVER overshoots or spikes — it flows smoothly through every anchor
- *   neighbourhood. Adjacent segments automatically share a smooth tangent at
- *   every midpoint endpoint, giving C1 continuity with no kinks.
+ * Smoothness — quadratic bezier midpoint chaining (6 anchors per shape):
+ *   Anchors sit at y = [0, 94, 188, 282, 376, 470] — the first and last are
+ *   ON the top/bottom boundary. Q-bezier endpoints sit at midpoints between
+ *   adjacent anchors; the anchors are the Q control points.
  *
- *   Path structure (terra):  M 0,0 · Q A0 m01 · Q A1 m12 · Q A2 m23 · Q A3 m34 · Q A4 0,470 · Z
- *   Path structure (sage):   M 560,0 · Q A0 m01 · …same… · Q A4 560,470 · Z
+ *   Key consequence of top/bottom anchors:
+ *   – The bezier from M(0,0) with control A0=(ax,0) exits HORIZONTALLY along
+ *     y=0, so the organic edge is already moving at the very top of the frame.
+ *   – The final bezier arrives at (0,470) with control A5=(ax,470), also
+ *     horizontal — so the edge also animates at the very bottom.
+ *   – Convex-hull guarantee: Q-beziers never overshoot their control points →
+ *     no spikes, guaranteed smooth tangents (C1) at every midpoint junction.
  *
- *  – Terra max control-point x ≤ 240; sage min ≥ 350 → ≥ 110 px gap always.
- *  – Terra: 20 s · Sage: 13 s (5 s offset) → LCM 260 s before phase repeats.
+ *   Path: M 0,0 · Q A0 m01 · Q A1 m12 · Q A2 m23 · Q A3 m34 · Q A4 m45 · Q A5 0,470 · Z
+ *
+ *  – Terra max control x ≤ 240; sage min ≥ 350 → ≥ 110 px gap always.
+ *  – Terra 20 s / Sage 13 s (5 s offset) → LCM 260 s before phase repeats.
  */
 
-// Terra (Struktur — left shape) — 4 keyframe paths
+// Terra (Struktur — left shape) — 4 keyframe paths, 6 Q commands each
 //
-// Anchor x-values at y = [50, 160, 250, 360, 440]  (TA / TB / TC / TD):
-//   A0 y=50:   60 / 230 /  80 / 200   rising ↔ falling
-//   A1 y=160: 120 / 210 / 200 /  80   varied
-//   A2 y=250: 190 / 150 / 240 /  60   bell ↔ valley
-//   A3 y=360: 240 /  80 / 180 / 130   large swing
-//   A4 y=440: 200 /  60 /  80 / 220   varied
+// Anchor x at y = [0, 94, 188, 282, 376, 470]   (TA / TB / TC / TD):
+//   A0 y=  0:   80 / 200 /  60 / 220   top-edge organic movement ← NEW
+//   A1 y= 94:  180 /  80 / 100 / 200
+//   A2 y=188:  240 /  60 / 160 / 150
+//   A3 y=282:  180 / 100 / 220 /  80
+//   A4 y=376:   80 / 220 / 240 /  60
+//   A5 y=470:  160 /  60 / 180 / 160   bottom-edge organic movement ← NEW
 //
-// Midpoints (Q endpoints) = avg of adjacent anchor x/y coords.
-// Convex-hull guarantee: curve x ≤ max(anchor, midpoint) ≤ 240 for all stages.
-const TA = 'M 0,0 Q 60,50 90,105 Q 120,160 155,205 Q 190,250 215,305 Q 240,360 220,400 Q 200,440 0,470 Z'
-const TB = 'M 0,0 Q 230,50 220,105 Q 210,160 180,205 Q 150,250 115,305 Q 80,360 70,400 Q 60,440 0,470 Z'
-const TC = 'M 0,0 Q 80,50 140,105 Q 200,160 220,205 Q 240,250 210,305 Q 180,360 130,400 Q 80,440 0,470 Z'
-const TD = 'M 0,0 Q 200,50 140,105 Q 80,160 70,205 Q 60,250 95,305 Q 130,360 175,400 Q 220,440 0,470 Z'
+// Midpoints = avg of adjacent anchor (x, y).
+const TA = 'M 0,0 Q 80,0 130,47 Q 180,94 210,141 Q 240,188 210,235 Q 180,282 130,329 Q 80,376 120,423 Q 160,470 0,470 Z'
+const TB = 'M 0,0 Q 200,0 140,47 Q 80,94 70,141 Q 60,188 80,235 Q 100,282 160,329 Q 220,376 140,423 Q 60,470 0,470 Z'
+const TC = 'M 0,0 Q 60,0 80,47 Q 100,94 130,141 Q 160,188 190,235 Q 220,282 230,329 Q 240,376 210,423 Q 180,470 0,470 Z'
+const TD = 'M 0,0 Q 220,0 210,47 Q 200,94 175,141 Q 150,188 115,235 Q 80,282 70,329 Q 60,376 110,423 Q 160,470 0,470 Z'
 
-// Sage (Strategie — right shape) — independent timing
+// Sage (Strategie — right shape) — independent timing, 6 Q commands each
 //
-// Anchor x-values at y = [50, 160, 250, 360, 440]  (SA / SB / SC / SD):
-//   A0 y=50:  490 / 370 / 480 / 360   large swing
-//   A1 y=160: 360 / 450 / 380 / 490   large swing
-//   A2 y=250: 380 / 510 / 350 / 500   large swing
-//   A3 y=360: 470 / 380 / 440 / 360   varied
-//   A4 y=440: 520 / 360 / 500 / 380   varied
+// Anchor x at y = [0, 94, 188, 282, 376, 470]   (SA / SB / SC / SD):
+//   A0 y=  0:  480 / 380 / 510 / 380   top-edge organic movement ← NEW
+//   A1 y= 94:  380 / 490 / 460 / 350
+//   A2 y=188:  360 / 520 / 400 / 400
+//   A3 y=282:  400 / 480 / 350 / 460
+//   A4 y=376:  500 / 370 / 380 / 510
+//   A5 y=470:  420 / 500 / 460 / 390   bottom-edge organic movement ← NEW
 //
-// Sage min control-point x ≥ 350 (SC A2) → gap from terra max 240 = 110 px.
-const SA = 'M 560,0 Q 490,50 425,105 Q 360,160 370,205 Q 380,250 425,305 Q 470,360 495,400 Q 520,440 560,470 Z'
-const SB = 'M 560,0 Q 370,50 410,105 Q 450,160 480,205 Q 510,250 445,305 Q 380,360 370,400 Q 360,440 560,470 Z'
-const SC = 'M 560,0 Q 480,50 430,105 Q 380,160 365,205 Q 350,250 395,305 Q 440,360 470,400 Q 500,440 560,470 Z'
-const SD = 'M 560,0 Q 360,50 425,105 Q 490,160 495,205 Q 500,250 430,305 Q 360,360 370,400 Q 380,440 560,470 Z'
+// Sage min x ≥ 350 → gap from terra max 240 = 110 px guaranteed.
+const SA = 'M 560,0 Q 480,0 430,47 Q 380,94 370,141 Q 360,188 380,235 Q 400,282 450,329 Q 500,376 460,423 Q 420,470 560,470 Z'
+const SB = 'M 560,0 Q 380,0 435,47 Q 490,94 505,141 Q 520,188 500,235 Q 480,282 425,329 Q 370,376 435,423 Q 500,470 560,470 Z'
+const SC = 'M 560,0 Q 510,0 485,47 Q 460,94 430,141 Q 400,188 375,235 Q 350,282 365,329 Q 380,376 420,423 Q 460,470 560,470 Z'
+const SD = 'M 560,0 Q 380,0 365,47 Q 350,94 375,141 Q 400,188 430,235 Q 460,282 485,329 Q 510,376 450,423 Q 390,470 560,470 Z'
 
 // Looping: append stage A at the end so each cycle is seamless.
 // Terra: 20 s · Sage: 13 s  →  LCM = 260 s before the phase combination repeats.
