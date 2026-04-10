@@ -345,7 +345,7 @@ export function TestimonialsSection() {
   return (
     <section
       ref={sectionRef}
-      className="testimonials-section"
+      className="testimonials-section scroll-card"
       style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-terra)' }}
     >
       <div style={{ maxWidth: '1920px', margin: '0 auto', paddingInline: 'var(--grid-margin)' }}>

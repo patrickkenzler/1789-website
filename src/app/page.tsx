@@ -63,12 +63,14 @@ export default function Home() {
 
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
       <section
+        className="scroll-card"
         style={{
-          height:        '100svh',   // hard cap — hero never exceeds the viewport
-          display:       'flex',
-          flexDirection: 'column',
-          paddingTop:    '7rem',
-          overflow:      'hidden',
+          height:          '100svh',
+          display:         'flex',
+          flexDirection:   'column',
+          paddingTop:      '7rem',
+          overflow:        'hidden',
+          backgroundColor: 'var(--color-background)',
         }}
       >
         {/* ── Main hero content ── */}
@@ -118,7 +120,7 @@ export default function Home() {
       </div>
 
       {/* ─── Dafür stehen wir ─────────────────────────────────────────────── */}
-      <section style={{ paddingBlock: '7rem 5rem' }}>
+      <section className="scroll-card" style={{ paddingBlock: '7rem 5rem', backgroundColor: 'var(--color-background)' }}>
         <Container>
 
           {/* ── Staggered editorial headline ── */}
@@ -181,7 +183,7 @@ export default function Home() {
       <ClientLogoCarousel />
 
       {/* ─── Highlight Cases ──────────────────────────────────────────────── */}
-      <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-ink)' }}>
+      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-ink)' }}>
         <Container>
           <Grid>
             <Col span={6}>
@@ -339,7 +341,7 @@ export default function Home() {
       <TestimonialsSection />
 
       {/* ─── Denk Labor ───────────────────────────────────────────────────── */}
-      <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
+      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
         <Container>
           <Grid>
             <Col span={5}>
@@ -485,7 +487,7 @@ export default function Home() {
       </section>
 
       {/* ─── Unser Ansatz — sticky 2-col (foreverday pattern) ──────────── */}
-      <section>
+      <section className="scroll-card" style={{ backgroundColor: 'var(--color-background)' }}>
         {/* Section header inside container */}
         <Container>
           <div style={{ paddingBlock: '7rem 4rem' }}>
@@ -512,7 +514,7 @@ export default function Home() {
       </section>
 
       {/* ─── Was wir erreichen ────────────────────────────────────────────── */}
-      <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
+      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
         <Container>
 
           {/* ── Staggered editorial headline ── */}
@@ -577,7 +579,7 @@ export default function Home() {
       </section>
 
       {/* ─── Calendar / Newsletter ────────────────────────────────────────── */}
-      <section style={{ paddingBlock: '7rem' }}>
+      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-background)' }}>
         <Container>
           <Grid className="stack-cols">
             <Col span={6}>
@@ -647,10 +649,12 @@ export default function Home() {
         No grid constraint — deliberately uses the full max-width.
       */}
       <section
+        className="scroll-card"
         style={{
-          paddingBlock: '8rem',
-          borderTop: '1px solid var(--color-border)',
-          overflow: 'hidden',
+          paddingBlock:    '8rem',
+          borderTop:       '1px solid var(--color-border)',
+          overflow:        'hidden',
+          backgroundColor: 'var(--color-background)',
         }}
       >
         <Container>
@@ -707,7 +711,7 @@ export default function Home() {
       </section>
 
       {/* ─── CTA ──────────────────────────────────────────────────────────── */}
-      <section style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-terra)' }}>
+      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-terra)' }}>
         <Container>
           <Grid>
             <Col span={8} start={3} className="text-center">
