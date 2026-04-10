@@ -226,6 +226,9 @@
     position: static;
     border-radius: 0;
     box-shadow: none;
+    /* Reset any inline height / overflow so content flows naturally on mobile */
+    height: auto !important;
+    overflow: visible !important;
   }
 }
 
