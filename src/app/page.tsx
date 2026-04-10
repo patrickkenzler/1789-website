@@ -119,8 +119,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ─── Dafür stehen wir + Logo Carousel ────────────────────────────── */}
-      <section className="scroll-card" style={{ paddingBottom: 0, paddingTop: '7rem', backgroundColor: 'var(--color-background)' }}>
+      {/* ─── Dafür stehen wir ─────────────────────────────────────────────── */}
+      <section className="scroll-card" style={{ paddingBlock: '7rem 5rem', backgroundColor: 'var(--color-background)' }}>
         <Container>
 
           {/* ── Staggered editorial headline ── */}
@@ -177,13 +177,13 @@ export default function Home() {
             ))}
           </Grid>
         </Container>
-
-        {/* Logo carousel lives at the bottom of this card */}
-        <ClientLogoCarousel />
       </section>
 
-      {/* ─── Highlight Cases + Questions Ticker ───────────────────────────── */}
-      <section className="scroll-card" style={{ paddingTop: '7rem', paddingBottom: 0, backgroundColor: 'var(--color-ink)' }}>
+      {/* ─── Client Logo Carousel ─────────────────────────────────────────── */}
+      <ClientLogoCarousel />
+
+      {/* ─── Highlight Cases ──────────────────────────────────────────────── */}
+      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-ink)' }}>
         <Container>
           <Grid>
             <Col span={6}>
@@ -332,10 +332,10 @@ export default function Home() {
             })}
           </Grid>
         </Container>
-
-        {/* Questions ticker lives at the bottom of this card */}
-        <QuestionsTicker />
       </section>
+
+      {/* ─── Questions Ticker ─────────────────────────────────────────────── */}
+      <QuestionsTicker />
 
       {/* ─── Testimonials ────────────────────────────────────────────────── */}
       <TestimonialsSection />
