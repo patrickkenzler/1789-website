@@ -120,14 +120,30 @@ export default function Home() {
       </div>
 
       {/* ─── Dafür stehen wir + Logo Carousel (one sticky card) ────────────── */}
-      <div className="scroll-card" style={{ backgroundColor: 'var(--color-background)', overflow: 'hidden' }}>
-        <section style={{ paddingBlock: '7rem 5rem' }}>
+      {/*
+        height: 100svh matches the hero pattern (which already works).
+        The wrapper is exactly viewport-tall when stuck → overflow:hidden clips
+        at the visual boundary, not at the layout position. The carousel sits
+        at the viewport bottom; both are covered together by the next card.
+      */}
+      <div
+        className="scroll-card"
+        style={{
+          backgroundColor: 'var(--color-background)',
+          height:          '100svh',
+          display:         'flex',
+          flexDirection:   'column',
+          overflow:        'hidden',
+        }}
+      >
+        {/* Section grows to fill the space above the carousel */}
+        <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3.5rem 2rem' }}>
           <Container>
 
             {/* ── Staggered editorial headline ── */}
-            <div style={{ marginBottom: '5rem' }}>
+            <div style={{ marginBottom: '2rem' }}>
               <Tag>Dafür stehen wir</Tag>
-              <div style={{ marginTop: '3rem' }}>
+              <div style={{ marginTop: '1.75rem' }}>
                 <div style={{ textAlign: 'right' }}>
                   <span style={displayStyle}>Ein neues Organisations&shy;verständnis —</span>
                 </div>
@@ -151,11 +167,11 @@ export default function Home() {
             </Grid>
 
             {/* ── Pillars ── */}
-            <Grid className="stack-cols mt-20">
+            <Grid className="stack-cols mt-10">
               {pillars.map((pillar) => (
                 <Col key={pillar.num} span={4}>
                   <div
-                    className="p-10 h-full flex flex-col gap-8 group hover:-translate-y-1 transition-transform duration-300"
+                    className="p-6 h-full flex flex-col gap-5 group hover:-translate-y-1 transition-transform duration-300"
                     style={{
                       border: '1px solid var(--color-border)',
                       borderRadius: 'var(--radius-md)',
@@ -180,13 +196,22 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Carousel travels with this card — covered together by Highlight Cases */}
+        {/* Carousel pinned at the viewport bottom — always visible when card is active */}
         <ClientLogoCarousel />
       </div>
 
       {/* ─── Highlight Cases + Questions Ticker (one sticky card) ───────────── */}
-      <div className="scroll-card" style={{ backgroundColor: 'var(--color-ink)', overflow: 'hidden' }}>
-      <section style={{ paddingBlock: '7rem' }}>
+      <div
+        className="scroll-card"
+        style={{
+          backgroundColor: 'var(--color-ink)',
+          height:          '100svh',
+          display:         'flex',
+          flexDirection:   'column',
+          overflow:        'hidden',
+        }}
+      >
+      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3.5rem 2rem' }}>
         <Container>
           <Grid>
             <Col span={6}>
@@ -207,7 +232,7 @@ export default function Home() {
             </Col>
           </Grid>
 
-          <Grid className="stack-cols mt-16">
+          <Grid className="stack-cols mt-8">
             {featuredCases.map((c, i) => {
               const bgColors   = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
               const textColors = ['var(--color-background)', 'var(--color-background)', 'var(--color-ink)']
@@ -235,13 +260,13 @@ export default function Home() {
                     backgroundColor: bg,
                     borderRadius:   'var(--radius-md)',
                     border:         '1px solid rgba(255,255,255,0.08)',
-                    minHeight:      '460px',
+                    minHeight:      '340px',
                     textDecoration: 'none',
                     overflow:       'hidden',
                   }}
                 >
-                  {/* ── Title image slot (200px) ── */}
-                  <div style={{ position: 'relative', height: '200px', flexShrink: 0, overflow: 'hidden' }}>
+                  {/* ── Title image slot (160px) ── */}
+                  <div style={{ position: 'relative', height: '160px', flexShrink: 0, overflow: 'hidden' }}>
                     {c.image ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -337,7 +362,7 @@ export default function Home() {
         </Container>
       </section>
 
-        {/* Ticker travels with this card — covered together by Testimonials */}
+        {/* Ticker pinned at viewport bottom — always visible when card is active */}
         <QuestionsTicker />
       </div>
 
