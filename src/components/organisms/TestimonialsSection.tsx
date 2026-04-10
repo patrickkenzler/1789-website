@@ -166,83 +166,217 @@ function Avatar({ name, photo }: { name: string; photo: string | null }) {
 }
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
+// "Editorial Portrait" — full-bleed headshot occupies the top 54% of the card.
+// A monochromatic filter unifies all five portraits; hover dissolves it to full
+// colour and gently zooms the image. A cream gradient bridges photo → text.
+// Company name sits as a frosted-glass pill at the photo's bottom-left corner.
+// Below: large terra quote mark, Cormorant italic quote, compact attribution.
+// The face *is* the avatar — no separate avatar component needed.
 
-function TestimonialCard({ quote, name, title, company, photo, linkedin, caseHref, caseLabel }: (typeof TESTIMONIALS)[number]) {
+function TestimonialCard({
+  quote, name, title, company, photo, linkedin, caseHref, caseLabel,
+}: (typeof TESTIMONIALS)[number]) {
+  const initials = name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()
+
   return (
     <div
       className="testimonial-card"
       style={{
-        height: '100%',
-        display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-        padding: 'clamp(1.5rem, 2vw, 2.25rem)',
-        border: '1px solid var(--color-border)',
-        borderRadius: 'var(--radius-md)',
+        height:          '100%',
+        display:         'flex',
+        flexDirection:   'column',
+        borderRadius:    'var(--radius-md)',
+        overflow:        'hidden',
         backgroundColor: 'var(--color-background)',
+        boxShadow:       '0 0 0 1px rgba(26,23,20,0.10)',
       }}
     >
-      {/* Opening mark */}
-      <span
-        aria-hidden
+
+      {/* ── Portrait ──────────────────────────────────────────────────────── */}
+      <div
+        className="t-card-photo"
         style={{
-          fontFamily: 'var(--font-display)', fontStyle: 'italic',
-          fontSize: 'clamp(3rem, 4vw, 5rem)', lineHeight: 0.8,
-          color: 'var(--color-terra)', marginBottom: '0.75rem', display: 'block', userSelect: 'none',
+          position:        'relative',
+          flexShrink:      0,
+          height:          '54%',
+          overflow:        'hidden',
+          backgroundColor: 'var(--color-surface)',
         }}
       >
-        "
-      </span>
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photo}
+            alt={name}
+            className="t-card-img"
+            style={{
+              width:          '100%',
+              height:         '100%',
+              objectFit:      'cover',
+              objectPosition: 'top center',
+              display:        'block',
+            }}
+          />
+        ) : (
+          /* Artistic fallback — italic initials on warm gradient */
+          <div
+            style={{
+              width:      '100%',
+              height:     '100%',
+              background: 'linear-gradient(135deg, var(--color-terra) 0%, rgba(244,77,11,0.55) 100%)',
+              display:    'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontStyle:  'italic',
+                fontSize:   'clamp(4rem, 6vw, 7rem)',
+                color:      'rgba(255,255,255,0.30)',
+                lineHeight: 1,
+                userSelect: 'none',
+              }}
+            >
+              {initials}
+            </span>
+          </div>
+        )}
 
-      {/* Quote */}
-      <p
-        style={{
-          fontFamily: 'var(--font-display)', fontStyle: 'italic',
-          fontSize: 'clamp(0.875rem, 1.15vw, 1.2rem)', lineHeight: 1.65,
-          letterSpacing: '-0.01em', color: 'var(--color-ink-muted)',
-          flex: 1, marginBottom: '1.5rem',
-        }}
-      >
-        {quote}
-      </p>
+        {/* Gradient — dissolves photo base into card background #F2F2F2 */}
+        <div
+          aria-hidden
+          style={{
+            position:      'absolute',
+            inset:         0,
+            background:    'linear-gradient(to bottom, transparent 40%, rgba(242,242,242,0.50) 72%, rgba(242,242,242,0.96) 100%)',
+            pointerEvents: 'none',
+          }}
+        />
 
-      {/* Divider */}
-      <div style={{ height: '1px', backgroundColor: 'var(--color-border)', marginBottom: '1.25rem', opacity: 0.4 }} />
-
-      {/* Author */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
-        <Avatar name={name} photo={photo} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--color-ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {name}
-          </p>
-          {(title || company) && (
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xxs)', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-ink-muted)', marginTop: '0.15rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {[title, company].filter(Boolean).join(' · ')}
-            </p>
-          )}
-        </div>
-        <a
-          href={linkedin} target="_blank" rel="noopener noreferrer"
-          aria-label={`${name} auf LinkedIn`}
-          className="linkedin-hover"
-          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '2rem', height: '2rem', borderRadius: '50%', border: '1px solid var(--color-border)', color: 'var(--color-ink-muted)', flexShrink: 0, transition: 'color 200ms, border-color 200ms' }}
-          onClick={(e) => e.stopPropagation()}
+        {/* Company pill — frosted glass, bottom-left of photo */}
+        <div
+          style={{
+            position:             'absolute',
+            bottom:               '0.875rem',
+            left:                 '1rem',
+            fontFamily:           'var(--font-mono)',
+            fontSize:             '0.595rem',
+            letterSpacing:        '0.15em',
+            textTransform:        'uppercase',
+            color:                'var(--color-terra)',
+            backgroundColor:      'rgba(242,242,242,0.84)',
+            backdropFilter:       'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            padding:              '0.28rem 0.65rem',
+            borderRadius:         '3px',
+            whiteSpace:           'nowrap',
+          }}
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z" />
-          </svg>
-        </a>
+          {company}
+        </div>
       </div>
 
-      {caseHref && caseLabel && (
-        <a
-          href={caseHref}
-          style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '1rem', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xxs)', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-terra)', textDecoration: 'none', transition: 'opacity 200ms', opacity: 0.8 }}
-          className="case-link"
+      {/* ── Text zone ─────────────────────────────────────────────────────── */}
+      <div
+        style={{
+          flex:          1,
+          minHeight:     0,
+          display:       'flex',
+          flexDirection: 'column',
+          padding:       '1rem 1.375rem 1.125rem',
+          overflow:      'hidden',
+        }}
+      >
+        {/* Opening quote mark */}
+        <span
+          aria-hidden
+          style={{
+            fontFamily:   'var(--font-display)',
+            fontStyle:    'italic',
+            fontSize:     '2.5rem',
+            lineHeight:   0.7,
+            color:        'var(--color-terra)',
+            marginBottom: '0.5rem',
+            display:      'block',
+            userSelect:   'none',
+            opacity:      0.85,
+          }}
         >
-          <span style={{ display: 'inline-block', width: '1rem', height: '1px', backgroundColor: 'currentColor', flexShrink: 0 }} />
-          {caseLabel}
-        </a>
-      )}
+          "
+        </span>
+
+        {/* Quote — clipped naturally by overflow:hidden on the flex parent */}
+        <p
+          style={{
+            fontFamily:    'var(--font-display)',
+            fontStyle:     'italic',
+            fontSize:      'clamp(0.82rem, 0.9vw, 0.98rem)',
+            lineHeight:    1.62,
+            letterSpacing: '-0.01em',
+            color:         'var(--color-ink-muted)',
+            flex:          1,
+            minHeight:     0,
+            overflow:      'hidden',
+          }}
+        >
+          {quote}
+        </p>
+
+        {/* ── Attribution ── */}
+        <div style={{ flexShrink: 0, marginTop: '0.875rem' }}>
+          {/* Fading rule */}
+          <div
+            style={{
+              height:       '1px',
+              background:   'linear-gradient(to right, rgba(26,23,20,0.18), transparent)',
+              marginBottom: '0.75rem',
+            }}
+          />
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'space-between' }}>
+            {/* Name + title */}
+            <div style={{ minWidth: 0 }}>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {name}
+              </p>
+              {title && (
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-ink-muted)', marginTop: '0.15rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', opacity: 0.75 }}>
+                  {title}
+                </p>
+              )}
+            </div>
+
+            {/* Case link + LinkedIn */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+              {caseHref && (
+                <a
+                  href={caseHref}
+                  className="case-link"
+                  title={caseLabel ?? undefined}
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.13em', textTransform: 'uppercase', color: 'var(--color-terra)', textDecoration: 'none', opacity: 0.8, transition: 'opacity 200ms' }}
+                >
+                  Case ↗
+                </a>
+              )}
+              <a
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${name} auf LinkedIn`}
+                className="linkedin-hover"
+                style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '1.625rem', height: '1.625rem', borderRadius: '50%', border: '1px solid rgba(26,23,20,0.18)', color: 'var(--color-ink-muted)', flexShrink: 0, transition: 'color 200ms, border-color 200ms' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
