@@ -189,7 +189,7 @@ export function HeroLogo() {
               fontFamily:    'var(--font-display)',
               fontWeight:    400,
               fontStyle:     'normal',
-              fontSize:      'clamp(1.5rem, min(6vw, 8.5svh), 9rem)',
+              fontSize:      'clamp(1.35rem, min(5.4vw, 7.65svh), 8.1rem)',
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-ink)',
@@ -201,13 +201,13 @@ export function HeroLogo() {
             schlechten Strategien
           </p>
 
-          {/* Block 2 — terra, italic */}
+          {/* Block 2 — terra, italic regular */}
           <p
             style={{
               fontFamily:    'var(--font-display)',
-              fontWeight:    700,
+              fontWeight:    400,
               fontStyle:     'italic',
-              fontSize:      'clamp(1.5rem, min(6vw, 8.5svh), 9rem)',
+              fontSize:      'clamp(1.35rem, min(5.4vw, 7.65svh), 8.1rem)',
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-terra)',
