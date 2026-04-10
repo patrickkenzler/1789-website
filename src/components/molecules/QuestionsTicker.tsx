@@ -29,10 +29,9 @@ export function QuestionsTicker() {
     <div
       style={{
         overflow: 'hidden',
-        borderTop: '1px solid var(--color-border)',
-        borderBottom: '1px solid var(--color-border)',
+        borderTop: '1px solid rgba(255,255,255,0.1)',
         paddingBlock: '2rem',
-        backgroundColor: 'var(--color-sand)',
+        backgroundColor: 'var(--color-ink)',
       }}
     >
       {/* Label — sits above the ticker */}
@@ -52,12 +51,12 @@ export function QuestionsTicker() {
             fontWeight: 500,
             letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: 'var(--color-ink-subtle)',
+            color: 'rgba(242,242,242,0.4)',
           }}
         >
           Was unsere Kunden fragen
         </span>
-        <span style={{ flex: 1, height: '1px', backgroundColor: 'var(--color-border)', opacity: 0.4 }} />
+        <span style={{ flex: 1, height: '1px', backgroundColor: 'rgba(255,255,255,0.12)' }} />
       </div>
 
       {/* Scrolling strip */}
@@ -80,7 +79,7 @@ export function QuestionsTicker() {
               fontStyle: 'italic',
               fontWeight: 300,
               fontSize: 'clamp(1.1rem, 2vw, 1.6rem)',
-              color: 'var(--color-ink-muted)',
+              color: 'rgba(242,242,242,0.65)',
               letterSpacing: '-0.01em',
               lineHeight: 1,
             }}

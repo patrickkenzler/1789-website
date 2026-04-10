@@ -111,7 +111,6 @@ export function ClientLogoCarousel() {
       style={{
         overflow:        'hidden',
         borderTop:       '1px solid var(--color-border)',
-        borderBottom:    '1px solid var(--color-border)',
         paddingBlock:    '2.5rem',
         backgroundColor: 'var(--color-background)',
       }}
