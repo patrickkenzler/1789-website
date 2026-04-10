@@ -27,29 +27,30 @@ const a = (
   easing  = 'var(--ease-entry)',
 ) => `${name} ${duration} ${easing} ${delay} both`
 
-// ─── Gap Graphic — mountain contour strokes ──────────────────────────────────
+// ─── Gap Graphic — mountain contour fills ────────────────────────────────────
 /**
- * Mountain-contour aesthetic: strokes only, no fill.
- * Each side renders 6 contour lines spaced 30 px apart — like a topographic
- * map of a canyon, with terra lines on the left and sage lines on the right.
+ * Topographic contour aesthetic: 6 closed filled shapes per side at 60% opacity.
+ * Shapes stack largest→smallest so overlapping areas accumulate opacity, creating
+ * a natural gradient — darkest at the fixed outer edge, lightest near the gap.
  *
- * Each contour is an OPEN path (no closing lines) running from y=0 to y=470:
- *   M tx,0  Q a1,94 m1,141  Q a2,188 m2,235  Q a3,282 m3,329  Q a4,376 bx,470
+ * Each contour is a CLOSED shape:
+ *   Terra:  M 0,0 · L tx,0 · Q×4 (organic right edge) · L 0,470 · Z
+ *   Sage:   M 560,0 · L tx,0 · Q×4 (organic left edge) · L 560,470 · Z
  *
- * Anchor arrays: [tx, a1, a2, a3, a4, bx]
- *   tx = x where edge meets y=0 (slides horizontally)
- *   a1–a4 = interior anchors at y = [94, 188, 282, 376]
- *   bx = x where edge meets y=470 (slides horizontally)
- *   m1–m3 = midpoints between adjacent interior anchors (Q endpoints)
+ * The outer corners (0,0), (0,470) for terra and (560,0), (560,470) for sage
+ * are always fixed. Only the organic edge slides per stage.
  *
- * Contour offsets: the 6 lines are shifted inward by [0, 30, 60, 90, 120, 150] px.
- * Terra shifts LEFT; sage shifts RIGHT — both move toward their respective edges.
- * Terra outermost max x = 240; sage outermost min x = 350 → ≥ 110 px gap.
+ * Contour offsets [0, 28, 56, 84, 112, 140] px — each layer's organic edge
+ * retreats inward by that amount. 6 layers × 60% opacity → nearly solid at
+ * the outer edge, single-layer transparency near the gap.
  *
  * Terra 20 s / Sage 13 s (5 s begin-offset) → LCM 260 s before phase repeats.
  */
 
-// Stage data: [tx, a1, a2, a3, a4, bx]
+// Anchor arrays: [tx, a1, a2, a3, a4, bx]
+//   tx = organic-edge x at y=0  (slides; corner stays at 0 or 560)
+//   a1–a4 = interior anchors at y = [94, 188, 282, 376]
+//   bx = organic-edge x at y=470
 const TERRA_STAGES: ReadonlyArray<readonly number[]> = [
   [ 80, 180, 240, 180,  80, 160],  // bell
   [220,  80,  60, 100, 220,  80],  // valley
@@ -63,19 +64,26 @@ const SAGE_STAGES: ReadonlyArray<readonly number[]> = [
   [370, 350, 400, 460, 510, 390],  // rising-r
 ]
 
-/** Open path for one terra contour edge, shifted left by δ px */
-function terraEdge(xs: readonly number[], δ: number): string {
+/** Closed terra shape: fixed left corners, organic right edge shifted left by δ */
+function terraContour(xs: readonly number[], δ: number): string {
   const [tx, a1, a2, a3, a4, bx] = xs.map(x => Math.max(0, Math.round(x - δ)))
-  return `M ${tx},0 Q ${a1},94 ${Math.round((a1+a2)/2)},141 Q ${a2},188 ${Math.round((a2+a3)/2)},235 Q ${a3},282 ${Math.round((a3+a4)/2)},329 Q ${a4},376 ${bx},470`
+  const m1 = Math.round((a1 + a2) / 2)
+  const m2 = Math.round((a2 + a3) / 2)
+  const m3 = Math.round((a3 + a4) / 2)
+  return `M 0,0 L ${tx},0 Q ${a1},94 ${m1},141 Q ${a2},188 ${m2},235 Q ${a3},282 ${m3},329 Q ${a4},376 ${bx},470 L 0,470 Z`
 }
 
-/** Open path for one sage contour edge, shifted right by δ px */
-function sageEdge(xs: readonly number[], δ: number): string {
+/** Closed sage shape: fixed right corners, organic left edge shifted right by δ */
+function sageContour(xs: readonly number[], δ: number): string {
   const [tx, a1, a2, a3, a4, bx] = xs.map(x => Math.min(560, Math.round(x + δ)))
-  return `M ${tx},0 Q ${a1},94 ${Math.round((a1+a2)/2)},141 Q ${a2},188 ${Math.round((a2+a3)/2)},235 Q ${a3},282 ${Math.round((a3+a4)/2)},329 Q ${a4},376 ${bx},470`
+  const m1 = Math.round((a1 + a2) / 2)
+  const m2 = Math.round((a2 + a3) / 2)
+  const m3 = Math.round((a3 + a4) / 2)
+  return `M 560,0 L ${tx},0 Q ${a1},94 ${m1},141 Q ${a2},188 ${m2},235 Q ${a3},282 ${m3},329 Q ${a4},376 ${bx},470 L 560,470 Z`
 }
 
-const CONTOUR_OFFSETS = [0, 30, 60, 90, 120, 150]   // 6 contour lines per side
+// 6 layers; rendered largest→smallest so overlap areas stack opacity naturally
+const CONTOUR_OFFSETS = [0, 28, 56, 84, 112, 140]
 const KEY_TIMES   = '0; 0.25; 0.5; 0.75; 1'
 const KEY_SPLINES = '0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1'
 
@@ -89,17 +97,15 @@ function GapGraphic() {
       style={{ display: 'block' }}
       preserveAspectRatio="none"
     >
-      {/* ── Struktur — terra contours (left) · 20 s cycle ── */}
+      {/* ── Struktur — terra (left) · 20 s · largest shape first ── */}
       {CONTOUR_OFFSETS.map((δ, i) => {
-        const vals = [...TERRA_STAGES, TERRA_STAGES[0]].map(s => terraEdge(s, δ)).join(';')
+        const vals = [...TERRA_STAGES, TERRA_STAGES[0]].map(s => terraContour(s, δ)).join(';')
         return (
           <path
             key={`t${i}`}
-            fill="none"
-            stroke="var(--color-terra)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            d={terraEdge(TERRA_STAGES[0], δ)}
+            fill="var(--color-terra)"
+            fillOpacity="0.6"
+            d={terraContour(TERRA_STAGES[0], δ)}
           >
             <animate
               attributeName="d"
@@ -115,17 +121,15 @@ function GapGraphic() {
         )
       })}
 
-      {/* ── Strategie — sage contours (right) · 13 s cycle, offset 5 s ── */}
+      {/* ── Strategie — sage (right) · 13 s · offset 5 s · largest first ── */}
       {CONTOUR_OFFSETS.map((δ, i) => {
-        const vals = [...SAGE_STAGES, SAGE_STAGES[0]].map(s => sageEdge(s, δ)).join(';')
+        const vals = [...SAGE_STAGES, SAGE_STAGES[0]].map(s => sageContour(s, δ)).join(';')
         return (
           <path
             key={`s${i}`}
-            fill="none"
-            stroke="var(--color-sage)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            d={sageEdge(SAGE_STAGES[0], δ)}
+            fill="var(--color-sage)"
+            fillOpacity="0.6"
+            d={sageContour(SAGE_STAGES[0], δ)}
           >
             <animate
               attributeName="d"
