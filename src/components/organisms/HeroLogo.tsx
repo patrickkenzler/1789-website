@@ -228,11 +228,11 @@ export function HeroLogo() {
               lineHeight:   1.7,
             }}
           >
-            Wir sind <strong>1789 Innovation</strong>, mit unserem innovativen
-            Beratungsansatz begleiten wir Organisationen in der Veränderung
-            ihrer Strukturen und Unternehmensstrategie. Dabei verknüpfen wir
-            wissenschaftliche systemtheoretische Ansätze mit sofortigen
-            pragmatischen Pilotierungen von Veränderungsprozessen.
+            Wir sind <strong style={{ color: 'var(--color-terra)' }}>1789 Innovation</strong>, mit unserem <strong>innovativen
+            Beratungsansatz</strong> begleiten wir Organisationen in der <strong>Veränderung
+            ihrer Strukturen und Unternehmensstrategie.</strong> Dabei verknüpfen wir
+            wissenschaftliche <strong>systemtheoretische Ansätze</strong> mit sofortigen <strong>pragmatischen
+            Pilotierungen</strong> von Veränderungsprozessen.
           </p>
 
           {/* CTAs */}
