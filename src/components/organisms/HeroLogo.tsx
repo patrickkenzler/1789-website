@@ -189,11 +189,12 @@ export function HeroLogo() {
               fontFamily:    'var(--font-display)',
               fontWeight:    400,
               fontStyle:     'normal',
-              fontSize:      'clamp(1.35rem, min(5.4vw, 7.65svh), 8.1rem)',
+              fontSize:      'clamp(1.2rem, min(4.8vw, 6.8svh), 7.2rem)',
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-ink)',
               paddingBottom: '0.22em',
+              maxWidth:      'calc(50vw - var(--grid-margin) * 2)',
             }}
           >
             Organisationen<br />
@@ -207,11 +208,12 @@ export function HeroLogo() {
               fontFamily:    'var(--font-display)',
               fontWeight:    400,
               fontStyle:     'italic',
-              fontSize:      'clamp(1.35rem, min(5.4vw, 7.65svh), 8.1rem)',
+              fontSize:      'clamp(1.2rem, min(4.8vw, 6.8svh), 7.2rem)',
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-terra)',
               paddingBottom: '0.22em',
+              maxWidth:      'calc(50vw - var(--grid-margin) * 2)',
             }}
           >
             Sie scheitern an der<br />
@@ -219,13 +221,14 @@ export function HeroLogo() {
             Strategie &amp; Struktur
           </p>
 
-          {/* Body copy */}
+          {/* Body copy — constrained to page midpoint with equal left/right spacing */}
           <p
             style={{
               fontFamily:   'var(--font-body)',
               fontSize:     'clamp(0.875rem, 1.05vw, 1.05rem)',
               color:        'var(--color-ink)',
               lineHeight:   1.7,
+              maxWidth:     'calc(50vw - var(--grid-margin) * 2)',
             }}
           >
             Wir sind <strong style={{ color: 'var(--color-terra)' }}>1789 Innovation</strong>, mit unserem <strong>innovativen
@@ -241,6 +244,7 @@ export function HeroLogo() {
               display:  'flex',
               gap:      '1rem',
               flexWrap: 'wrap',
+              maxWidth: 'calc(50vw - var(--grid-margin) * 2)',
               animation: a('fadeUp', '700ms', '350ms'),
             }}
           >
