@@ -171,7 +171,7 @@ export function HeroLogo() {
       >
 
         {/* ─────────────────────────────────────────────────────────────
-            LEFT — two headline blocks spread across full column height
+            LEFT — all text: both headlines + body copy + CTAs
         ──────────────────────────────────────────────────────────────── */}
         <div
           style={{
@@ -183,10 +183,7 @@ export function HeroLogo() {
             animation:      a('fadeUp', '900ms', '80ms', 'var(--ease-expressive)'),
           }}
         >
-          {/* Block 1 — ink, bold
-              font-size uses min(vw, svh) so it scales down whichever
-              viewport dimension is the bottleneck (width OR height).
-              On a 13" MBP (~1280×800) svh wins and keeps 6 lines inside the viewport. */}
+          {/* Block 1 — ink, regular */}
           <p
             style={{
               fontFamily:    'var(--font-display)',
@@ -196,7 +193,7 @@ export function HeroLogo() {
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-ink)',
-              paddingBottom: '0.22em',   // descender clearance for "g" in "Strategien"
+              paddingBottom: '0.22em',
             }}
           >
             Organisationen<br />
@@ -204,7 +201,7 @@ export function HeroLogo() {
             schlechten Strategien
           </p>
 
-          {/* Block 2 — terra, italic bold */}
+          {/* Block 2 — terra, italic */}
           <p
             style={{
               fontFamily:    'var(--font-display)',
@@ -214,78 +211,60 @@ export function HeroLogo() {
               lineHeight:    0.93,
               letterSpacing: '-0.028em',
               color:         'var(--color-terra)',
-              paddingBottom: '0.22em',   // descender clearance for "g" in "Strategie"
+              paddingBottom: '0.22em',
             }}
           >
             Sie scheitern an der<br />
             Lücke zwischen<br />
-            Strategie und Struktur.
+            Strategie &amp; Struktur
           </p>
+
+          {/* Body copy */}
+          <p
+            style={{
+              fontFamily:   'var(--font-body)',
+              fontSize:     'clamp(0.875rem, 1.05vw, 1.05rem)',
+              color:        'var(--color-ink)',
+              lineHeight:   1.7,
+            }}
+          >
+            Wir sind <strong>1789 Innovation</strong>, mit unserem innovativen
+            Beratungsansatz begleiten wir Organisationen in der Veränderung
+            ihrer Strukturen und Unternehmensstrategie. Dabei verknüpfen wir
+            wissenschaftliche systemtheoretische Ansätze mit sofortigen
+            pragmatischen Pilotierungen von Veränderungsprozessen.
+          </p>
+
+          {/* CTAs */}
+          <div
+            style={{
+              display:  'flex',
+              gap:      '1rem',
+              flexWrap: 'wrap',
+              animation: a('fadeUp', '700ms', '350ms'),
+            }}
+          >
+            <a href="/ansatz">
+              <Button variant="ghost">Unser Ansatz →</Button>
+            </a>
+            <a href="/kontakt">
+              <Button variant="terra">Erstgespräch vereinbaren</Button>
+            </a>
+          </div>
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
-            RIGHT — graphic (flex-grow) + body copy + CTAs
-            ALL padding lives on the outer wrapper — graphic and text
-            share one identical content box, so their widths always match.
+            RIGHT — SVG animation only, full column height, no padding
         ──────────────────────────────────────────────────────────────── */}
         <div
           style={{
-            display:        'flex',
-            flexDirection:  'column',
-            paddingInline:  'clamp(1.25rem, 2.5vw, 3rem)',
-            paddingTop:     'clamp(1rem, 1.5svh, 2.5rem)',
-            paddingBottom:  'clamp(1.25rem, 2.5svh, 3.5rem)',
+            display:   'flex',
+            alignItems: 'stretch',
+            overflow:  'hidden',
+            animation: a('fadeUp', '1000ms', '200ms', 'var(--ease-expressive)'),
           }}
         >
-
-          {/* Graphic — fills remaining space; minHeight:0 lets it shrink on small screens */}
-          <div
-            style={{
-              flex:      '1 1 0',
-              minHeight: 0,
-              overflow:  'hidden',
-              display:   'flex',
-              alignItems:'stretch',
-              animation: a('fadeUp', '1000ms', '200ms', 'var(--ease-expressive)'),
-            }}
-          >
-            <GapGraphic />
-          </div>
-
-          {/* Body copy + CTAs — fixed height, never hidden */}
-          <div
-            style={{
-              flexShrink: 0,
-              paddingTop: 'clamp(1rem, 1.5svh, 2rem)',
-              animation:  a('fadeUp', '700ms', '350ms'),
-            }}
-          >
-            <p
-              style={{
-                fontFamily:   'var(--font-body)',
-                fontSize:     'clamp(0.875rem, 1.05vw, 1.05rem)',
-                color:        'var(--color-ink)',
-                lineHeight:   1.7,
-                marginBottom: 'clamp(1rem, 2svh, 2rem)',
-              }}
-            >
-              Wir nennen diese Lücke <strong>den Gap</strong><br />
-              Er ist kein Defizit, sondern der produktivste Ort Ihrer Organisation.<br />
-              <strong>1789 macht den Gap verhandelbar:</strong> durch
-              Organisationsarchitekturen, die Strategie und Struktur als das
-              behandeln, was sie sind – zwei Seiten derselben Bewegung.
-            </p>
-
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-              <a href="/ansatz">
-                <Button variant="ghost">Unser Ansatz →</Button>
-              </a>
-              <a href="/kontakt">
-                <Button variant="terra">Erstgespräch vereinbaren</Button>
-              </a>
-            </div>
-          </div>
-
+          <GapGraphic />
         </div>
       </div>
 
