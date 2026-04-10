@@ -166,7 +166,7 @@ export function HeroLogo() {
         style={{
           flex:                '1',
           display:             'grid',
-          gridTemplateColumns: '7fr 5fr',
+          gridTemplateColumns: '1fr 1fr',
         }}
       >
 
@@ -265,7 +265,7 @@ export function HeroLogo() {
             display:       'flex',
             alignItems:    'stretch',
             overflow:      'hidden',
-            paddingInline: 'var(--grid-margin)',
+            paddingRight: 'var(--grid-margin)',
             animation:     a('fadeUp', '1000ms', '200ms', 'var(--ease-expressive)'),
           }}
         >
