@@ -27,60 +27,55 @@ const a = (
   easing  = 'var(--ease-entry)',
 ) => `${name} ${duration} ${easing} ${delay} both`
 
-// ─── Gap Graphic — morphing SVG ──────────────────────────────────────────────
+// ─── Gap Graphic — mountain contour strokes ──────────────────────────────────
 /**
- * Two organic blobs morphing through 4 states via SVG <animate>.
+ * Mountain-contour aesthetic: strokes only, no fill.
+ * Each side renders 6 contour lines spaced 30 px apart — like a topographic
+ * map of a canyon, with terra lines on the left and sage lines on the right.
  *
- * Shape structure — straight top/bottom, organic middle:
- *   Top and bottom edges are STRAIGHT horizontal lines whose x-endpoint
- *   slides left/right each stage → the shape has a clean squared corner
- *   where the horizontal edge meets the organic vertical edge.
- *   The organic middle uses quadratic bezier midpoint chaining (4 interior
- *   anchors) for guaranteed smooth, spike-free curves.
+ * Each contour is an OPEN path (no closing lines) running from y=0 to y=470:
+ *   M tx,0  Q a1,94 m1,141  Q a2,188 m2,235  Q a3,282 m3,329  Q a4,376 bx,470
  *
- *   Path (terra):  M 0,0 · L tx,0 · Q A1 m12 · Q A2 m23 · Q A3 m34 · Q A4 bx,470 · L 0,470 · Z
- *   Path (sage):   M 560,0 · L tx,0 · Q … · L 560,470 · Z
+ * Anchor arrays: [tx, a1, a2, a3, a4, bx]
+ *   tx = x where edge meets y=0 (slides horizontally)
+ *   a1–a4 = interior anchors at y = [94, 188, 282, 376]
+ *   bx = x where edge meets y=470 (slides horizontally)
+ *   m1–m3 = midpoints between adjacent interior anchors (Q endpoints)
  *
- *   tx = top anchor x (slides along y=0)
- *   bx = bottom anchor x (slides along y=470)
- *   A1–A4 = interior organic anchors at y = [94, 188, 282, 376]
- *   m12, m23, m34 = midpoints between adjacent interior anchors (Q endpoints)
+ * Contour offsets: the 6 lines are shifted inward by [0, 30, 60, 90, 120, 150] px.
+ * Terra shifts LEFT; sage shifts RIGHT — both move toward their respective edges.
+ * Terra outermost max x = 240; sage outermost min x = 350 → ≥ 110 px gap.
  *
- *  – Terra max x ≤ 240; sage min x ≥ 350 → ≥ 110 px gap always.
- *  – Terra 20 s / Sage 13 s (5 s offset) → LCM 260 s before phase repeats.
+ * Terra 20 s / Sage 13 s (5 s begin-offset) → LCM 260 s before phase repeats.
  */
 
-// Terra (Struktur — left shape) — 4 keyframe paths
-//                      tx /  A1  /  A2  /  A3  /  A4  / bx
-//  TA (bell):          80 / 180  / 240  / 180  /  80  / 160
-//  TB (valley):       220 /  80  /  60  / 100  / 220  /  80
-//  TC (rising):        60 / 100  / 160  / 220  / 240  / 180
-//  TD (falling):      240 / 200  / 150  /  80  /  60  / 180
-//
-// All interior midpoints = avg of adjacent anchor (x, y).
-// Terra convex-hull max x = 240 across all stages.
-const TA = 'M 0,0 L 80,0 Q 180,94 210,141 Q 240,188 210,235 Q 180,282 130,329 Q 80,376 160,470 L 0,470 Z'
-const TB = 'M 0,0 L 220,0 Q 80,94 70,141 Q 60,188 80,235 Q 100,282 160,329 Q 220,376 80,470 L 0,470 Z'
-const TC = 'M 0,0 L 60,0 Q 100,94 130,141 Q 160,188 190,235 Q 220,282 230,329 Q 240,376 180,470 L 0,470 Z'
-const TD = 'M 0,0 L 240,0 Q 200,94 175,141 Q 150,188 115,235 Q 80,282 70,329 Q 60,376 180,470 L 0,470 Z'
+// Stage data: [tx, a1, a2, a3, a4, bx]
+const TERRA_STAGES: ReadonlyArray<readonly number[]> = [
+  [ 80, 180, 240, 180,  80, 160],  // bell
+  [220,  80,  60, 100, 220,  80],  // valley
+  [ 60, 100, 160, 220, 240, 180],  // rising
+  [240, 200, 150,  80,  60, 180],  // falling
+]
+const SAGE_STAGES: ReadonlyArray<readonly number[]> = [
+  [490, 380, 360, 400, 500, 420],  // valley-r
+  [380, 490, 520, 480, 370, 500],  // bell-r
+  [510, 460, 400, 350, 380, 460],  // falling-r
+  [370, 350, 400, 460, 510, 390],  // rising-r
+]
 
-// Sage (Strategie — right shape) — independent timing
-//                      tx  /  A1  /  A2  /  A3  /  A4  / bx
-//  SA (valley-r):     490  / 380  / 360  / 400  / 500  / 420
-//  SB (bell-r):       380  / 490  / 520  / 480  / 370  / 500
-//  SC (falling-r):    510  / 460  / 400  / 350  / 380  / 460
-//  SD (rising-r):     370  / 350  / 400  / 460  / 510  / 390
-//
-// Sage convex-hull min x = 350 → gap from terra max 240 = 110 px.
-const SA = 'M 560,0 L 490,0 Q 380,94 370,141 Q 360,188 380,235 Q 400,282 450,329 Q 500,376 420,470 L 560,470 Z'
-const SB = 'M 560,0 L 380,0 Q 490,94 505,141 Q 520,188 500,235 Q 480,282 425,329 Q 370,376 500,470 L 560,470 Z'
-const SC = 'M 560,0 L 510,0 Q 460,94 430,141 Q 400,188 375,235 Q 350,282 365,329 Q 380,376 460,470 L 560,470 Z'
-const SD = 'M 560,0 L 370,0 Q 350,94 375,141 Q 400,188 430,235 Q 460,282 485,329 Q 510,376 390,470 L 560,470 Z'
+/** Open path for one terra contour edge, shifted left by δ px */
+function terraEdge(xs: readonly number[], δ: number): string {
+  const [tx, a1, a2, a3, a4, bx] = xs.map(x => Math.max(0, Math.round(x - δ)))
+  return `M ${tx},0 Q ${a1},94 ${Math.round((a1+a2)/2)},141 Q ${a2},188 ${Math.round((a2+a3)/2)},235 Q ${a3},282 ${Math.round((a3+a4)/2)},329 Q ${a4},376 ${bx},470`
+}
 
-// Looping: append stage A at the end so each cycle is seamless.
-// Terra: 20 s · Sage: 13 s  →  LCM = 260 s before the phase combination repeats.
-const TERRA_VALS  = [TA, TB, TC, TD, TA].join(';')
-const SAGE_VALS   = [SA, SB, SC, SD, SA].join(';')
+/** Open path for one sage contour edge, shifted right by δ px */
+function sageEdge(xs: readonly number[], δ: number): string {
+  const [tx, a1, a2, a3, a4, bx] = xs.map(x => Math.min(560, Math.round(x + δ)))
+  return `M ${tx},0 Q ${a1},94 ${Math.round((a1+a2)/2)},141 Q ${a2},188 ${Math.round((a2+a3)/2)},235 Q ${a3},282 ${Math.round((a3+a4)/2)},329 Q ${a4},376 ${bx},470`
+}
+
+const CONTOUR_OFFSETS = [0, 30, 60, 90, 120, 150]   // 6 contour lines per side
 const KEY_TIMES   = '0; 0.25; 0.5; 0.75; 1'
 const KEY_SPLINES = '0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1'
 
@@ -90,37 +85,61 @@ function GapGraphic() {
       viewBox="0 0 560 470"
       width="100%"
       height="100%"
-      aria-label="Der Gap: Struktur und Strategie getrennt durch eine sich verändernde Lücke"
+      aria-label="Der Gap: Struktur und Strategie — Bergkonturen"
       style={{ display: 'block' }}
       preserveAspectRatio="none"
     >
-      {/* ── Struktur — terra (left) · 15 s cycle ── */}
-      <path fill="var(--color-terra)" d={TA}>
-        <animate
-          attributeName="d"
-          dur="20s"
-          begin="0s"
-          repeatCount="indefinite"
-          values={TERRA_VALS}
-          calcMode="spline"
-          keyTimes={KEY_TIMES}
-          keySplines={KEY_SPLINES}
-        />
-      </path>
+      {/* ── Struktur — terra contours (left) · 20 s cycle ── */}
+      {CONTOUR_OFFSETS.map((δ, i) => {
+        const vals = [...TERRA_STAGES, TERRA_STAGES[0]].map(s => terraEdge(s, δ)).join(';')
+        return (
+          <path
+            key={`t${i}`}
+            fill="none"
+            stroke="var(--color-terra)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            d={terraEdge(TERRA_STAGES[0], δ)}
+          >
+            <animate
+              attributeName="d"
+              dur="20s"
+              begin="0s"
+              repeatCount="indefinite"
+              values={vals}
+              calcMode="spline"
+              keyTimes={KEY_TIMES}
+              keySplines={KEY_SPLINES}
+            />
+          </path>
+        )
+      })}
 
-      {/* ── Strategie — sage (right) · 11 s cycle, offset by 4 s ── */}
-      <path fill="var(--color-sage)" d={SA}>
-        <animate
-          attributeName="d"
-          dur="13s"
-          begin="5s"
-          repeatCount="indefinite"
-          values={SAGE_VALS}
-          calcMode="spline"
-          keyTimes={KEY_TIMES}
-          keySplines={KEY_SPLINES}
-        />
-      </path>
+      {/* ── Strategie — sage contours (right) · 13 s cycle, offset 5 s ── */}
+      {CONTOUR_OFFSETS.map((δ, i) => {
+        const vals = [...SAGE_STAGES, SAGE_STAGES[0]].map(s => sageEdge(s, δ)).join(';')
+        return (
+          <path
+            key={`s${i}`}
+            fill="none"
+            stroke="var(--color-sage)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            d={sageEdge(SAGE_STAGES[0], δ)}
+          >
+            <animate
+              attributeName="d"
+              dur="13s"
+              begin="5s"
+              repeatCount="indefinite"
+              values={vals}
+              calcMode="spline"
+              keyTimes={KEY_TIMES}
+              keySplines={KEY_SPLINES}
+            />
+          </path>
+        )
+      })}
     </svg>
   )
 }
