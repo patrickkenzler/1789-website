@@ -226,6 +226,55 @@
   }
 }
 
+/* ── Testimonials: card entrance + horizontal scroll ───────────────────────── */
+
+/*
+ * Initial state — each card wrapper is invisible and offset to the right.
+ * The stagger delay is set via the --t-delay custom property on each wrapper.
+ */
+.t-card-wrapper {
+  opacity:   0;
+  transform: translateX(22vw);
+  transition:
+    opacity   500ms ease                          var(--t-delay, 0ms),
+    transform 750ms cubic-bezier(0.16, 1, 0.3, 1) var(--t-delay, 0ms);
+}
+
+/* Entered state — cards settle into their natural positions */
+[data-entered='true'] .t-card-wrapper {
+  opacity:   1;
+  transform: translateX(0);
+}
+
+/* Progress dots */
+.t-dot {
+  width:        7px;
+  height:       7px;
+  border-radius:50%;
+  background:   rgba(255, 255, 255, 0.28);
+  transition:   background 350ms ease, transform 350ms ease;
+}
+.t-dot-active {
+  background: rgba(255, 255, 255, 0.88);
+  transform:  scale(1.45);
+}
+
+/* Mobile: collapse to a simple vertical list, no horizontal scroll */
+@media (max-width: 767px) {
+  .testimonials-section {
+    position: static !important;
+    height:   auto   !important;
+    overflow: visible !important;
+    border-radius: 0 !important;
+  }
+  .t-card-wrapper {
+    width:     100%  !important;
+    opacity:   1     !important;
+    transform: none  !important;
+    transition:none  !important;
+  }
+}
+
 /* Disable on mobile — too small to be meaningful */
 @media (max-width: 767px) {
   .scroll-card {
