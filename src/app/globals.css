@@ -121,14 +121,26 @@
   .testimonial-card {
     transition:
       box-shadow   300ms var(--ease-standard),
-      border-color 300ms var(--ease-standard),
       transform    300ms var(--ease-standard);
   }
 
   .testimonial-card:hover {
-    transform:    translateY(-4px);
-    box-shadow:   0 12px 40px rgba(26, 23, 20, 0.09);
-    border-color: var(--color-terra) !important;
+    transform:  translateY(-4px);
+    box-shadow: 0 16px 48px rgba(26, 23, 20, 0.13);
+  }
+
+  /* Photo area — greyscale dissolves + gentle zoom on card hover */
+  .t-card-img {
+    filter:     grayscale(60%);
+    transform:  scale(1.00);
+    transition:
+      filter    600ms var(--ease-standard),
+      transform 600ms var(--ease-expressive);
+  }
+
+  .testimonial-card:hover .t-card-img {
+    filter:    grayscale(0%);
+    transform: scale(1.04);
   }
 
   .case-link:hover { opacity: 1 !important; }
