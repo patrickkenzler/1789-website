@@ -29,77 +29,58 @@ const a = (
 
 // ─── Gap Graphic — morphing SVG ──────────────────────────────────────────────
 /**
- * Two organic blobs that continuously morph between 3 states via SVG <animate>.
+ * Two organic blobs that continuously morph between 4 states via SVG <animate>.
  *
- * Rules:
- *  – Both shapes use the SAME command sequence (M C C C C C C Z) in every
- *    stage so SVG can interpolate smoothly between them.
- *  – The facing edges (terra right / sage left) shift independently but
- *    always maintain a minimum gap of ~50 viewBox units — they never touch.
- *  – Terra and sage run on DIFFERENT clocks (15 s / 11 s, 4 s phase offset)
- *    so they never lock into the same phase twice — LCM = 165 s before repeat.
- *  – Terra swings dramatically: retracted to ~115 px (left strip) up to ~400 px
- *    (covering 71 % of canvas). Sage oscillates between ~510 px (thin) and
- *    ~455 px (moderate), always staying at least 55 px clear of terra's max.
- *
- * Stage 1 — terra: retracted thin strip   | sage: medium presence
- * Stage 2 — terra: dramatic wide lobes    | sage: retreated thin strip
- * Stage 3 — terra: asymmetric bulges      | sage: complex interdigitation
+ * Shape design:
+ *  – All paths use the SAME command sequence: M · C×5 · Z (5 cubic segments).
+ *    SVG SMIL requires identical commands in every keyframe for smooth morphing.
+ *  – Control points are derived via Catmull-Rom → cubic bezier conversion,
+ *    guaranteeing C1 continuity (smooth tangent at every anchor) — no kinks.
+ *  – Each shape has 4 right/left-edge anchor points at y = [100, 200, 300, 400].
+ *    One anchor (y=200) has a small oscillation range (~30 px) so the edge
+ *    reads as a slow-breathing wave rather than a uniform pulse.
+ *  – Terra and sage run on DIFFERENT clocks (20 s / 13 s, 5 s begin-offset)
+ *    so they drift continuously — LCM = 260 s before the phase repeats.
+ *  – Terra max x ≈ 240; sage min x ≈ 350 → guaranteed ~110 px gap clearance.
  */
 
-// Terra (Struktur — left shape) — 3 keyframe paths
-// Command sequence: M · C(top) · C×8(right contour) · C(bottom) · Z  =  10 C commands
+// Terra (Struktur — left shape) — 4 keyframe paths
+// Path: M 0,0 → CR-bezier down right edge → 0,470 → Z (left edge implicit)
 //
-// Every contour anchor point has a UNIQUE trajectory across the 3 stages.
-// Points 3 (y≈177) and 6 (y≈353) are LARGEST in T1 and SHRINK during T1→T2,
-// while points 1, 4, 7 grow. This means in every transition some points move
-// rightward while others move leftward simultaneously → no group behaviour.
+// Anchor x-values (TA / TB / TC / TD):
+//   y=100:  80 / 220 / 130 / 230   large swing (150 px)
+//   y=200: 215 / 190 / 225 / 180   small swing  (45 px) ← wave anchor
+//   y=300: 240 /  70 / 200 /  80   large swing (170 px)
+//   y=400: 100 / 210 /  80 / 220   large swing (140 px)
 //
-//   Point x-values  (T1 / T2 / T3):
-//   y≈ 59:  191 / 255 / 135   peaks T2
-//   y≈118:  135 / 195 / 245   peaks T3
-//   y≈177:  258 / 152 / 195   peaks T1  ← contracts during T1→T2
-//   y≈235:  145 / 248 / 178   peaks T2
-//   y≈294:  112 / 165 / 252   peaks T3
-//   y≈353:  240 / 148 / 205   peaks T1  ← contracts during T1→T2
-//   y≈412:  155 / 245 / 112   peaks T2
-//   y≈470:  112 / 182 / 258   peaks T3
-//
-// Terra max x ≈ 258; gap to sage min ≈ 340 → guaranteed ~82 px clearance
-const T1 = 'M 0,0 C 61,0 112,0 160,0 C 172,20 182,40 191,59 C 170,79 152,99 135,118 C 182,138 221,158 258,177 C 215,197 179,217 145,235 C 132,255 122,275 112,294 C 161,314 202,334 240,353 C 208,373 180,393 155,412 C 139,432 125,452 112,470 C 69,470 34,470 0,470 Z'
-const T2 = 'M 0,0 C 82,0 151,0 215,0 C 230,20 243,40 255,59 C 232,79 213,99 195,118 C 179,138 165,158 152,177 C 188,197 219,217 248,235 C 216,255 190,275 165,294 C 159,314 153,334 148,353 C 185,373 216,393 245,412 C 221,432 201,452 182,470 C 113,470 55,470 0,470 Z'
-const T3 = 'M 0,0 C 58,0 106,0 152,0 C 146,20 140,40 135,59 C 177,79 212,99 245,118 C 226,138 210,158 195,177 C 189,197 183,217 178,235 C 206,255 230,275 252,294 C 234,314 219,334 205,353 C 170,373 140,393 112,412 C 167,432 214,452 258,470 C 160,470 77,470 0,470 Z'
+// Catmull-Rom formula: CP1 = Pi + (Pi+1 − Pi−1)/6
+//                      CP2 = Pi+1 − (Pi+2 − Pi)/6
+// (virtual P−1 = start, virtual Pn = end for boundary segments)
+const TA = 'M 0,0 C 13,17 44,67 80,100 C 116,133 188,167 215,200 C 242,233 259,267 240,300 C 221,333 140,372 100,400 C 60,428 17,458 0,470 Z'
+const TB = 'M 0,0 C 37,17 188,67 220,100 C 252,133 215,167 190,200 C 165,233 67,267 70,300 C 73,333 222,372 210,400 C 198,428 35,458 0,470 Z'
+const TC = 'M 0,0 C 22,17 92,67 130,100 C 168,133 213,167 225,200 C 237,233 224,267 200,300 C 176,333 113,372 80,400 C 47,428 13,458 0,470 Z'
+const TD = 'M 0,0 C 38,17 200,67 230,100 C 260,133 205,167 180,200 C 155,233 73,267 80,300 C 87,333 233,372 220,400 C 207,428 37,458 0,470 Z'
 
-// Sage (Strategie — right shape) — independent timing, equally dramatic
-// Command sequence: M · C(top) · C×8(left contour) · C(bottom) · Z  =  10 C commands
+// Sage (Strategie — right shape) — independent timing, equally organic
+// Path: M 560,0 → CR-bezier down left edge → 560,470 → Z (right edge implicit)
 //
-// Same independent-trajectory principle — each of the 8 left-edge anchor
-// points peaks in a different stage, so S1→S2 has 4 points expanding while
-// 4 contract, and S2→S3 is similarly mixed.
-//
-//   Point x-values  (S1 / S2 / S3):
-//   y≈ 59:  380 / 358 / 482   peaks S2 (most expanded)
-//   y≈118:  440 / 395 / 480   peaks S2
-//   y≈177:  362 / 480 / 420   peaks S1  ← expands during S1, contracts S1→S2
-//   y≈235:  462 / 345 / 485   peaks S2
-//   y≈294:  485 / 375 / 342   peaks S3  ← most expanded in S3!
-//   y≈353:  355 / 478 / 430   peaks S1  ← contracts during S1→S2
-//   y≈412:  465 / 340 / 490   peaks S2
-//   y≈470:  432 / 465 / 358   peaks S3
-//
-// Sage min x ≈ 340 (gap to terra max 258 → ~82 px guaranteed clearance)
-const S1 = 'M 560,0 C 505,0 458,0 415,0 C 402,20 390,40 380,59 C 403,79 422,99 440,118 C 410,138 385,158 362,177 C 400,197 432,217 462,235 C 471,255 478,275 485,294 C 436,314 394,334 355,353 C 397,373 432,393 465,412 C 452,432 442,452 432,470 C 481,470 522,470 560,470 Z'
-const S2 = 'M 560,0 C 492,0 434,0 380,0 C 372,20 365,40 358,59 C 372,79 384,99 395,118 C 427,138 455,158 480,177 C 429,197 385,217 345,235 C 356,255 366,275 375,294 C 414,314 447,334 478,353 C 426,373 381,393 340,412 C 388,432 428,452 465,470 C 501,470 532,470 560,470 Z'
-const S3 = 'M 560,0 C 530,0 504,0 480,0 C 480,20 481,40 482,59 C 482,79 481,99 480,118 C 457,138 438,158 420,177 C 445,197 466,217 485,235 C 431,255 385,275 342,294 C 375,314 404,334 430,353 C 453,373 472,393 490,412 C 440,432 398,452 358,470 C 435,470 499,470 560,470 Z'
+// Anchor x-values (SA / SB / SC / SD):
+//   y=100: 500 / 370 / 470 / 360   large swing (140 px)
+//   y=200: 460 / 480 / 455 / 475   small swing  (25 px) ← wave anchor
+//   y=300: 350 / 500 / 380 / 510   large swing (160 px)
+//   y=400: 490 / 370 / 510 / 360   large swing (150 px)
+const SA = 'M 560,0 C 550,17 517,67 500,100 C 483,133 485,167 460,200 C 435,233 345,267 350,300 C 355,333 455,372 490,400 C 525,428 548,458 560,470 Z'
+const SB = 'M 560,0 C 528,17 383,67 370,100 C 357,133 458,167 480,200 C 502,233 518,267 500,300 C 482,333 360,372 370,400 C 380,428 528,458 560,470 Z'
+const SC = 'M 560,0 C 545,17 488,67 470,100 C 452,133 470,167 455,200 C 440,233 371,267 380,300 C 389,333 480,372 510,400 C 540,428 552,458 560,470 Z'
+const SD = 'M 560,0 C 527,17 374,67 360,100 C 346,133 450,167 475,200 C 500,233 529,267 510,300 C 491,333 352,372 360,400 C 368,428 527,458 560,470 Z'
 
-// Looping: append stage 1 at the end so each cycle is seamless.
-// Terra: 15 s · Sage: 11 s  →  LCM = 165 s before the phase combination repeats.
-// The 4 s begin-offset means they start out of phase and drift continuously —
-// the gap breathes wide, narrows to ~65 px, opens again, never the same twice.
-const TERRA_VALS  = [T1, T2, T3, T1].join(';')
-const SAGE_VALS   = [S1, S2, S3, S1].join(';')
-const KEY_TIMES   = '0; 0.33; 0.66; 1'
-const KEY_SPLINES = '0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1'  // ease-in-out per segment
+// Looping: append stage A at the end so each cycle is seamless.
+// Terra: 20 s · Sage: 13 s  →  LCM = 260 s before the phase repeats.
+// The 5 s begin-offset ensures they start drifted and never lock in phase.
+const TERRA_VALS  = [TA, TB, TC, TD, TA].join(';')
+const SAGE_VALS   = [SA, SB, SC, SD, SA].join(';')
+const KEY_TIMES   = '0; 0.25; 0.5; 0.75; 1'
+const KEY_SPLINES = '0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1; 0.45 0 0.55 1'
 
 function GapGraphic() {
   return (
@@ -115,7 +96,7 @@ function GapGraphic() {
       <path fill="var(--color-terra)" d={T1}>
         <animate
           attributeName="d"
-          dur="15s"
+          dur="20s"
           begin="0s"
           repeatCount="indefinite"
           values={TERRA_VALS}
@@ -129,8 +110,8 @@ function GapGraphic() {
       <path fill="var(--color-sage)" d={S1}>
         <animate
           attributeName="d"
-          dur="11s"
-          begin="4s"
+          dur="13s"
+          begin="5s"
           repeatCount="indefinite"
           values={SAGE_VALS}
           calcMode="spline"
