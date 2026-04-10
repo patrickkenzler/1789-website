@@ -104,7 +104,7 @@ function GapGraphic() {
           <path
             key={`t${i}`}
             fill="var(--color-terra)"
-            fillOpacity="0.6"
+            fillOpacity="0.3"
             d={terraContour(TERRA_STAGES[0], δ)}
           >
             <animate
@@ -128,7 +128,7 @@ function GapGraphic() {
           <path
             key={`s${i}`}
             fill="var(--color-sage)"
-            fillOpacity="0.6"
+            fillOpacity="0.3"
             d={sageContour(SAGE_STAGES[0], δ)}
           >
             <animate
