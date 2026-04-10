@@ -105,7 +105,7 @@ export default function Home() {
       </section>
 
       {/* ─── Ticker ───────────────────────────────────────────────────────── */}
-      <div className="overflow-hidden py-4" style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)', position: 'relative', zIndex: 0 }}>
+      <div className="overflow-hidden py-4" style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)' }}>
         <div className="flex gap-16 whitespace-nowrap">
           {Array(4).fill([
             'Structure', 'Strategy', 'Gap Consulting', 'Operating Model',
