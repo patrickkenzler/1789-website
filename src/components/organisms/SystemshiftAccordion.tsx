@@ -59,7 +59,7 @@ const ITEMS = [
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function SystemshiftAccordion() {
-  const [active, setActive] = useState<number>(0)
+  const [active, setActive] = useState<number | null>(null)
 
   return (
     <div className="systemshift-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
