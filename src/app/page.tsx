@@ -62,14 +62,20 @@ export default function Home() {
     <main>
 
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
+      {/*
+        position:relative + overflow:hidden → SVG inside HeroLogo (absolute inset-0)
+        clips cleanly within the 100svh card. paddingTop pads the content column
+        inside HeroLogo (not the card itself) so the SVG can bleed to true top=0.
+      */}
       <section
         className="scroll-card"
         style={{
           height:          '100svh',
           display:         'flex',
           flexDirection:   'column',
-          paddingTop:      '7rem',
+          paddingTop:      '5rem', /* nav height — content inside HeroLogo adds more */
           overflow:        'hidden',
+          position:        'relative',
           backgroundColor: 'var(--color-background)',
         }}
       >
@@ -79,14 +85,15 @@ export default function Home() {
         {/* ── Bottom scroll indicator ── */}
         <div
           style={{
-            marginTop:   'auto',
-            borderTop:   '1px solid var(--color-border)',
-            paddingInline: 'var(--grid-margin)',
-            paddingBlock:  '1.25rem',
-            display:     'flex',
+            position:       'relative',
+            zIndex:         3,
+            borderTop:      '1px solid rgba(26,23,20,0.10)',
+            paddingInline:  'var(--grid-margin)',
+            paddingBlock:   '1.25rem',
+            display:        'flex',
             justifyContent: 'flex-end',
-            alignItems:  'center',
-            gap:         '1rem',
+            alignItems:     'center',
+            gap:            '1rem',
           }}
         >
           <span
@@ -100,7 +107,7 @@ export default function Home() {
           >
             Scroll
           </span>
-          <div style={{ width: '1px', height: '2.5rem', backgroundColor: 'var(--color-border)' }} />
+          <div style={{ width: '1px', height: '2.5rem', backgroundColor: 'rgba(26,23,20,0.15)' }} />
         </div>
       </section>
 
