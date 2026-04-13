@@ -111,20 +111,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Ticker ───────────────────────────────────────────────────────── */}
-      <div className="overflow-hidden py-4" style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)' }}>
-        <div className="flex gap-16 whitespace-nowrap">
-          {Array(4).fill([
-            'Structure', 'Strategy', 'Gap Consulting', 'Operating Model',
-            'Systemshift', 'Transformation', 'Wertschöpfungsfluss',
-          ]).flat().map((item, i) => (
-            <span key={i} className="inline-flex items-center gap-8 font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-ink-subtle)' }}>
-              {item}
-              <span className="inline-block w-1 h-1 rounded-full" style={{ backgroundColor: 'var(--color-terra)' }} />
-            </span>
-          ))}
-        </div>
-      </div>
 
       {/* ─── Dafür stehen wir + Logo Carousel (one sticky card) ────────────── */}
       {/*
