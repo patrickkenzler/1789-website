@@ -250,7 +250,7 @@ function TestimonialCard({
           style={{
             position:      'absolute',
             inset:         0,
-            background:    'linear-gradient(to bottom, transparent 40%, rgba(242,242,242,0.50) 72%, rgba(242,242,242,0.96) 100%)',
+            background:    'linear-gradient(to bottom, transparent 40%, rgba(143,166,106,0.40) 72%, rgba(143,166,106,0.40) 100%)',
             pointerEvents: 'none',
           }}
         />
