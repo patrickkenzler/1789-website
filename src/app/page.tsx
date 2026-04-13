@@ -132,9 +132,10 @@ export default function Home() {
             <Grid className="stack-cols">
               <Col span={5} start={8}>
                 <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
-                  Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
-                  Durch Erkenntnis und Vokabular entsteht eine neue Möglichkeit,
-                  sich mit Problemen und Lösungen auseinanderzusetzen.
+                  Wir sind 1789 Innovation, mit unserem innovativen Beratungsansatz begleiten wir
+                  Organisationen in der Veränderung ihrer Strukturen und Unternehmensstrategie.
+                  Dabei verknüpfen wir wissenschaftliche systemtheoretische Ansätze mit sofortigen
+                  pragmatischen Pilotierungen von Veränderungsprozessen.
                 </p>
               </Col>
             </Grid>
