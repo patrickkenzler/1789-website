@@ -12,7 +12,7 @@
 
 // ─── SVG logos ────────────────────────────────────────────────────────────────
 
-const logos: { name: string; svg: string }[] = [
+export const clientLogos: { name: string; svg: string }[] = [
   {
     name: 'Procter & Gamble',
     svg: `<svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +104,7 @@ const logos: { name: string; svg: string }[] = [
 
 export function ClientLogoCarousel() {
   // Duplicate for seamless loop
-  const items = [...logos, ...logos]
+  const items = [...clientLogos, ...clientLogos]
 
   return (
     <div

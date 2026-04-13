@@ -9,6 +9,7 @@
  */
 
 import { Button } from '@/components/atoms/Button'
+import { clientLogos } from '@/components/molecules/ClientLogoCarousel'
 
 /** Shorthand for CSS animation shorthand with fill-mode:both */
 const a = (
@@ -218,6 +219,51 @@ export function HeroLogo() {
           <a href="/kontakt">
             <Button variant="terra">Erstgespräch vereinbaren</Button>
           </a>
+        </div>
+
+        {/* ── Client logo strip ── */}
+        <div
+          style={{
+            position:   'relative',
+            width:      '100%',
+            overflow:   'hidden',
+            marginTop:  'clamp(2rem, 5svh, 3.5rem)',
+            /* Edge fade — logos dissolve at both sides */
+            maskImage:  'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+          }}
+        >
+          <div
+            style={{
+              display:    'flex',
+              gap:        '4rem',
+              whiteSpace: 'nowrap',
+              alignItems: 'center',
+              animation:  'marqueeSlide 70s linear infinite',
+            }}
+          >
+            {[...clientLogos, ...clientLogos].map((logo, i) => (
+              <span
+                key={i}
+                aria-label={logo.name}
+                title={logo.name}
+                style={{
+                  display:    'inline-flex',
+                  alignItems: 'center',
+                  height:     '26px',
+                  opacity:    0.32,
+                  flexShrink: 0,
+                  filter:     'brightness(0)',   /* force all SVGs to black */
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: logo.svg.replace(
+                    /<svg /,
+                    '<svg height="26" style="height:26px;width:auto;display:block;" '
+                  ),
+                }}
+              />
+            ))}
+          </div>
         </div>
 
       </div>
