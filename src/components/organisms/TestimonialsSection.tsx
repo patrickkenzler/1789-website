@@ -244,13 +244,14 @@ function TestimonialCard({
           </div>
         )}
 
-        {/* Gradient — dissolves photo base into card background #F2F2F2 */}
+        {/* Colour wash — solid #8FA66A at 65% opacity, duotone effect */}
         <div
           aria-hidden
           style={{
             position:      'absolute',
             inset:         0,
-            background:    'linear-gradient(to bottom, transparent 40%, rgba(143,166,106,0.40) 72%, rgba(143,166,106,0.40) 100%)',
+            background:    'rgba(143,166,106,0.65)',
+            mixBlendMode:  'multiply',
             pointerEvents: 'none',
           }}
         />

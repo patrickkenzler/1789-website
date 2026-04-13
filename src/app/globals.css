@@ -129,9 +129,10 @@
     box-shadow: 0 16px 48px rgba(26, 23, 20, 0.13);
   }
 
-  /* Photo area — greyscale dissolves + gentle zoom on card hover */
+  /* Photo area — full greyscale so the multiply overlay is the sole tint.
+     Hover dissolves greyscale → natural colour shows through the green wash. */
   .t-card-img {
-    filter:     grayscale(60%);
+    filter:     grayscale(100%);
     transform:  scale(1.00);
     transition:
       filter    600ms var(--ease-standard),
