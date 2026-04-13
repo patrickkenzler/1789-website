@@ -163,12 +163,12 @@ export function HeroLogo() {
             fontFamily:    'var(--font-display)',
             fontWeight:    400,
             fontStyle:     'normal',
-            fontSize:      'clamp(1.75rem, min(4.4vw, 6.2svh), 5.5rem)',
-            lineHeight:    0.93,
-            letterSpacing: '-0.028em',
+            fontSize:      'clamp(2.5rem, min(6vw, 8.5svh), 7.5rem)',
+            lineHeight:    0.9,
+            letterSpacing: '-0.03em',
             color:         'var(--color-ink)',
-            maxWidth:      '18ch',
-            marginBottom:  '0.28em',
+            maxWidth:      '16ch',
+            marginBottom:  '0.22em',
           }}
         >
           Organisationen scheitern nicht an schlechten Strategien
@@ -181,7 +181,7 @@ export function HeroLogo() {
             height:          '1px',
             backgroundColor: 'var(--color-terra)',
             opacity:         0.55,
-            marginBlock:     '0.55em',
+            marginBlock:     '0.5em',
           }}
         />
 
@@ -191,33 +191,15 @@ export function HeroLogo() {
             fontFamily:    'var(--font-display)',
             fontWeight:    400,
             fontStyle:     'italic',
-            fontSize:      'clamp(1.75rem, min(4.4vw, 6.2svh), 5.5rem)',
-            lineHeight:    0.93,
-            letterSpacing: '-0.028em',
+            fontSize:      'clamp(2.5rem, min(6vw, 8.5svh), 7.5rem)',
+            lineHeight:    0.9,
+            letterSpacing: '-0.03em',
             color:         'var(--color-terra)',
-            maxWidth:      '18ch',
-            marginBottom:  'clamp(1.5rem, 4svh, 3rem)',
+            maxWidth:      '16ch',
+            marginBottom:  'clamp(2rem, 5svh, 4rem)',
           }}
         >
           Sie scheitern an der Lücke zwischen Strategie &amp; Struktur
-        </p>
-
-        {/* ── Body copy ── */}
-        <p
-          style={{
-            fontFamily: 'var(--font-body)',
-            fontSize:   'clamp(0.875rem, 1.05vw, 1.05rem)',
-            color:      'var(--color-ink)',
-            lineHeight: 1.75,
-            maxWidth:   '52ch',
-            marginBottom: 'clamp(1.5rem, 3.5svh, 2.5rem)',
-          }}
-        >
-          Wir sind <strong style={{ color: 'var(--color-terra)' }}>1789 Innovation</strong>, mit
-          unserem <strong>innovativen Beratungsansatz</strong> begleiten wir Organisationen in
-          der <strong>Veränderung ihrer Strukturen und Unternehmensstrategie.</strong> Dabei
-          verknüpfen wir wissenschaftliche <strong>systemtheoretische Ansätze</strong> mit
-          sofortigen <strong>pragmatischen Pilotierungen</strong> von Veränderungsprozessen.
         </p>
 
         {/* ── CTAs ── */}
