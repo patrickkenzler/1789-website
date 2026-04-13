@@ -135,7 +135,8 @@ export function HeroLogo() {
           justifyContent: 'center',
           textAlign:      'center',
           paddingInline:  'var(--grid-margin)',
-          paddingBlock:   'clamp(2rem, 4svh, 4rem)',
+          paddingTop:     'clamp(0.5rem, 2svh, 1.5rem)',
+          paddingBottom:  'clamp(3rem, 7svh, 6rem)',
           gap:            0,
           animation:      a('fadeUp', '900ms', '80ms', 'var(--ease-expressive)'),
         }}

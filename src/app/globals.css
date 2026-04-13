@@ -188,11 +188,10 @@
    * Stays inside the card bounds, never bleeds over adjacent strips. */
   box-shadow: inset 0 6px 20px rgba(26, 23, 20, 0.05);
   /*
-   * Friction gap — the margin is invisible (card fills the viewport visually)
-   * but adds scroll distance before the next card enters from below.
-   * The current card remains fully visible for this extra 25 vh of travel.
+   * A small pause before the next card slides in from below.
+   * Keep this tight — too large a value exposes empty background.
    */
-  margin-bottom: 25vh;
+  margin-bottom: 6vh;
 }
 
 @keyframes scroll-card-recede {

@@ -82,33 +82,7 @@ export default function Home() {
         {/* ── Main hero content ── */}
         <HeroLogo />
 
-        {/* ── Bottom scroll indicator ── */}
-        <div
-          style={{
-            position:       'relative',
-            zIndex:         3,
-            borderTop:      '1px solid rgba(26,23,20,0.10)',
-            paddingInline:  'var(--grid-margin)',
-            paddingBlock:   '1.25rem',
-            display:        'flex',
-            justifyContent: 'flex-end',
-            alignItems:     'center',
-            gap:            '1rem',
-          }}
-        >
-          <span
-            style={{
-              fontFamily:    'var(--font-mono)',
-              fontSize:      'var(--text-xxs)',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color:         'var(--color-ink-subtle)',
-            }}
-          >
-            Scroll
-          </span>
-          <div style={{ width: '1px', height: '2.5rem', backgroundColor: 'rgba(26,23,20,0.15)' }} />
-        </div>
+        {/* Scroll indicator removed — hero now full-bleed with no strip at bottom */}
       </section>
 
 
