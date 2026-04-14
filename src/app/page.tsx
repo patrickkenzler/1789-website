@@ -127,7 +127,7 @@ export default function Home() {
             {/* ── Intro copy ── */}
             <Grid className="stack-cols">
               <Col span={5}>
-                <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
+                <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
                   Wir sind 1789 Innovation, mit unserem innovativen Beratungsansatz begleiten wir
                   Organisationen in der Veränderung ihrer Strukturen und Unternehmensstrategie.
                   Dabei verknüpfen wir wissenschaftliche systemtheoretische Ansätze mit sofortigen
@@ -490,7 +490,7 @@ export default function Home() {
           {/* ── Intro copy ── */}
           <Grid className="stack-cols">
             <Col span={5}>
-              <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
+              <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
                 Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
                 Wir setzen Transformation prototypisch, zielgetrieben, pragmatisch,
                 partizipativ und effektiv um.
