@@ -169,7 +169,7 @@ function TestimonialCard({
         borderRadius:    'var(--radius-md)',
         overflow:        'hidden',
         backgroundColor: 'var(--color-background)',
-        boxShadow:       '0 0 0 1px rgba(26,23,20,0.10)',
+        boxShadow:       '0 0 0 1px rgba(26,23,20,0.08)',
       }}
     >
       {/* ── Portrait ──────────────────────────────────────────────────────── */}
