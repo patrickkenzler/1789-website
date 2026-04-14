@@ -55,10 +55,9 @@ export function Header() {
           left:            0,
           right:           0,
           zIndex:          50,
-          transition:      'background 300ms, border-color 300ms',
+          transition:      'background 300ms',
           backgroundColor: scrolled ? 'rgba(242,242,242,0.92)' : 'transparent',
           backdropFilter:  scrolled ? 'blur(12px)' : 'none',
-          borderBottom:    scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
         }}
       >
         {/* ── Desktop layout ── */}
