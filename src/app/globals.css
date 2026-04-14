@@ -129,8 +129,9 @@
   /* Photo area — full greyscale so the multiply overlay is the sole tint.
      Hover dissolves greyscale → natural colour shows through the green wash. */
   .t-card-img {
-    filter:     grayscale(100%);
-    transform:  scale(1.00);
+    filter:      grayscale(100%);
+    transform:   scale(1.00);
+    will-change: transform, filter;
     transition:
       filter    600ms var(--ease-standard),
       transform 600ms var(--ease-expressive);
@@ -273,6 +274,14 @@
    * Keep this tight — too large a value exposes empty background.
    */
   margin-bottom: 6vh;
+  /*
+   * Pre-promote to a GPU compositor layer on page load.
+   * Without this hint the browser waits until the first scroll event to
+   * promote, causing a visible hitch (≈1 frame) before motion starts.
+   * Safe here because scroll-driven animations already need a transform
+   * layer — this just ensures it is allocated eagerly.
+   */
+  will-change: transform;
 }
 
 @keyframes scroll-card-recede {
