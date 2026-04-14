@@ -257,20 +257,18 @@ export default function Home() {
                     {/* Client badge — always on image, same style as testimonials */}
                     <div
                       style={{
-                        position:             'absolute',
-                        bottom:               '0.875rem',
-                        left:                 '1rem',
-                        fontFamily:           'var(--font-mono)',
-                        fontSize:             '0.595rem',
-                        letterSpacing:        '0.15em',
-                        textTransform:        'uppercase',
-                        color:                'var(--color-terra)',
-                        backgroundColor:      'rgba(242,242,242,0.88)',
-                        backdropFilter:       'blur(6px)',
-                        WebkitBackdropFilter: 'blur(6px)',
-                        padding:              '0.28rem 0.65rem',
-                        borderRadius:         '3px',
-                        whiteSpace:           'nowrap',
+                        position:        'absolute',
+                        bottom:          '0.875rem',
+                        left:            '1rem',
+                        fontFamily:      'var(--font-mono)',
+                        fontSize:        '0.595rem',
+                        letterSpacing:   '0.15em',
+                        textTransform:   'uppercase',
+                        color:           'var(--color-terra)',
+                        backgroundColor: 'rgba(242,242,242,0.94)',
+                        padding:         '0.28rem 0.65rem',
+                        borderRadius:    '3px',
+                        whiteSpace:      'nowrap',
                       }}
                     >
                       {c.client}

@@ -119,14 +119,11 @@
 
   /* ── Testimonial card hover (entrance animation is on .t-card-wrapper) ─── */
   .testimonial-card {
-    transition:
-      box-shadow   300ms var(--ease-standard),
-      transform    300ms var(--ease-standard);
+    transition: box-shadow 300ms var(--ease-standard);
   }
 
   .testimonial-card:hover {
-    transform:  translateY(-4px);
-    box-shadow: 0 16px 48px rgba(26, 23, 20, 0.13);
+    box-shadow: 0 16px 48px rgba(26, 23, 20, 0.15);
   }
 
   /* Photo area — full greyscale so the multiply overlay is the sole tint.
@@ -163,25 +160,21 @@
   .card {
     border-radius: var(--radius-md);
     box-shadow:    0 0 0 1px rgba(26, 23, 20, 0.08);
-    transition:    box-shadow 280ms var(--ease-standard),
-                   transform  280ms var(--ease-standard);
+    transition:    box-shadow 280ms var(--ease-standard);
   }
 
   .card:hover {
-    box-shadow: 0 6px 24px rgba(26, 23, 20, 0.08), 0 0 0 1px rgba(26, 23, 20, 0.12);
-    transform:  translateY(-2px);
+    box-shadow: 0 6px 24px rgba(26, 23, 20, 0.10), 0 0 0 1px rgba(26, 23, 20, 0.14);
   }
 
   .card-dark {
     border-radius: var(--radius-md);
     box-shadow:    0 0 0 1px rgba(255, 255, 255, 0.09);
-    transition:    box-shadow 280ms var(--ease-standard),
-                   transform  280ms var(--ease-standard);
+    transition:    box-shadow 280ms var(--ease-standard);
   }
 
   .card-dark:hover {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.20), 0 0 0 1px rgba(255, 255, 255, 0.16);
-    transform:  translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.18);
   }
 
   /* Accent top border — 2px coloured bar at the card top */
