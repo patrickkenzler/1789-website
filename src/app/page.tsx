@@ -4,7 +4,6 @@ import { Tag } from '@/components/atoms/Tag'
 import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
 import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
-import { ClientLogoCarousel } from '@/components/molecules/ClientLogoCarousel'
 import { SystemshiftAccordion } from '@/components/organisms/SystemshiftAccordion'
 import { TestimonialsSection } from '@/components/organisms/TestimonialsSection'
 
@@ -170,8 +169,6 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Carousel pinned at the viewport bottom — always visible when card is active */}
-        <ClientLogoCarousel />
       </div>
 
       {/* ─── Highlight Cases + Questions Ticker (one sticky card) ───────────── */}
