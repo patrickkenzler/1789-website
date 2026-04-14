@@ -112,24 +112,20 @@ export default function Home() {
         <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem 2rem' }}>
           <Container>
 
-            {/* ── Staggered editorial headline ── */}
+            {/* ── Headline ── */}
             <div style={{ marginBottom: '2rem' }}>
               <Tag>Dafür stehen wir</Tag>
               <div style={{ marginTop: '1.75rem' }}>
-                <div style={{ textAlign: 'right' }}>
-                  <span style={displayStyle}>Ein neues Organisations&shy;verständnis —</span>
-                </div>
-                <div style={{ marginTop: '0.15em' }}>
-                  <span style={{ ...displayStyle, paddingLeft: '8%', fontStyle: 'italic', color: 'var(--color-terra)' }}>
-                    auf Struktur- und Strategieebene.
-                  </span>
-                </div>
+                <p style={displayStyle}>Ein neues Organisations&shy;verständnis —</p>
+                <p style={{ ...displayStyle, marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
+                  auf Struktur- und Strategieebene.
+                </p>
               </div>
             </div>
 
             {/* ── Intro copy ── */}
             <Grid className="stack-cols">
-              <Col span={5} start={8}>
+              <Col span={4} start={9}>
                 <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                   Wir sind 1789 Innovation, mit unserem innovativen Beratungsansatz begleiten wir
                   Organisationen in der Veränderung ihrer Strukturen und Unternehmensstrategie.
@@ -521,24 +517,20 @@ export default function Home() {
       <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
         <Container>
 
-          {/* ── Staggered editorial headline ── */}
+          {/* ── Headline ── */}
           <div style={{ marginBottom: '5rem' }}>
             <Tag>Was wir erreichen</Tag>
-            <div style={{ marginTop: '3rem' }}>
-              <div>
-                <span style={{ ...displayStyle, paddingLeft: '4%' }}>Drei Dinge,</span>
-              </div>
-              <div style={{ marginTop: '0.15em', textAlign: 'right' }}>
-                <span style={{ ...displayStyle, fontStyle: 'italic' }}>
-                  die jede Transformation braucht.
-                </span>
-              </div>
+            <div style={{ marginTop: '1.75rem' }}>
+              <p style={displayStyle}>Drei Dinge,</p>
+              <p style={{ ...displayStyle, marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
+                die jede Transformation braucht.
+              </p>
             </div>
           </div>
 
           {/* ── Intro copy ── */}
           <Grid className="stack-cols">
-            <Col span={5} start={8}>
+            <Col span={4} start={9}>
               <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
                 Wir setzen Transformation prototypisch, zielgetrieben, pragmatisch,
