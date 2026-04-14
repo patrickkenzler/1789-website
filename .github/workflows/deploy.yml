@@ -36,6 +36,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /1789-website
 
       # next build with output:'export' writes to ./out
       - uses: actions/upload-pages-artifact@v3

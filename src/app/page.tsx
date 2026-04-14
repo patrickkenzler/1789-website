@@ -233,7 +233,7 @@ export default function Home() {
                       height:             '200px',
                       flexShrink:         0,
                       overflow:           'hidden',
-                      backgroundImage:    c.image ? `url(${c.image})` : placeholderBg,
+                      backgroundImage:    c.image ? `url(${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${c.image})` : placeholderBg,
                       backgroundSize:     'cover',
                       backgroundPosition: 'center',
                       backgroundColor:    '#0D0B0A',

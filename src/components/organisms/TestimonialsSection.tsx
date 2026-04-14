@@ -9,6 +9,7 @@
  */
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -186,7 +187,7 @@ function TestimonialCard({
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={photo}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${photo}`}
             alt={name}
             className="t-card-img"
             style={{
@@ -324,14 +325,14 @@ function TestimonialCard({
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
               {caseHref && (
-                <a
+                <Link
                   href={caseHref}
                   className="case-link"
                   title={caseLabel ?? undefined}
                   style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.13em', textTransform: 'uppercase', color: 'var(--color-terra)', textDecoration: 'none', opacity: 0.8, transition: 'opacity 200ms' }}
                 >
                   Case ↗
-                </a>
+                </Link>
               )}
               <a
                 href={linkedin}
