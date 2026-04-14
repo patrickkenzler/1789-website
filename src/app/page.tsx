@@ -140,11 +140,8 @@ export default function Home() {
               {pillars.map((pillar) => (
                 <Col key={pillar.num} span={4}>
                   <div
-                    className="p-6 h-full flex flex-col gap-5 group hover:-translate-y-1 transition-transform duration-300"
-                    style={{
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-md)',
-                    }}
+                    className="card h-full flex flex-col gap-5"
+                    style={{ padding: '1.75rem' }}
                   >
                     <span className="font-mono text-xs tracking-[0.15em]" style={{ color: 'var(--color-terra)' }}>
                       {pillar.num}
@@ -222,15 +219,13 @@ export default function Home() {
                 <a
                   key={c.slug}
                   href={`/projekte/${c.slug}`}
-                  className="group flex flex-col cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+                  className="card-dark group flex flex-col cursor-pointer"
                   style={{
-                    gridColumn:     'span 4',
+                    gridColumn:      'span 4',
                     backgroundColor: bg,
-                    borderRadius:   'var(--radius-md)',
-                    border:         '1px solid rgba(255,255,255,0.08)',
-                    minHeight:      '340px',
-                    textDecoration: 'none',
-                    overflow:       'hidden',
+                    minHeight:       '340px',
+                    textDecoration:  'none',
+                    overflow:        'hidden',
                   }}
                 >
                   {/* ── Title image slot (160px) ── */}
@@ -366,14 +361,8 @@ export default function Home() {
             {/* ── Left: latest podcast episode with embedded player ── */}
             <Col span={6}>
               <div
-                style={{
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 'var(--radius-md)',
-                  overflow: 'hidden',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
+                className="card"
+                style={{ overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}
               >
                 <div className="p-8 pb-5">
                   <div className="flex items-center gap-3 mb-4">
@@ -424,8 +413,8 @@ export default function Home() {
                 {/* Essay by Human Nagafi */}
                 <a
                   href="/labor"
-                  className="group flex-1 p-8 cursor-pointer hover:-translate-y-0.5 transition-transform duration-300 block"
-                  style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', textDecoration: 'none' }}
+                  className="card flex-1 block"
+                  style={{ padding: '1.75rem', textDecoration: 'none' }}
                 >
                   <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-ink-subtle)' }}>
                     Essay
@@ -447,13 +436,8 @@ export default function Home() {
                 {/* Upcoming live event */}
                 <a
                   href="/labor"
-                  className="group flex-1 p-8 cursor-pointer hover:-translate-y-0.5 transition-transform duration-300 block"
-                  style={{
-                    border: '1px solid var(--color-terra)',
-                    borderRadius: 'var(--radius-md)',
-                    textDecoration: 'none',
-                    backgroundColor: 'rgba(244,77,11,0.04)',
-                  }}
+                  className="card card-terra flex-1 block"
+                  style={{ padding: '1.75rem', textDecoration: 'none' }}
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-terra)' }}>
@@ -543,10 +527,8 @@ export default function Home() {
             {achievements.map((a, i) => (
               <Col key={a.phase} span={4}>
                 <div
-                  className="p-10 h-full"
-                  style={{
-                    borderTop: `3px solid ${i === 0 ? 'var(--color-terra)' : i === 1 ? 'var(--color-sage)' : 'var(--color-ink)'}`,
-                  }}
+                  className={`card h-full ${i === 0 ? 'card-terra' : i === 1 ? 'card-sage' : 'card-ink'}`}
+                  style={{ padding: '1.75rem' }}
                 >
                   <p className="font-mono text-xs tracking-[0.15em] uppercase mb-6" style={{ color: 'var(--color-ink-subtle)' }}>
                     Phase {String(i + 1).padStart(2, '0')}
@@ -588,10 +570,7 @@ export default function Home() {
               </h2>
             </Col>
             <Col span={4} start={9} className="flex items-end">
-              <div
-                className="w-full p-8"
-                style={{ backgroundColor: 'var(--color-surface)', borderRadius: 'var(--radius-md)' }}
-              >
+              <div className="card w-full" style={{ padding: '1.75rem' }}>
                 <p className="font-body text-ink-muted mb-4" style={{ fontSize: 'var(--text-sub)' }}>
                   Systemshift-Perspektiven direkt in Ihr Postfach.
                 </p>

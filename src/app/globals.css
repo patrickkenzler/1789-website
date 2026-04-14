@@ -149,6 +149,46 @@
   /* Project card — colour overlay fades on parent hover to reveal more of the photo */
   .group:hover .case-img-overlay { opacity: 0.28 !important; }
 
+  /* ─── Card system ─────────────────────────────────────────────────────────
+   *
+   * Two base classes + one accent modifier cover every card on the site.
+   *
+   * .card       — light bg contexts (cream, surface)
+   * .card-dark  — dark bg contexts (ink background)
+   * .card-terra — accent top border for featured / live items
+   *
+   * Hover: 2px vertical lift + shadow bloom. No Tailwind hover-translate
+   * classes needed — remove them from JSX.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .card {
+    border-radius: var(--radius-md);
+    box-shadow:    0 0 0 1px rgba(26, 23, 20, 0.08);
+    transition:    box-shadow 280ms var(--ease-standard),
+                   transform  280ms var(--ease-standard);
+  }
+
+  .card:hover {
+    box-shadow: 0 6px 24px rgba(26, 23, 20, 0.08), 0 0 0 1px rgba(26, 23, 20, 0.12);
+    transform:  translateY(-2px);
+  }
+
+  .card-dark {
+    border-radius: var(--radius-md);
+    box-shadow:    0 0 0 1px rgba(255, 255, 255, 0.09);
+    transition:    box-shadow 280ms var(--ease-standard),
+                   transform  280ms var(--ease-standard);
+  }
+
+  .card-dark:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.20), 0 0 0 1px rgba(255, 255, 255, 0.16);
+    transform:  translateY(-2px);
+  }
+
+  /* Accent top border — 2px coloured bar at the card top */
+  .card-terra { border-top: 2px solid var(--color-terra); }
+  .card-sage  { border-top: 2px solid var(--color-sage);  }
+  .card-ink   { border-top: 2px solid var(--color-ink);   }
+
   /* Hover Underline */
   .hover-line {
     position: relative;
