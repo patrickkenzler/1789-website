@@ -147,7 +147,7 @@
   .case-link:hover { opacity: 1 !important; }
 
   /* Project card — colour overlay fades on parent hover to reveal more of the photo */
-  .group:hover .case-img-overlay { opacity: 0.28 !important; }
+  .group:hover .case-img-overlay { opacity: 0.08 !important; }
 
   /* ─── Card system ─────────────────────────────────────────────────────────
    *
@@ -188,6 +188,54 @@
   .card-terra { border-top: 2px solid var(--color-terra); }
   .card-sage  { border-top: 2px solid var(--color-sage);  }
   .card-ink   { border-top: 2px solid var(--color-ink);   }
+
+  /* ─── Card content system ─────────────────────────────────────────────────
+   *
+   * Four layers used consistently across every card type on the site.
+   * Applying these classes means font, size, colour and spacing are
+   * defined once — no per-card overrides needed.
+   *
+   *   .c-eyebrow   mono label above the title (category, number, type)
+   *   .c-title     display light heading — the card's primary statement
+   *   .c-body      body supporting text
+   *   .c-meta      small mono footer line (date, duration, location …)
+   * ──────────────────────────────────────────────────────────────────────── */
+  .c-eyebrow {
+    font-family:    var(--font-mono);
+    font-size:      var(--text-xxs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color:          var(--color-ink-subtle);
+    display:        block;
+  }
+  .c-eyebrow--terra { color: var(--color-terra); }
+
+  .c-title {
+    font-family:    var(--font-display);
+    font-weight:    300;
+    font-size:      var(--text-sm);
+    line-height:    1.1;
+    letter-spacing: -0.02em;
+    color:          var(--color-ink);
+    margin-top:     0.75rem;
+  }
+
+  .c-body {
+    font-family: var(--font-body);
+    font-size:   var(--text-sub);
+    line-height: 1.65;
+    color:       var(--color-ink-muted);
+    margin-top:  0.75rem;
+  }
+
+  .c-meta {
+    font-family:    var(--font-mono);
+    font-size:      var(--text-xxs);
+    letter-spacing: 0.08em;
+    color:          var(--color-ink-subtle);
+    margin-top:     0.75rem;
+    display:        block;
+  }
 
   /* Hover Underline */
   .hover-line {
