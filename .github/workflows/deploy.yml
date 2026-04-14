@@ -29,21 +29,18 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
-      # Install and build inside the web/ subdirectory
       - name: Install dependencies
-        run: npm ci
-        working-directory: web
+        run: npm install
 
       - name: Build
         run: npm run build
-        working-directory: web
 
-      # next build with output:'export' writes to web/out/
+      # next build with output:'export' writes to ./out
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web/out
+          path: out
 
       - id: deploy
         uses: actions/deploy-pages@v4
