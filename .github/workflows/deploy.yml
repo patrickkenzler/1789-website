@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [v4-editorial-design]   # change to [main] once you rename the branch
+
+# Required by the GitHub Pages deployment API
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment runs at a time; cancel in-progress if a new push arrives
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Tells GitHub this job deploys to the Pages environment (enables the URL output)
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: web/package-lock.json   # cache scoped to the sub-directory
+
+      # Install and build inside the web/ subdirectory
+      - name: Install dependencies
+        run: npm ci
+        working-directory: web
+
+      - name: Build
+        run: npm run build
+        working-directory: web
+
+      # next build with output:'export' writes to web/out/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/out
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
