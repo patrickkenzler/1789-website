@@ -140,19 +140,16 @@ export default function Home() {
               {pillars.map((pillar) => (
                 <Col key={pillar.num} span={4}>
                   <div
-                    className="card h-full flex flex-col gap-5"
+                    className="card h-full flex flex-col"
                     style={{ padding: '1.75rem' }}
                   >
-                    <span className="font-mono text-xs tracking-[0.15em]" style={{ color: 'var(--color-terra)' }}>
+                    <span className="c-eyebrow c-eyebrow--terra">
                       {pillar.num}
                     </span>
-                    <h3
-                      className="font-display font-light text-ink"
-                      style={{ fontSize: 'var(--text-lg)', lineHeight: '1', letterSpacing: '-0.03em' }}
-                    >
+                    <h3 className="c-title">
                       {pillar.title}
                     </h3>
-                    <p className="font-body text-ink-muted mt-auto" style={{ fontSize: 'var(--text-sub)', lineHeight: '1.6' }}>
+                    <p className="c-body mt-auto">
                       {pillar.body}
                     </p>
                   </div>
@@ -228,56 +225,49 @@ export default function Home() {
                     overflow:        'hidden',
                   }}
                 >
-                  {/* ── Title image slot (160px) ── */}
-                  <div style={{ position: 'relative', height: '160px', flexShrink: 0, overflow: 'hidden' }}>
-                    {c.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={c.image}
-                        alt={c.title}
+                  {/* ── Title image slot ── */}
+                  <div
+                    style={{
+                      position:           'relative',
+                      height:             '200px',
+                      flexShrink:         0,
+                      overflow:           'hidden',
+                      backgroundImage:    c.image ? `url(${c.image})` : placeholderBg,
+                      backgroundSize:     'cover',
+                      backgroundPosition: 'center',
+                      backgroundColor:    '#0D0B0A',
+                    }}
+                  >
+                    {/* Placeholder label — only when no image */}
+                    {!c.image && (
+                      <span
                         style={{
-                          width:     '100%',
-                          height:    '100%',
-                          objectFit: 'cover',
-                          filter:    'grayscale(0.65) brightness(0.82)',
-                          display:   'block',
-                        }}
-                      />
-                    ) : (
-                      // Placeholder — diagonal texture + accent gradient
-                      <div
-                        style={{
-                          width:    '100%',
-                          height:   '100%',
-                          background: placeholderBg,
-                          display:  'flex',
-                          alignItems:    'flex-end',
-                          justifyContent:'flex-end',
-                          padding:  '1rem 1.25rem',
-                        }}
-                      >
-                        <span style={{
+                          position:      'absolute',
+                          bottom:        '1rem',
+                          right:         '1.25rem',
                           fontFamily:    'var(--font-mono)',
                           fontSize:      '0.6rem',
                           letterSpacing: '0.18em',
                           textTransform: 'uppercase',
                           color:         accentLabel[i % 3],
                           opacity:       0.7,
-                        }}>
-                          ↗ {c.client}
-                        </span>
-                      </div>
+                        }}
+                      >
+                        ↗ {c.client}
+                      </span>
                     )}
-
-                    {/* Colour overlay — sits above the photo, fades on hover */}
+                    {/* Subtle brand tint — fades on hover */}
                     {c.image && (
                       <div
                         className="case-img-overlay"
                         style={{
                           position:        'absolute',
-                          inset:           0,
+                          top:             0,
+                          right:           0,
+                          bottom:          0,
+                          left:            0,
                           backgroundColor: overlayColors[i % 3],
-                          opacity:         0.5,
+                          opacity:         0.18,
                           transition:      'opacity 300ms var(--ease-standard)',
                         }}
                       />
@@ -365,18 +355,13 @@ export default function Home() {
                 style={{ overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}
               >
                 <div className="p-8 pb-5">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-terra)' }}>
-                      ★ Aktuelle Folge · #142
-                    </span>
-                  </div>
-                  <h3
-                    className="font-display font-light text-ink"
-                    style={{ fontSize: 'var(--text-sm)', lineHeight: '1.2' }}
-                  >
+                  <span className="c-eyebrow c-eyebrow--terra" style={{ marginBottom: '0.25rem' }}>
+                    ★ Aktuelle Folge · #142
+                  </span>
+                  <h3 className="c-title">
                     Das Internet: Utopie, Infrastruktur, Schlachtfeld
                   </h3>
-                  <p className="mt-2 font-body italic" style={{ fontSize: 'var(--text-sub)', color: 'var(--color-ink-subtle)' }}>
+                  <p className="c-body" style={{ fontStyle: 'italic', color: 'var(--color-ink-subtle)' }}>
                     mit Marie Kilg
                   </p>
                   <div className="flex gap-2 mt-4">
@@ -416,19 +401,16 @@ export default function Home() {
                   className="card flex-1 block"
                   style={{ padding: '1.75rem', textDecoration: 'none' }}
                 >
-                  <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-ink-subtle)' }}>
+                  <span className="c-eyebrow">
                     Essay
                   </span>
-                  <h3
-                    className="mt-3 font-heading font-normal text-ink"
-                    style={{ fontSize: 'var(--text-base)', lineHeight: '1.4' }}
-                  >
+                  <h3 className="c-title">
                     Nähe als Organisationsprinzip — warum wir Corporate Therapy auf die Bühne bringen
                   </h3>
-                  <p className="mt-3 font-body italic" style={{ fontSize: 'var(--text-sub)', color: 'var(--color-ink-subtle)' }}>
+                  <p className="c-body" style={{ fontStyle: 'italic', color: 'var(--color-ink-subtle)' }}>
                     Human Nagafi
                   </p>
-                  <p className="mt-2 font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>
+                  <p className="c-meta">
                     Essay · 8 Min · 2024
                   </p>
                 </a>
@@ -440,23 +422,20 @@ export default function Home() {
                   style={{ padding: '1.75rem', textDecoration: 'none' }}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs tracking-[0.12em] uppercase" style={{ color: 'var(--color-terra)' }}>
+                    <span className="c-eyebrow c-eyebrow--terra">
                       Live · Talk
                     </span>
                     <span className="font-mono text-xs" style={{ color: 'var(--color-terra)' }}>
                       25.06.2024
                     </span>
                   </div>
-                  <h3
-                    className="mt-3 font-heading font-normal text-ink"
-                    style={{ fontSize: 'var(--text-base)', lineHeight: '1.4' }}
-                  >
+                  <h3 className="c-title">
                     Corporate Therapy — Live in Frankfurt
                   </h3>
-                  <p className="mt-2 font-body" style={{ fontSize: 'var(--text-sub)', color: 'var(--color-ink-muted)', lineHeight: '1.5' }}>
-                    Live-Folge mit Human, Patrick & Gast. Einlass ab 18 Uhr, Start 18:30 Uhr. Gespräche, Snacks & Drinks.
+                  <p className="c-body">
+                    Live-Folge mit Human, Patrick &amp; Gast. Einlass ab 18 Uhr, Start 18:30 Uhr. Gespräche, Snacks &amp; Drinks.
                   </p>
-                  <p className="mt-3 font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>
+                  <p className="c-meta">
                     Frankfurt am Main
                   </p>
                 </a>
@@ -530,16 +509,13 @@ export default function Home() {
                   className={`card h-full ${i === 0 ? 'card-terra' : i === 1 ? 'card-sage' : 'card-ink'}`}
                   style={{ padding: '1.75rem' }}
                 >
-                  <p className="font-mono text-xs tracking-[0.15em] uppercase mb-6" style={{ color: 'var(--color-ink-subtle)' }}>
+                  <p className="c-eyebrow">
                     Phase {String(i + 1).padStart(2, '0')}
                   </p>
-                  <h3
-                    className="font-display font-light text-ink mb-8"
-                    style={{ fontSize: 'var(--text-sm)', lineHeight: 1 }}
-                  >
+                  <h3 className="c-title">
                     {a.phase}
                   </h3>
-                  <ul className="flex flex-col gap-3">
+                  <ul className="flex flex-col gap-3" style={{ marginTop: '1.5rem' }}>
                     {a.items.map((item) => (
                       <li key={item} className="flex items-start gap-3">
                         <span style={{ color: 'var(--color-terra)', marginTop: '3px' }}>·</span>

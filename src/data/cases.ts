@@ -39,6 +39,7 @@ export const cases: CaseStudy[] = [
     },
     color: 'terra',
     featured: true,
+    image: '/projects/wd40.jpg',
   },
   {
     slug: 'effektivitaet-und-kundennaehe',
@@ -55,6 +56,7 @@ export const cases: CaseStudy[] = [
     result: 'Autonome, kundennahe Teams mit echter Entscheidungskraft. Schnellere Reaktionsfähigkeit auf individuelle Anforderungen. Dezentralisierung nicht als Kontrollverlust — sondern als Wertschöpfungsgewinn.',
     color: 'ink',
     featured: true,
+    image: '/projects/pg.jpg',
   },
   {
     slug: 'integration',
@@ -71,6 +73,7 @@ export const cases: CaseStudy[] = [
     result: 'Ein dezentrales Operating Model, in dem Teams eigenständig und kompetenzbasiert entscheiden — im Rahmen klarer Strukturen. Enge Kundenbeziehungen erhalten. Selbstbestimmung der Mitarbeitenden gestärkt statt geschwächt.',
     color: 'sage',
     featured: true,
+    image: '/projects/teccle.jpg',
   },
   {
     slug: 'motivieren-und-entwickeln',
