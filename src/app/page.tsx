@@ -238,24 +238,6 @@ export default function Home() {
                       backgroundColor:    '#0D0B0A',
                     }}
                   >
-                    {/* Placeholder label — only when no image */}
-                    {!c.image && (
-                      <span
-                        style={{
-                          position:      'absolute',
-                          bottom:        '1rem',
-                          right:         '1.25rem',
-                          fontFamily:    'var(--font-mono)',
-                          fontSize:      '0.6rem',
-                          letterSpacing: '0.18em',
-                          textTransform: 'uppercase',
-                          color:         accentLabel[i % 3],
-                          opacity:       0.7,
-                        }}
-                      >
-                        ↗ {c.client}
-                      </span>
-                    )}
                     {/* Subtle brand tint — fades on hover */}
                     {c.image && (
                       <div
@@ -272,6 +254,27 @@ export default function Home() {
                         }}
                       />
                     )}
+                    {/* Client badge — always on image, same style as testimonials */}
+                    <div
+                      style={{
+                        position:             'absolute',
+                        bottom:               '0.875rem',
+                        left:                 '1rem',
+                        fontFamily:           'var(--font-mono)',
+                        fontSize:             '0.595rem',
+                        letterSpacing:        '0.15em',
+                        textTransform:        'uppercase',
+                        color:                'var(--color-terra)',
+                        backgroundColor:      'rgba(242,242,242,0.88)',
+                        backdropFilter:       'blur(6px)',
+                        WebkitBackdropFilter: 'blur(6px)',
+                        padding:              '0.28rem 0.65rem',
+                        borderRadius:         '3px',
+                        whiteSpace:           'nowrap',
+                      }}
+                    >
+                      {c.client}
+                    </div>
                   </div>
 
                   {/* ── Card content ── */}
@@ -291,12 +294,6 @@ export default function Home() {
                       ))}
                     </div>
                     <div>
-                      <p
-                        className="font-mono text-[0.6rem] tracking-widest uppercase mb-2"
-                        style={{ color: 'rgba(255,255,255,0.45)' }}
-                      >
-                        {c.client}
-                      </p>
                       <h3
                         className="font-display font-light"
                         style={{ fontSize: 'var(--text-sm)', lineHeight: '1.15', color: fg }}
