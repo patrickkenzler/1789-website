@@ -55,9 +55,13 @@ export function Header() {
           left:            0,
           right:           0,
           zIndex:          50,
-          transition:      'background 300ms',
+          transition:      'background-color 300ms',
           backgroundColor: scrolled ? 'rgba(242,242,242,0.92)' : 'transparent',
-          backdropFilter:  scrolled ? 'blur(12px)' : 'none',
+          /* Always on — toggling backdrop-filter creates/destroys compositor
+             layers on every scroll event, causing site-wide repaint flicker.
+             blur on a fully-transparent bg is invisible, so there's no visual
+             difference at the top of the page. */
+          backdropFilter:  'blur(12px)',
         }}
       >
         {/* ── Desktop layout ── */}
