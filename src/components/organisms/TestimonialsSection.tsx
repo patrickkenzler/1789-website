@@ -412,17 +412,6 @@ export function TestimonialsSection() {
 
         {/* ── Arrows + counter ────────────────────────────────────────────── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingBottom: '0.25rem' }}>
-          <span
-            style={{
-              fontFamily:    'var(--font-mono)',
-              fontSize:      'var(--text-xxs)',
-              letterSpacing: '0.1em',
-              color:         'rgba(255,255,255,0.45)',
-              userSelect:    'none',
-            }}
-          >
-            {offset + 1} – {Math.min(offset + VISIBLE, TESTIMONIALS.length)} / {TESTIMONIALS.length}
-          </span>
           <ArrowBtn dir="prev" disabled={offset === 0}          onClick={() => setOffset(o => Math.max(0, o - 1))} />
           <ArrowBtn dir="next" disabled={offset === MAX_OFFSET} onClick={() => setOffset(o => Math.min(MAX_OFFSET, o + 1))} />
         </div>
