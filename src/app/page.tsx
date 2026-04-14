@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Container, Grid, Col } from '@/components/layout/Grid'
 import { Button } from '@/components/atoms/Button'
 import { Tag } from '@/components/atoms/Tag'
@@ -186,11 +187,11 @@ export default function Home() {
               </h2>
             </Col>
             <Col span={2} start={11} className="flex items-end justify-end">
-              <a href="/projekte">
+              <Link href="/projekte">
                 <Button variant="ghost" size="sm" style={{ borderColor: 'rgba(255,255,255,0.3)', color: 'var(--color-background)' }}>
                   Alle Cases →
                 </Button>
-              </a>
+              </Link>
             </Col>
           </Grid>
 
@@ -213,7 +214,7 @@ export default function Home() {
               ][0]
 
               return (
-                <a
+                <Link
                   key={c.slug}
                   href={`/projekte/${c.slug}`}
                   className="card-dark group flex flex-col cursor-pointer"
@@ -303,7 +304,7 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                </a>
+                </Link>
               )
             })}
           </Grid>
@@ -332,13 +333,13 @@ export default function Home() {
               <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
                 Unser Denklabor — wo Organisationstheorie auf Praxis trifft.
               </p>
-              <a
+              <Link
                 href="/labor"
                 className="hover-line inline-block mt-8 font-body uppercase tracking-widest"
                 style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--color-ink-muted)' }}
               >
                 Alle Inhalte →
-              </a>
+              </Link>
             </Col>
           </Grid>
 
@@ -375,13 +376,13 @@ export default function Home() {
                   />
                 </div>
                 <div className="px-8 pb-6">
-                  <a
+                  <Link
                     href="/podcast"
                     className="hover-line font-body uppercase tracking-widest"
                     style={{ fontSize: 'var(--text-xxs)', fontWeight: 500, color: 'var(--color-terra)' }}
                   >
                     Alle Folgen →
-                  </a>
+                  </Link>
                 </div>
               </div>
             </Col>
@@ -391,7 +392,7 @@ export default function Home() {
               <div className="flex flex-col gap-6 h-full">
 
                 {/* Essay by Human Nagafi */}
-                <a
+                <Link
                   href="/labor"
                   className="card flex-1 block"
                   style={{ padding: '1.75rem', textDecoration: 'none' }}
@@ -408,10 +409,10 @@ export default function Home() {
                   <p className="c-meta">
                     Essay · 8 Min · 2024
                   </p>
-                </a>
+                </Link>
 
                 {/* Upcoming live event */}
-                <a
+                <Link
                   href="/labor"
                   className="card card-terra flex-1 block"
                   style={{ padding: '1.75rem', textDecoration: 'none' }}
@@ -433,7 +434,7 @@ export default function Home() {
                   <p className="c-meta">
                     Frankfurt am Main
                   </p>
-                </a>
+                </Link>
 
               </div>
             </Col>
@@ -690,7 +691,7 @@ export default function Home() {
                 ihrer Organisation aufzuzeigen und gemeinsam wirksame Veränderungen zu entwerfen.
               </p>
               <div className="mt-12 flex items-center justify-center gap-6">
-                <a href="/kontakt">
+                <Link href="/kontakt">
                   <Button
                     variant="ghost"
                     size="lg"
@@ -698,7 +699,7 @@ export default function Home() {
                   >
                     Erstgespräch vereinbaren
                   </Button>
-                </a>
+                </Link>
               </div>
             </Col>
           </Grid>

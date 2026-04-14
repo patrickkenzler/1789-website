@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { Container, Grid, Col } from '@/components/layout/Grid'
 import { Tag } from '@/components/atoms/Tag'
 import { cases, getCaseBySlug } from '@/data/cases'
@@ -32,13 +33,13 @@ export default async function CaseDetail({ params }: { params: Promise<{ slug: s
       >
         <Container>
           <div className="mb-8">
-            <a
+            <Link
               href="/projekte"
               className="font-mono text-xs tracking-widest uppercase"
               style={{ color: colors.muted, textDecoration: 'none' }}
             >
               ← Shift Cases
-            </a>
+            </Link>
           </div>
           <Grid>
             <Col span={8}>
@@ -206,7 +207,7 @@ export default async function CaseDetail({ params }: { params: Promise<{ slug: s
               const oc = colorMap[other.color]
               return (
                 <Col key={other.slug} span={4}>
-                  <a
+                  <Link
                     href={`/projekte/${other.slug}`}
                     className="group flex flex-col justify-between cursor-pointer transition-transform duration-300 hover:-translate-y-1"
                     style={{
@@ -242,7 +243,7 @@ export default async function CaseDetail({ params }: { params: Promise<{ slug: s
                         Mehr →
                       </p>
                     </div>
-                  </a>
+                  </Link>
                 </Col>
               )
             })}

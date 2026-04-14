@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Container, Grid, Col } from '@/components/layout/Grid'
 
 const navItems = [
@@ -26,9 +27,9 @@ export function Footer() {
             <ul className="flex flex-col gap-2">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="text-body-sm text-ink-muted hover:text-ink hover-line transition-colors duration-fast">
+                  <Link href={item.href} className="text-body-sm text-ink-muted hover:text-ink hover-line transition-colors duration-fast">
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

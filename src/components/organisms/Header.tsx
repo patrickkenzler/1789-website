@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Logo1789 }   from '@/components/atoms/Logo1789'
 import { useScrollProgress } from '@/hooks/useScrollProgress'
 
@@ -87,14 +88,14 @@ export function Header() {
             }}
           >
             {LEFT_ITEMS.map((item) => (
-              <a key={item.href} href={item.href} className="hover-line" style={NAV_LINK}>
+              <Link key={item.href} href={item.href} className="hover-line" style={NAV_LINK}>
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* ── Logo — always centered, always visible ── */}
-          <a
+          <Link
             href="/"
             aria-label="1789 Innovation — zur Startseite"
             style={{
@@ -105,7 +106,7 @@ export function Header() {
             }}
           >
             <Logo1789 height={38} showSub={false} />
-          </a>
+          </Link>
 
           {/* ── Right nav ── */}
           <nav
@@ -117,9 +118,9 @@ export function Header() {
             }}
           >
             {RIGHT_ITEMS.map((item) => (
-              <a key={item.href} href={item.href} className="hover-line" style={NAV_LINK}>
+              <Link key={item.href} href={item.href} className="hover-line" style={NAV_LINK}>
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -137,13 +138,13 @@ export function Header() {
           }}
         >
           {/* Logo — left on mobile */}
-          <a
+          <Link
             href="/"
             aria-label="1789 Innovation — zur Startseite"
             style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
           >
             <Logo1789 height={32} showSub={false} />
-          </a>
+          </Link>
 
           {/* Hamburger — right */}
           <button
@@ -214,7 +215,7 @@ export function Header() {
           }}
         >
           {ALL_ITEMS.map((item, i) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
@@ -234,11 +235,11 @@ export function Header() {
               }}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <a
+        <Link
           href="/kontakt"
           onClick={() => setMenuOpen(false)}
           style={{
@@ -255,7 +256,7 @@ export function Header() {
           }}
         >
           Erstgespräch vereinbaren →
-        </a>
+        </Link>
       </div>
     </>
   )
