@@ -8,6 +8,7 @@
  * Both headline blocks + body copy + CTAs sit on the vertical center-line.
  */
 
+import Link from 'next/link'
 import { Button } from '@/components/atoms/Button'
 import { clientLogos } from '@/components/molecules/ClientLogoCarousel'
 
@@ -164,11 +165,11 @@ export function HeroLogo() {
             fontFamily:    'var(--font-display)',
             fontWeight:    400,
             fontStyle:     'normal',
-            fontSize:      'clamp(2.5rem, min(6vw, 8.5svh), 7.5rem)',
+            fontSize:      'clamp(2.75rem, min(7.5vw, 10svh), 9rem)',
             lineHeight:    0.9,
             letterSpacing: '-0.03em',
             color:         'var(--color-ink)',
-            maxWidth:      '16ch',
+            maxWidth:      '20ch',
             marginBottom:  '0.22em',
           }}
         >
@@ -192,11 +193,11 @@ export function HeroLogo() {
             fontFamily:    'var(--font-display)',
             fontWeight:    400,
             fontStyle:     'italic',
-            fontSize:      'clamp(2.5rem, min(6vw, 8.5svh), 7.5rem)',
+            fontSize:      'clamp(2.75rem, min(7.5vw, 10svh), 9rem)',
             lineHeight:    0.9,
             letterSpacing: '-0.03em',
             color:         'var(--color-terra)',
-            maxWidth:      '16ch',
+            maxWidth:      '20ch',
             marginBottom:  'clamp(2rem, 5svh, 4rem)',
           }}
         >
@@ -213,12 +214,12 @@ export function HeroLogo() {
             animation:      a('fadeUp', '700ms', '350ms'),
           }}
         >
-          <a href="/ansatz">
+          <Link href="/ansatz">
             <Button variant="ghost">Unser Ansatz →</Button>
-          </a>
-          <a href="/kontakt">
+          </Link>
+          <Link href="/kontakt">
             <Button variant="terra">Erstgespräch vereinbaren</Button>
-          </a>
+          </Link>
         </div>
 
         {/* ── Client logo strip ── */}
