@@ -7,6 +7,7 @@ import { HeroLogo } from '@/components/organisms/HeroLogo'
 import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
 import { SystemshiftAccordion } from '@/components/organisms/SystemshiftAccordion'
 import { TestimonialsSection } from '@/components/organisms/TestimonialsSection'
+import { StickyScrollSection } from '@/components/layout/StickyScrollSection'
 
 // ─── Pillar icons ─────────────────────────────────────────────────────────────
 
@@ -144,16 +145,7 @@ export default function Home() {
         at the visual boundary, not at the layout position. The carousel sits
         at the viewport bottom; both are covered together by the next card.
       */}
-      <div
-        style={{
-          backgroundColor: 'var(--color-background)',
-          /*
-           * NOT a scroll-card — this section flows normally so all content
-           * is reachable by scrolling. The next dark card (scroll-card) slides
-           * over it from below, preserving the stacking visual effect.
-           */
-        }}
-      >
+      <StickyScrollSection style={{ backgroundColor: 'var(--color-background)' }}>
         <section style={{ paddingBlock: '3rem 4rem' }}>
           <Container>
 
@@ -260,7 +252,7 @@ export default function Home() {
           </Container>
         </section>
 
-      </div>
+      </StickyScrollSection>
 
       {/* ─── Highlight Cases + Questions Ticker (one sticky card) ───────────── */}
       <div
