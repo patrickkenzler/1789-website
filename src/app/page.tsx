@@ -200,7 +200,7 @@ export default function Home() {
                         position:      'absolute',
                         top:           '1.25rem',
                         right:         '1.25rem',
-                        opacity:       0.16,
+                        opacity:       1,
                         pointerEvents: 'none',
                         lineHeight:    0,
                       }}
