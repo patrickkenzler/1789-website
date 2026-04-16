@@ -149,19 +149,19 @@ export default function Home() {
         style={{
           backgroundColor: 'var(--color-background)',
           /*
-           * Inline top override: dock the card flush under the fixed nav (5rem)
-           * so no content is ever behind it. Height shrinks to the remaining
-           * viewport so the carousel stays pinned at the exact bottom edge.
+           * minHeight (not height) so the card fills at least the full viewport
+           * but can grow taller when content overflows on small screens.
+           * This means the user scrolls through the full section content before
+           * the next sticky card slides over from below.
            */
           top:             '5rem',
-          height:          'calc(100svh - 5rem)',
+          minHeight:       'calc(100svh - 5rem)',
           display:         'flex',
           flexDirection:   'column',
-          overflow:        'hidden',
         }}
       >
-        {/* Section grows to fill the space above the carousel */}
-        <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem 2rem' }}>
+        {/* Section grows with content — no overflow clipping */}
+        <section style={{ flex: 1, paddingBlock: '3rem 2.5rem' }}>
           <Container>
 
             {/* ── Headline ── */}
