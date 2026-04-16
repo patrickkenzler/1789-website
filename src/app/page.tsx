@@ -130,7 +130,7 @@ export default function Home() {
                 <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
                 Zwischen Strategie und Wirklichkeit liegt eine Lücke.
                 Diese Lücke ist kein Fehler — sie ist der Motor.
-                Unser Beratungsprozess begleitet Organisation bei der  Auseinandersetzung, Modellierung und Umsetzung der Lücke, so dass sie die Spannung nutzt, statt an ihr zu scheitern.</p>
+                Unser Beratungsprozess begleitet Organisation bei der Verhandlung, Modellierung und Realisation neuer Strukturen, so dass sie die Spannung nutzt, statt an ihr zu scheitern.</p>
               </Col>
             </Grid>
 
