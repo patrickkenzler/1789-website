@@ -61,18 +61,21 @@ const pillarIcons = [
 const pillars = [
   {
     num: '01',
-    title: 'Structure',
-    body: 'Wir schaffen für unsere Kunden ein neues Organisationsverständnis auf Struktur- und Strategieebene.',
+    title: 'Modell',
+    body: 'Das Modell ist Rahmen und Denkraum zugleich. Wir beschreiben die Organisation in ihren formalen, informellen und schauseitigen Schichten – und übersetzen diese Beschreibung in ein Zielbild, an dem die Organisation arbeiten kann.',
+    items: ['Research', 'Zielbild', 'Designprinzipien', 'Rollen & Rechenschaft'],
   },
   {
     num: '02',
-    title: 'Strategy',
-    body: 'Den bestehenden Gap sichtbar, beschreibbar und besprechbar machen – Erkenntnis als Ausgangspunkt jeder Veränderung.',
+    title: 'Strukturation',
+    body: 'Das Modell kommt bewusst unfertig in den Raum und imitiert einen Prozess, in dem die Organisation sich das Modell aneignet – prototypisch, iterativ, im Sparring. Was hält, wird Form. Was nicht hält, verändert das Modell. Beides geschieht am gleichen Gegenstand.',
+    items: ['Prototyp', 'Sparring', 'Simulation', 'Einpassung'],
   },
   {
     num: '03',
-    title: 'Gap',
-    body: 'Wir treten für erfolgreiche Organisationen an. Das, was andere als Problem sehen, sehen wir als Lösung.',
+    title: 'AI-Human-Native',
+    body: 'Wenn Strukturen neu entstehen, denken wir AI als Teil ihrer Operation mit: als Companion in Rollen und Workflows, als Mediator in Erwartungsräumen zwischen Menschen, als Begleiter in Veränderungsprozessen. Nicht als Tool auf der Organisation, sondern als Schicht in ihr.',
+    items: ['AI Operating System', 'AI enabled Structures', 'AI Mediation bei Human to Human Erwartungsstrukturen', 'AI Companions'],
   },
 ]
 
@@ -204,15 +207,59 @@ export default function Home() {
                     >
                       {pillarIcons[i]}
                     </div>
+
+                    {/* Eyebrow + title */}
                     <span className="c-eyebrow c-eyebrow--terra">
                       {pillar.num}
                     </span>
                     <h3 className="c-title">
                       {pillar.title}
                     </h3>
-                    <p className="c-body mt-auto">
+
+                    {/* Body copy */}
+                    <p className="c-body" style={{ marginTop: '1rem' }}>
                       {pillar.body}
                     </p>
+
+                    {/* Divider */}
+                    <div
+                      style={{
+                        marginTop:       '1.25rem',
+                        marginBottom:    '1.25rem',
+                        height:          '1px',
+                        backgroundColor: 'var(--color-border)',
+                      }}
+                    />
+
+                    {/* Bullet list */}
+                    <ul className="flex flex-col gap-2 mt-auto">
+                      {pillar.items.map((item) => (
+                        <li key={item} className="flex items-start gap-2">
+                          <span
+                            style={{
+                              color:      'var(--color-terra)',
+                              fontFamily: 'var(--font-mono)',
+                              fontSize:   'var(--text-xxs)',
+                              marginTop:  '3px',
+                              flexShrink: 0,
+                            }}
+                          >
+                            →
+                          </span>
+                          <span
+                            style={{
+                              fontFamily:    'var(--font-mono)',
+                              fontSize:      'var(--text-xxs)',
+                              letterSpacing: '0.06em',
+                              color:         'var(--color-ink-muted)',
+                              lineHeight:    1.5,
+                            }}
+                          >
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </Col>
               ))}
