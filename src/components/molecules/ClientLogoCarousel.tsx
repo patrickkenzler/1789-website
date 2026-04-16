@@ -120,7 +120,16 @@ export function ClientLogoCarousel() {
   return (
     <div
       style={{
-        overflow:        'hidden',
+        /*
+         * overflow-x: clip  — hides the scrolling strip beyond left/right edges
+         *                      without creating a scroll container (unlike hidden).
+         * overflow-y: visible — lets SVG descenders / stroke halves breathe
+         *                       vertically without being cut off.
+         * Note: setting one overflow axis to clip/hidden forces the other to auto
+         * in old spec, but clip is exempt — modern browsers respect both independently.
+         */
+        overflowX:       'clip',
+        overflowY:       'visible',
         borderTop:       '1px solid var(--color-border)',
         borderBottom:    '1px solid var(--color-border)',
         paddingBlock:    '2rem',
