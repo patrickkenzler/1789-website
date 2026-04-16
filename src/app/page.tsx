@@ -119,7 +119,7 @@ export default function Home() {
               <div style={{ marginTop: '1.75rem' }}>
                 <p style={displayStyle}>Ein neues Organisations&shy;verständnis —</p>
                 <p style={{ ...displayStyle, marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
-                  Modelierung, Strukturdesign & Pilotierung
+                  Modelierung, Strukturdesign & AI-Human OS
                 </p>
               </div>
             </div>
@@ -128,10 +128,7 @@ export default function Home() {
             <Grid className="stack-cols">
               <Col span={5}>
                 <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
-                  Wir sind 1789 Innovation, mit unserem innovativen Beratungsansatz begleiten wir
-                  Organisationen in der Veränderung ihrer Strukturen und Unternehmensstrategie.
-                  Dabei verknüpfen wir wissenschaftliche systemtheoretische Ansätze mit sofortigen
-                  pragmatischen Pilotierungen von Veränderungsprozessen.
+                Wir zeigen Organisationen, was sie selbst nicht sehen können. Nicht ihre blinden Flecken — die kennt jeder. Sondern die Regeln, mit denen sie ihre blinden Flecken erzeugen.
                 </p>
               </Col>
             </Grid>
