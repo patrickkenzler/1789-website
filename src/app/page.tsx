@@ -128,8 +128,9 @@ export default function Home() {
             <Grid className="stack-cols">
               <Col span={5}>
                 <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
-                Wir zeigen Organisationen, was sie selbst nicht sehen können. Nicht ihre blinden Flecken — die kennt jeder. Sondern die Regeln, mit denen sie ihre blinden Flecken erzeugen. Die Lücke zwsichen Strategie und Struktur ist ein notwendiger Teil jeder Organisation und trotzdem gilt: Struktur ist Strategie, Strategie braucht Organisation.
-                </p>
+                Zwischen Strategie und Wirklichkeit liegt eine Lücke.
+                Diese Lücke ist kein Fehler — sie ist der Motor.
+                Wir gestalten die Organisation so, dass sie die Spannung nutzt, statt an ihr zu scheitern.</p>
               </Col>
             </Grid>
 
