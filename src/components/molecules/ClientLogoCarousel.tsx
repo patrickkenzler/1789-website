@@ -40,11 +40,11 @@ export const clientLogos: { name: string; svg: string }[] = [
     svg: `<svg fill="black" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.277 1.538a.018.018 0 0 0-.012.007l-4.74 8.21-1.398 2.418c.446.774.794 1.353 1.22 2.09.671 1.164 1.548 1.597 3.13 1.889a12.9 12.9 0 0 1 .697-1.392l2.783-4.824 2.786-4.826c.404-.702 1.296-2.143 2.57-2.965-.04.025-.07.059-.109.085.07-.047.137-.094.209-.136.46-.278.98-.467 1.413-.515.339-.038 1.465-.041 2.74-.041zm11.59.505c-1.048-.008-1.462.007-2.545.008-1.39 0-2.381.887-3.083 1.773.372.493.68.971.863 1.288a13357.605 13357.605 0 0 0 5.571 9.648c.404.7 1.209 2.196 1.284 3.71.029.574-.079 1.165-.265 1.592-.131.3-.652 1.207-1.256 2.253L24 12.678v-.008a.013.013 0 0 0-.002-.005zM.001 8.163l.095 4.946L0 8.163zm.093 4.946 1.132 1.964 4.264 7.384a.015.015 0 0 0 .012.005h12.265c.446-.779.664-1.147 1.311-2.282.709-1.242.278-2.681-.037-3.472-.618.076-1.18.093-1.547.093H6.35c-.809 0-2.505-.05-3.853-.741-.513-.263-.972-.65-1.248-1.027-.176-.238-.625-1.003-1.156-1.924z"/></svg>`,
   },
   {
-    // Two-line stacked: small-caps label + serif name; extra right margin for ascenders
+    // Two-line stacked — viewBox height 60 gives 12px below the baseline for descenders
     name: 'Stadt Freiburg',
-    svg: `<svg viewBox="0 0 170 48" xmlns="http://www.w3.org/2000/svg">
-      <text x="2" y="17" font-family="Arial,sans-serif" font-size="9" font-weight="600" letter-spacing="1.5" fill="black">STADT</text>
-      <text x="2" y="44" font-family="Georgia,serif" font-size="28" font-weight="400" fill="black">Freiburg</text>
+    svg: `<svg viewBox="0 0 170 60" xmlns="http://www.w3.org/2000/svg">
+      <text x="2" y="18" font-family="Arial,sans-serif" font-size="9" font-weight="600" letter-spacing="1.5" fill="black">STADT</text>
+      <text x="2" y="46" font-family="Georgia,serif" font-size="28" font-weight="400" fill="black">Freiburg</text>
     </svg>`,
   },
   {
@@ -70,10 +70,10 @@ export const clientLogos: { name: string; svg: string }[] = [
     </svg>`,
   },
   {
-    // Large mark + dot — extra width/height so nothing clips
+    // Large mark — viewBox height 60 so descender on 'y' in PwC clears the bottom
     name: 'PwC',
-    svg: `<svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg">
-      <text x="2" y="42" font-family="Arial,sans-serif" font-size="38" font-weight="700" fill="black">PwC</text>
+    svg: `<svg viewBox="0 0 76 60" xmlns="http://www.w3.org/2000/svg">
+      <text x="2" y="46" font-family="Arial,sans-serif" font-size="38" font-weight="700" fill="black">PwC</text>
       <rect x="70" y="5" width="5" height="5" fill="black"/>
     </svg>`,
   },
@@ -118,25 +118,14 @@ export function ClientLogoCarousel() {
   const items = [...clientLogos, ...clientLogos]
 
   return (
+    // Outer div: borders + background only — no overflow constraint.
+    // mask-image on the inner wrapper cannot implicitly re-clip this layer.
     <div
       style={{
-        /*
-         * overflow-x: clip  — hides the scrolling strip beyond left/right edges
-         *                      without creating a scroll container (unlike hidden).
-         * overflow-y: visible — lets SVG descenders / stroke halves breathe
-         *                       vertically without being cut off.
-         * Note: setting one overflow axis to clip/hidden forces the other to auto
-         * in old spec, but clip is exempt — modern browsers respect both independently.
-         */
-        overflowX:       'clip',
-        overflowY:       'visible',
         borderTop:       '1px solid var(--color-border)',
         borderBottom:    '1px solid var(--color-border)',
         paddingBlock:    '2rem',
         backgroundColor: 'var(--color-background)',
-        /* Soft left/right fade so logos dissolve rather than hard-clip */
-        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)',
-        maskImage:       'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)',
       }}
     >
       {/* Label */}
@@ -164,6 +153,23 @@ export function ClientLogoCarousel() {
         </span>
         <span style={{ flex: 1, height: '1px', backgroundColor: 'var(--color-border)', opacity: 0.35 }} />
       </div>
+
+      {/*
+        Clip + fade wrapper — overflow:hidden hides the marquee beyond left/right.
+        paddingBlock: 12px + marginBlock: -12px means the clip boundary sits 12px
+        above/below the logo strip, so descenders and stroke halves never reach it.
+        mask-image lives here (same element as overflow) so it can't independently
+        force a tighter clip on a parent layer.
+      */}
+      <div
+        style={{
+          overflow:        'hidden',
+          paddingBlock:    '12px',
+          marginBlock:     '-12px',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)',
+          maskImage:       'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)',
+        }}
+      >
 
       {/* Scrolling strip */}
       <div
@@ -195,6 +201,7 @@ export function ClientLogoCarousel() {
           />
         ))}
       </div>
+      </div> {/* end clip + fade wrapper */}
     </div>
   )
 }
