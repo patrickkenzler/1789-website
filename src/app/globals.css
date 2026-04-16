@@ -111,6 +111,31 @@
     .event-row .event-location { display: none !important; }
   }
 
+  /* ─── Footer link hover states ───────────────────────────────────────────── */
+  .footer-link {
+    color:      rgba(242,242,242,0.5);
+    transition: color 200ms var(--ease-standard);
+  }
+  .footer-link:hover { color: var(--color-background); }
+
+  .footer-link-email {
+    color:      rgba(242,242,242,0.5);
+    transition: color 200ms var(--ease-standard);
+  }
+  .footer-link-email:hover { color: var(--color-terra); }
+
+  .footer-cta {
+    color:      var(--color-terra);
+    transition: opacity 200ms var(--ease-standard);
+  }
+  .footer-cta:hover { opacity: 0.72; }
+
+  .footer-legal {
+    color:      rgba(242,242,242,0.2);
+    transition: color 200ms var(--ease-standard);
+  }
+  .footer-legal:hover { color: rgba(242,242,242,0.5); }
+
   /* LinkedIn icon hover */
   .linkedin-hover:hover {
     color: var(--color-terra) !important;
