@@ -8,6 +8,54 @@ import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
 import { SystemshiftAccordion } from '@/components/organisms/SystemshiftAccordion'
 import { TestimonialsSection } from '@/components/organisms/TestimonialsSection'
 
+// ─── Pillar icons ─────────────────────────────────────────────────────────────
+
+/** Segmented circle — pixelated ring built from 18 rectangular arcs */
+function PillarIcon1() {
+  return (
+    <svg width="40" height="40" viewBox="0 0 125 125" fill="none" aria-hidden="true">
+      <path d="M31.8008 8V30.7H62.1008V0C51.1008 0 40.7008 3 31.8008 8Z" fill="var(--color-terra)"/>
+      <path d="M0.0996094 62.0002H30.7996V31.7002H8.09961C3.09961 40.6002 0.0996094 51.0002 0.0996094 62.0002Z" fill="var(--color-terra)"/>
+      <path d="M62.1008 31.7002H31.8008V62.0002H62.1008V31.7002Z" fill="var(--color-terra)"/>
+      <path d="M62.1008 63H31.8008V93.3H62.1008V63Z" fill="var(--color-terra)"/>
+      <path d="M94.3008 30.7001H116.401C111.001 21.6001 103.401 14.0001 94.3008 8.6001V30.7001Z" fill="var(--color-terra)"/>
+      <path d="M63.0996 0V30.7H93.3996V8C84.3996 3 74.0996 0 63.0996 0Z" fill="var(--color-terra)"/>
+      <path d="M30.7996 63H0.0996094C0.199609 74 3.0996 84.3 8.1996 93.3H30.7996V63Z" fill="var(--color-terra)"/>
+      <path d="M93.3996 31.7002H63.0996V62.0002H93.3996V31.7002Z" fill="var(--color-terra)"/>
+      <path d="M62.1008 125V94.2002H31.8008V116.9C40.7008 121.9 51.1008 124.9 62.1008 125Z" fill="var(--color-terra)"/>
+      <path d="M93.3 94.2002H63V124.9C74 124.8 84.3 121.9 93.3 116.8V94.2002Z" fill="var(--color-terra)"/>
+      <path d="M30.7992 30.7001V8.6001C21.6992 14.0001 14.0992 21.6001 8.69922 30.7001H30.7992Z" fill="var(--color-terra)"/>
+      <path d="M30.7992 94.2002H8.69922C14.0992 103.3 21.6992 110.9 30.7992 116.3V94.2002Z" fill="var(--color-terra)"/>
+      <path d="M94.3008 94.2002V116.3C103.401 110.9 111.001 103.3 116.401 94.2002H94.3008Z" fill="var(--color-terra)"/>
+      <path d="M93.3996 63H63.0996V93.3H93.3996V63Z" fill="var(--color-terra)"/>
+      <path d="M125.001 63H94.3008V93.2H117.001C122.001 84.3 125.001 74 125.001 63Z" fill="var(--color-terra)"/>
+      <path d="M94.3008 31.7002V62.0002H125.001C124.901 51.0002 122.001 40.7002 116.901 31.7002H94.3008Z" fill="var(--color-terra)"/>
+    </svg>
+  )
+}
+
+/** Eight outward-pointing chevrons — compass / radiate pattern */
+function PillarIcon3() {
+  return (
+    <svg width="40" height="40" viewBox="0 0 125 125" fill="none" aria-hidden="true">
+      <path d="M0 74.5405V104.716C0 107.614 3.49998 109.113 5.59998 107.015L35.7999 76.8387C37.8999 74.7404 36.4 71.2432 33.5 71.2432H3.19995C1.39995 71.2432 0 72.642 0 74.5405Z" fill="var(--color-terra)"/>
+      <path d="M35.7999 48.1613L5.59998 17.9854C3.49998 15.8871 0 17.3859 0 20.2836V50.4594C0 52.258 1.49993 53.7568 3.29993 53.7568H33.5C36.4 53.7568 37.7999 50.2596 35.7999 48.1613Z" fill="var(--color-terra)"/>
+      <path d="M50.4002 0.100098H20.2003C17.3003 0.100098 15.8002 3.59729 17.9002 5.69561L48.1003 35.8715C50.2003 37.9698 53.7003 36.471 53.7003 33.5733V3.39746C53.7003 1.49898 52.3002 0.100098 50.4002 0.100098Z" fill="var(--color-terra)"/>
+      <path d="M71.1992 3.29737V33.4732C71.1992 36.3709 74.6992 37.8697 76.7992 35.7714L106.999 5.59553C109.099 3.49721 107.599 0 104.699 0H74.4993C72.5993 0.0999201 71.1992 1.4988 71.1992 3.29737Z" fill="var(--color-terra)"/>
+      <path d="M89.1 76.8387L119.3 107.015C121.4 109.113 124.9 107.614 124.9 104.716V74.5405C124.9 72.742 123.4 71.2432 121.6 71.2432H91.3999C88.4999 71.2432 87.1 74.7404 89.1 76.8387Z" fill="var(--color-terra)"/>
+      <path d="M125.001 50.4594V20.2836C125.001 17.3859 121.501 15.8871 119.401 17.9854L89.201 48.1613C87.101 50.2596 88.6011 53.7568 91.5011 53.7568H121.701C123.501 53.7568 125.001 52.3579 125.001 50.4594Z" fill="var(--color-terra)"/>
+      <path d="M71.1992 91.5268V121.703C71.1992 123.501 72.6993 125 74.4993 125H104.699C107.599 125 109.099 121.503 106.999 119.404L76.7992 89.2286C74.6992 87.1303 71.1992 88.5292 71.1992 91.5268Z" fill="var(--color-terra)"/>
+      <path d="M48.1003 89.1285L17.9002 119.304C15.8002 121.403 17.3003 124.9 20.2003 124.9H50.4002C52.2002 124.9 53.7003 123.401 53.7003 121.603V91.4267C53.7003 88.529 50.2003 87.1301 48.1003 89.1285Z" fill="var(--color-terra)"/>
+    </svg>
+  )
+}
+
+const pillarIcons = [
+  <PillarIcon1 key="i1" />,
+  <img key="i2" src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/icons/icon_2.png`} width={40} height={40} alt="" aria-hidden="true" style={{ display: 'block' }} />,
+  <PillarIcon3 key="i3" />,
+]
+
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const pillars = [
@@ -136,12 +184,26 @@ export default function Home() {
 
             {/* ── Pillars ── */}
             <Grid className="stack-cols mt-10">
-              {pillars.map((pillar) => (
+              {pillars.map((pillar, i) => (
                 <Col key={pillar.num} span={4}>
                   <div
                     className="card h-full flex flex-col"
-                    style={{ padding: '1.75rem' }}
+                    style={{ padding: '1.75rem', position: 'relative' }}
                   >
+                    {/* Icon — upper right corner, subtle opacity */}
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        position:      'absolute',
+                        top:           '1.25rem',
+                        right:         '1.25rem',
+                        opacity:       0.16,
+                        pointerEvents: 'none',
+                        lineHeight:    0,
+                      }}
+                    >
+                      {pillarIcons[i]}
+                    </div>
                     <span className="c-eyebrow c-eyebrow--terra">
                       {pillar.num}
                     </span>
