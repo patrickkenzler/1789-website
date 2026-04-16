@@ -119,7 +119,7 @@ export default function Home() {
               <div style={{ marginTop: '1.75rem' }}>
                 <p style={displayStyle}>Ein neues Organisations&shy;verständnis —</p>
                 <p style={{ ...displayStyle, marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
-                  Modelierung, Strukturation & AI-Human Organisationsdesign
+                  Modelierung, Strukturation & AI-Human Native
                 </p>
               </div>
             </div>
