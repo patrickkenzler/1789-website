@@ -173,12 +173,12 @@ export default function Home() {
             {/* ── Pillars ── */}
             <Grid className="stack-cols mt-10">
               {pillars.map((pillar, i) => (
-                <Col key={pillar.num} span={4}>
+                <Col key={pillar.title} span={4}>
                   <div
                     className="card h-full flex flex-col"
                     style={{ padding: '1.75rem', position: 'relative' }}
                   >
-                    {/* Icon — upper right corner, subtle opacity */}
+                    {/* Icon — upper right corner */}
                     <div
                       aria-hidden="true"
                       style={{
@@ -193,11 +193,19 @@ export default function Home() {
                       {pillarIcons[i]}
                     </div>
 
-                    {/* Eyebrow + title */}
-                    <span className="c-eyebrow c-eyebrow--terra">
-                      {pillar.num}
-                    </span>
-                    <h3 className="c-title">
+                    {/* Title — prominent, no number eyebrow */}
+                    <h3
+                      style={{
+                        fontFamily:    'var(--font-display)',
+                        fontWeight:    400,
+                        fontSize:      'clamp(1.75rem, 2.5vw, 2.5rem)',
+                        lineHeight:    1.05,
+                        letterSpacing: '-0.025em',
+                        color:         'var(--color-ink)',
+                        marginTop:     0,
+                        paddingRight:  '3rem', /* clear the icon */
+                      }}
+                    >
                       {pillar.title}
                     </h3>
 

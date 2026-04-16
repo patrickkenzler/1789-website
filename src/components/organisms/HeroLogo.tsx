@@ -223,17 +223,28 @@ export function HeroLogo() {
         </div>
 
         {/* ── Client logo strip ── */}
+        {/*
+          Key constraint: mask-image on a parent creates a compositing surface
+          bounded to that element's border-box. Any child content (SVG strokes,
+          descenders) touching the surface edge gets rasterised away — no
+          overflow:hidden/visible, clip-path, or padding hack can fix it.
+
+          Solution: overflow:hidden on the wrapper (safe — contains only the
+          horizontal marquee overflow) with NO mask-image. The left/right edge
+          fade is achieved by two absolutely-positioned gradient overlay divs
+          that paint cream on top of the logos. They are siblings of the marquee,
+          not parents, so they never affect the logos' compositing surface.
+        */}
         <div
           style={{
             position:   'relative',
             width:      '100%',
-            overflow:   'hidden',
+            overflow:   'hidden',          /* clips horizontal marquee only  */
             marginTop:  'clamp(2rem, 5svh, 3.5rem)',
-            /* Edge fade — logos dissolve at both sides */
-            maskImage:  'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+                                           /* NO mask-image here             */
           }}
         >
+          {/* Scrolling logos */}
           <div
             style={{
               display:    'flex',
@@ -251,20 +262,49 @@ export function HeroLogo() {
                 style={{
                   display:    'inline-flex',
                   alignItems: 'center',
-                  height:     '26px',
-                  opacity:    0.32,
+                  height:     '28px',      /* taller than SVG (20px) so      */
+                  opacity:    0.32,        /* filter bitmap has headroom      */
                   flexShrink: 0,
-                  filter:     'brightness(0)',   /* force all SVGs to black */
+                  filter:     'brightness(0)',
                 }}
                 dangerouslySetInnerHTML={{
                   __html: logo.svg.replace(
                     /<svg /,
-                    '<svg height="26" style="height:26px;width:auto;display:block;" '
+                    '<svg height="20" overflow="visible" style="height:20px;width:auto;display:block;overflow:visible;" '
                   ),
                 }}
               />
             ))}
           </div>
+
+          {/* Left fade — gradient overlay, not mask-image */}
+          <div
+            aria-hidden="true"
+            style={{
+              position:      'absolute',
+              top:           0,
+              left:          0,
+              bottom:        0,
+              width:         '10%',
+              background:    'linear-gradient(to right, var(--color-background) 0%, transparent 100%)',
+              pointerEvents: 'none',
+              zIndex:        1,
+            }}
+          />
+          {/* Right fade */}
+          <div
+            aria-hidden="true"
+            style={{
+              position:      'absolute',
+              top:           0,
+              right:         0,
+              bottom:        0,
+              width:         '10%',
+              background:    'linear-gradient(to left, var(--color-background) 0%, transparent 100%)',
+              pointerEvents: 'none',
+              zIndex:        1,
+            }}
+          />
         </div>
 
       </div>
