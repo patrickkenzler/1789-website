@@ -219,13 +219,12 @@ export default function Home() {
                     {/* Bullet list */}
                     <ul className="flex flex-col gap-2 mt-auto">
                       {pillar.items.map((item) => (
-                        <li key={item} className="flex items-start gap-2">
+                        <li key={item} className="flex items-baseline gap-2">
                           <span
                             style={{
                               color:      'var(--color-terra)',
                               fontFamily: 'var(--font-mono)',
                               fontSize:   'var(--text-xxs)',
-                              marginTop:  '3px',
                               flexShrink: 0,
                             }}
                           >
