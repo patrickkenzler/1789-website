@@ -145,23 +145,16 @@ export default function Home() {
         at the viewport bottom; both are covered together by the next card.
       */}
       <div
-        className="scroll-card"
         style={{
           backgroundColor: 'var(--color-background)',
           /*
-           * minHeight (not height) so the card fills at least the full viewport
-           * but can grow taller when content overflows on small screens.
-           * This means the user scrolls through the full section content before
-           * the next sticky card slides over from below.
+           * NOT a scroll-card — this section flows normally so all content
+           * is reachable by scrolling. The next dark card (scroll-card) slides
+           * over it from below, preserving the stacking visual effect.
            */
-          top:             '5rem',
-          minHeight:       'calc(100svh - 5rem)',
-          display:         'flex',
-          flexDirection:   'column',
         }}
       >
-        {/* Section grows with content — no overflow clipping */}
-        <section style={{ flex: 1, paddingBlock: '3rem 2.5rem' }}>
+        <section style={{ paddingBlock: '3rem 4rem' }}>
           <Container>
 
             {/* ── Headline ── */}
