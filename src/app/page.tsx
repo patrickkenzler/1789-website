@@ -4,7 +4,6 @@ import { Button } from '@/components/atoms/Button'
 import { Tag } from '@/components/atoms/Tag'
 import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
-import { QuestionsTicker } from '@/components/molecules/QuestionsTicker'
 import { SystemshiftAccordion } from '@/components/organisms/SystemshiftAccordion'
 import { TestimonialsSection } from '@/components/organisms/TestimonialsSection'
 import { StickyScrollSection } from '@/components/layout/StickyScrollSection'
@@ -273,7 +272,7 @@ export default function Home() {
           overflow:        'hidden',
         }}
       >
-      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem 2rem' }}>
+      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem' }}>
         <Container>
           <Grid>
             <Col span={6}>
@@ -410,8 +409,6 @@ export default function Home() {
         </Container>
       </section>
 
-        {/* Ticker pinned at viewport bottom — always visible when card is active */}
-        <QuestionsTicker />
       </div>
 
       {/* ─── Testimonials ────────────────────────────────────────────────── */}
