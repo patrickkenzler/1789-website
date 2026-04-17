@@ -165,7 +165,7 @@ export function ClientLogoCarousel() {
         The left/right edge fade is painted by two absolutely-positioned gradient
         overlay divs — siblings of the marquee, never parents.
       */}
-      <div style={{ position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', overflow: 'hidden', height: '80px' }}>
 
         {/* Scrolling strip */}
         <div

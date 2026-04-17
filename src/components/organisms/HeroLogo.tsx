@@ -239,9 +239,12 @@ export function HeroLogo() {
           style={{
             position:   'relative',
             width:      '100%',
-            overflow:   'hidden',          /* clips horizontal marquee only  */
+            overflow:   'hidden',
+            height:     '44px',   /* explicit height — Chrome's overflow:hidden clips
+                                     at this boundary. SVGs are 26px, centered in 30px
+                                     spans, so max content reaches ~28px. 44px gives
+                                     16px of clearance below any logo stroke/descender. */
             marginTop:  'clamp(2rem, 5svh, 3.5rem)',
-                                           /* NO mask-image here             */
           }}
         >
           {/* Scrolling logos */}
