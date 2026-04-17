@@ -272,8 +272,8 @@ export default function Home() {
           overflow:        'hidden',
         }}
       >
-      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem' }}>
-        <Container>
+      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem', display: 'flex', flexDirection: 'column' }}>
+        <Container style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           <Grid>
             <Col span={6}>
               <Tag variant="accent">Shift Cases</Tag>
@@ -293,7 +293,7 @@ export default function Home() {
             </Col>
           </Grid>
 
-          <Grid className="stack-cols mt-8">
+          <Grid className="stack-cols mt-8" style={{ flex: 1, minHeight: 0, gridAutoRows: '1fr' }}>
             {featuredCases.map((c, i) => {
               const bgColors   = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
               const textColors = ['var(--color-background)', 'var(--color-background)', 'var(--color-ink)']
@@ -319,7 +319,7 @@ export default function Home() {
                   style={{
                     gridColumn:      'span 4',
                     backgroundColor: bg,
-                    minHeight:       '340px',
+                    height:          '100%',
                     textDecoration:  'none',
                     overflow:        'hidden',
                   }}
@@ -328,7 +328,7 @@ export default function Home() {
                   <div
                     style={{
                       position:           'relative',
-                      height:             '200px',
+                      height:             '55%',
                       flexShrink:         0,
                       overflow:           'hidden',
                       backgroundImage:    c.image ? `url(${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${c.image})` : placeholderBg,
