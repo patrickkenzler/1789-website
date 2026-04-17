@@ -235,15 +235,21 @@ export function HeroLogo() {
           that paint cream on top of the logos. They are siblings of the marquee,
           not parents, so they never affect the logos' compositing surface.
         */}
+        {/*
+          clip-path:inset(0) is a geometric clip — unlike overflow:hidden it does
+          NOT create a compositing/raster surface in Chrome. overflow:hidden forces
+          a stacking context that clips SVG overflow="visible" content in Chrome
+          even when the container is taller than the logos. clip-path just defines
+          a polygon; SVG content painted within the 60px height passes through fine.
+          Height 60px: logos are 26px SVGs centered in 30px spans → max content
+          y≈50px from wrapper top → 10px clearance before the clip boundary.
+        */}
         <div
           style={{
             position:   'relative',
             width:      '100%',
-            overflow:   'hidden',
-            height:     '44px',   /* explicit height — Chrome's overflow:hidden clips
-                                     at this boundary. SVGs are 26px, centered in 30px
-                                     spans, so max content reaches ~28px. 44px gives
-                                     16px of clearance below any logo stroke/descender. */
+            height:     '60px',
+            clipPath:   'inset(0)',
             marginTop:  'clamp(2rem, 5svh, 3.5rem)',
           }}
         >
@@ -254,6 +260,7 @@ export function HeroLogo() {
               gap:        '4rem',
               whiteSpace: 'nowrap',
               alignItems: 'center',
+              height:     '100%',
               animation:  'marqueeSlide 70s linear infinite',
             }}
           >
