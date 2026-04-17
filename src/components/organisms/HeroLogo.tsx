@@ -277,34 +277,6 @@ export function HeroLogo() {
             ))}
           </div>
 
-          {/* Left fade — gradient overlay, not mask-image */}
-          <div
-            aria-hidden="true"
-            style={{
-              position:      'absolute',
-              top:           0,
-              left:          0,
-              bottom:        0,
-              width:         '10%',
-              background:    'linear-gradient(to right, var(--color-background) 0%, transparent 100%)',
-              pointerEvents: 'none',
-              zIndex:        1,
-            }}
-          />
-          {/* Right fade */}
-          <div
-            aria-hidden="true"
-            style={{
-              position:      'absolute',
-              top:           0,
-              right:         0,
-              bottom:        0,
-              width:         '10%',
-              background:    'linear-gradient(to left, var(--color-background) 0%, transparent 100%)',
-              pointerEvents: 'none',
-              zIndex:        1,
-            }}
-          />
         </div>
 
       </div>
