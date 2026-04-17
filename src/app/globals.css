@@ -184,9 +184,10 @@
    * classes needed — remove them from JSX.
    * ──────────────────────────────────────────────────────────────────────── */
   .card {
-    border-radius: var(--radius-md);
-    box-shadow:    0 0 0 1px rgba(26, 23, 20, 0.08);
-    transition:    box-shadow 280ms var(--ease-standard);
+    border-radius:    var(--radius-md);
+    background-color: var(--color-background);
+    box-shadow:       0 0 0 1px rgba(26, 23, 20, 0.08);
+    transition:       box-shadow 280ms var(--ease-standard);
   }
 
   .card:hover {
