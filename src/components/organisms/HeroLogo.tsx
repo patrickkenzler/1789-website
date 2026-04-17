@@ -262,15 +262,17 @@ export function HeroLogo() {
                 style={{
                   display:    'inline-flex',
                   alignItems: 'center',
-                  height:     '28px',      /* taller than SVG (20px) so      */
-                  opacity:    0.32,        /* filter bitmap has headroom      */
+                  height:     '30px',
+                  opacity:    0.32,
                   flexShrink: 0,
-                  filter:     'brightness(0)',
+                  /* No filter — all SVGs already use fill="black".
+                     filter:brightness() creates a compositing surface
+                     bounded to the element box, clipping SVG content. */
                 }}
                 dangerouslySetInnerHTML={{
                   __html: logo.svg.replace(
                     /<svg /,
-                    '<svg height="20" overflow="visible" style="height:20px;width:auto;display:block;overflow:visible;" '
+                    '<svg height="26" overflow="visible" style="height:26px;width:auto;display:block;overflow:visible;" '
                   ),
                 }}
               />
