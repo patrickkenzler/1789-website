@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Container, Grid, Col } from '@/components/layout/Grid'
 import { Tag } from '@/components/atoms/Tag'
 import { Button } from '@/components/atoms/Button'
@@ -206,7 +207,9 @@ export default function Leistungen() {
                 Kein Pitch. Kein Sales-Deck.
               </p>
               <div className="mt-10">
-                <Button variant="primary" size="lg">Erstgespräch anfragen</Button>
+                <Link href="/kontakt">
+                  <Button variant="primary" size="lg">Erstgespräch anfragen</Button>
+                </Link>
               </div>
             </Col>
           </Grid>
