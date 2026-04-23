@@ -393,7 +393,7 @@ export default function Home() {
                     <div>
                       <h3
                         className="c-title"
-                        style={{ fontSize: 'var(--text-base)', lineHeight: '1.4', color: fg }}
+                        style={{ fontSize: 'clamp(1.1rem, 1.3vw, 1.4rem)', lineHeight: '1.45', color: fg }}
                       >
                         {c.teaser ?? c.title}
                       </h3>

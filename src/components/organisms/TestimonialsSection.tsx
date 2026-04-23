@@ -291,8 +291,8 @@ function TestimonialCard({
           style={{
             fontFamily:    'var(--font-display)',
             fontStyle:     'italic',
-            fontSize:      'clamp(0.82rem, 0.9vw, 0.98rem)',
-            lineHeight:    1.62,
+            fontSize:      'clamp(1rem, 1.1vw, 1.2rem)',
+            lineHeight:    1.55,
             letterSpacing: '-0.01em',
             color:         'var(--color-ink-muted)',
             flex:          1,
