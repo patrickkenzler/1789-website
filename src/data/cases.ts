@@ -4,6 +4,8 @@ export type CaseStudy = {
   sector: string
   title: string
   tagline: string
+  /** Short punchy teaser shown on homepage cards — challenge/result framing */
+  teaser?: string
   tags: string[]
   duration: string
   scale: string
@@ -25,6 +27,7 @@ export const cases: CaseStudy[] = [
     sector: 'Consumer Goods',
     title: 'Innovationskraft durch Zusammenarbeit',
     tagline: 'Wie ein Marktführer lernte, seinen eigenen Erfolg zu hinterfragen.',
+    teaser: 'Wie wir einem Weltmarktführer halfen, die eigenen Silos zu durchbrechen — und aus internem Konkurrenzdenken echte Innovationskraft zu machen.',
     tags: ['Innovation', 'Operating Model', 'Cross-funktional'],
     duration: '8 Monate',
     scale: 'DACH-Organisation',
@@ -47,6 +50,7 @@ export const cases: CaseStudy[] = [
     sector: 'Consumer Goods',
     title: 'Effektivität und Kundennähe durch Dezentralität',
     tagline: 'Wenn Effizienz-Logik der Kundennähe im Weg steht.',
+    teaser: 'Wie wir 200 Mitarbeitende aus der Logik der Masseneffizienz befreit haben — und autonome Teams entstanden, die Kunden wieder wirklich kennen.',
     tags: ['Transformation', 'Dezentralisierung', 'Operating Model'],
     duration: '9 Monate',
     scale: '200 Mitarbeitende',
@@ -64,6 +68,7 @@ export const cases: CaseStudy[] = [
     sector: 'IT-Services / Mittelstand',
     title: 'Integration: 15 Firmen, eine Organisation',
     tagline: 'Target Operating Model für ein Netzwerk, das zusammenwachsen wollte.',
+    teaser: 'Wie 15 eigenständige IT-Unternehmen lernten, als eine Organisation zu denken — ohne dabei ihre lokale Stärke und Eigenständigkeit zu verlieren.',
     tags: ['M&A', 'Post-Merger-Integration', 'Selbstwirksamkeit'],
     duration: '~2 Jahre',
     scale: '500 Mitarbeitende, 15+ Unternehmen',

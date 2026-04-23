@@ -393,9 +393,9 @@ export default function Home() {
                     <div>
                       <h3
                         className="font-display font-light"
-                        style={{ fontSize: 'var(--text-sm)', lineHeight: '1.15', color: fg }}
+                        style={{ fontSize: 'clamp(1.1rem, 1.6vw, 1.5rem)', lineHeight: '1.25', color: fg }}
                       >
-                        {c.title}
+                        {c.teaser ?? c.title}
                       </h3>
                       <p className="mt-3 font-mono text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
                         {c.duration} · {c.scale}
