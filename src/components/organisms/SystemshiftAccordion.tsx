@@ -16,6 +16,7 @@
  */
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { CollagePanel } from '@/components/molecules/CollagePanel'
 import { Button } from '@/components/atoms/Button'
 
@@ -117,9 +118,9 @@ export function SystemshiftAccordion() {
 
         {/* CTA below last item */}
         <div style={{ borderTop: '1px solid var(--color-border)', paddingBlock: '3rem' }}>
-          <a href="/ansatz">
+          <Link href="/ansatz">
             <Button variant="ghost">Ansatz im Detail →</Button>
-          </a>
+          </Link>
         </div>
       </div>
 
