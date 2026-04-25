@@ -1,13 +1,13 @@
 import { Container, Grid, Col } from '@/components/layout/Grid'
 import { Tag } from '@/components/atoms/Tag'
 import { Button } from '@/components/atoms/Button'
-import { AnsatzIllustration, type AnsatzVariant } from '@/components/molecules/AnsatzIllustration'
+import { PhaseIllustration, type PhaseVariant } from '@/components/molecules/CollagePanel'
 
 // ── Cycle data ─────────────────────────────────────────────────────────────────
 
 type CycleStep = {
   num: string
-  variant: AnsatzVariant
+  variant: PhaseVariant
   title: string
   sub: string
   body: string
@@ -123,7 +123,7 @@ export default function Ansatz() {
             >
               {/* Left half — FVS illustration */}
               <Col span={6}>
-                <AnsatzIllustration variant={step.variant} />
+                <PhaseIllustration variant={step.variant} />
               </Col>
 
               {/* Right half — step number + title + body */}

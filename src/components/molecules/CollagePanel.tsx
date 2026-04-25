@@ -1,26 +1,32 @@
 'use client'
 
 /**
- * CollagePanel — v5: Phase-specific editorial illustrations
+ * CollagePanel + PhaseIllustration — FVS Circle / Square / Quarter system
  *
- * Each variant is a distinct SVG composition expressing the conceptual
- * identity of the corresponding Systemshift phase.
+ * ── Primitive vocabulary ──────────────────────────────────────────────────────
+ *   ⬤  full circle    ◼  full square    ◜◝◟◞  quarter-circle pie slice
  *
- *   analyse        → The Lens:   concentric rings converging to a focal point
- *   change         → The Motion: diagonal vectors, sparse→dense (acceleration)
- *   responsibility → The Knot:   two overlapping circles, terra-filled intersection
- *   iterate        → The Spiral: expanding Archimedean spiral
- *   overall        → Quadrant montage of all four motifs
+ * ── FVS transformation rule set ──────────────────────────────────────────────
+ *   SCALE   →  iterate:        same circle repeated at 5 scales (opacity gradient)
+ *   ROTATE  →  change:         square → square rotated 45° → circle (morph read)
+ *   SHIFT   →  responsibility: two identical squares offset to create overlap zone
+ *   QUARTER →  all phases:     corner pie slices as structural framing devices
  *
- * Palette (hard-coded — CSS vars unreliable in SVG fill/stroke attributes):
- *   bg  #EDEAE6  ·  ink  #1A1714  ·  terra  #F44D0B  ·  sage  #B8CC8A
+ * ── Phase colour logic ────────────────────────────────────────────────────────
+ *   analyse        terra primary  + ink corners
+ *   change         ink squares    + sage circle / sage corner quarter
+ *   responsibility ink squares    + terra binding circle + ink corner
+ *   iterate        terra rings    + ink corner quarter
+ *   overall        all four in 2×2 quadrant montage
+ *
+ * ── Two exports ──────────────────────────────────────────────────────────────
+ *   CollagePanel      fills its parent container (accordion sticky panel)
+ *   PhaseIllustration intrinsic 1:1 square (ansatz page inline column)
+ *
+ * Palette hard-coded — CSS vars unreliable in SVG fill/stroke attributes.
  */
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-interface CollagePanelProps {
-  variant?: 'analyse' | 'change' | 'responsibility' | 'iterate' | 'overall'
-}
+import React from 'react'
 
 // ─── Palette ──────────────────────────────────────────────────────────────────
 
@@ -29,282 +35,265 @@ const INK   = '#1A1714'
 const TERRA = '#F44D0B'
 const SAGE  = '#B8CC8A'
 
-// ─── Spiral path helper ───────────────────────────────────────────────────────
+// ─── Types ────────────────────────────────────────────────────────────────────
 
-/**
- * Returns SVG path data for an Archimedean spiral.
- * r = b·θ, starting from the top (−π/2 phase offset).
- */
-function makeSpiral(
-  cx: number, cy: number,
-  turns: number, maxR: number,
-  steps = 320,
-): string {
-  const tMax = turns * 2 * Math.PI
-  const b    = maxR / tMax
-  const pts: string[] = []
-  for (let i = 0; i <= steps; i++) {
-    const t = (i / steps) * tMax
-    const r = b * t
-    const x = (cx + r * Math.cos(t - Math.PI / 2)).toFixed(1)
-    const y = (cy + r * Math.sin(t - Math.PI / 2)).toFixed(1)
-    pts.push(`${i === 0 ? 'M' : 'L'}${x},${y}`)
-  }
-  return pts.join(' ')
-}
+export type PhaseVariant  = 'analyse' | 'change' | 'responsibility' | 'iterate'
+type        PanelVariant  = PhaseVariant | 'overall'
 
-// Pre-compute spirals at module level (avoids per-render allocation)
-const SPIRAL_MAIN = makeSpiral(300, 300, 3.5, 272)
-const SPIRAL_BR   = makeSpiral(450, 450, 2.5, 128)
+// ─── Quarter-circle helpers ───────────────────────────────────────────────────
+// Each returns a filled SVG pie-slice path anchored at a canvas corner,
+// pointing inward toward the canvas centre (viewBox 600 × 600).
+//
+//   TL (0,0)       → CW arc   sweep=1   qTL(r) = M 0,0 L r,0 A r,r 0 0,1 0,r Z
+//   TR (600,0)     → CCW arc  sweep=0
+//   BL (0,600)     → CCW arc  sweep=0
+//   BR (600,600)   → CW arc   sweep=1
 
-// ─── ANALYSE — The Lens ───────────────────────────────────────────────────────
-/**
- * Concentric rings narrowing to a focal point.
- * A horizontal hairline bisects the composition — the precise gaze.
- */
+function qTL(r: number): string { return `M 0,0 L ${r},0 A ${r},${r} 0 0,1 0,${r} Z` }
+function qTR(r: number): string { return `M 600,0 L ${600-r},0 A ${r},${r} 0 0,0 600,${r} Z` }
+function qBL(r: number): string { return `M 0,600 L ${r},600 A ${r},${r} 0 0,0 0,${600-r} Z` }
+function qBR(r: number): string { return `M 600,600 L ${600-r},600 A ${r},${r} 0 0,1 600,${600-r} Z` }
 
-function LensSVG() {
-  const rings = [268, 218, 168, 118, 70, 28]
+// ─── ANALYSE — Scale + Corner quarters ───────────────────────────────────────
+// Primary rule: FOCUS — convergence to a point.
+//
+// Large terra circle (the subject under examination) fills the centre.
+// Two ink corner quarter-circles frame it like a viewfinder.
+// A small rotated square (diamond) at centre = the crystallised insight.
+// A faint horizontal axis bisects the composition — the line of precise seeing.
+
+function AnalyseSVG() {
   return (
-    <svg viewBox="0 0 600 600" width="100%" height="100%" aria-hidden="true"
-      style={{ position: 'absolute', inset: 0 }}>
-      {/* Concentric rings — terra, progressively stronger toward centre */}
-      {rings.map((r, i) => (
-        <circle key={r} cx={300} cy={300} r={r}
-          fill="none" stroke={TERRA}
-          strokeWidth={0.75 + i * 0.4}
-          opacity={0.05 + i * 0.12}
-        />
-      ))}
-      {/* Primary hairline — horizontal axis */}
+    <>
+      {/* Axis hairline — precision reference */}
       <line x1={0} y1={300} x2={600} y2={300}
-        stroke={INK} strokeWidth={0.75} opacity={0.22} />
-      {/* Secondary hairline — vertical */}
-      <line x1={300} y1={0} x2={300} y2={600}
-        stroke={INK} strokeWidth={0.75} opacity={0.09} />
-      {/* Lens brackets — arcs above and below the horizontal */}
-      <path d="M 22,300 A 278,278 0 0 1 578,300"
-        fill="none" stroke={INK} strokeWidth={0.75} opacity={0.12} />
-      <path d="M 22,300 A 278,278 0 0 0 578,300"
-        fill="none" stroke={INK} strokeWidth={0.75} opacity={0.07} />
-      {/* Focal dot */}
-      <circle cx={300} cy={300} r={11} fill={BG} />
-      <circle cx={300} cy={300} r={7}  fill={TERRA} opacity={0.92} />
-    </svg>
+        stroke={INK} strokeWidth={0.75} opacity={0.10} />
+
+      {/* Viewfinder frames — ink corner quarters */}
+      <path d={qTL(160)} fill={INK} fillOpacity={0.16} />
+      <path d={qBR(160)} fill={INK} fillOpacity={0.16} />
+
+      {/* Primary: terra circle — the focal field */}
+      <circle cx={300} cy={300} r={200} fill={TERRA} fillOpacity={0.86} />
+
+      {/* Focal point: small diamond (square rotated 45°) at centre */}
+      {/* rect 78×78 centred at (300,300), half-diagonal ≈ 55 px */}
+      <rect x={261} y={261} width={78} height={78}
+        fill={BG} fillOpacity={0.80}
+        transform="rotate(45 300 300)" />
+    </>
   )
 }
 
-// ─── CHANGE — The Motion ──────────────────────────────────────────────────────
-/**
- * Diagonal lines at 45° (y = x + c), sparse at upper-right → dense at lower-left.
- * Reads as kinetic acceleration: momentum building as it sweeps across the canvas.
- *
- * Lines clipped to viewBox 600×600.
- * x1 = max(0,−c), y1 = max(0,c), x2 = min(600,600−c), y2 = min(600,600+c)
- */
+// ─── CHANGE — Rotate (morph read) ────────────────────────────────────────────
+// Primary rule: TRANSFORMATION — same shape at different stages of rotation.
+//
+// Three shapes along a bottom-left → top-right diagonal:
+//   1. Aligned square (ink)         = structure at rest
+//   2. Diamond  (ink, rotated 45°)  = structure mid-rotation
+//   3. Circle   (sage)              = the organic, transformed state
+// Sage quarter at TR corner: momentum continues beyond the frame.
 
-// c-values: few at top-right (large negative c) → many packed at lower-left
-const MOTION_C = [
-  // Sparse — upper-right area
-  -520, -400, -270,
-  // Building — crossing the canvas
-  -180, -110, -55, -10,
-  // Dense — lower-left accumulation
-  28, 60, 90, 118, 144, 168, 190,
-  210, 228, 246, 262, 278, 293, 308,
-  322, 338, 355, 374, 396, 424, 458,
-]
-
-type MotionLine = [number, number, number, number, string, number, number]
-
-const MOTION_LINES: MotionLine[] = MOTION_C.map((c, i) => {
-  const x1 = Math.max(0, -c)
-  const y1 = Math.max(0,  c)
-  const x2 = Math.min(600, 600 - c)
-  const y2 = Math.min(600, 600 + c)
-  const midY   = (y1 + y2) / 2
-  const density = Math.min(1, midY / 500)
-  const color   = (i % 7 === 2 || i % 7 === 5) ? TERRA : SAGE
-  return [x1, y1, x2, y2, color, 0.14 + density * 0.62, 0.5 + density * 2.2]
-})
-
-function MotionSVG() {
+function ChangeSVG() {
   return (
-    <svg viewBox="0 0 600 600" width="100%" height="100%" aria-hidden="true"
-      style={{ position: 'absolute', inset: 0 }}>
-      {MOTION_LINES.map(([x1, y1, x2, y2, color, opacity, width], i) => (
-        <line key={i}
-          x1={x1} y1={y1} x2={x2} y2={y2}
-          stroke={color} strokeWidth={width} opacity={opacity}
-          strokeLinecap="round"
-        />
-      ))}
-    </svg>
+    <>
+      {/* Stage 1: aligned square — static structure */}
+      <rect x={68} y={408} width={98} height={98}
+        fill={INK} fillOpacity={0.82} />
+
+      {/* Stage 2: diamond — same square, rotated 45° — in motion */}
+      {/* rect 126×126 centred at (300,300) */}
+      <rect x={237} y={237} width={126} height={126}
+        fill={INK} fillOpacity={0.82}
+        transform="rotate(45 300 300)" />
+
+      {/* Stage 3: circle — the transformed, organic state */}
+      <circle cx={458} cy={142} r={118} fill={SAGE} fillOpacity={0.88} />
+
+      {/* Continuation: sage quarter at TR — momentum beyond the frame */}
+      <path d={qTR(178)} fill={SAGE} fillOpacity={0.28} />
+    </>
   )
 }
 
-// ─── RESPONSIBILITY — The Knot ────────────────────────────────────────────────
-/**
- * Two large overlapping circles — a Venn diagram.
- * The shared lens intersection is filled with terra: the space of commitment.
- *
- * Circle geometry:
- *   r = 165, centres at (215, 300) and (385, 300), distance = 170
- *   Intersection x = 300
- *   Intersection y = 300 ± √(165²−85²) = 300 ± √(19800) ≈ 300 ± 141
- */
-const KNOT_R  = 165
-const KNOT_LX = 215
-const KNOT_RX = 385
-const KNOT_CY = 300
-const KNOT_OFF = KNOT_RX - 300  // = 85
-const KNOT_YO  = Math.round(Math.sqrt(KNOT_R * KNOT_R - KNOT_OFF * KNOT_OFF)) // ≈ 141
+// ─── RESPONSIBILITY — Shift (overlap zone) ────────────────────────────────────
+// Primary rule: INTERLOCKING — two identical shapes shifted to share a zone.
+//
+// Two large ink squares offset horizontally; their overlap reads darker (alpha compositing).
+// A terra circle sits at the exact overlap centre = the binding commitment.
+// Ink quarter at BL corner = structural anchor / grounding.
 
-// Lens path: arc of left circle (CW, short) + arc of right circle (CW, short)
-const KNOT_LENS = `M 300,${KNOT_CY - KNOT_YO} A ${KNOT_R},${KNOT_R} 0 0 1 300,${KNOT_CY + KNOT_YO} A ${KNOT_R},${KNOT_R} 0 0 1 300,${KNOT_CY - KNOT_YO} Z`
-
-function KnotSVG() {
+function ResponsibilitySVG() {
   return (
-    <svg viewBox="0 0 600 600" width="100%" height="100%" aria-hidden="true"
-      style={{ position: 'absolute', inset: 0 }}>
-      {/* Left circle */}
-      <circle cx={KNOT_LX} cy={KNOT_CY} r={KNOT_R}
-        fill="none" stroke={INK} strokeWidth={1.5} opacity={0.5} />
-      {/* Right circle */}
-      <circle cx={KNOT_RX} cy={KNOT_CY} r={KNOT_R}
-        fill="none" stroke={INK} strokeWidth={1.5} opacity={0.5} />
-      {/* Shared intersection — terra fill */}
-      <path d={KNOT_LENS} fill={TERRA} opacity={0.78} />
-      {/* Centre marks */}
-      <circle cx={KNOT_LX} cy={KNOT_CY} r={4} fill={INK} opacity={0.2} />
-      <circle cx={KNOT_RX} cy={KNOT_CY} r={4} fill={INK} opacity={0.2} />
-      {/* Horizontal axis through both centres */}
-      <line x1={30} y1={KNOT_CY} x2={570} y2={KNOT_CY}
-        stroke={INK} strokeWidth={0.6} opacity={0.12} />
-    </svg>
+    <>
+      {/* Left square  — spans x: 62–326, y: 168–432 */}
+      <rect x={62} y={168} width={264} height={264}
+        fill={INK} fillOpacity={0.50} />
+
+      {/* Right square — spans x: 274–538, y: 168–432   overlap x: 274–326 = 52 px wide */}
+      <rect x={274} y={168} width={264} height={264}
+        fill={INK} fillOpacity={0.50} />
+
+      {/* Binding element: terra circle at the overlap centre */}
+      <circle cx={300} cy={300} r={70} fill={TERRA} fillOpacity={0.92} />
+
+      {/* Anchor: ink quarter at BL corner */}
+      <path d={qBL(120)} fill={INK} fillOpacity={0.16} />
+    </>
   )
 }
 
-// ─── ITERATE — The Spiral ─────────────────────────────────────────────────────
-/**
- * An expanding Archimedean spiral — 3.5 revolutions, terra stroke.
- * Growth that never closes: each cycle extends the previous.
- * Guide rings (dashed) show the concentric rhythm underneath.
- */
+// ─── ITERATE — Scale (opacity rings) ─────────────────────────────────────────
+// Primary rule: EXPANSION — same circle scaled across 5 steps, opacity gradient.
+//
+// Innermost ring = full intensity (the origin/seed).
+// Each outer ring = lighter = earlier/later iteration still present.
+// Ink quarter at BR corner = the rotational, cyclical momentum of iteration.
 
-function SpiralSVG() {
+const ITERATE_RINGS: ReadonlyArray<readonly [number, number]> = [
+  [272, 0.07],
+  [210, 0.16],
+  [148, 0.34],
+  [86,  0.65],
+  [34,  1.00],
+] as const
+
+function IterateSVG() {
   return (
-    <svg viewBox="0 0 600 600" width="100%" height="100%" aria-hidden="true"
-      style={{ position: 'absolute', inset: 0 }}>
-      {/* Dashed guide rings */}
-      {[68, 136, 204, 272].map(r => (
+    <>
+      {/* Rotational indicator: ink quarter at BR — the ongoing cycle */}
+      <path d={qBR(205)} fill={INK} fillOpacity={0.11} />
+
+      {/* Concentric terra rings — outermost → innermost = faint → solid */}
+      {ITERATE_RINGS.map(([r, opacity]) => (
         <circle key={r} cx={300} cy={300} r={r}
-          fill="none" stroke={INK} strokeWidth={0.5} opacity={0.07}
-          strokeDasharray="3 12" />
+          fill={TERRA} fillOpacity={opacity} />
       ))}
-      {/* Archimedean spiral */}
-      <path d={SPIRAL_MAIN}
-        fill="none" stroke={TERRA} strokeWidth={2.5} opacity={0.86}
-        strokeLinecap="round" strokeLinejoin="round" />
-      {/* Origin dot */}
-      <circle cx={300} cy={300} r={4} fill={TERRA} opacity={0.9} />
-    </svg>
+    </>
   )
 }
 
 // ─── OVERALL — Quadrant montage ───────────────────────────────────────────────
-/**
- * All four motifs arranged in a 2×2 grid, each clipped to its quadrant.
- * TL = Lens, TR = Motion, BL = Knot, BR = Spiral.
- */
-
-// Small Venn for BL quadrant — circles at (118,450) and (182,450), r=70
-const VENN2_R  = 70
-const VENN2_OFF = 32
-const VENN2_YO  = Math.round(Math.sqrt(VENN2_R * VENN2_R - VENN2_OFF * VENN2_OFF)) // ≈ 62
-const VENN2_LENS = `M 150,${450 - VENN2_YO} A ${VENN2_R},${VENN2_R} 0 0 1 150,${450 + VENN2_YO} A ${VENN2_R},${VENN2_R} 0 0 1 150,${450 - VENN2_YO} Z`
-
-// Motion lines for TR quadrant — a few lines radiating from left edge into right half
-const TR_LINES: Array<[number, number, number, number, string, number, number]> = [
-  [300, 300, 600,  20, SAGE,  0.20, 0.75],
-  [300, 300, 600,  90, SAGE,  0.30, 1.00],
-  [300, 300, 600, 165, SAGE,  0.40, 1.25],
-  [300, 300, 600, 240, TERRA, 0.60, 1.75],
-  [360, 300, 600, 100, SAGE,  0.28, 0.75],
-  [420, 300, 600, 170, TERRA, 0.50, 1.25],
-  [480, 300, 600, 230, SAGE,  0.35, 0.75],
-]
+// All four phase signatures at half scale in a 2×2 grid.
+// A small terra circle at the canvas centre binds the four quadrants.
 
 function OverallSVG() {
   return (
-    <svg viewBox="0 0 600 600" width="100%" height="100%" aria-hidden="true"
-      style={{ position: 'absolute', inset: 0 }}>
-
+    <>
       <defs>
-        <clipPath id="cp-tl"><rect x={0}   y={0}   width={300} height={300} /></clipPath>
-        <clipPath id="cp-tr"><rect x={300} y={0}   width={300} height={300} /></clipPath>
-        <clipPath id="cp-bl"><rect x={0}   y={300} width={300} height={300} /></clipPath>
-        <clipPath id="cp-br"><rect x={300} y={300} width={300} height={300} /></clipPath>
+        <clipPath id="ovr-tl"><rect x={0}   y={0}   width={300} height={300} /></clipPath>
+        <clipPath id="ovr-tr"><rect x={300} y={0}   width={300} height={300} /></clipPath>
+        <clipPath id="ovr-bl"><rect x={0}   y={300} width={300} height={300} /></clipPath>
+        <clipPath id="ovr-br"><rect x={300} y={300} width={300} height={300} /></clipPath>
       </defs>
 
-      {/* TL — The Lens (simplified) */}
-      <g clipPath="url(#cp-tl)">
-        {[118, 88, 58, 28, 10].map((r, i) => (
-          <circle key={r} cx={150} cy={150} r={r}
-            fill="none" stroke={TERRA}
-            strokeWidth={0.75 + i * 0.4}
-            opacity={0.06 + i * 0.14}
-          />
+      {/* TL — Analyse */}
+      <g clipPath="url(#ovr-tl)">
+        <line x1={0} y1={150} x2={300} y2={150} stroke={INK} strokeWidth={0.6} opacity={0.10} />
+        <path d={qTL(80)} fill={INK} fillOpacity={0.16} />
+        <circle cx={150} cy={150} r={100} fill={TERRA} fillOpacity={0.86} />
+        <rect x={131} y={131} width={38} height={38}
+          fill={BG} fillOpacity={0.80} transform="rotate(45 150 150)" />
+      </g>
+
+      {/* TR — Change */}
+      <g clipPath="url(#ovr-tr)">
+        <rect x={322} y={212} width={48} height={48} fill={INK} fillOpacity={0.82} />
+        {/* diamond centred at (450, 150) */}
+        <rect x={419} y={119} width={62} height={62} fill={INK} fillOpacity={0.82}
+          transform="rotate(45 450 150)" />
+        <circle cx={538} cy={70} r={58} fill={SAGE} fillOpacity={0.88} />
+        <path d="M 600,0 L 512,0 A 88,88 0 0,0 600,88 Z" fill={SAGE} fillOpacity={0.28} />
+      </g>
+
+      {/* BL — Responsibility */}
+      <g clipPath="url(#ovr-bl)">
+        <rect x={28}  y={340} width={132} height={132} fill={INK} fillOpacity={0.50} />
+        <rect x={119} y={340} width={132} height={132} fill={INK} fillOpacity={0.50} />
+        <circle cx={150} cy={406} r={34} fill={TERRA} fillOpacity={0.92} />
+        <path d="M 0,600 L 60,600 A 60,60 0 0,0 0,540 Z" fill={INK} fillOpacity={0.16} />
+      </g>
+
+      {/* BR — Iterate */}
+      <g clipPath="url(#ovr-br)">
+        <path d="M 600,600 L 497,600 A 103,103 0 0,1 600,497 Z" fill={INK} fillOpacity={0.11} />
+        {([136, 105, 74, 43, 17] as const).map((r, i) => (
+          <circle key={r} cx={450} cy={450} r={r} fill={TERRA}
+            fillOpacity={([0.07, 0.16, 0.34, 0.65, 1.00] as const)[i]} />
         ))}
-        <line x1={0}   y1={150} x2={300} y2={150} stroke={INK} strokeWidth={0.6} opacity={0.18} />
-        <line x1={150} y1={0}   x2={150} y2={300} stroke={INK} strokeWidth={0.6} opacity={0.09} />
-        <circle cx={150} cy={150} r={5} fill={BG}    />
-        <circle cx={150} cy={150} r={3} fill={TERRA} opacity={0.9} />
       </g>
 
-      {/* TR — The Motion */}
-      <g clipPath="url(#cp-tr)">
-        {TR_LINES.map(([x1, y1, x2, y2, color, opacity, width], i) => (
-          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
-            stroke={color} strokeWidth={width} opacity={opacity}
-            strokeLinecap="round" />
-        ))}
-      </g>
+      {/* Dividers */}
+      <line x1={300} y1={0}   x2={300} y2={600} stroke={INK} strokeWidth={0.6} opacity={0.14} />
+      <line x1={0}   y1={300} x2={600} y2={300} stroke={INK} strokeWidth={0.6} opacity={0.14} />
 
-      {/* BL — The Knot (small Venn) */}
-      <g clipPath="url(#cp-bl)">
-        <circle cx={150 - VENN2_OFF} cy={450} r={VENN2_R}
-          fill="none" stroke={INK} strokeWidth={1} opacity={0.4} />
-        <circle cx={150 + VENN2_OFF} cy={450} r={VENN2_R}
-          fill="none" stroke={INK} strokeWidth={1} opacity={0.4} />
-        <path d={VENN2_LENS} fill={TERRA} opacity={0.72} />
-      </g>
+      {/* Centre binding element */}
+      <circle cx={300} cy={300} r={14} fill={TERRA} fillOpacity={0.92} />
+    </>
+  )
+}
 
-      {/* BR — The Spiral */}
-      <g clipPath="url(#cp-br)">
-        <path d={SPIRAL_BR}
-          fill="none" stroke={TERRA} strokeWidth={1.5} opacity={0.82}
-          strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx={450} cy={450} r={3} fill={TERRA} opacity={0.9} />
-      </g>
+// ─── Content dispatcher ───────────────────────────────────────────────────────
 
-      {/* Quadrant dividers */}
-      <line x1={300} y1={0}   x2={300} y2={600} stroke={INK} strokeWidth={0.75} opacity={0.16} />
-      <line x1={0}   y1={300} x2={600} y2={300} stroke={INK} strokeWidth={0.75} opacity={0.16} />
+function PhaseContent({ variant }: { variant: PanelVariant }) {
+  if (variant === 'analyse')        return <AnalyseSVG />
+  if (variant === 'change')         return <ChangeSVG />
+  if (variant === 'responsibility') return <ResponsibilitySVG />
+  if (variant === 'iterate')        return <IterateSVG />
+  return <OverallSVG />
+}
+
+const PHASE_LABEL: Record<PanelVariant, string> = {
+  analyse:        '01 / Analyse',
+  change:         '02 / Change',
+  responsibility: '03 / Responsibility',
+  iterate:        '04 / Iterate',
+  overall:        'Systemshift Cycle',
+}
+
+// ─── PhaseIllustration ────────────────────────────────────────────────────────
+// Inline, intrinsic-sized export for the /ansatz page.
+// The SVG derives its height from viewBox aspect ratio (600:600 = 1:1).
+// No external sizing needed — drop it in any block container.
+
+export function PhaseIllustration({ variant }: { variant: PhaseVariant }) {
+  return (
+    <svg
+      viewBox="0 0 600 600"
+      width="100%"
+      style={{ display: 'block' }}
+      aria-hidden="true"
+    >
+      {/* Background */}
+      <rect width={600} height={600} fill={BG} />
+
+      {/* Phase shapes */}
+      <PhaseContent variant={variant} />
+
+      {/* Signature label */}
+      <text
+        x={14} y={587}
+        fontSize={9}
+        fontFamily="'DM Mono', 'Courier New', monospace"
+        fill={INK} fillOpacity={0.22}
+        letterSpacing={1.4}
+      >
+        FVS · 1789 · {PHASE_LABEL[variant].toUpperCase()}
+      </text>
     </svg>
   )
 }
 
-// ─── Panel ────────────────────────────────────────────────────────────────────
+// ─── CollagePanel ─────────────────────────────────────────────────────────────
+// Fill-mode export for the SystemshiftAccordion sticky panel.
+// The SVG stretches to fill 100 % × 100 % of its parent (position: absolute).
+// preserveAspectRatio="xMidYMid slice" ensures no letterboxing at non-square ratios.
 
-export function CollagePanel({ variant = 'analyse' }: CollagePanelProps) {
-  const label =
-    variant === 'analyse'          ? '01 / Analyse'
-    : variant === 'change'         ? '02 / Change'
-    : variant === 'responsibility' ? '03 / Responsibility'
-    : variant === 'iterate'        ? '04 / Iterate'
-    :                                'Systemshift Cycle'
+interface CollagePanelProps {
+  variant?: PanelVariant
+}
 
+export function CollagePanel({ variant = 'overall' }: CollagePanelProps) {
   return (
     <div
       style={{
@@ -316,13 +305,19 @@ export function CollagePanel({ variant = 'analyse' }: CollagePanelProps) {
         overflow:        'hidden',
       }}
     >
-      {variant === 'analyse'        && <LensSVG />}
-      {variant === 'change'         && <MotionSVG />}
-      {variant === 'responsibility' && <KnotSVG />}
-      {variant === 'iterate'        && <SpiralSVG />}
-      {variant === 'overall'        && <OverallSVG />}
+      {/* SVG fills the panel — slice ensures no gaps at non-square viewports */}
+      <svg
+        viewBox="0 0 600 600"
+        width="100%"
+        height="100%"
+        preserveAspectRatio="xMidYMid slice"
+        style={{ position: 'absolute', inset: 0 }}
+        aria-hidden="true"
+      >
+        <PhaseContent variant={variant} />
+      </svg>
 
-      {/* ── Label — bottom left ── */}
+      {/* Label overlay — positioned by CSS, not SVG text */}
       <div
         style={{
           position:      'absolute',
@@ -354,7 +349,7 @@ export function CollagePanel({ variant = 'analyse' }: CollagePanelProps) {
             color:         'rgba(26,23,20,0.25)',
           }}
         >
-          {label}
+          {PHASE_LABEL[variant]}
         </span>
       </div>
     </div>
