@@ -1,29 +1,38 @@
 'use client'
 
 /**
- * CollagePanel + PhaseIllustration — FVS Circle / Square / Quarter system
+ * CollagePanel + PhaseIllustration — FVS Primitive Grid
  *
- * ── Primitive vocabulary ──────────────────────────────────────────────────────
- *   ⬤  full circle    ◼  full square    ◜◝◟◞  quarter-circle pie slice
+ * ── System ────────────────────────────────────────────────────────────────────
+ *   Canvas: 600 × 600 px
+ *   Grid:   4 × 4 cells, each 150 × 150 px
  *
- * ── FVS transformation rule set ──────────────────────────────────────────────
- *   SCALE   →  iterate:        same circle repeated at 5 scales (opacity gradient)
- *   ROTATE  →  change:         square → square rotated 45° → circle (morph read)
- *   SHIFT   →  responsibility: two identical squares offset to create overlap zone
- *   QUARTER →  all phases:     corner pie slices as structural framing devices
+ *   Background layer (every phase):
+ *     16 faint circles at 8 % opacity — the machine, the order reference.
  *
- * ── Phase colour logic ────────────────────────────────────────────────────────
- *   analyse        terra primary  + ink corners
- *   change         ink squares    + sage circle / sage corner quarter
- *   responsibility ink squares    + terra binding circle + ink corner
- *   iterate        terra rings    + ink corner quarter
- *   overall        all four in 2×2 quadrant montage
+ *   Foreground layer (per phase):
+ *     Selected cells filled with one of three primitives:
+ *       ■  full square   (fills the cell)
+ *       ●  full circle   (inscribed, r = 75)
+ *       ◜◝◟◞  quarter-circle pie slice (one per corner orientation)
  *
- * ── Two exports ──────────────────────────────────────────────────────────────
- *   CollagePanel      fills its parent container (accordion sticky panel)
- *   PhaseIllustration intrinsic 1:1 square (ansatz page inline column)
+ *   The SAME grid underlies all four phases.
+ *   Only the GESTURE (which cells, which primitive) changes.
  *
- * Palette hard-coded — CSS vars unreliable in SVG fill/stroke attributes.
+ * ── Quarter-circle orientation key ───────────────────────────────────────────
+ *   ◜  qTL(c,r)  centre at cell's top-left      → fills cell's bottom-right
+ *   ◝  qTR(c,r)  centre at cell's top-right     → fills cell's bottom-left
+ *   ◟  qBL(c,r)  centre at cell's bottom-left   → fills cell's top-right
+ *   ◞  qBR(c,r)  centre at cell's bottom-right  → fills cell's top-left
+ *
+ * ── FVS rule per phase ────────────────────────────────────────────────────────
+ *   Analyse        FRAME   4 corner quarters converge on 4 inner circles   terra
+ *   Change         MORPH   sq→◟→◟→● diagonal: same mass, shape transforms  ink+sage
+ *   Responsibility SHIFT   two square columns shifted to edges + connecting circles  ink+terra
+ *   Iterate        SCALE   two concentric rings of quarters, opacity gradient  terra
+ *
+ * ── Palette (hard-coded — CSS vars unreliable in SVG fill/stroke) ─────────────
+ *   BG #EDEAE6 · INK #1A1714 · TERRA #F44D0B · SAGE #B8CC8A
  */
 
 import React from 'react'
@@ -35,205 +44,211 @@ const INK   = '#1A1714'
 const TERRA = '#F44D0B'
 const SAGE  = '#B8CC8A'
 
+// ─── Grid ─────────────────────────────────────────────────────────────────────
+
+const S = 150  // cell size in px; 4 × 150 = 600
+
+// ─── Quarter-circle path helpers ─────────────────────────────────────────────
+// Each returns a filled SVG pie-slice.
+// Circle centre = specified corner of cell (c, r); radius = S = full cell side.
+// The arc sweeps through the interior of the cell.
+//
+// Verification — qTL(c, r):
+//   centre (c·S, r·S), arc from (c·S+S, r·S) CW to (c·S, r·S+S)
+//   mid-arc ≈ (c·S + S·cos45°, r·S + S·sin45°) — cell interior ✓
+
+function qTL(c: number, r: number): string {
+  const x = c * S, y = r * S
+  return `M ${x},${y} L ${x+S},${y} A ${S},${S} 0 0,1 ${x},${y+S} Z`
+}
+function qTR(c: number, r: number): string {
+  const x = c * S, y = r * S
+  return `M ${x+S},${y} L ${x},${y} A ${S},${S} 0 0,0 ${x+S},${y+S} Z`
+}
+function qBL(c: number, r: number): string {
+  const x = c * S, y = r * S
+  return `M ${x},${y+S} L ${x+S},${y+S} A ${S},${S} 0 0,0 ${x},${y} Z`
+}
+function qBR(c: number, r: number): string {
+  const x = c * S, y = r * S
+  return `M ${x+S},${y+S} L ${x},${y+S} A ${S},${S} 0 0,1 ${x+S},${y} Z`
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type PhaseVariant  = 'analyse' | 'change' | 'responsibility' | 'iterate'
-type        PanelVariant  = PhaseVariant | 'overall'
+export type PhaseVariant = 'analyse' | 'change' | 'responsibility' | 'iterate'
+type        PanelVariant = PhaseVariant | 'overall'
 
-// ─── Quarter-circle helpers ───────────────────────────────────────────────────
-// Each returns a filled SVG pie-slice path anchored at a canvas corner,
-// pointing inward toward the canvas centre (viewBox 600 × 600).
-//
-//   TL (0,0)       → CW arc   sweep=1   qTL(r) = M 0,0 L r,0 A r,r 0 0,1 0,r Z
-//   TR (600,0)     → CCW arc  sweep=0
-//   BL (0,600)     → CCW arc  sweep=0
-//   BR (600,600)   → CW arc   sweep=1
+// ─── Background grid (shared) ─────────────────────────────────────────────────
+// 16 inscribed circles at 8 % opacity — the visible grid / machine layer.
 
-function qTL(r: number): string { return `M 0,0 L ${r},0 A ${r},${r} 0 0,1 0,${r} Z` }
-function qTR(r: number): string { return `M 600,0 L ${600-r},0 A ${r},${r} 0 0,0 600,${r} Z` }
-function qBL(r: number): string { return `M 0,600 L ${r},600 A ${r},${r} 0 0,0 0,${600-r} Z` }
-function qBR(r: number): string { return `M 600,600 L ${600-r},600 A ${r},${r} 0 0,1 600,${600-r} Z` }
+const CELLS = Array.from({ length: 16 }, (_, i) => ({ c: i % 4, r: Math.floor(i / 4) }))
 
-// ─── ANALYSE — Scale + Corner quarters ───────────────────────────────────────
-// Primary rule: FOCUS — convergence to a point.
-//
-// Large terra circle (the subject under examination) fills the centre.
-// Two ink corner quarter-circles frame it like a viewfinder.
-// A small rotated square (diamond) at centre = the crystallised insight.
-// A faint horizontal axis bisects the composition — the line of precise seeing.
-
-function AnalyseSVG() {
+function GridBG({ color }: { color: string }) {
   return (
     <>
-      {/* Axis hairline — precision reference */}
-      <line x1={0} y1={300} x2={600} y2={300}
-        stroke={INK} strokeWidth={0.75} opacity={0.10} />
-
-      {/* Viewfinder frames — ink corner quarters */}
-      <path d={qTL(160)} fill={INK} fillOpacity={0.16} />
-      <path d={qBR(160)} fill={INK} fillOpacity={0.16} />
-
-      {/* Primary: terra circle — the focal field */}
-      <circle cx={300} cy={300} r={200} fill={TERRA} fillOpacity={0.86} />
-
-      {/* Focal point: small diamond (square rotated 45°) at centre */}
-      {/* rect 78×78 centred at (300,300), half-diagonal ≈ 55 px */}
-      <rect x={261} y={261} width={78} height={78}
-        fill={BG} fillOpacity={0.80}
-        transform="rotate(45 300 300)" />
-    </>
-  )
-}
-
-// ─── CHANGE — Rotate (morph read) ────────────────────────────────────────────
-// Primary rule: TRANSFORMATION — same shape at different stages of rotation.
-//
-// Three shapes along a bottom-left → top-right diagonal:
-//   1. Aligned square (ink)         = structure at rest
-//   2. Diamond  (ink, rotated 45°)  = structure mid-rotation
-//   3. Circle   (sage)              = the organic, transformed state
-// Sage quarter at TR corner: momentum continues beyond the frame.
-
-function ChangeSVG() {
-  return (
-    <>
-      {/* Stage 1: aligned square — static structure */}
-      <rect x={68} y={408} width={98} height={98}
-        fill={INK} fillOpacity={0.82} />
-
-      {/* Stage 2: diamond — same square, rotated 45° — in motion */}
-      {/* rect 126×126 centred at (300,300) */}
-      <rect x={237} y={237} width={126} height={126}
-        fill={INK} fillOpacity={0.82}
-        transform="rotate(45 300 300)" />
-
-      {/* Stage 3: circle — the transformed, organic state */}
-      <circle cx={458} cy={142} r={118} fill={SAGE} fillOpacity={0.88} />
-
-      {/* Continuation: sage quarter at TR — momentum beyond the frame */}
-      <path d={qTR(178)} fill={SAGE} fillOpacity={0.28} />
-    </>
-  )
-}
-
-// ─── RESPONSIBILITY — Shift (overlap zone) ────────────────────────────────────
-// Primary rule: INTERLOCKING — two identical shapes shifted to share a zone.
-//
-// Two large ink squares offset horizontally; their overlap reads darker (alpha compositing).
-// A terra circle sits at the exact overlap centre = the binding commitment.
-// Ink quarter at BL corner = structural anchor / grounding.
-
-function ResponsibilitySVG() {
-  return (
-    <>
-      {/* Left square  — spans x: 62–326, y: 168–432 */}
-      <rect x={62} y={168} width={264} height={264}
-        fill={INK} fillOpacity={0.50} />
-
-      {/* Right square — spans x: 274–538, y: 168–432   overlap x: 274–326 = 52 px wide */}
-      <rect x={274} y={168} width={264} height={264}
-        fill={INK} fillOpacity={0.50} />
-
-      {/* Binding element: terra circle at the overlap centre */}
-      <circle cx={300} cy={300} r={70} fill={TERRA} fillOpacity={0.92} />
-
-      {/* Anchor: ink quarter at BL corner */}
-      <path d={qBL(120)} fill={INK} fillOpacity={0.16} />
-    </>
-  )
-}
-
-// ─── ITERATE — Scale (opacity rings) ─────────────────────────────────────────
-// Primary rule: EXPANSION — same circle scaled across 5 steps, opacity gradient.
-//
-// Innermost ring = full intensity (the origin/seed).
-// Each outer ring = lighter = earlier/later iteration still present.
-// Ink quarter at BR corner = the rotational, cyclical momentum of iteration.
-
-const ITERATE_RINGS: ReadonlyArray<readonly [number, number]> = [
-  [272, 0.07],
-  [210, 0.16],
-  [148, 0.34],
-  [86,  0.65],
-  [34,  1.00],
-] as const
-
-function IterateSVG() {
-  return (
-    <>
-      {/* Rotational indicator: ink quarter at BR — the ongoing cycle */}
-      <path d={qBR(205)} fill={INK} fillOpacity={0.11} />
-
-      {/* Concentric terra rings — outermost → innermost = faint → solid */}
-      {ITERATE_RINGS.map(([r, opacity]) => (
-        <circle key={r} cx={300} cy={300} r={r}
-          fill={TERRA} fillOpacity={opacity} />
+      {CELLS.map(({ c, r }) => (
+        <circle
+          key={`${c}-${r}`}
+          cx={c * S + S / 2}
+          cy={r * S + S / 2}
+          r={S / 2}
+          fill={color}
+          fillOpacity={0.08}
+        />
       ))}
     </>
   )
 }
 
-// ─── OVERALL — Quadrant montage ───────────────────────────────────────────────
-// All four phase signatures at half scale in a 2×2 grid.
-// A small terra circle at the canvas centre binds the four quadrants.
+// ─── ANALYSE — FRAME ─────────────────────────────────────────────────────────
+// Grid pattern:
+//   ◜ · · ◝    four corner quarters point inward — a viewfinder / lens frame
+//   · ● ● ·    four inner circles — the focal zone being examined
+//   · ● ● ·
+//   ◟ · · ◞
+
+function AnalyseSVG() {
+  return (
+    <>
+      <GridBG color={INK} />
+      {/* Corner quarters — framing, pointing toward canvas centre */}
+      <path d={qTL(0, 0)} fill={TERRA} fillOpacity={0.88} />
+      <path d={qTR(3, 0)} fill={TERRA} fillOpacity={0.88} />
+      <path d={qBL(0, 3)} fill={TERRA} fillOpacity={0.88} />
+      <path d={qBR(3, 3)} fill={TERRA} fillOpacity={0.88} />
+      {/* Inner 2×2 circles — focal cluster */}
+      <circle cx={1*S + S/2} cy={1*S + S/2} r={S/2} fill={TERRA} fillOpacity={0.88} />
+      <circle cx={2*S + S/2} cy={1*S + S/2} r={S/2} fill={TERRA} fillOpacity={0.88} />
+      <circle cx={1*S + S/2} cy={2*S + S/2} r={S/2} fill={TERRA} fillOpacity={0.88} />
+      <circle cx={2*S + S/2} cy={2*S + S/2} r={S/2} fill={TERRA} fillOpacity={0.88} />
+    </>
+  )
+}
+
+// ─── CHANGE — MORPH ───────────────────────────────────────────────────────────
+// Grid pattern:
+//   · · · ●    circle  — organic, transformed destination  (sage)
+//   · · ◟ ·    quarter — shape mid-rotation, pointing top-right (sage)
+//   · ◟ · ·    quarter — continuing transformation         (sage)
+//   ■ · · ·    square  — structure at rest, origin        (ink)
+//
+// Diagonal axis BL→TR: same visual mass at each step, shape transforms.
+// ◟ = qBL: centre at cell's bottom-left, fills the cell's top-right quadrant
+// = pointing toward top-right = toward the direction of change.
+
+function ChangeSVG() {
+  return (
+    <>
+      <GridBG color={INK} />
+      {/* Origin: aligned square — structure before change */}
+      <rect x={0} y={3*S} width={S} height={S} fill={INK} fillOpacity={0.85} />
+      {/* Mid-1: quarter pointing top-right */}
+      <path d={qBL(1, 2)} fill={SAGE} fillOpacity={0.85} />
+      {/* Mid-2: quarter pointing top-right */}
+      <path d={qBL(2, 1)} fill={SAGE} fillOpacity={0.85} />
+      {/* Destination: circle — organic, transformed state */}
+      <circle cx={3*S + S/2} cy={S/2} r={S/2} fill={SAGE} fillOpacity={0.88} />
+    </>
+  )
+}
+
+// ─── RESPONSIBILITY — SHIFT ───────────────────────────────────────────────────
+// Grid pattern:
+//   ■ · · ■    two square columns at the outer edges (ink)
+//   ■ · · ■    both 4 cells tall — the two entities
+//   ■ ● ● ■    terra circles at row 2, centre columns — the binding link
+//   ■ · · ■
+//
+// Same primitive (square), shifted to opposite edges.
+// Circles mark the zone of shared accountability.
+
+function ResponsibilitySVG() {
+  return (
+    <>
+      <GridBG color={INK} />
+      {/* Left column */}
+      {[0, 1, 2, 3].map(r => (
+        <rect key={`L${r}`} x={0} y={r*S} width={S} height={S}
+          fill={INK} fillOpacity={0.78} />
+      ))}
+      {/* Right column */}
+      {[0, 1, 2, 3].map(r => (
+        <rect key={`R${r}`} x={3*S} y={r*S} width={S} height={S}
+          fill={INK} fillOpacity={0.78} />
+      ))}
+      {/* Binding circles — the shared commitment zone */}
+      <circle cx={1*S + S/2} cy={2*S + S/2} r={S/2} fill={TERRA} fillOpacity={0.92} />
+      <circle cx={2*S + S/2} cy={2*S + S/2} r={S/2} fill={TERRA} fillOpacity={0.92} />
+    </>
+  )
+}
+
+// ─── ITERATE — SCALE ──────────────────────────────────────────────────────────
+// Grid pattern:
+//   ◜ · · ◝    outer ring at 36 % — the most recent, expanded iteration
+//   · ◜ ◝ ·    inner ring at 80 % — the established core
+//   · ◟ ◞ ·
+//   ◟ · · ◞
+//
+// Same quarter-circle primitive at two scales / opacities.
+// All 8 quarters point toward canvas centre — convergent growth read.
+// Inner quarters are centred at the corners of the inner 2×2 meeting at (300,300).
+
+function IterateSVG() {
+  return (
+    <>
+      <GridBG color={TERRA} />
+      {/* Outer ring — canvas corners, lighter */}
+      <path d={qTL(0, 0)} fill={TERRA} fillOpacity={0.36} />
+      <path d={qTR(3, 0)} fill={TERRA} fillOpacity={0.36} />
+      <path d={qBL(0, 3)} fill={TERRA} fillOpacity={0.36} />
+      <path d={qBR(3, 3)} fill={TERRA} fillOpacity={0.36} />
+      {/* Inner ring — inner 2×2 corners, full intensity */}
+      <path d={qTL(1, 1)} fill={TERRA} fillOpacity={0.80} />
+      <path d={qTR(2, 1)} fill={TERRA} fillOpacity={0.80} />
+      <path d={qBL(1, 2)} fill={TERRA} fillOpacity={0.80} />
+      <path d={qBR(2, 2)} fill={TERRA} fillOpacity={0.80} />
+    </>
+  )
+}
+
+// ─── OVERALL — quadrant montage ───────────────────────────────────────────────
+// Each phase at 0.5× scale in its 300×300 quadrant.
+// SVG transform: translate(tx,ty) scale(0.5) — scale from origin, then translate.
+// The same GridBG + phase shapes render at half size, perfectly filling each zone.
 
 function OverallSVG() {
   return (
     <>
       <defs>
-        <clipPath id="ovr-tl"><rect x={0}   y={0}   width={300} height={300} /></clipPath>
-        <clipPath id="ovr-tr"><rect x={300} y={0}   width={300} height={300} /></clipPath>
-        <clipPath id="ovr-bl"><rect x={0}   y={300} width={300} height={300} /></clipPath>
-        <clipPath id="ovr-br"><rect x={300} y={300} width={300} height={300} /></clipPath>
+        <clipPath id="ov-tl"><rect width={300} height={300} /></clipPath>
+        <clipPath id="ov-tr"><rect x={300} width={300} height={300} /></clipPath>
+        <clipPath id="ov-bl"><rect y={300} width={300} height={300} /></clipPath>
+        <clipPath id="ov-br"><rect x={300} y={300} width={300} height={300} /></clipPath>
       </defs>
 
-      {/* TL — Analyse */}
-      <g clipPath="url(#ovr-tl)">
-        <line x1={0} y1={150} x2={300} y2={150} stroke={INK} strokeWidth={0.6} opacity={0.10} />
-        <path d={qTL(80)} fill={INK} fillOpacity={0.16} />
-        <circle cx={150} cy={150} r={100} fill={TERRA} fillOpacity={0.86} />
-        <rect x={131} y={131} width={38} height={38}
-          fill={BG} fillOpacity={0.80} transform="rotate(45 150 150)" />
+      <g clipPath="url(#ov-tl)" transform="scale(0.5)">
+        <AnalyseSVG />
+      </g>
+      <g clipPath="url(#ov-tr)" transform="translate(300,0) scale(0.5)">
+        <ChangeSVG />
+      </g>
+      <g clipPath="url(#ov-bl)" transform="translate(0,300) scale(0.5)">
+        <ResponsibilitySVG />
+      </g>
+      <g clipPath="url(#ov-br)" transform="translate(300,300) scale(0.5)">
+        <IterateSVG />
       </g>
 
-      {/* TR — Change */}
-      <g clipPath="url(#ovr-tr)">
-        <rect x={322} y={212} width={48} height={48} fill={INK} fillOpacity={0.82} />
-        {/* diamond centred at (450, 150) */}
-        <rect x={419} y={119} width={62} height={62} fill={INK} fillOpacity={0.82}
-          transform="rotate(45 450 150)" />
-        <circle cx={538} cy={70} r={58} fill={SAGE} fillOpacity={0.88} />
-        <path d="M 600,0 L 512,0 A 88,88 0 0,0 600,88 Z" fill={SAGE} fillOpacity={0.28} />
-      </g>
-
-      {/* BL — Responsibility */}
-      <g clipPath="url(#ovr-bl)">
-        <rect x={28}  y={340} width={132} height={132} fill={INK} fillOpacity={0.50} />
-        <rect x={119} y={340} width={132} height={132} fill={INK} fillOpacity={0.50} />
-        <circle cx={150} cy={406} r={34} fill={TERRA} fillOpacity={0.92} />
-        <path d="M 0,600 L 60,600 A 60,60 0 0,0 0,540 Z" fill={INK} fillOpacity={0.16} />
-      </g>
-
-      {/* BR — Iterate */}
-      <g clipPath="url(#ovr-br)">
-        <path d="M 600,600 L 497,600 A 103,103 0 0,1 600,497 Z" fill={INK} fillOpacity={0.11} />
-        {([136, 105, 74, 43, 17] as const).map((r, i) => (
-          <circle key={r} cx={450} cy={450} r={r} fill={TERRA}
-            fillOpacity={([0.07, 0.16, 0.34, 0.65, 1.00] as const)[i]} />
-        ))}
-      </g>
-
-      {/* Dividers */}
-      <line x1={300} y1={0}   x2={300} y2={600} stroke={INK} strokeWidth={0.6} opacity={0.14} />
-      <line x1={0}   y1={300} x2={600} y2={300} stroke={INK} strokeWidth={0.6} opacity={0.14} />
-
-      {/* Centre binding element */}
-      <circle cx={300} cy={300} r={14} fill={TERRA} fillOpacity={0.92} />
+      <line x1={300} y1={0}   x2={300} y2={600} stroke={INK} strokeWidth={0.75} opacity={0.18} />
+      <line x1={0}   y1={300} x2={600} y2={300} stroke={INK} strokeWidth={0.75} opacity={0.18} />
+      <circle cx={300} cy={300} r={10} fill={TERRA} fillOpacity={0.88} />
     </>
   )
 }
 
-// ─── Content dispatcher ───────────────────────────────────────────────────────
+// ─── Dispatcher ───────────────────────────────────────────────────────────────
 
 function PhaseContent({ variant }: { variant: PanelVariant }) {
   if (variant === 'analyse')        return <AnalyseSVG />
@@ -251,32 +266,18 @@ const PHASE_LABEL: Record<PanelVariant, string> = {
   overall:        'Systemshift Cycle',
 }
 
-// ─── PhaseIllustration ────────────────────────────────────────────────────────
-// Inline, intrinsic-sized export for the /ansatz page.
-// The SVG derives its height from viewBox aspect ratio (600:600 = 1:1).
-// No external sizing needed — drop it in any block container.
+// ─── PhaseIllustration — inline / intrinsic sizing ────────────────────────────
+// For the /ansatz page. SVG derives height from viewBox (600:600 = 1:1 square).
 
 export function PhaseIllustration({ variant }: { variant: PhaseVariant }) {
   return (
-    <svg
-      viewBox="0 0 600 600"
-      width="100%"
-      style={{ display: 'block' }}
-      aria-hidden="true"
-    >
-      {/* Background */}
+    <svg viewBox="0 0 600 600" width="100%" style={{ display: 'block' }} aria-hidden="true">
       <rect width={600} height={600} fill={BG} />
-
-      {/* Phase shapes */}
       <PhaseContent variant={variant} />
-
-      {/* Signature label */}
       <text
-        x={14} y={587}
-        fontSize={9}
+        x={14} y={587} fontSize={9}
         fontFamily="'DM Mono', 'Courier New', monospace"
-        fill={INK} fillOpacity={0.22}
-        letterSpacing={1.4}
+        fill={INK} fillOpacity={0.20} letterSpacing={1.4}
       >
         FVS · 1789 · {PHASE_LABEL[variant].toUpperCase()}
       </text>
@@ -284,10 +285,8 @@ export function PhaseIllustration({ variant }: { variant: PhaseVariant }) {
   )
 }
 
-// ─── CollagePanel ─────────────────────────────────────────────────────────────
-// Fill-mode export for the SystemshiftAccordion sticky panel.
-// The SVG stretches to fill 100 % × 100 % of its parent (position: absolute).
-// preserveAspectRatio="xMidYMid slice" ensures no letterboxing at non-square ratios.
+// ─── CollagePanel — fill mode for SystemshiftAccordion ────────────────────────
+// Stretches to fill 100 % × 100 svh of its sticky panel container.
 
 interface CollagePanelProps {
   variant?: PanelVariant
@@ -295,21 +294,13 @@ interface CollagePanelProps {
 
 export function CollagePanel({ variant = 'overall' }: CollagePanelProps) {
   return (
-    <div
-      style={{
-        position:        'relative',
-        width:           '100%',
-        height:          '100%',
-        minHeight:       '100svh',
-        backgroundColor: BG,
-        overflow:        'hidden',
-      }}
-    >
-      {/* SVG fills the panel — slice ensures no gaps at non-square viewports */}
+    <div style={{
+      position: 'relative', width: '100%', height: '100%',
+      minHeight: '100svh', backgroundColor: BG, overflow: 'hidden',
+    }}>
       <svg
         viewBox="0 0 600 600"
-        width="100%"
-        height="100%"
+        width="100%" height="100%"
         preserveAspectRatio="xMidYMid slice"
         style={{ position: 'absolute', inset: 0 }}
         aria-hidden="true"
@@ -317,38 +308,22 @@ export function CollagePanel({ variant = 'overall' }: CollagePanelProps) {
         <PhaseContent variant={variant} />
       </svg>
 
-      {/* Label overlay — positioned by CSS, not SVG text */}
-      <div
-        style={{
-          position:      'absolute',
-          bottom:        '2.5rem',
-          left:          '2.5rem',
-          display:       'flex',
-          flexDirection: 'column',
-          gap:           '0.5rem',
-          zIndex:        1,
-        }}
-      >
-        <span
-          style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      '0.6rem',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color:         'rgba(26,23,20,0.4)',
-          }}
-        >
+      <div style={{
+        position: 'absolute', bottom: '2.5rem', left: '2.5rem',
+        display: 'flex', flexDirection: 'column', gap: '0.5rem', zIndex: 1,
+      }}>
+        <span style={{
+          fontFamily: 'var(--font-mono)', fontSize: '0.6rem',
+          letterSpacing: '0.2em', textTransform: 'uppercase',
+          color: 'rgba(26,23,20,0.4)',
+        }}>
           Systemshift · 1789
         </span>
-        <span
-          style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      '0.6rem',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color:         'rgba(26,23,20,0.25)',
-          }}
-        >
+        <span style={{
+          fontFamily: 'var(--font-mono)', fontSize: '0.6rem',
+          letterSpacing: '0.2em', textTransform: 'uppercase',
+          color: 'rgba(26,23,20,0.25)',
+        }}>
           {PHASE_LABEL[variant]}
         </span>
       </div>
