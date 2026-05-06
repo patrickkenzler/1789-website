@@ -61,20 +61,23 @@ const pillarIcons = [
 const pillars = [
   {
     num: '01',
-    title: 'Modell',
-    body: 'Das Modell ist Rahmen und Denkraum zugleich. Wir beschreiben die Organisation in ihren formalen, informellen und schauseitigen Schichten – und übersetzen diese Beschreibung in ein Zielbild, an dem die Organisation arbeiten kann.',
+    title: 'Modeling',
+    body: 'Wir beginnen nicht mit Lösungen, sondern übersetzen Beobachtungen in Hypothesen. Welche Entscheidungen, Rollen, Erwartungen und informalen Routinen halten die Organisation zusammen? Daraus entsteht ein Zielmodell
+- nicht als Blueprint, sondern als Arbeitsgegenstand für
+Führung.',
     items: ['Research', 'Zielbild', 'Designprinzipien', 'Rollen & Rechenschaft'],
   },
   {
     num: '02',
-    title: 'Strukturation',
-    body: 'Das Modell kommt bewusst unfertig in den Raum und imitiert einen Prozess, in dem die Organisation sich das Modell aneignet – prototypisch, iterativ, im Sparring. Was hält, wird Form. Was nicht hält, verändert das Modell. Beides geschieht am gleichen Gegenstand.',
+    title: 'Structuration',
+    body: 'Struktur entsteht nicht im Rollout. Die Organisation arbeitet sich am Modell ab, prüft, widerspricht, passt an
+— und macht es dadurch zu ihrer eigenen Struktur. Was trägt, wird verstetigt. Was nicht trägt, verändert das Modell.',
     items: ['Prototyp', 'Sparring', 'Simulation', 'Einpassung'],
   },
   {
     num: '03',
     title: 'AI-Human-Native',
-    body: 'Wenn Strukturen neu entstehen, denken wir AI als Teil ihrer Operation mit: als Companion in Rollen und Workflows, als Mediator in Erwartungsräumen zwischen Menschen, als Begleiter in Veränderungsprozessen. Nicht als Tool auf der Organisation, sondern als Schicht in ihr.',
+    body: 'Al ist kein Add-on zur Organisation. Wenn Arbeit neu geordnet wird, denken wir Al als Medium mit: in Rollen, Workflows, Entscheidungen und im Zugriff auf organisationales Wissen.',
     items: ['AI Operating System', 'AI enabled Structures', 'AI Mediation bei Human to Human Erwartungsstrukturen', 'AI Companions'],
   },
 ]
@@ -150,11 +153,11 @@ export default function Home() {
 
             {/* ── Headline ── */}
             <div style={{ marginBottom: '2rem' }}>
-              <Tag>Dafür stehen wir</Tag>
+              <Tag>DER 1789-BLICK</Tag>
               <div style={{ marginTop: '1.75rem' }}>
-                <p style={displayStyle}>Ein neues Organisations&shy;verständnis —</p>
+                <p style={displayStyle}>Was heute blockiert, —</p>
                 <p style={{ ...displayStyle, marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
-                  Modelierung, Strukturation & AI-Human Native
+                   hat gestern getragen.
                 </p>
               </div>
             </div>
@@ -163,9 +166,7 @@ export default function Home() {
             <Grid className="stack-cols">
               <Col span={5}>
                 <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
-                Zwischen Strategie und Wirklichkeit liegt eine Lücke.
-                Diese Lücke ist kein Fehler — sie ist der Motor.
-                Unser Beratungsprozess begleitet Organisation bei der Verhandlung, Modellierung und Realisation neuer Strukturen, so dass sie die Spannung nutzt, statt an ihr zu scheitern.</p>
+                Jede Organisation lebt von Entscheidungen, Routinen und informalen Lösungen, die einmal funktioniert haben. Wir legen frei, welche Ordnung heute noch trägt, wo sie blockiert und was neu entschieden werden muss damit Verantwortung greift, Veränderung tragfähig wird und Wertschöpfung & Wirkung entstehen.</p>
               </Col>
             </Grid>
 
