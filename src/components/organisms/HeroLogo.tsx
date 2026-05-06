@@ -125,126 +125,122 @@ export function HeroLogo() {
         }}
       />
 
-      {/* ── Centered content ── */}
+      {/* ── Content — two-zone column: centered claim + bottom-pinned logos ── */}
       <div
         style={{
-          position:       'relative',
-          zIndex:         2,
-          height:         '100%',
-          display:        'flex',
-          flexDirection:  'column',
-          alignItems:     'center',
-          justifyContent: 'center',
-          textAlign:      'center',
-          paddingInline:  'var(--grid-margin)',
-          paddingTop:     'clamp(0.5rem, 2svh, 1.5rem)',
-          paddingBottom:  'clamp(3rem, 7svh, 6rem)',
-          gap:            0,
-          animation:      a('fadeUp', '900ms', '80ms', 'var(--ease-expressive)'),
+          position:      'relative',
+          zIndex:        2,
+          height:        '100%',
+          display:       'flex',
+          flexDirection: 'column',
+          alignItems:    'center',
+          textAlign:     'center',
+          paddingInline: 'var(--grid-margin)',
+          animation:     a('fadeUp', '900ms', '80ms', 'var(--ease-expressive)'),
         }}
       >
 
-        {/* ── Eyebrow label ── */}
-        <p
-          style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      'var(--text-xxs)',
-            fontWeight:    400,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color:         'var(--color-ink-subtle)',
-            marginBottom:  'clamp(1.25rem, 3svh, 2.5rem)',
-          }}
-        >
-          Gap Consulting · Strategie · Struktur
-        </p>
-
-        {/* ── Headline — three-line mixed claim ── */}
+        {/* ── Zone 1: vertically centered claim block ── */}
         <div
           style={{
-            fontFamily:    'var(--font-display)',
-            fontWeight:    300,
-            fontSize:      'clamp(2.5rem, min(6.5vw, 9svh), 8.5rem)',
-            lineHeight:    1.02,
-            letterSpacing: '-0.03em',
-            color:         'var(--color-ink)',
-            marginBottom:  'clamp(2rem, 5svh, 4rem)',
-          }}
-        >
-          <p style={{ margin: 0 }}>
-            Strategie{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>scheitert an</em>
-            {' '}Struktur.
-          </p>
-          <p style={{ margin: 0 }}>
-            Struktur{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>überholt</em>
-            {' '}Strategie.
-          </p>
-          <p style={{ margin: 0 }}>
-            Dazwischen{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>entscheidet</em>
-            {' '}Organisation.
-          </p>
-        </div>
-
-        {/* ── CTAs ── */}
-        <div
-          style={{
+            flex:           1,
             display:        'flex',
-            gap:            '1rem',
-            flexWrap:       'wrap',
+            flexDirection:  'column',
+            alignItems:     'center',
             justifyContent: 'center',
-            animation:      a('fadeUp', '700ms', '350ms'),
+            paddingTop:     'clamp(0.5rem, 2svh, 1.5rem)',
+            paddingBottom:  'clamp(1rem, 2svh, 2rem)',
           }}
         >
-          <Link href="/ansatz">
-            <Button variant="ghost">Unser Ansatz →</Button>
-          </Link>
-          <Link href="/kontakt">
-            <Button variant="terra">Erstgespräch vereinbaren</Button>
-          </Link>
-        </div>
 
-        {/* ── Client logo strip ── */}
-        {/*
-          Key constraint: mask-image on a parent creates a compositing surface
-          bounded to that element's border-box. Any child content (SVG strokes,
-          descenders) touching the surface edge gets rasterised away — no
-          overflow:hidden/visible, clip-path, or padding hack can fix it.
+          {/* Eyebrow label */}
+          <p
+            style={{
+              fontFamily:    'var(--font-mono)',
+              fontSize:      'var(--text-xxs)',
+              fontWeight:    400,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color:         'var(--color-ink-subtle)',
+              marginBottom:  'clamp(1.25rem, 3svh, 2.5rem)',
+            }}
+          >
+            Gap Consulting · Strategie · Struktur
+          </p>
 
-          Solution: overflow:hidden on the wrapper (safe — contains only the
-          horizontal marquee overflow) with NO mask-image. The left/right edge
-          fade is achieved by two absolutely-positioned gradient overlay divs
-          that paint cream on top of the logos. They are siblings of the marquee,
-          not parents, so they never affect the logos' compositing surface.
-        */}
+          {/* Headline — three-line mixed claim */}
+          <div
+            style={{
+              fontFamily:    'var(--font-display)',
+              fontWeight:    300,
+              fontSize:      'clamp(2.5rem, 7vw, 9rem)',
+              lineHeight:    1.02,
+              letterSpacing: '-0.03em',
+              color:         'var(--color-ink)',
+              marginBottom:  'clamp(2rem, 4svh, 4rem)',
+            }}
+          >
+            <p style={{ margin: 0 }}>
+              Strategie{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>scheitert an</em>
+              {' '}Struktur.
+            </p>
+            <p style={{ margin: 0 }}>
+              Struktur{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>überholt</em>
+              {' '}Strategie.
+            </p>
+            <p style={{ margin: 0 }}>
+              Dazwischen{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>entscheidet</em>
+              {' '}Organisation.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div
+            style={{
+              display:        'flex',
+              gap:            '1rem',
+              flexWrap:       'wrap',
+              justifyContent: 'center',
+              animation:      a('fadeUp', '700ms', '350ms'),
+            }}
+          >
+            <Link href="/ansatz">
+              <Button variant="ghost">Unser Ansatz →</Button>
+            </Link>
+            <Link href="/kontakt">
+              <Button variant="terra">Erstgespräch vereinbaren</Button>
+            </Link>
+          </div>
+
+        </div>{/* end Zone 1 */}
+
+        {/* ── Zone 2: logo strip pinned to bottom edge ── */}
         {/*
-          clip-path:inset(0) is a geometric clip — unlike overflow:hidden it does
-          NOT create a compositing/raster surface in Chrome. overflow:hidden forces
-          a stacking context that clips SVG overflow="visible" content in Chrome
-          even when the container is taller than the logos. clip-path just defines
-          a polygon; SVG content painted within the 60px height passes through fine.
-          Height 60px: logos are 26px SVGs centered in 30px spans → max content
-          y≈50px from wrapper top → 10px clearance before the clip boundary.
+          clip-path:inset(0) — geometric clip, does NOT create a compositing
+          surface in Chrome (unlike overflow:hidden which clips SVG overflow).
+          Height 60px gives 10px clearance above the 26px SVG logos.
         */}
         <div
           style={{
-            position:   'relative',
-            width:      '100%',
-            height:     '60px',
-            clipPath:   'inset(0)',
-            marginTop:  'clamp(2rem, 5svh, 3.5rem)',
+            position:      'relative',
+            width:         '100%',
+            height:        '60px',
+            clipPath:      'inset(0)',
+            flexShrink:    0,
+            paddingBottom: 'clamp(1.5rem, 3svh, 2.5rem)',
+            boxSizing:     'content-box',
           }}
         >
-          {/* Scrolling logos */}
           <div
             style={{
               display:    'flex',
               gap:        '4rem',
               whiteSpace: 'nowrap',
               alignItems: 'center',
-              height:     '100%',
+              height:     '60px',
               animation:  'marqueeSlide 70s linear infinite',
             }}
           >
@@ -259,9 +255,6 @@ export function HeroLogo() {
                   height:     '30px',
                   opacity:    0.32,
                   flexShrink: 0,
-                  /* No filter — all SVGs already use fill="black".
-                     filter:brightness() creates a compositing surface
-                     bounded to the element box, clipping SVG content. */
                 }}
                 dangerouslySetInnerHTML={{
                   __html: logo.svg.replace(
@@ -272,8 +265,7 @@ export function HeroLogo() {
               />
             ))}
           </div>
-
-        </div>
+        </div>{/* end Zone 2 */}
 
       </div>
     </div>
