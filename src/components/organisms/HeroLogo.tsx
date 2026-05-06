@@ -164,8 +164,8 @@ export function HeroLogo() {
           style={{
             fontFamily:    'var(--font-display)',
             fontWeight:    300,
-            fontSize:      'clamp(2rem, min(5.5vw, 8svh), 7rem)',
-            lineHeight:    1.15,
+            fontSize:      'clamp(2.5rem, min(6.5vw, 9svh), 8.5rem)',
+            lineHeight:    1.02,
             letterSpacing: '-0.03em',
             color:         'var(--color-ink)',
             marginBottom:  'clamp(2rem, 5svh, 4rem)',
