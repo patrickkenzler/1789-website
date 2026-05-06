@@ -65,11 +65,10 @@ export function Header() {
           backdropFilter:  'blur(12px)',
         }}
       >
-        {/* ── Desktop layout ── */}
+        {/* ── Desktop layout (≥ 1024px): editorial split-nav with centered logo ── */}
         <div
-          className="hide-mobile"
+          className="show-desktop-grid"
           style={{
-            display:             'grid',
             gridTemplateColumns: '1fr auto 1fr',
             alignItems:          'center',
             height:              '5rem',
@@ -78,7 +77,7 @@ export function Header() {
           }}
         >
 
-          {/* ── Left nav ── */}
+          {/* Left nav */}
           <nav
             style={{
               display:        'flex',
@@ -94,7 +93,7 @@ export function Header() {
             ))}
           </nav>
 
-          {/* ── Logo — always centered, always visible ── */}
+          {/* Logo — centered */}
           <Link
             href="/"
             aria-label="1789 Innovation — zur Startseite"
@@ -108,7 +107,7 @@ export function Header() {
             <Logo1789 height={38} showSub={false} />
           </Link>
 
-          {/* ── Right nav ── */}
+          {/* Right nav */}
           <nav
             style={{
               display:        'flex',
@@ -126,7 +125,37 @@ export function Header() {
 
         </div>
 
-        {/* ── Mobile layout ── */}
+        {/* ── Tablet layout (768px–1023px): logo left, all links right ── */}
+        <div
+          className="show-tablet-flex"
+          style={{
+            alignItems:     'center',
+            justifyContent: 'space-between',
+            height:         '5rem',
+            paddingInline:  'var(--grid-margin)',
+            gap:            '2rem',
+          }}
+        >
+          {/* Logo — left */}
+          <Link
+            href="/"
+            aria-label="1789 Innovation — zur Startseite"
+            style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
+          >
+            <Logo1789 height={34} showSub={false} />
+          </Link>
+
+          {/* All links — right, compact */}
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            {ALL_ITEMS.map((item) => (
+              <Link key={item.href} href={item.href} className="hover-line" style={NAV_LINK}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        {/* ── Mobile layout (< 768px): logo left, hamburger right ── */}
         <div
           className="show-mobile-flex"
           style={{
