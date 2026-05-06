@@ -62,15 +62,13 @@ const pillars = [
   {
     num: '01',
     title: 'Modeling',
-    body: 'Wir beginnen nicht mit Lösungen, sondern übersetzen Beobachtungen in Hypothesen. Welche Entscheidungen, Rollen, Erwartungen und informalen Routinen halten die Organisation zusammen? Daraus entsteht ein Zielmodell, nicht als Blueprint, sondern als Arbeitsgegenstand für
-Führung.',
+    body: 'Wir beginnen nicht mit Lösungen, sondern übersetzen Beobachtungen in Hypothesen. Welche Entscheidungen, Rollen, Erwartungen und informalen Routinen halten die Organisation zusammen? Daraus entsteht ein Zielmodell, nicht als Blueprint, sondern als Arbeitsgegenstand für Führung.',
     items: ['Research', 'Zielbild', 'Designprinzipien', 'Rollen & Rechenschaft'],
   },
   {
     num: '02',
     title: 'Structuration',
-    body: 'Struktur entsteht nicht im Rollout. Die Organisation arbeitet sich am Modell ab, prüft, widerspricht, passt an
-— und macht es dadurch zu ihrer eigenen Struktur. Was trägt, wird verstetigt. Was nicht trägt, verändert das Modell.',
+    body: 'Struktur entsteht nicht im Rollout. Die Organisation arbeitet sich am Modell ab, prüft, widerspricht, passt an — und macht es dadurch zu ihrer eigenen Struktur. Was trägt, wird verstetigt. Was nicht trägt, verändert das Modell.',
     items: ['Prototyp', 'Sparring', 'Simulation', 'Einpassung'],
   },
   {
