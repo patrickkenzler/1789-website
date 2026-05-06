@@ -62,8 +62,7 @@ const pillars = [
   {
     num: '01',
     title: 'Modeling',
-    body: 'Wir beginnen nicht mit Lösungen, sondern übersetzen Beobachtungen in Hypothesen. Welche Entscheidungen, Rollen, Erwartungen und informalen Routinen halten die Organisation zusammen? Daraus entsteht ein Zielmodell
-- nicht als Blueprint, sondern als Arbeitsgegenstand für
+    body: 'Wir beginnen nicht mit Lösungen, sondern übersetzen Beobachtungen in Hypothesen. Welche Entscheidungen, Rollen, Erwartungen und informalen Routinen halten die Organisation zusammen? Daraus entsteht ein Zielmodell, nicht als Blueprint, sondern als Arbeitsgegenstand für
 Führung.',
     items: ['Research', 'Zielbild', 'Designprinzipien', 'Rollen & Rechenschaft'],
   },
