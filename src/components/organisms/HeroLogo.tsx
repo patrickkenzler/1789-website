@@ -159,50 +159,34 @@ export function HeroLogo() {
           Gap Consulting · Strategie · Struktur
         </p>
 
-        {/* ── Headline block 1 — ink, regular ── */}
-        <p
-          style={{
-            fontFamily:    'var(--font-display)',
-            fontWeight:    400,
-            fontStyle:     'normal',
-            fontSize:      'clamp(2.75rem, min(7.5vw, 10svh), 9rem)',
-            lineHeight:    0.9,
-            letterSpacing: '-0.03em',
-            color:         'var(--color-ink)',
-            maxWidth:      '20ch',
-            marginBottom:  '0.22em',
-          }}
-        >
-          Organisationen scheitern nicht an schlechten Strategien
-        </p>
-
-        {/* ── Terra hairline rule ── */}
+        {/* ── Headline — three-line mixed claim ── */}
         <div
           style={{
-            width:           '2.5rem',
-            height:          '1px',
-            backgroundColor: 'var(--color-terra)',
-            opacity:         0.55,
-            marginBlock:     '0.5em',
-          }}
-        />
-
-        {/* ── Headline block 2 — terra, italic ── */}
-        <p
-          style={{
             fontFamily:    'var(--font-display)',
-            fontWeight:    400,
-            fontStyle:     'italic',
-            fontSize:      'clamp(2.75rem, min(7.5vw, 10svh), 9rem)',
-            lineHeight:    0.9,
+            fontWeight:    300,
+            fontSize:      'clamp(2rem, min(5.5vw, 8svh), 7rem)',
+            lineHeight:    1.15,
             letterSpacing: '-0.03em',
-            color:         'var(--color-terra)',
-            maxWidth:      '20ch',
+            color:         'var(--color-ink)',
             marginBottom:  'clamp(2rem, 5svh, 4rem)',
           }}
         >
-          Sie scheitern an der Lücke zwischen Strategie &amp; Struktur
-        </p>
+          <p style={{ margin: 0 }}>
+            Strategie{' '}
+            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>scheitert an</em>
+            {' '}Struktur.
+          </p>
+          <p style={{ margin: 0 }}>
+            Struktur{' '}
+            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>überholt</em>
+            {' '}Strategie.
+          </p>
+          <p style={{ margin: 0 }}>
+            Dazwischen{' '}
+            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>entscheidet</em>
+            {' '}Organisation.
+          </p>
+        </div>
 
         {/* ── CTAs ── */}
         <div
