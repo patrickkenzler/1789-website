@@ -165,7 +165,7 @@ export function HeroLogo() {
               marginBottom:  'clamp(1.25rem, 3svh, 2.5rem)',
             }}
           >
-            Gap Consulting · Strategie · Struktur
+            Organizational Strategy • Governance Design • Target Operating Model
           </p>
 
           {/* Headline — three-line mixed claim */}
