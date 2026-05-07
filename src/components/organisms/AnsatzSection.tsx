@@ -143,13 +143,14 @@ function AccordionItem({ step, isActive, onActivate }: ItemProps) {
         flexDirection:   'column',
         justifyContent:  'center',
         paddingInline:   'var(--grid-margin)',
-        paddingBlock:    'clamp(0.75rem, 1.2svh, 1.5rem)',
+        paddingBlock:    'clamp(1rem, 1.6svh, 2rem)',
+        /* Single consistent border system — 1px throughout, no width changes */
         borderTop:       '1px solid var(--color-border)',
-        borderLeft:      isActive ? '3px solid var(--color-terra)' : '3px solid transparent',
         cursor:          'pointer',
         outline:         'none',
-        transition:      'border-color 0.3s var(--ease-standard)',
-        backgroundColor: isActive ? 'rgba(244,77,11,0.025)' : 'transparent',
+        /* Active state: subtle surface tint — no border-width change */
+        backgroundColor: isActive ? 'rgba(26,23,20,0.03)' : 'transparent',
+        transition:      'background-color 0.3s var(--ease-standard)',
         userSelect:      'none',
       }}
     >
@@ -160,9 +161,9 @@ function AccordionItem({ step, isActive, onActivate }: ItemProps) {
         letterSpacing: '0.18em',
         textTransform: 'uppercase',
         color:         'var(--color-terra)',
-        opacity:       lit ? 1 : 0.4,
-        transition:    'opacity 0.25s',
-        marginBottom:  '0.3rem',
+        opacity:       lit ? 1 : 0.38,
+        transition:    'opacity 0.25s var(--ease-standard)',
+        marginBottom:  '0.5rem',
         display:       'block',
       }}>
         {step.num}
@@ -172,7 +173,7 @@ function AccordionItem({ step, isActive, onActivate }: ItemProps) {
       <h3 style={{
         fontFamily:    'var(--font-display)',
         fontWeight:    300,
-        fontSize:      'clamp(1.4rem, 2vw, 2.25rem)',
+        fontSize:      'clamp(1.5rem, 2.1vw, 2.5rem)',
         lineHeight:    1.0,
         letterSpacing: '-0.025em',
         color:         lit ? 'var(--color-ink)' : 'var(--color-ink-muted)',
@@ -182,19 +183,19 @@ function AccordionItem({ step, isActive, onActivate }: ItemProps) {
         {step.title}
       </h3>
 
-      {/* Leitfrage — fades in, no height change */}
+      {/* Leitfrage — opacity fade only, always occupies space → no height jump */}
       <p style={{
-        fontFamily:  'var(--font-display)',
-        fontStyle:   'italic',
-        fontSize:    'var(--text-xs)',
-        lineHeight:  1.4,
-        color:       'var(--color-terra)',
-        margin:      '0.45rem 0 0',
-        opacity:     isActive ? 1 : 0,
-        transform:   isActive ? 'translateY(0)' : 'translateY(4px)',
-        transition:  'opacity 0.35s var(--ease-entry), transform 0.35s var(--ease-entry)',
+        fontFamily:    'var(--font-display)',
+        fontStyle:     'italic',
+        fontSize:      'var(--text-xs)',
+        lineHeight:    1.45,
+        color:         'var(--color-terra)',
+        margin:        '0.6rem 0 0',
+        opacity:       isActive ? 0.85 : 0,
+        transform:     isActive ? 'translateY(0)' : 'translateY(3px)',
+        transition:    'opacity 0.35s var(--ease-entry), transform 0.35s var(--ease-entry)',
         pointerEvents: 'none',
-        maxWidth:    '36ch',
+        maxWidth:      '38ch',
       }}>
         {step.leitfrage}
       </p>
@@ -203,8 +204,12 @@ function AccordionItem({ step, isActive, onActivate }: ItemProps) {
 }
 
 // ── Detail card ────────────────────────────────────────────────────────────────
+// Padding scale: clamp(p, vw, P) keeps generous whitespace at all desktop sizes.
+// All separators: 1px solid var(--color-border) — same token as everywhere else.
 
 function DetailCard({ step }: { step: Step }) {
+  const pad = 'clamp(2rem, 3vw, 3.25rem)'
+
   return (
     <div style={{
       height:          '100%',
@@ -213,13 +218,13 @@ function DetailCard({ step }: { step: Step }) {
       backgroundColor: 'var(--color-surface)',
       overflow:        'hidden',
     }}>
-      {/* ── Header strip ── */}
+      {/* ── Step label + title ── */}
       <div style={{
-        paddingInline: 'clamp(1.75rem, 2.5vw, 2.75rem)',
-        paddingTop:    'clamp(1.5rem, 2.5vw, 2.25rem)',
-        paddingBottom: '1.125rem',
-        borderBottom:  '1px solid var(--color-border)',
-        flexShrink:    0,
+        paddingInline:  pad,
+        paddingTop:     pad,
+        paddingBottom:  'clamp(1.25rem, 1.8vw, 1.75rem)',
+        borderBottom:   '1px solid var(--color-border)',
+        flexShrink:     0,
       }}>
         <span style={{
           fontFamily:    'var(--font-mono)',
@@ -228,16 +233,16 @@ function DetailCard({ step }: { step: Step }) {
           textTransform: 'uppercase',
           color:         'var(--color-terra)',
           display:       'block',
-          marginBottom:  '0.3rem',
+          marginBottom:  '0.6rem',
         }}>
           {step.num}
         </span>
         <h3 style={{
           fontFamily:    'var(--font-display)',
           fontWeight:    300,
-          fontSize:      'clamp(1.5rem, 2.2vw, 2.5rem)',
+          fontSize:      'clamp(1.75rem, 2.4vw, 2.75rem)',
           lineHeight:    0.95,
-          letterSpacing: '-0.025em',
+          letterSpacing: '-0.03em',
           color:         'var(--color-ink)',
           margin:        0,
         }}>
@@ -249,23 +254,24 @@ function DetailCard({ step }: { step: Step }) {
       <div style={{
         flex:          1,
         overflowY:     'auto',
-        paddingInline: 'clamp(1.75rem, 2.5vw, 2.75rem)',
-        paddingBlock:  'clamp(1.25rem, 2vw, 2rem)',
+        paddingInline: pad,
+        paddingTop:    'clamp(1.5rem, 2.2vw, 2.25rem)',
+        paddingBottom: 'clamp(1.5rem, 2.2vw, 2.25rem)',
         display:       'flex',
         flexDirection: 'column',
-        gap:           'clamp(1rem, 1.5vw, 1.5rem)',
+        gap:           'clamp(1.25rem, 2vw, 2rem)',
       }}>
 
-        {/* Editorial quote */}
+        {/* Editorial quote — the primary message */}
         <blockquote style={{
           fontFamily:  'var(--font-display)',
           fontStyle:   'italic',
           fontWeight:  300,
-          fontSize:    'clamp(0.95rem, 1.2vw, 1.175rem)',
-          lineHeight:  1.6,
+          fontSize:    'clamp(1rem, 1.35vw, 1.25rem)',
+          lineHeight:  1.65,
           color:       'var(--color-ink)',
-          borderLeft:  '2px solid var(--color-terra)',
-          paddingLeft: '1rem',
+          borderLeft:  '1px solid var(--color-terra)',
+          paddingLeft: '1.125rem',
           margin:      0,
         }}>
           {step.text}
@@ -276,20 +282,31 @@ function DetailCard({ step }: { step: Step }) {
           <p style={{
             fontFamily:    'var(--font-mono)',
             fontSize:      'var(--text-xxs)',
-            letterSpacing: '0.14em',
+            letterSpacing: '0.16em',
             textTransform: 'uppercase',
             color:         'var(--color-ink-subtle)',
-            margin:        '0 0 0.5rem',
+            margin:        '0 0 0.75rem',
           }}>
             Was wir tun
           </p>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.425rem' }}>
             {step.wir.map((item, i) => (
-              <li key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'baseline' }}>
-                <span style={{ color: 'var(--color-terra)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xxs)', flexShrink: 0, lineHeight: 1.6 }}>
+              <li key={i} style={{ display: 'flex', gap: '0.625rem', alignItems: 'baseline' }}>
+                <span style={{
+                  color:      'var(--color-terra)',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize:   'var(--text-xxs)',
+                  flexShrink: 0,
+                  lineHeight: 1.7,
+                }}>
                   →
                 </span>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', color: 'var(--color-ink-muted)', lineHeight: 1.55 }}>
+                <span style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize:   '0.875rem',
+                  color:      'var(--color-ink-muted)',
+                  lineHeight: 1.6,
+                }}>
                   {item}
                 </span>
               </li>
@@ -302,27 +319,27 @@ function DetailCard({ step }: { step: Step }) {
           <p style={{
             fontFamily:    'var(--font-mono)',
             fontSize:      'var(--text-xxs)',
-            letterSpacing: '0.14em',
+            letterSpacing: '0.16em',
             textTransform: 'uppercase',
             color:         'var(--color-ink-subtle)',
-            margin:        '0 0 0.5rem',
+            margin:        '0 0 0.75rem',
           }}>
             Typische Outputs
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>
             {step.outputs.map((o, i) => (
               <span key={i} style={{
-                fontFamily:    'var(--font-mono)',
-                fontSize:      '0.625rem',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                color:         'var(--color-ink-muted)',
+                fontFamily:      'var(--font-mono)',
+                fontSize:        '0.625rem',
+                letterSpacing:   '0.08em',
+                textTransform:   'uppercase',
+                color:           'var(--color-ink-muted)',
                 backgroundColor: 'var(--color-background)',
-                border:        '1px solid var(--color-border)',
-                borderRadius:  '2px',
-                paddingInline: '0.5rem',
-                paddingBlock:  '0.25rem',
-                lineHeight:    1.5,
+                border:          '1px solid var(--color-border)',
+                borderRadius:    '2px',
+                paddingInline:   '0.5rem',
+                paddingBlock:    '0.3rem',
+                lineHeight:      1.5,
               }}>
                 {o}
               </span>
@@ -330,38 +347,53 @@ function DetailCard({ step }: { step: Step }) {
           </div>
         </div>
 
-        {/* Outcome — always at bottom via marginTop auto */}
+        {/* Outcome — always last, clear visual stop */}
         <div style={{
-          marginTop:   'auto',
-          paddingTop:  '1rem',
+          paddingTop:  'clamp(1rem, 1.5vw, 1.5rem)',
           borderTop:   '1px solid var(--color-border)',
         }}>
           <p style={{
             fontFamily:    'var(--font-mono)',
             fontSize:      'var(--text-xxs)',
-            letterSpacing: '0.14em',
+            letterSpacing: '0.16em',
             textTransform: 'uppercase',
             color:         'var(--color-terra)',
-            margin:        '0 0 0.35rem',
+            margin:        '0 0 0.5rem',
           }}>
             Outcome
           </p>
           <p style={{
             fontFamily: 'var(--font-body)',
             fontSize:   'var(--text-xs)',
-            lineHeight: 1.7,
+            lineHeight: 1.75,
             color:      'var(--color-ink)',
             margin:     0,
           }}>
             {step.outcome}
           </p>
         </div>
+
       </div>
     </div>
   )
 }
 
 // ── Main export ────────────────────────────────────────────────────────────────
+//
+// Layout (flex column, 100svh):
+//
+//  ┌────────────────────────┬────────────────────────┐  ← Row A: header
+//  │  Tag: Unser Ansatz     │  (empty — whitespace)  │    height: auto (CSS grid stretches both cells equal)
+//  ├────────────────────────┼────────────────────────┤  ← full-width 1px divider
+//  │  01 Sichtbar machen    │  Detail card           │  ← Row B: body (flex:1)
+//  │  02 Entscheidbar       ├────────────────────────┤
+//  │  03 Gestaltbar         │  FVS illustration      │
+//  │  04 Erprobbar          │                        │
+//  │  05 Unabhängig         │                        │
+//  └────────────────────────┴────────────────────────┘
+//
+// The header row uses CSS grid so both cells have identical height automatically.
+// This aligns the detail card top with accordion item 01's top — no fudge factors.
 
 export function AnsatzSection() {
   const [active, setActive] = useState(0)
@@ -370,38 +402,57 @@ export function AnsatzSection() {
     <div
       className="ansatz-grid"
       style={{
-        display:             'grid',
-        gridTemplateColumns: '1fr 1fr',
-        height:              '100svh',
-        overflow:            'hidden',
-        position:            'relative',
+        display:        'flex',
+        flexDirection:  'column',
+        height:         '100svh',
+        overflow:       'hidden',
       }}
     >
 
-      {/* ══ LEFT: accordion ══════════════════════════════════════════════════ */}
+      {/* ══ Row A: header — spans full width, nav-offset applied here ══════ */}
       <div
-        className="ansatz-left"
         style={{
-          display:        'flex',
-          flexDirection:  'column',
-          height:         '100svh',
-          borderRight:    '1px solid var(--color-border)',
-          overflow:       'hidden',
-          paddingTop:     '5rem',   /* clear fixed nav */
+          display:             'grid',
+          gridTemplateColumns: '1fr 1fr',
+          flexShrink:          0,
+          paddingTop:          '5rem',   /* clear fixed nav */
         }}
       >
-        {/* Section label */}
+        {/* Left: section label with generous bottom breathing room */}
         <div style={{
-          paddingInline:  'var(--grid-margin)',
-          paddingBlock:   '1.75rem 1.25rem',
-          flexShrink:     0,
-          borderBottom:   '1px solid var(--color-border)',
+          paddingInline: 'var(--grid-margin)',
+          paddingTop:    '2rem',
+          paddingBottom: '2.5rem',
+          borderRight:   '1px solid var(--color-border)',
         }}>
           <Tag>Unser Ansatz</Tag>
         </div>
 
-        {/* Accordion items — flex:1 distributes remaining height equally */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* Right: empty — CSS grid makes it equal height to left cell */}
+        <div />
+      </div>
+
+      {/* ══ Row B: body — two-column grid, fills all remaining height ═══════ */}
+      <div
+        style={{
+          flex:                1,
+          display:             'grid',
+          gridTemplateColumns: '1fr 1fr',
+          minHeight:           0,
+          overflow:            'hidden',
+        }}
+      >
+
+        {/* ── Left: accordion items ── */}
+        <div
+          className="ansatz-left"
+          style={{
+            borderRight:   '1px solid var(--color-border)',
+            display:       'flex',
+            flexDirection: 'column',
+            overflow:      'hidden',
+          }}
+        >
           {STEPS.map((step, i) => (
             <AccordionItem
               key={step.num}
@@ -411,58 +462,64 @@ export function AnsatzSection() {
             />
           ))}
         </div>
-      </div>
 
-      {/* ══ RIGHT: detail + illustration ════════════════════════════════════ */}
-      <div
-        className="ansatz-right"
-        style={{
-          display:             'grid',
-          gridTemplateRows:    '1fr 1fr',
-          height:              '100svh',
-          overflow:            'hidden',
-        }}
-      >
+        {/* ── Right: detail card + FVS illustration, split 50/50 ── */}
+        <div
+          className="ansatz-right"
+          style={{
+            display:          'grid',
+            gridTemplateRows: '1fr 1fr',
+            overflow:         'hidden',
+            borderTop:        '1px solid var(--color-border)',  /* aligns with item 01 borderTop */
+          }}
+        >
 
-        {/* ── Detail card — top 50svh ── */}
-        <div className="ansatz-detail" style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid var(--color-border)' }}>
-          {STEPS.map((step, i) => (
-            <div
-              key={step.num}
-              aria-hidden={active !== i}
-              style={{
-                position:      'absolute',
-                inset:         0,
-                opacity:       active === i ? 1 : 0,
-                transition:    'opacity 0.45s var(--ease-entry)',
-                pointerEvents: active === i ? 'auto' : 'none',
-                zIndex:        active === i ? 1 : 0,
-              }}
-            >
-              <DetailCard step={step} />
-            </div>
-          ))}
+          {/* Detail card — top half */}
+          <div
+            className="ansatz-detail"
+            style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid var(--color-border)' }}
+          >
+            {STEPS.map((step, i) => (
+              <div
+                key={step.num}
+                aria-hidden={active !== i}
+                style={{
+                  position:      'absolute',
+                  inset:         0,
+                  opacity:       active === i ? 1 : 0,
+                  transition:    'opacity 0.45s var(--ease-entry)',
+                  pointerEvents: active === i ? 'auto' : 'none',
+                  zIndex:        active === i ? 1 : 0,
+                }}
+              >
+                <DetailCard step={step} />
+              </div>
+            ))}
+          </div>
+
+          {/* FVS illustration — bottom half */}
+          <div
+            className="ansatz-image"
+            style={{ position: 'relative', overflow: 'hidden' }}
+          >
+            {STEPS.map((step, i) => (
+              <div
+                key={step.num}
+                aria-hidden={active !== i}
+                style={{
+                  position:   'absolute',
+                  inset:      0,
+                  opacity:    active === i ? 1 : 0,
+                  transition: 'opacity 0.55s var(--ease-entry)',
+                  zIndex:     active === i ? 1 : 0,
+                }}
+              >
+                <CollagePanel variant={step.panel} />
+              </div>
+            ))}
+          </div>
+
         </div>
-
-        {/* ── FVS illustration — bottom 50svh ── */}
-        <div className="ansatz-image" style={{ position: 'relative', overflow: 'hidden' }}>
-          {STEPS.map((step, i) => (
-            <div
-              key={step.num}
-              aria-hidden={active !== i}
-              style={{
-                position:      'absolute',
-                inset:         0,
-                opacity:       active === i ? 1 : 0,
-                transition:    'opacity 0.55s var(--ease-entry)',
-                zIndex:        active === i ? 1 : 0,
-              }}
-            >
-              <CollagePanel variant={step.panel} />
-            </div>
-          ))}
-        </div>
-
       </div>
     </div>
   )
