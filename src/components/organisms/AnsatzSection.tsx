@@ -162,17 +162,18 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         display:         'flex',
         flexDirection:   'column',
         justifyContent:  'center',
-        /* Shift paddingInline to accommodate the 2px left stripe without layout jump */
+        /* Left border offset so the 2px stripe doesn't shift content */
         paddingLeft:     'calc(var(--grid-margin) - 2px)',
         paddingRight:    'var(--grid-margin)',
         paddingBlock:    'clamp(2rem, 3svh, 4rem)',
-        /* 2px colored left stripe — transparent when inactive (no layout shift) */
+        /* 2px colour stripe — fades in on hover, full on active */
         borderLeft:      `2px solid ${isActive ? color : hovered ? wa(color, 0.35) : 'transparent'}`,
-        borderTop:       isFirst ? 'none' : '1px solid rgba(255,255,255,0.08)',
+        /* Cards separated by gap on container — no borderTop needed */
         cursor:          'pointer',
         outline:         'none',
-        backgroundColor: isActive ? wa(color, 0.08) : 'transparent',
-        transition:      'background-color 0.35s var(--ease-standard), border-left-color 0.3s var(--ease-standard)',
+        /* Persistent card bg so items are always visually distinct */
+        backgroundColor: isActive ? wa(color, 0.1) : hovered ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.03)',
+        transition:      'background-color 0.3s var(--ease-standard), border-left-color 0.3s var(--ease-standard)',
         userSelect:      'none',
       }}
     >
@@ -413,23 +414,60 @@ export function AnsatzSection() {
       style={{
         display:         'flex',
         flexDirection:   'column',
-        height:          '100svh',
+        height:          '100%',   /* fills the scroll-card wrapper in page.tsx */
         overflow:        'hidden',
         backgroundColor: 'var(--color-ink)',
       }}
     >
 
-      {/* ══ Row A: full-width header band ════════════════════════════════════ */}
+      {/* ══ Row A: header — tag + headline left, description right ═══════════ */}
       <div
         style={{
-          flexShrink:    0,
-          paddingTop:    '5rem',
-          paddingInline: 'var(--grid-margin)',
-          paddingBottom: '2rem',
-          borderBottom:  '1px solid rgba(255,255,255,0.08)',
+          flexShrink:          0,
+          display:             'grid',
+          gridTemplateColumns: '1fr 2fr',
+          paddingTop:          '2.5rem',   /* wrapper sits at top:5rem, no extra nav offset */
+          borderBottom:        '1px solid rgba(255,255,255,0.08)',
         }}
       >
-        <Tag variant="accent">Unser Ansatz</Tag>
+        {/* Left cell: tag + headline */}
+        <div style={{
+          paddingInline: 'var(--grid-margin)',
+          paddingBottom: '2.5rem',
+        }}>
+          <Tag variant="accent">Unser Ansatz</Tag>
+          <h2 style={{
+            fontFamily:    'var(--font-display)',
+            fontWeight:    300,
+            fontSize:      'clamp(1.5rem, 2.1vw, 2.5rem)',
+            lineHeight:    1.05,
+            letterSpacing: '-0.03em',
+            color:         'rgba(242,242,242,0.92)',
+            margin:        '1.1rem 0 0',
+          }}>
+            Von Diagnose<br />zur Eigenständigkeit.
+          </h2>
+        </div>
+
+        {/* Right cell: short description */}
+        <div style={{
+          paddingInline: 'var(--grid-margin)',
+          paddingBottom: '2.5rem',
+          display:       'flex',
+          alignItems:    'flex-end',
+        }}>
+          <p style={{
+            fontFamily: 'var(--font-body)',
+            fontSize:   'var(--text-base)',
+            lineHeight: 1.75,
+            color:      'rgba(242,242,242,0.45)',
+            margin:     0,
+            maxWidth:   '52ch',
+          }}>
+            Fünf Phasen, in denen wir Organisationen von der ersten Erkenntnis bis
+            zur selbstständigen Weiterentwicklung begleiten.
+          </p>
+        </div>
       </div>
 
       {/* ══ Row B: two-column body ═══════════════════════════════════════════ */}
@@ -450,6 +488,7 @@ export function AnsatzSection() {
             borderRight:   '1px solid rgba(255,255,255,0.08)',
             display:       'flex',
             flexDirection: 'column',
+            gap:           '2px',   /* dark ink shows between cards */
             overflow:      'hidden',
           }}
         >

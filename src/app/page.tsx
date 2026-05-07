@@ -537,7 +537,15 @@ export default function Home() {
       </section>
 
       {/* ─── Unser Ansatz — 5-step process accordion ────────────────── */}
-      <section style={{ backgroundColor: 'var(--color-ink)', position: 'relative', zIndex: 0 }}>
+      <section
+        className="scroll-card"
+        style={{
+          backgroundColor: 'var(--color-ink)',
+          top:             '5rem',
+          height:          'calc(100svh - 5rem)',
+          overflow:        'hidden',
+        }}
+      >
         <AnsatzSection />
       </section>
 
