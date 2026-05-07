@@ -411,27 +411,19 @@ export function AnsatzSection() {
       }}
     >
 
-      {/* ══ Row A: header — spans full width, nav-offset applied here ══════ */}
+      {/* ══ Row A: header — full-width band, NO vertical divider here ══════
+           The borderBottom spans both columns so the vertical line in the
+           body section appears to start exactly at the content boundary.     */}
       <div
         style={{
-          display:             'grid',
-          gridTemplateColumns: '2fr 3fr',
-          flexShrink:          0,
-          paddingTop:          '5rem',   /* clear fixed nav */
+          flexShrink:    0,
+          paddingTop:    '5rem',   /* clear fixed nav */
+          paddingInline: 'var(--grid-margin)',
+          paddingBottom: '2rem',
+          borderBottom:  '1px solid var(--color-border)',
         }}
       >
-        {/* Left: section label with generous bottom breathing room */}
-        <div style={{
-          paddingInline: 'var(--grid-margin)',
-          paddingTop:    '2rem',
-          paddingBottom: '2.5rem',
-          borderRight:   '1px solid var(--color-border)',
-        }}>
-          <Tag>Unser Ansatz</Tag>
-        </div>
-
-        {/* Right: empty — CSS grid makes it equal height to left cell */}
-        <div />
+        <Tag>Unser Ansatz</Tag>
       </div>
 
       {/* ══ Row B: body — two-column grid, fills all remaining height ═══════ */}
@@ -439,7 +431,7 @@ export function AnsatzSection() {
         style={{
           flex:                1,
           display:             'grid',
-          gridTemplateColumns: '2fr 3fr',
+          gridTemplateColumns: '1fr 2fr',
           minHeight:           0,
           overflow:            'hidden',
         }}
