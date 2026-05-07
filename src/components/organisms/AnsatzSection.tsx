@@ -1,23 +1,36 @@
 'use client'
 
 /**
- * AnsatzSection — v1
+ * AnsatzSection — v2  dark edition
  *
- * Layout:
- *   Left  50vw — accordion list (5 process steps)
- *   Right 50vw — split vertically at 50svh:
- *                top    → detail card (crossfades between active steps)
- *                bottom → FVS illustration panel (CollagePanel)
+ * Full dark section (var(--color-ink) throughout).
+ * Each of the 5 steps carries an accent colour drawn from the brand palette
+ * (terra / sage / sand).  That colour flows through:
+ *   Left  — step number, 2px left-border stripe on the active item
+ *   Right — blockquote border, list arrows, output-tag border, outcome label
  *
- * Ordering principle:
- *   — Items use flex:1 → equal height slots, no layout jump on activate
- *   — Leitfrage fades in (opacity) inside the fixed slot; no height change
- *   — Detail + panel crossfade via stacked absolute divs with opacity
+ * Layout: flex column, 100svh
+ *   Row A  full-width header band (borderBottom, no vertical divider)
+ *   Row B  CSS grid 1fr/2fr
+ *          Left  accordion (borderRight)
+ *          Right detail card (3fr) + FVS illustration (1fr)
  */
 
 import { useState } from 'react'
 import { Tag }          from '@/components/atoms/Tag'
 import { CollagePanel } from '@/components/molecules/CollagePanel'
+
+// ── Colour helpers ────────────────────────────────────────────────────────────
+
+const TERRA = '#F44D0B'
+const SAGE  = '#B8CC8A'
+const SAND  = '#E3DDD5'
+
+/** Return rgba(…) string from a 6-digit hex + alpha 0–1 */
+function wa(hex: string, a: number) {
+  const n = parseInt(hex.replace('#', ''), 16)
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`
+}
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -27,11 +40,12 @@ type Step = {
   num:       string
   title:     string
   leitfrage: string
-  text:      string    // editorial quote for the card
-  wir:       string[]  // "Was wir tun"
-  outputs:   string[]  // "Typische Outputs"
+  text:      string
+  wir:       string[]
+  outputs:   string[]
   outcome:   string
   panel:     PanelVariant
+  color:     string   // brand accent for this step
 }
 
 const STEPS: Step[] = [
@@ -48,8 +62,9 @@ const STEPS: Step[] = [
       'Entwicklung erster Hypothesen zur tatsächlichen Organisationslogik',
     ],
     outputs: ['Systembild', 'Spannungslandkarte', 'Entscheidungs- & Rollenlandkarte', 'Hypothesen zur Organisationslogik', 'Designprinzipien'],
-    outcome:   'Die Organisation bekommt ein gemeinsames Vokabular für das, was bisher diffus war. Führung kann klarer sehen, welche Strukturfragen wirklich bearbeitet werden müssen.',
-    panel:     'analyse',
+    outcome: 'Die Organisation bekommt ein gemeinsames Vokabular für das, was bisher diffus war. Führung kann klarer sehen, welche Strukturfragen wirklich bearbeitet werden müssen.',
+    panel:   'analyse',
+    color:   TERRA,
   },
   {
     num:       '02',
@@ -64,8 +79,9 @@ const STEPS: Step[] = [
       'Priorisierung von Veränderungsschritten & Operationalisierungsplan',
     ],
     outputs: ['Zielbild', 'Target Operating Model', 'Governance- & Entscheidungsarchitektur', 'Rollen- & Verantwortungsmodell', 'Operationalisierungsplan'],
-    outcome:   'Führung kann entscheiden, was verändert wird, in welcher Reihenfolge und mit welchem Anspruch. Die Organisation erhält eine gemeinsame Orientierung für die nächste Entwicklungsbewegung.',
-    panel:     'change',
+    outcome: 'Führung kann entscheiden, was verändert wird, in welcher Reihenfolge und mit welchem Anspruch. Die Organisation erhält eine gemeinsame Orientierung für die nächste Entwicklungsbewegung.',
+    panel:   'change',
+    color:   SAGE,
   },
   {
     num:       '03',
@@ -80,8 +96,9 @@ const STEPS: Step[] = [
       'Iteration des Zielmodells auf Basis realer Erfahrung',
     ],
     outputs: ['Pilotdesign', 'Workshop-Architektur', 'Rollenprototypen', 'Meeting- & Entscheidungsformate', 'Iterationslogik'],
-    outcome:   'Veränderung wird praktisch erfahrbar, bevor sie groß ausgerollt wird. Die Organisation erkennt früh, was funktioniert, was angepasst werden muss.',
-    panel:     'responsibility',
+    outcome: 'Veränderung wird praktisch erfahrbar, bevor sie groß ausgerollt wird. Die Organisation erkennt früh, was funktioniert, was angepasst werden muss.',
+    panel:   'responsibility',
+    color:   SAND,
   },
   {
     num:       '04',
@@ -95,8 +112,9 @@ const STEPS: Step[] = [
       'Prüfung, Widerspruch und Anpassung durch die Organisation',
     ],
     outputs: ['Pilotdesign', 'Arbeitsartefakte', 'Mission Boards', 'Iterationslogik'],
-    outcome:   'Die Organisation erkennt früh, was funktioniert, was angepasst werden muss und welche neue Arbeitsweise tragfähig ist.',
-    panel:     'iterate',
+    outcome: 'Die Organisation erkennt früh, was funktioniert, was angepasst werden muss und welche neue Arbeitsweise tragfähig ist.',
+    panel:   'iterate',
+    color:   TERRA,
   },
   {
     num:       '05',
@@ -111,15 +129,13 @@ const STEPS: Step[] = [
       'Übergabe der Arbeitsarchitektur',
     ],
     outputs: ['Playbook', 'Operating Rhythm', 'Verantwortungslandkarte', 'Enablement-Formate', 'Übergabe- & Iterationsmodell'],
-    outcome:   'Die Organisation kann die neue Struktur eigenständig weiterentwickeln. Veränderung wird nicht als Projekt verwaltet, sondern in die Arbeitsfähigkeit eingebettet.',
-    panel:     'overall',
+    outcome: 'Die Organisation kann die neue Struktur eigenständig weiterentwickeln. Veränderung wird nicht als Projekt verwaltet, sondern in die Arbeitsfähigkeit eingebettet.',
+    panel:   'overall',
+    color:   SAGE,
   },
 ]
 
 // ── Accordion item ─────────────────────────────────────────────────────────────
-// isFirst: suppresses borderTop on item 01 (the header area provides separation).
-// Active state: var(--color-surface) bg + full-ink title = clearly visible change.
-// Inactive: var(--color-ink-subtle) title + low-opacity number = strong contrast.
 
 interface ItemProps {
   step:       Step
@@ -130,6 +146,7 @@ interface ItemProps {
 
 function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
   const [hovered, setHovered] = useState(false)
+  const { color } = step
 
   return (
     <div
@@ -145,24 +162,28 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         display:         'flex',
         flexDirection:   'column',
         justifyContent:  'center',
-        paddingInline:   'var(--grid-margin)',
+        /* Shift paddingInline to accommodate the 2px left stripe without layout jump */
+        paddingLeft:     'calc(var(--grid-margin) - 2px)',
+        paddingRight:    'var(--grid-margin)',
         paddingBlock:    'clamp(2rem, 3svh, 4rem)',
-        borderTop:       isFirst ? 'none' : '1px solid var(--color-border)',
+        /* 2px colored left stripe — transparent when inactive (no layout shift) */
+        borderLeft:      `2px solid ${isActive ? color : hovered ? wa(color, 0.35) : 'transparent'}`,
+        borderTop:       isFirst ? 'none' : '1px solid rgba(255,255,255,0.08)',
         cursor:          'pointer',
         outline:         'none',
-        backgroundColor: isActive ? 'var(--color-surface)' : 'transparent',
-        transition:      'background-color 0.35s var(--ease-standard)',
+        backgroundColor: isActive ? wa(color, 0.08) : 'transparent',
+        transition:      'background-color 0.35s var(--ease-standard), border-left-color 0.3s var(--ease-standard)',
         userSelect:      'none',
       }}
     >
-      {/* Step number */}
+      {/* Step number — always in the step's accent colour */}
       <span style={{
         fontFamily:    'var(--font-mono)',
         fontSize:      'var(--text-xxs)',
         letterSpacing: '0.18em',
         textTransform: 'uppercase',
-        color:         'var(--color-terra)',
-        opacity:       isActive ? 1 : hovered ? 0.5 : 0.18,
+        color:         color,
+        opacity:       isActive ? 1 : hovered ? 0.55 : 0.28,
         transition:    'opacity 0.25s var(--ease-standard)',
         marginBottom:  '0.6rem',
         display:       'block',
@@ -177,7 +198,11 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         fontSize:      'clamp(1.5rem, 1.9vw, 2.25rem)',
         lineHeight:    1.0,
         letterSpacing: '-0.025em',
-        color:         isActive ? 'var(--color-ink)' : hovered ? 'var(--color-ink-muted)' : 'var(--color-ink-subtle)',
+        color:         isActive
+                         ? 'rgba(242,242,242,0.95)'
+                         : hovered
+                           ? 'rgba(242,242,242,0.6)'
+                           : 'rgba(242,242,242,0.3)',
         margin:        0,
         transition:    'color 0.3s var(--ease-standard)',
       }}>
@@ -190,9 +215,9 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         fontStyle:     'italic',
         fontSize:      'calc(var(--text-xs) * 1.2)',
         lineHeight:    1.5,
-        color:         'var(--color-ink-muted)',
+        color:         'rgba(242,242,242,0.55)',
         margin:        '0.65rem 0 0',
-        opacity:       isActive ? 0.65 : 0,
+        opacity:       isActive ? 1 : 0,
         transform:     isActive ? 'translateY(0)' : 'translateY(4px)',
         transition:    'opacity 0.35s var(--ease-entry), transform 0.35s var(--ease-entry)',
         pointerEvents: 'none',
@@ -205,21 +230,15 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
 }
 
 // ── Detail card ────────────────────────────────────────────────────────────────
-// Padding scale: clamp(p, vw, P) keeps generous whitespace at all desktop sizes.
-// All separators: 1px solid var(--color-border) — same token as everywhere else.
 
 function DetailCard({ step }: { step: Step }) {
-  const pad = 'clamp(2rem, 3vw, 3.25rem)'
+  const pad   = 'clamp(2rem, 3vw, 3.25rem)'
+  const color = step.color
 
   return (
-    <div style={{
-      height:        '100%',
-      display:       'flex',
-      flexDirection: 'column',
-      overflow:      'hidden',
-    }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
-      {/* ── Scrollable body — starts directly, no redundant header ── */}
+      {/* ── Scrollable body ── */}
       <div style={{
         flex:          1,
         overflowY:     'auto',
@@ -238,9 +257,9 @@ function DetailCard({ step }: { step: Step }) {
           fontWeight:  300,
           fontSize:    'clamp(1rem, 1.35vw, 1.25rem)',
           lineHeight:  1.65,
-          color:       'rgba(242,242,242,0.9)',
-          borderLeft:  '1px solid var(--color-terra)',
-          paddingLeft: '1.125rem',
+          color:       'rgba(242,242,242,0.88)',
+          borderLeft:  `2px solid ${color}`,
+          paddingLeft: '1.25rem',
           margin:      0,
         }}>
           {step.text}
@@ -253,7 +272,7 @@ function DetailCard({ step }: { step: Step }) {
             fontSize:      'var(--text-xxs)',
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
-            color:         'rgba(242,242,242,0.38)',
+            color:         'rgba(242,242,242,0.35)',
             margin:        '0 0 0.75rem',
           }}>
             Was wir tun
@@ -262,18 +281,19 @@ function DetailCard({ step }: { step: Step }) {
             {step.wir.map((item, i) => (
               <li key={i} style={{ display: 'flex', gap: '0.625rem', alignItems: 'baseline' }}>
                 <span style={{
-                  color:      'var(--color-terra)',
+                  color:      color,
                   fontFamily: 'var(--font-mono)',
                   fontSize:   'var(--text-xxs)',
                   flexShrink: 0,
                   lineHeight: 1.7,
+                  opacity:    0.8,
                 }}>
                   →
                 </span>
                 <span style={{
                   fontFamily: 'var(--font-body)',
                   fontSize:   '0.875rem',
-                  color:      'rgba(242,242,242,0.65)',
+                  color:      'rgba(242,242,242,0.62)',
                   lineHeight: 1.6,
                 }}>
                   {item}
@@ -290,7 +310,7 @@ function DetailCard({ step }: { step: Step }) {
             fontSize:      'var(--text-xxs)',
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
-            color:         'rgba(242,242,242,0.38)',
+            color:         'rgba(242,242,242,0.35)',
             margin:        '0 0 0.75rem',
           }}>
             Typische Outputs
@@ -302,9 +322,9 @@ function DetailCard({ step }: { step: Step }) {
                 fontSize:        '0.625rem',
                 letterSpacing:   '0.08em',
                 textTransform:   'uppercase',
-                color:           'rgba(242,242,242,0.55)',
-                backgroundColor: 'rgba(255,255,255,0.07)',
-                border:          '1px solid rgba(255,255,255,0.14)',
+                color:           wa(color, 0.75),
+                backgroundColor: wa(color, 0.07),
+                border:          `1px solid ${wa(color, 0.25)}`,
                 borderRadius:    '2px',
                 paddingInline:   '0.5rem',
                 paddingBlock:    '0.3rem',
@@ -319,15 +339,16 @@ function DetailCard({ step }: { step: Step }) {
         {/* Outcome */}
         <div style={{
           paddingTop: 'clamp(1rem, 1.5vw, 1.5rem)',
-          borderTop:  '1px solid rgba(255,255,255,0.1)',
+          borderTop:  '1px solid rgba(255,255,255,0.08)',
         }}>
           <p style={{
             fontFamily:    'var(--font-mono)',
             fontSize:      'var(--text-xxs)',
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
-            color:         'var(--color-terra)',
+            color:         color,
             margin:        '0 0 0.5rem',
+            opacity:       0.85,
           }}>
             Outcome
           </p>
@@ -335,7 +356,7 @@ function DetailCard({ step }: { step: Step }) {
             fontFamily: 'var(--font-body)',
             fontSize:   'var(--text-xs)',
             lineHeight: 1.75,
-            color:      'rgba(242,242,242,0.85)',
+            color:      'rgba(242,242,242,0.82)',
             margin:     0,
           }}>
             {step.outcome}
@@ -348,21 +369,6 @@ function DetailCard({ step }: { step: Step }) {
 }
 
 // ── Main export ────────────────────────────────────────────────────────────────
-//
-// Layout (flex column, 100svh):
-//
-//  ┌────────────────────────┬────────────────────────┐  ← Row A: header
-//  │  Tag: Unser Ansatz     │  (empty — whitespace)  │    height: auto (CSS grid stretches both cells equal)
-//  ├────────────────────────┼────────────────────────┤  ← full-width 1px divider
-//  │  01 Sichtbar machen    │  Detail card           │  ← Row B: body (flex:1)
-//  │  02 Entscheidbar       ├────────────────────────┤
-//  │  03 Gestaltbar         │  FVS illustration      │
-//  │  04 Erprobbar          │                        │
-//  │  05 Unabhängig         │                        │
-//  └────────────────────────┴────────────────────────┘
-//
-// The header row uses CSS grid so both cells have identical height automatically.
-// This aligns the detail card top with accordion item 01's top — no fudge factors.
 
 export function AnsatzSection() {
   const [active, setActive] = useState(0)
@@ -371,29 +377,28 @@ export function AnsatzSection() {
     <div
       className="ansatz-grid"
       style={{
-        display:        'flex',
-        flexDirection:  'column',
-        height:         '100svh',
-        overflow:       'hidden',
+        display:         'flex',
+        flexDirection:   'column',
+        height:          '100svh',
+        overflow:        'hidden',
+        backgroundColor: 'var(--color-ink)',
       }}
     >
 
-      {/* ══ Row A: header — full-width band, NO vertical divider here ══════
-           The borderBottom spans both columns so the vertical line in the
-           body section appears to start exactly at the content boundary.     */}
+      {/* ══ Row A: full-width header band ════════════════════════════════════ */}
       <div
         style={{
           flexShrink:    0,
-          paddingTop:    '5rem',   /* clear fixed nav */
+          paddingTop:    '5rem',
           paddingInline: 'var(--grid-margin)',
           paddingBottom: '2rem',
-          borderBottom:  '1px solid var(--color-border)',
+          borderBottom:  '1px solid rgba(255,255,255,0.08)',
         }}
       >
-        <Tag>Unser Ansatz</Tag>
+        <Tag variant="accent">Unser Ansatz</Tag>
       </div>
 
-      {/* ══ Row B: body — two-column grid, fills all remaining height ═══════ */}
+      {/* ══ Row B: two-column body ═══════════════════════════════════════════ */}
       <div
         style={{
           flex:                1,
@@ -404,11 +409,11 @@ export function AnsatzSection() {
         }}
       >
 
-        {/* ── Left: accordion items ── */}
+        {/* ── Left: accordion ── */}
         <div
           className="ansatz-left"
           style={{
-            borderRight:   '1px solid var(--color-border)',
+            borderRight:   '1px solid rgba(255,255,255,0.08)',
             display:       'flex',
             flexDirection: 'column',
             overflow:      'hidden',
@@ -425,7 +430,7 @@ export function AnsatzSection() {
           ))}
         </div>
 
-        {/* ── Right: detail card (3 parts) + FVS illustration (1 part) ── */}
+        {/* ── Right: detail card (top 3/4) + FVS illustration (bottom 1/4) ── */}
         <div
           className="ansatz-right"
           style={{
@@ -436,10 +441,10 @@ export function AnsatzSection() {
           }}
         >
 
-          {/* Detail card — top 3/4 */}
+          {/* Detail card */}
           <div
             className="ansatz-detail"
-            style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,0.1)' }}
+            style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
           >
             {STEPS.map((step, i) => (
               <div
@@ -459,7 +464,7 @@ export function AnsatzSection() {
             ))}
           </div>
 
-          {/* FVS illustration — bottom half */}
+          {/* FVS illustration strip */}
           <div
             className="ansatz-image"
             style={{ position: 'relative', overflow: 'hidden' }}

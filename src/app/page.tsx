@@ -537,7 +537,7 @@ export default function Home() {
       </section>
 
       {/* ─── Unser Ansatz — 5-step process accordion ────────────────── */}
-      <section style={{ backgroundColor: 'var(--color-background)', position: 'relative', zIndex: 0 }}>
+      <section style={{ backgroundColor: 'var(--color-ink)', position: 'relative', zIndex: 0 }}>
         <AnsatzSection />
       </section>
 
@@ -594,67 +594,6 @@ export default function Home() {
               </Col>
             ))}
           </Grid>
-        </Container>
-      </section>
-
-      {/* ─── Calendar / Newsletter ────────────────────────────────────────── */}
-      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-background)' }}>
-        <Container>
-          <Grid className="stack-cols">
-            <Col span={6}>
-              <Tag>News & Termine</Tag>
-              <h2
-                className="mt-6 font-heading font-normal text-ink balance"
-                style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
-              >
-                Upcoming Events & Neuigkeiten
-              </h2>
-            </Col>
-            <Col span={4} start={9} className="flex items-end">
-              <div className="card w-full" style={{ padding: '1.75rem' }}>
-                <p className="font-body text-ink-muted mb-4" style={{ fontSize: 'var(--text-sub)' }}>
-                  Systemshift-Perspektiven direkt in Ihr Postfach.
-                </p>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="Ihre E-Mail"
-                    className="flex-1 px-4 py-3 font-body text-ink bg-transparent outline-none"
-                    style={{
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-sm)',
-                      fontSize: 'var(--text-sub)',
-                    }}
-                  />
-                  <Button variant="primary" size="sm">→</Button>
-                </div>
-              </div>
-            </Col>
-          </Grid>
-
-          <div className="mt-16" style={{ borderTop: '1px solid var(--color-border)' }}>
-            {[
-              { date: '25.06.2024', type: 'Live Talk', title: 'Corporate Therapy — Live Episode mit Human, Patrick & Gast', location: 'Frankfurt a.M.' },
-              { date: 'Laufend',    type: 'Podcast',   title: '#142 Das Internet: Utopie, Infrastruktur, Schlachtfeld',     location: 'Spotify' },
-              { date: '2024',       type: 'Essay',     title: 'Nähe als Organisationsprinzip — Human Nagafi',               location: 'Labor' },
-            ].map((e, i) => (
-              <div
-                key={i}
-                className="event-row items-center py-6 hover:pl-4 transition-all duration-300 cursor-pointer group"
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '10rem 6rem 1fr 8rem',
-                  gap: '2rem',
-                  borderBottom: '1px solid var(--color-border)',
-                }}
-              >
-                <span className="font-mono text-xs" style={{ color: 'var(--color-ink-subtle)' }}>{e.date}</span>
-                <Tag>{e.type}</Tag>
-                <span className="font-heading font-normal text-ink" style={{ fontSize: 'var(--text-base)' }}>{e.title}</span>
-                <span className="font-mono text-xs text-right event-location" style={{ color: 'var(--color-ink-subtle)' }}>{e.location}</span>
-              </div>
-            ))}
-          </div>
         </Container>
       </section>
 
