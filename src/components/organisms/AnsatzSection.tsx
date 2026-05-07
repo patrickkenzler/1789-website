@@ -238,12 +238,46 @@ function DetailCard({ step }: { step: Step }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
+      {/* ── Fixed header: step number + guiding question ── */}
+      <div style={{
+        paddingInline: pad,
+        paddingTop:    pad,
+        paddingBottom: 'clamp(1.25rem, 1.8vw, 1.75rem)',
+        borderBottom:  '1px solid rgba(255,255,255,0.08)',
+        flexShrink:    0,
+      }}>
+        <span style={{
+          fontFamily:    'var(--font-mono)',
+          fontSize:      'var(--text-xxs)',
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color:         color,
+          display:       'block',
+          marginBottom:  '0.5rem',
+          opacity:       0.9,
+        }}>
+          {step.num}
+        </span>
+        <p style={{
+          fontFamily:    'var(--font-display)',
+          fontStyle:     'italic',
+          fontWeight:    300,
+          fontSize:      'clamp(1.2rem, 1.7vw, 1.65rem)',
+          lineHeight:    1.35,
+          letterSpacing: '-0.025em',
+          color:         'rgba(242,242,242,0.9)',
+          margin:        0,
+        }}>
+          {step.leitfrage}
+        </p>
+      </div>
+
       {/* ── Scrollable body ── */}
       <div style={{
         flex:          1,
         overflowY:     'auto',
         paddingInline: pad,
-        paddingTop:    'clamp(1.75rem, 2.5vw, 2.75rem)',
+        paddingTop:    'clamp(1.5rem, 2.2vw, 2rem)',
         paddingBottom: 'clamp(1.5rem, 2.2vw, 2.25rem)',
         display:       'flex',
         flexDirection: 'column',
@@ -435,7 +469,7 @@ export function AnsatzSection() {
           className="ansatz-right"
           style={{
             display:          'grid',
-            gridTemplateRows: '3fr 1fr',
+            gridTemplateRows: '2fr 1fr',
             overflow:         'hidden',
             backgroundColor:  'var(--color-ink)',
           }}
