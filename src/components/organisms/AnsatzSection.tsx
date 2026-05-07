@@ -130,7 +130,6 @@ interface ItemProps {
 
 function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
   const [hovered, setHovered] = useState(false)
-  const lit = isActive || hovered
 
   return (
     <div
@@ -147,12 +146,10 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         flexDirection:   'column',
         justifyContent:  'center',
         paddingInline:   'var(--grid-margin)',
-        paddingBlock:    'clamp(1.5rem, 2.2svh, 2.75rem)',
-        /* No borderTop on first item — the tag header area provides separation */
+        paddingBlock:    'clamp(2rem, 3svh, 4rem)',
         borderTop:       isFirst ? 'none' : '1px solid var(--color-border)',
         cursor:          'pointer',
         outline:         'none',
-        /* Active: surface bg (#E8E8E8 vs #F2F2F2 background) — clearly visible */
         backgroundColor: isActive ? 'var(--color-surface)' : 'transparent',
         transition:      'background-color 0.35s var(--ease-standard)',
         userSelect:      'none',
@@ -165,19 +162,19 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         letterSpacing: '0.18em',
         textTransform: 'uppercase',
         color:         'var(--color-terra)',
-        opacity:       isActive ? 1 : hovered ? 0.55 : 0.22,
+        opacity:       isActive ? 1 : hovered ? 0.5 : 0.18,
         transition:    'opacity 0.25s var(--ease-standard)',
-        marginBottom:  '0.55rem',
+        marginBottom:  '0.6rem',
         display:       'block',
       }}>
         {step.num}
       </span>
 
-      {/* Title — ink-subtle at rest, full ink on hover/active */}
+      {/* Title */}
       <h3 style={{
         fontFamily:    'var(--font-display)',
         fontWeight:    300,
-        fontSize:      'clamp(1.5rem, 2.1vw, 2.5rem)',
+        fontSize:      'clamp(1.5rem, 1.9vw, 2.25rem)',
         lineHeight:    1.0,
         letterSpacing: '-0.025em',
         color:         isActive ? 'var(--color-ink)' : hovered ? 'var(--color-ink-muted)' : 'var(--color-ink-subtle)',
@@ -187,19 +184,19 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         {step.title}
       </h3>
 
-      {/* Leitfrage — opacity fade, always occupies space (no height jump) */}
+      {/* Leitfrage — always rendered so height stays stable */}
       <p style={{
         fontFamily:    'var(--font-display)',
         fontStyle:     'italic',
         fontSize:      'var(--text-xs)',
-        lineHeight:    1.45,
+        lineHeight:    1.5,
         color:         'var(--color-ink-muted)',
-        margin:        '0.7rem 0 0',
-        opacity:       isActive ? 0.72 : 0,
-        transform:     isActive ? 'translateY(0)' : 'translateY(3px)',
+        margin:        '0.65rem 0 0',
+        opacity:       isActive ? 0.65 : 0,
+        transform:     isActive ? 'translateY(0)' : 'translateY(4px)',
         transition:    'opacity 0.35s var(--ease-entry), transform 0.35s var(--ease-entry)',
         pointerEvents: 'none',
-        maxWidth:      '40ch',
+        maxWidth:      '36ch',
       }}>
         {step.leitfrage}
       </p>
@@ -245,9 +242,9 @@ function DetailCard({ step }: { step: Step }) {
           fontFamily:    'var(--font-display)',
           fontStyle:     'italic',
           fontWeight:    300,
-          fontSize:      'clamp(1.1rem, 1.6vw, 1.5rem)',
-          lineHeight:    1.4,
-          letterSpacing: '-0.02em',
+          fontSize:      'clamp(1.2rem, 1.7vw, 1.65rem)',
+          lineHeight:    1.35,
+          letterSpacing: '-0.025em',
           color:         'var(--color-ink)',
           margin:        0,
         }}>
@@ -418,7 +415,7 @@ export function AnsatzSection() {
       <div
         style={{
           display:             'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: '2fr 3fr',
           flexShrink:          0,
           paddingTop:          '5rem',   /* clear fixed nav */
         }}
@@ -442,7 +439,7 @@ export function AnsatzSection() {
         style={{
           flex:                1,
           display:             'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: '2fr 3fr',
           minHeight:           0,
           overflow:            'hidden',
         }}
