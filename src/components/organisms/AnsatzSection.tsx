@@ -188,7 +188,7 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
       <p style={{
         fontFamily:    'var(--font-display)',
         fontStyle:     'italic',
-        fontSize:      'var(--text-xs)',
+        fontSize:      'calc(var(--text-xs) * 1.2)',
         lineHeight:    1.5,
         color:         'var(--color-ink-muted)',
         margin:        '0.65rem 0 0',
@@ -213,65 +213,32 @@ function DetailCard({ step }: { step: Step }) {
 
   return (
     <div style={{
-      height:          '100%',
-      display:         'flex',
-      flexDirection:   'column',
-      backgroundColor: 'var(--color-surface)',
-      overflow:        'hidden',
+      height:        '100%',
+      display:       'flex',
+      flexDirection: 'column',
+      overflow:      'hidden',
     }}>
-      {/* ── Step number + Leitfrage ── */}
-      <div style={{
-        paddingInline:  pad,
-        paddingTop:     pad,
-        paddingBottom:  'clamp(1.25rem, 1.8vw, 1.75rem)',
-        borderBottom:   '1px solid var(--color-border)',
-        flexShrink:     0,
-      }}>
-        <span style={{
-          fontFamily:    'var(--font-mono)',
-          fontSize:      'var(--text-xxs)',
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color:         'var(--color-terra)',
-          display:       'block',
-          marginBottom:  '0.5rem',
-        }}>
-          {step.num}
-        </span>
-        <p style={{
-          fontFamily:    'var(--font-display)',
-          fontStyle:     'italic',
-          fontWeight:    300,
-          fontSize:      'clamp(1.2rem, 1.7vw, 1.65rem)',
-          lineHeight:    1.35,
-          letterSpacing: '-0.025em',
-          color:         'var(--color-ink)',
-          margin:        0,
-        }}>
-          {step.leitfrage}
-        </p>
-      </div>
 
-      {/* ── Scrollable body ── */}
+      {/* ── Scrollable body — starts directly, no redundant header ── */}
       <div style={{
         flex:          1,
         overflowY:     'auto',
         paddingInline: pad,
-        paddingTop:    'clamp(1.5rem, 2.2vw, 2.25rem)',
+        paddingTop:    'clamp(1.75rem, 2.5vw, 2.75rem)',
         paddingBottom: 'clamp(1.5rem, 2.2vw, 2.25rem)',
         display:       'flex',
         flexDirection: 'column',
         gap:           'clamp(1.25rem, 2vw, 2rem)',
       }}>
 
-        {/* Editorial quote — the primary message */}
+        {/* Editorial quote */}
         <blockquote style={{
           fontFamily:  'var(--font-display)',
           fontStyle:   'italic',
           fontWeight:  300,
           fontSize:    'clamp(1rem, 1.35vw, 1.25rem)',
           lineHeight:  1.65,
-          color:       'var(--color-ink)',
+          color:       'rgba(242,242,242,0.9)',
           borderLeft:  '1px solid var(--color-terra)',
           paddingLeft: '1.125rem',
           margin:      0,
@@ -286,7 +253,7 @@ function DetailCard({ step }: { step: Step }) {
             fontSize:      'var(--text-xxs)',
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
-            color:         'var(--color-ink-subtle)',
+            color:         'rgba(242,242,242,0.38)',
             margin:        '0 0 0.75rem',
           }}>
             Was wir tun
@@ -306,7 +273,7 @@ function DetailCard({ step }: { step: Step }) {
                 <span style={{
                   fontFamily: 'var(--font-body)',
                   fontSize:   '0.875rem',
-                  color:      'var(--color-ink-muted)',
+                  color:      'rgba(242,242,242,0.65)',
                   lineHeight: 1.6,
                 }}>
                   {item}
@@ -323,7 +290,7 @@ function DetailCard({ step }: { step: Step }) {
             fontSize:      'var(--text-xxs)',
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
-            color:         'var(--color-ink-subtle)',
+            color:         'rgba(242,242,242,0.38)',
             margin:        '0 0 0.75rem',
           }}>
             Typische Outputs
@@ -335,9 +302,9 @@ function DetailCard({ step }: { step: Step }) {
                 fontSize:        '0.625rem',
                 letterSpacing:   '0.08em',
                 textTransform:   'uppercase',
-                color:           'var(--color-ink-muted)',
-                backgroundColor: 'var(--color-background)',
-                border:          '1px solid var(--color-border)',
+                color:           'rgba(242,242,242,0.55)',
+                backgroundColor: 'rgba(255,255,255,0.07)',
+                border:          '1px solid rgba(255,255,255,0.14)',
                 borderRadius:    '2px',
                 paddingInline:   '0.5rem',
                 paddingBlock:    '0.3rem',
@@ -349,10 +316,10 @@ function DetailCard({ step }: { step: Step }) {
           </div>
         </div>
 
-        {/* Outcome — always last, clear visual stop */}
+        {/* Outcome */}
         <div style={{
-          paddingTop:  'clamp(1rem, 1.5vw, 1.5rem)',
-          borderTop:   '1px solid var(--color-border)',
+          paddingTop: 'clamp(1rem, 1.5vw, 1.5rem)',
+          borderTop:  '1px solid rgba(255,255,255,0.1)',
         }}>
           <p style={{
             fontFamily:    'var(--font-mono)',
@@ -368,7 +335,7 @@ function DetailCard({ step }: { step: Step }) {
             fontFamily: 'var(--font-body)',
             fontSize:   'var(--text-xs)',
             lineHeight: 1.75,
-            color:      'var(--color-ink)',
+            color:      'rgba(242,242,242,0.85)',
             margin:     0,
           }}>
             {step.outcome}
@@ -458,20 +425,21 @@ export function AnsatzSection() {
           ))}
         </div>
 
-        {/* ── Right: detail card + FVS illustration, split 50/50 ── */}
+        {/* ── Right: detail card (3 parts) + FVS illustration (1 part) ── */}
         <div
           className="ansatz-right"
           style={{
             display:          'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: '3fr 1fr',
             overflow:         'hidden',
+            backgroundColor:  'var(--color-ink)',
           }}
         >
 
-          {/* Detail card — top half */}
+          {/* Detail card — top 3/4 */}
           <div
             className="ansatz-detail"
-            style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid var(--color-border)' }}
+            style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,0.1)' }}
           >
             {STEPS.map((step, i) => (
               <div
