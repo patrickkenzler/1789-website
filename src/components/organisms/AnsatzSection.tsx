@@ -117,14 +117,18 @@ const STEPS: Step[] = [
 ]
 
 // ── Accordion item ─────────────────────────────────────────────────────────────
+// isFirst: suppresses borderTop on item 01 (the header area provides separation).
+// Active state: var(--color-surface) bg + full-ink title = clearly visible change.
+// Inactive: var(--color-ink-subtle) title + low-opacity number = strong contrast.
 
 interface ItemProps {
   step:       Step
+  isFirst:    boolean
   isActive:   boolean
   onActivate: () => void
 }
 
-function AccordionItem({ step, isActive, onActivate }: ItemProps) {
+function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
   const [hovered, setHovered] = useState(false)
   const lit = isActive || hovered
 
@@ -143,14 +147,14 @@ function AccordionItem({ step, isActive, onActivate }: ItemProps) {
         flexDirection:   'column',
         justifyContent:  'center',
         paddingInline:   'var(--grid-margin)',
-        paddingBlock:    'clamp(1rem, 1.6svh, 2rem)',
-        /* Single consistent border system — 1px throughout, no width changes */
-        borderTop:       '1px solid var(--color-border)',
+        paddingBlock:    'clamp(1.5rem, 2.2svh, 2.75rem)',
+        /* No borderTop on first item — the tag header area provides separation */
+        borderTop:       isFirst ? 'none' : '1px solid var(--color-border)',
         cursor:          'pointer',
         outline:         'none',
-        /* Active state: subtle surface tint — no border-width change */
-        backgroundColor: isActive ? 'rgba(26,23,20,0.03)' : 'transparent',
-        transition:      'background-color 0.3s var(--ease-standard)',
+        /* Active: surface bg (#E8E8E8 vs #F2F2F2 background) — clearly visible */
+        backgroundColor: isActive ? 'var(--color-surface)' : 'transparent',
+        transition:      'background-color 0.35s var(--ease-standard)',
         userSelect:      'none',
       }}
     >
@@ -161,41 +165,41 @@ function AccordionItem({ step, isActive, onActivate }: ItemProps) {
         letterSpacing: '0.18em',
         textTransform: 'uppercase',
         color:         'var(--color-terra)',
-        opacity:       lit ? 1 : 0.38,
+        opacity:       isActive ? 1 : hovered ? 0.55 : 0.22,
         transition:    'opacity 0.25s var(--ease-standard)',
-        marginBottom:  '0.5rem',
+        marginBottom:  '0.55rem',
         display:       'block',
       }}>
         {step.num}
       </span>
 
-      {/* Title */}
+      {/* Title — ink-subtle at rest, full ink on hover/active */}
       <h3 style={{
         fontFamily:    'var(--font-display)',
         fontWeight:    300,
         fontSize:      'clamp(1.5rem, 2.1vw, 2.5rem)',
         lineHeight:    1.0,
         letterSpacing: '-0.025em',
-        color:         lit ? 'var(--color-ink)' : 'var(--color-ink-muted)',
+        color:         isActive ? 'var(--color-ink)' : hovered ? 'var(--color-ink-muted)' : 'var(--color-ink-subtle)',
         margin:        0,
         transition:    'color 0.3s var(--ease-standard)',
       }}>
         {step.title}
       </h3>
 
-      {/* Leitfrage — opacity fade only, always occupies space → no height jump */}
+      {/* Leitfrage — opacity fade, always occupies space (no height jump) */}
       <p style={{
         fontFamily:    'var(--font-display)',
         fontStyle:     'italic',
         fontSize:      'var(--text-xs)',
         lineHeight:    1.45,
-        color:         'var(--color-terra)',
-        margin:        '0.6rem 0 0',
-        opacity:       isActive ? 0.85 : 0,
+        color:         'var(--color-ink-muted)',
+        margin:        '0.7rem 0 0',
+        opacity:       isActive ? 0.72 : 0,
         transform:     isActive ? 'translateY(0)' : 'translateY(3px)',
         transition:    'opacity 0.35s var(--ease-entry), transform 0.35s var(--ease-entry)',
         pointerEvents: 'none',
-        maxWidth:      '38ch',
+        maxWidth:      '40ch',
       }}>
         {step.leitfrage}
       </p>
@@ -218,7 +222,7 @@ function DetailCard({ step }: { step: Step }) {
       backgroundColor: 'var(--color-surface)',
       overflow:        'hidden',
     }}>
-      {/* ── Step label + title ── */}
+      {/* ── Step number + Leitfrage ── */}
       <div style={{
         paddingInline:  pad,
         paddingTop:     pad,
@@ -233,21 +237,22 @@ function DetailCard({ step }: { step: Step }) {
           textTransform: 'uppercase',
           color:         'var(--color-terra)',
           display:       'block',
-          marginBottom:  '0.6rem',
+          marginBottom:  '0.5rem',
         }}>
           {step.num}
         </span>
-        <h3 style={{
+        <p style={{
           fontFamily:    'var(--font-display)',
+          fontStyle:     'italic',
           fontWeight:    300,
-          fontSize:      'clamp(1.75rem, 2.4vw, 2.75rem)',
-          lineHeight:    0.95,
-          letterSpacing: '-0.03em',
+          fontSize:      'clamp(1.1rem, 1.6vw, 1.5rem)',
+          lineHeight:    1.4,
+          letterSpacing: '-0.02em',
           color:         'var(--color-ink)',
           margin:        0,
         }}>
-          {step.title}
-        </h3>
+          {step.leitfrage}
+        </p>
       </div>
 
       {/* ── Scrollable body ── */}
@@ -457,6 +462,7 @@ export function AnsatzSection() {
             <AccordionItem
               key={step.num}
               step={step}
+              isFirst={i === 0}
               isActive={active === i}
               onActivate={() => setActive(i)}
             />
@@ -470,7 +476,6 @@ export function AnsatzSection() {
             display:          'grid',
             gridTemplateRows: '1fr 1fr',
             overflow:         'hidden',
-            borderTop:        '1px solid var(--color-border)',  /* aligns with item 01 borderTop */
           }}
         >
 
