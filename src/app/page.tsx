@@ -4,7 +4,7 @@ import { Button } from '@/components/atoms/Button'
 import { Tag } from '@/components/atoms/Tag'
 import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
-import { SystemshiftAccordion } from '@/components/organisms/SystemshiftAccordion'
+import { AnsatzSection } from '@/components/organisms/AnsatzSection'
 import { TestimonialsSection } from '@/components/organisms/TestimonialsSection'
 import { StickyScrollSection } from '@/components/layout/StickyScrollSection'
 
@@ -536,34 +536,9 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ─── Unser Ansatz — sticky 2-col (foreverday pattern) ──────────── */}
-      {/* NOTE: no scroll-card here — the inner SystemshiftAccordion has its
-          own position:sticky left panel; nesting two sticky contexts causes
-          the accordion to mis-behave. This section scrolls normally. */}
+      {/* ─── Unser Ansatz — 5-step process accordion ────────────────── */}
       <section style={{ backgroundColor: 'var(--color-background)', position: 'relative', zIndex: 0 }}>
-        {/* Section header inside container */}
-        <Container>
-          <div style={{ paddingBlock: '7rem 4rem' }}>
-            <Grid>
-              <Col span={5}>
-                <Tag>Unser Ansatz</Tag>
-                <h2
-                  className="mt-6 font-display font-light text-ink balance"
-                  style={{ fontSize: 'var(--text-md)', lineHeight: '1.0', letterSpacing: '-0.02em' }}
-                >
-                  Der Systemshift Cycle
-                </h2>
-                <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.7' }}>
-                  Wertschöpfungsfluss ist der Herzschlag unserer Projekte.
-                  Wie organisiert man die Arbeit um die Wertschöpfung herum?
-                </p>
-              </Col>
-            </Grid>
-          </div>
-        </Container>
-
-        {/* Full-bleed accordion — collage crossfades left, items expand right */}
-        <SystemshiftAccordion />
+        <AnsatzSection />
       </section>
 
       {/* ─── Was wir erreichen ────────────────────────────────────────────── */}

@@ -84,6 +84,16 @@
     .show-desktop-grid { display: grid; }
   }
 
+  /* ── AnsatzSection responsive overrides ─────────────────────────── */
+  @media (max-width: 767px) {
+    .ansatz-grid   { display: block !important; height: auto !important; }
+    .ansatz-left   { height: auto !important; overflow-y: visible !important; border-right: none !important; border-bottom: 1px solid var(--color-border) !important; }
+    .ansatz-right  { display: block !important; height: auto !important; }
+    .ansatz-detail { position: static !important; height: auto !important; min-height: 60svh !important; }
+    .ansatz-detail > div { position: static !important; opacity: 1 !important; pointer-events: auto !important; }
+    .ansatz-image  { height: 45svh !important; }
+  }
+
   /* Collapse a CSS grid to single column on mobile */
   @media (max-width: 767px) {
     .stack-cols     { grid-template-columns: 1fr !important; }
