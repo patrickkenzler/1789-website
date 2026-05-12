@@ -299,6 +299,32 @@
   .hover-line:hover::after {
     width: 100%;
   }
+
+  /* ── AI & Organisation — diamond + 4 dimension labels grid ─────────────── */
+  .ai-grid {
+    display: grid;
+    grid-template-columns: 1fr clamp(220px, 26vw, 380px) 1fr;
+    grid-template-rows: auto auto auto;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+    justify-items: center;
+    max-width: 1100px;
+    margin-inline: auto;
+  }
+  /* Mobile: collapse to single column, drop the spacer cells, shrink the diamond */
+  @media (max-width: 767px) {
+    .ai-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .ai-grid > .ai-spacer { display: none; }
+    .ai-grid > .ai-diamond {
+      width: 60%;
+      max-width: 240px;
+      margin-inline: auto;
+      order: -1; /* diamond above all labels */
+    }
+  }
 }
 
 /* ─── Scroll-stack cards ──────────────────────────────────────────────────── */

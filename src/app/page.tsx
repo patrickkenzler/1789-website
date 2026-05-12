@@ -80,20 +80,93 @@ const pillars = [
 ]
 
 
-const achievements = [
+// ─── AI & Organisation — four dimensions arranged around a diamond ────────
+//
+// WIP: copy/title are placeholder while the section narrative is still being
+// refined. Order matches the briefing: 01 Prozesse · 02 Mensch · 03 Entscheidungen · 04 Strukturen.
+
+const AI_DIMENSIONS = [
   {
-    phase: 'Planning',
-    items: ['Erkenntnis über den Gap', 'Vokabular für die Organisation', 'Operating Model Entwurf'],
+    num:   '01',
+    title: 'AI in Prozessen',
+    body:  'Wie KI Abläufe neu strukturiert — Automatisierung, hybride Workflows, neue Geschwindigkeiten.',
   },
   {
-    phase: 'Rollout',
-    items: ['Prototypische Transformation', 'Artefaktgestützte Begleitung', 'Partizipative Umsetzung'],
+    num:   '02',
+    title: 'AI und Mensch',
+    body:  'Wie KI Zusammenarbeit verschiebt — Rollen, Erwartungen, Kompetenzbilder.',
   },
   {
-    phase: 'Adjustment',
-    items: ['Messbare Veränderung', 'Eigenständige Iteration', 'Organisationales Mindset'],
+    num:   '03',
+    title: 'AI in Entscheidungen',
+    body:  'Wie KI Urteilsbildung verändert — Datenbasis, Vorschlagslogik, Verantwortung.',
   },
-]
+  {
+    num:   '04',
+    title: 'AI und Strukturen',
+    body:  'Wie KI Organisationsdesign herausfordert — Governance, Verantwortlichkeit, Architektur.',
+  },
+] as const
+
+type AIDimension = (typeof AI_DIMENSIONS)[number]
+
+/** Four-quadrant diamond — visual centerpiece. Subtle terra/sage tints
+ *  on each triangle, thin ink outline, terra dot at the centre. */
+function AIDiamond() {
+  return (
+    <svg viewBox="0 0 200 200" width="100%" height="100%" style={{ display: 'block' }} aria-hidden="true">
+      {/* Quadrant fills — top, right, bottom, left */}
+      <polygon points="100,5 195,100 100,100" fill="var(--color-terra)" fillOpacity="0.12" />
+      <polygon points="195,100 100,195 100,100" fill="var(--color-sage)"  fillOpacity="0.14" />
+      <polygon points="100,195 5,100 100,100"  fill="var(--color-terra)" fillOpacity="0.06" />
+      <polygon points="5,100 100,5 100,100"    fill="var(--color-sage)"  fillOpacity="0.08" />
+      {/* Outline */}
+      <polygon
+        points="100,5 195,100 100,195 5,100"
+        fill="none"
+        stroke="var(--color-ink)"
+        strokeWidth="1.25"
+        strokeOpacity="0.5"
+      />
+      {/* Internal cross — quadrant dividers */}
+      <line x1="100" y1="5"   x2="100" y2="195" stroke="var(--color-ink)" strokeWidth="0.6" strokeOpacity="0.18" />
+      <line x1="5"   y1="100" x2="195" y2="100" stroke="var(--color-ink)" strokeWidth="0.6" strokeOpacity="0.18" />
+      {/* Centre point */}
+      <circle cx="100" cy="100" r="3" fill="var(--color-terra)" />
+    </svg>
+  )
+}
+
+/** Label cell for one dimension. textAlign adapts to its position so the
+ *  copy "leans toward" the diamond at the centre. */
+function AIDimensionLabel({
+  dim,
+  position,
+}: { dim: AIDimension; position: 'top' | 'right' | 'bottom' | 'left' }) {
+  const textAlign =
+    position === 'right'  ? 'right' :
+    position === 'left'   ? 'left'  : 'center'
+
+  return (
+    <div style={{ maxWidth: '34ch', textAlign }}>
+      <p className="c-eyebrow--terra" style={{ marginBottom: '0.45rem' }}>{dim.num}</p>
+      <h3
+        style={{
+          fontFamily:    'var(--font-display)',
+          fontWeight:    300,
+          fontSize:      'clamp(1.5rem, 2vw, 2.25rem)',
+          lineHeight:    1.05,
+          letterSpacing: '-0.025em',
+          color:         'var(--color-ink)',
+          margin:        0,
+        }}
+      >
+        {dim.title}
+      </h3>
+      <p className="c-body" style={{ marginTop: '0.6rem' }}>{dim.body}</p>
+    </div>
+  )
+}
 
 // ─── Shared style for staggered display headlines ────────────────────────────
 
@@ -549,17 +622,19 @@ export default function Home() {
         <AnsatzSection />
       </section>
 
-      {/* ─── Was wir erreichen ────────────────────────────────────────────── */}
+      {/* ─── AI und Organisation ─────────────────────────────────────────── */}
+      {/* WIP placeholder — title + framing copy still being developed.
+          Four dimensions are arranged N / E / S / W around a centre diamond. */}
       <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-background)' }}>
         <Container>
 
           {/* ── Headline ── */}
-          <div style={{ marginBottom: '5rem' }}>
-            <Tag>Was wir erreichen</Tag>
+          <div style={{ marginBottom: '4rem' }}>
+            <Tag>AI und Organisation</Tag>
             <div style={{ marginTop: '1.75rem' }}>
-              <p style={displayStyle}>Drei Dinge,</p>
+              <p style={displayStyle}>Vier Dimensionen,</p>
               <p style={{ ...displayStyle, marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
-                die jede Transformation braucht.
+                in denen KI Organisation neu denkt.
               </p>
             </div>
           </div>
@@ -568,40 +643,34 @@ export default function Home() {
           <Grid className="stack-cols">
             <Col span={5}>
               <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
-                Wir machen Organisationen und ihre Spannungen auf eine neue Art sichtbar.
-                Wir setzen Transformation prototypisch, zielgetrieben, pragmatisch,
-                partizipativ und effektiv um.
+                KI ist kein Add-on. Wenn Arbeit neu geordnet wird, verändert sie sich
+                in vier Richtungen gleichzeitig — in Prozessen, mit Menschen,
+                in Entscheidungen, an Strukturen.
               </p>
             </Col>
           </Grid>
 
-          <Grid className="stack-cols mt-16">
-            {achievements.map((a, i) => (
-              <Col key={a.phase} span={4}>
-                <div
-                  className={`card h-full ${i === 0 ? 'card-terra' : i === 1 ? 'card-sage' : 'card-ink'}`}
-                  style={{ padding: '1.75rem' }}
-                >
-                  <p className="c-eyebrow">
-                    Phase {String(i + 1).padStart(2, '0')}
-                  </p>
-                  <h3 className="c-title">
-                    {a.phase}
-                  </h3>
-                  <ul className="flex flex-col gap-3" style={{ marginTop: '1.5rem' }}>
-                    {a.items.map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <span style={{ color: 'var(--color-terra)', marginTop: '3px' }}>·</span>
-                        <span className="font-body text-ink-muted" style={{ fontSize: 'var(--text-sub)', lineHeight: '1.5' }}>
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Col>
-            ))}
-          </Grid>
+          {/* ── Diamond + four dimensions ── */}
+          <div className="ai-grid" style={{ marginTop: 'clamp(3rem, 6vw, 6rem)' }}>
+
+            {/* Row 1: empty · top label (01) · empty */}
+            <div className="ai-spacer" aria-hidden="true" />
+            <AIDimensionLabel dim={AI_DIMENSIONS[0]} position="top" />
+            <div className="ai-spacer" aria-hidden="true" />
+
+            {/* Row 2: left label (04) · diamond · right label (02) */}
+            <AIDimensionLabel dim={AI_DIMENSIONS[3]} position="left" />
+            <div className="ai-diamond" style={{ width: '100%', aspectRatio: '1 / 1' }}>
+              <AIDiamond />
+            </div>
+            <AIDimensionLabel dim={AI_DIMENSIONS[1]} position="right" />
+
+            {/* Row 3: empty · bottom label (03) · empty */}
+            <div className="ai-spacer" aria-hidden="true" />
+            <AIDimensionLabel dim={AI_DIMENSIONS[2]} position="bottom" />
+            <div className="ai-spacer" aria-hidden="true" />
+
+          </div>
         </Container>
       </section>
 
