@@ -148,13 +148,13 @@ function AIDimensionLabel({
     position === 'left'   ? 'left'  : 'center'
 
   return (
-    <div style={{ maxWidth: '34ch', textAlign }}>
-      <p className="c-eyebrow--terra" style={{ marginBottom: '0.45rem' }}>{dim.num}</p>
+    <div style={{ maxWidth: '32ch', textAlign }}>
+      <p className="c-eyebrow--terra" style={{ marginBottom: 'clamp(0.25rem, 0.5svh, 0.45rem)' }}>{dim.num}</p>
       <h3
         style={{
           fontFamily:    'var(--font-display)',
           fontWeight:    300,
-          fontSize:      'clamp(1.5rem, 2vw, 2.25rem)',
+          fontSize:      'clamp(1.1rem, 2.6svh, 2.25rem)',
           lineHeight:    1.05,
           letterSpacing: '-0.025em',
           color:         'var(--color-ink)',
@@ -163,7 +163,16 @@ function AIDimensionLabel({
       >
         {dim.title}
       </h3>
-      <p className="c-body" style={{ marginTop: '0.6rem' }}>{dim.body}</p>
+      <p
+        className="c-body"
+        style={{
+          marginTop: 'clamp(0.35rem, 0.8svh, 0.6rem)',
+          fontSize:  'clamp(0.8125rem, 1.5svh, 1.0625rem)',
+          lineHeight: 1.55,
+        }}
+      >
+        {dim.body}
+      </p>
     </div>
   )
 }
@@ -624,34 +633,33 @@ export default function Home() {
 
       {/* ─── AI und Organisation ─────────────────────────────────────────── */}
       {/* WIP placeholder — title + framing copy still being developed.
-          Four dimensions are arranged N / E / S / W around a centre diamond. */}
-      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-background)' }}>
+          Sticky card sized to viewport so the diamond + four dimensions are
+          all visible at once and don't get clipped by the next card. */}
+      <section
+        className="scroll-card"
+        style={{
+          top:             '5rem',
+          height:          'calc(100svh - 5rem)',
+          paddingBlock:    'clamp(2rem, 4svh, 4rem)',
+          overflow:        'hidden',
+          backgroundColor: 'var(--color-background)',
+        }}
+      >
         <Container>
 
           {/* ── Headline ── */}
-          <div style={{ marginBottom: '4rem' }}>
+          <div style={{ marginBottom: 'clamp(1rem, 2svh, 2.5rem)' }}>
             <Tag>AI und Organisation</Tag>
-            <div style={{ marginTop: '1.75rem' }}>
-              <p style={displayStyle}>Vier Dimensionen,</p>
-              <p style={{ ...displayStyle, marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
+            <div style={{ marginTop: 'clamp(0.5rem, 1.5svh, 1.5rem)' }}>
+              <p style={{ ...displayStyle, fontSize: 'clamp(1.75rem, 4svh, 4rem)' }}>Vier Dimensionen,</p>
+              <p style={{ ...displayStyle, fontSize: 'clamp(1.75rem, 4svh, 4rem)', marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
                 in denen KI Organisation neu denkt.
               </p>
             </div>
           </div>
 
-          {/* ── Intro copy ── */}
-          <Grid className="stack-cols">
-            <Col span={5}>
-              <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
-                KI ist kein Add-on. Wenn Arbeit neu geordnet wird, verändert sie sich
-                in vier Richtungen gleichzeitig — in Prozessen, mit Menschen,
-                in Entscheidungen, an Strukturen.
-              </p>
-            </Col>
-          </Grid>
-
           {/* ── Diamond + four dimensions ── */}
-          <div className="ai-grid" style={{ marginTop: 'clamp(3rem, 6vw, 6rem)' }}>
+          <div className="ai-grid" style={{ marginTop: 'clamp(1rem, 2svh, 2.5rem)' }}>
 
             {/* Row 1: empty · top label (01) · empty */}
             <div className="ai-spacer" aria-hidden="true" />
@@ -670,73 +678,6 @@ export default function Home() {
             <AIDimensionLabel dim={AI_DIMENSIONS[2]} position="bottom" />
             <div className="ai-spacer" aria-hidden="true" />
 
-          </div>
-        </Container>
-      </section>
-
-      {/* ─── Big typographic statement ────────────────────────────────────── */}
-      {/*
-        Inspired by diffferent's full-width staggered footer statement.
-        Three lines alternating left/right, spanning full container width.
-        No grid constraint — deliberately uses the full max-width.
-      */}
-      <section
-        className="scroll-card"
-        style={{
-          paddingBlock:    '8rem',
-          overflow:        'hidden',
-          backgroundColor: 'var(--color-background)',
-        }}
-      >
-        <Container>
-          <div>
-            {/* Line 1 — right */}
-            <div style={{ textAlign: 'right' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 300,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.88,
-                  color: 'var(--color-ink)',
-                  fontSize: 'clamp(3rem, 8vw, 8rem)',
-                }}
-              >
-                Transformation beginnt
-              </span>
-            </div>
-            {/* Line 2 — left, indented */}
-            <div style={{ marginTop: '0.08em' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 300,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.88,
-                  color: 'var(--color-ink)',
-                  fontSize: 'clamp(3rem, 8vw, 8rem)',
-                  paddingLeft: '12%',
-                }}
-              >
-                mit der Benennung
-              </span>
-            </div>
-            {/* Line 3 — right, italic terra */}
-            <div style={{ marginTop: '0.08em', textAlign: 'right' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontStyle: 'italic',
-                  fontWeight: 300,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.88,
-                  color: 'var(--color-terra)',
-                  fontSize: 'clamp(3rem, 8vw, 8rem)',
-                }}
-              >
-                des Gaps.
-              </span>
-            </div>
           </div>
         </Container>
       </section>

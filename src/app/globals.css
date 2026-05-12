@@ -303,9 +303,11 @@
   /* ── AI & Organisation — diamond + 4 dimension labels grid ─────────────── */
   .ai-grid {
     display: grid;
-    grid-template-columns: 1fr clamp(220px, 26vw, 380px) 1fr;
+    /* Diamond column scales with viewport height so the whole figure stays
+       inside a single sticky card on shorter viewports (iPads, 13" laptops). */
+    grid-template-columns: 1fr clamp(160px, 28svh, 360px) 1fr;
     grid-template-rows: auto auto auto;
-    gap: clamp(2rem, 4vw, 4rem);
+    gap: clamp(1rem, 3svh, 3rem) clamp(1.5rem, 4vw, 4rem);
     align-items: center;
     justify-items: center;
     max-width: 1100px;
