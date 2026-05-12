@@ -1,536 +1,233 @@
-'use client'
-
 /**
- * AnsatzSection — v2  dark edition
+ * AnsatzSection — editorial 5-step list
  *
- * Full dark section (var(--color-ink) throughout).
- * Each of the 5 steps carries an accent colour drawn from the brand palette
- * (terra / sage / sand).  That colour flows through:
- *   Left  — step number, 2px left-border stripe on the active item
- *   Right — blockquote border, list arrows, output-tag border, outcome label
+ * Replaces the previous accordion + detail-panel + illustration layout with a
+ * compact editorial list that matches the rest of the home page (Hero, AI
+ * section, Pillars). One row per phase:
+ *   [italic-display number, accent colour]   [title + leitfrage]   [summary]
  *
- * Layout: flex column, 100svh
- *   Row A  full-width header band (borderBottom, no vertical divider)
- *   Row B  CSS grid 1fr/2fr
- *          Left  accordion (borderRight)
- *          Right detail card (3fr) + FVS illustration (1fr)
+ * Long-form descriptions, "Was wir tun" lists, output tags and outcomes have
+ * moved to /ansatz so this section can stay one viewport-tall sticky card.
+ * All vertical sizing is svh-driven so the five rows + header + CTA fit on
+ * 13" laptops / iPad mirrors as well as full desktop.
  */
 
-import { useState } from 'react'
-import { Tag }          from '@/components/atoms/Tag'
-import { CollagePanel } from '@/components/molecules/CollagePanel'
+import Link from 'next/link'
+import { Container, Grid, Col } from '@/components/layout/Grid'
+import { Tag } from '@/components/atoms/Tag'
 
-// ── Colour helpers ────────────────────────────────────────────────────────────
-
-const TERRA = '#F44D0B'
-const SAGE  = '#B8CC8A'
-const SAND  = '#E3DDD5'
-
-/** Return rgba(…) string from a 6-digit hex + alpha 0–1 */
-function wa(hex: string, a: number) {
-  const n = parseInt(hex.replace('#', ''), 16)
-  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`
-}
-
-// ── Data ──────────────────────────────────────────────────────────────────────
-
-type PanelVariant = 'analyse' | 'change' | 'responsibility' | 'iterate' | 'overall'
+const TERRA = 'var(--color-terra)'
+const SAGE  = 'var(--color-sage)'
+const SAND  = 'var(--color-sand)'
 
 type Step = {
   num:       string
   title:     string
   leitfrage: string
-  text:      string
-  wir:       string[]
-  outputs:   string[]
-  outcome:   string
-  panel:     PanelVariant
-  color:     string   // brand accent for this step
+  summary:   string
+  color:     string
 }
 
-const STEPS: Step[] = [
+const STEPS: readonly Step[] = [
   {
     num:       '01',
     title:     'Sichtbar machen',
     leitfrage: 'Was blockiert uns wirklich?',
-    text:      'Wir machen sichtbar, wie die Organisation wirklich arbeitet. Nicht entlang offizieller Organigramme, sondern entlang tatsächlicher Entscheidungen, Routinen, Verantwortungen und Reibungen. So entsteht ein gemeinsames Bild der Ordnung, die heute wirkt.',
-    wir: [
-      'Interviews und Gespräche mit relevanten Akteur:innen',
-      'Analyse von Entscheidungswegen, Rollen und Verantwortlichkeiten',
-      'Beobachtung von Routinen, Meetings, Übergaben und Schnittstellen',
-      'Verdichtung organisationaler Spannungen',
-      'Entwicklung erster Hypothesen zur tatsächlichen Organisationslogik',
-    ],
-    outputs: ['Systembild', 'Spannungslandkarte', 'Entscheidungs- & Rollenlandkarte', 'Hypothesen zur Organisationslogik', 'Designprinzipien'],
-    outcome: 'Die Organisation bekommt ein gemeinsames Vokabular für das, was bisher diffus war. Führung kann klarer sehen, welche Strukturfragen wirklich bearbeitet werden müssen.',
-    panel:   'analyse',
-    color:   TERRA,
+    summary:   'Wir machen sichtbar, wie die Organisation tatsächlich arbeitet — entlang realer Entscheidungen, Routinen und Reibungen.',
+    color:     TERRA,
   },
   {
     num:       '02',
     title:     'Entscheidbar machen',
     leitfrage: 'Wie müsste unsere Organisation arbeiten, damit Strategie wirksam wird?',
-    text:      'Wir übersetzen Erkenntnis in ein entscheidbares Zielmodell. Es zeigt, wie Arbeit künftig organisiert werden soll: welche Verantwortung wo liegt, wie Entscheidungen getroffen werden, welche Routinen tragen und welche Struktur Strategie wirksam macht.',
-    wir: [
-      'Entwicklung eines organisationalen Zielbilds',
-      'Design von Operating Model, Governance und Entscheidungsarchitektur',
-      'Klärung von Rollen, Verantwortlichkeiten und Schnittstellen',
-      'Übersetzung strategischer Ambitionen in organisatorische Anforderungen',
-      'Priorisierung von Veränderungsschritten & Operationalisierungsplan',
-    ],
-    outputs: ['Zielbild', 'Target Operating Model', 'Governance- & Entscheidungsarchitektur', 'Rollen- & Verantwortungsmodell', 'Operationalisierungsplan'],
-    outcome: 'Führung kann entscheiden, was verändert wird, in welcher Reihenfolge und mit welchem Anspruch. Die Organisation erhält eine gemeinsame Orientierung für die nächste Entwicklungsbewegung.',
-    panel:   'change',
-    color:   SAGE,
+    summary:   'Aus Erkenntnis wird ein entscheidbares Zielmodell — Operating Model, Governance, Verantwortung.',
+    color:     SAGE,
   },
   {
     num:       '03',
     title:     'Gestaltbar machen',
     leitfrage: 'Wie kommt das Modell in echte Arbeit?',
-    text:      'Struktur entsteht im Arbeiten am Modell. Deshalb bringen wir Zielbilder früh in reale Situationen: in Piloten, Entscheidungen, Routinen und Arbeitsformate. So wird sichtbar, was trägt — und was weiterentwickelt werden muss.',
-    wir: [
-      'Entwicklung von Pilot- und Prototyping-Formaten',
-      'Gestaltung von Workshops, Entscheidungsformaten und Arbeitsroutinen',
-      'Simulation neuer Rollen, Schnittstellen oder Governance-Elemente',
-      'Begleitung erster Anwendungssituationen',
-      'Iteration des Zielmodells auf Basis realer Erfahrung',
-    ],
-    outputs: ['Pilotdesign', 'Workshop-Architektur', 'Rollenprototypen', 'Meeting- & Entscheidungsformate', 'Iterationslogik'],
-    outcome: 'Veränderung wird praktisch erfahrbar, bevor sie groß ausgerollt wird. Die Organisation erkennt früh, was funktioniert, was angepasst werden muss.',
-    panel:   'responsibility',
-    color:   SAND,
+    summary:   'Zielbilder treffen früh auf reale Situationen — in Piloten, Routinen und Entscheidungen.',
+    color:     SAND,
   },
   {
     num:       '04',
     title:     'Erprobbar machen',
-    leitfrage: 'Was funktioniert wirklich — und was muss angepasst werden?',
-    text:      'Das Zielmodell wird erst belastbar, wenn es in realen Arbeitssituationen geprüft wird. Die Organisation prüft, widerspricht, passt an — und macht das Modell dadurch zu ihrer eigenen Struktur.',
-    wir: [
-      'Begleitung erster Anwendungssituationen im echten Betrieb',
-      'Iteration und Weiterentwicklung des Zielmodells',
-      'Übersetzung in konkrete Arbeitsartefakte',
-      'Prüfung, Widerspruch und Anpassung durch die Organisation',
-    ],
-    outputs: ['Pilotdesign', 'Arbeitsartefakte', 'Mission Boards', 'Iterationslogik'],
-    outcome: 'Die Organisation erkennt früh, was funktioniert, was angepasst werden muss und welche neue Arbeitsweise tragfähig ist.',
-    panel:   'iterate',
-    color:   TERRA,
+    leitfrage: 'Was funktioniert wirklich?',
+    summary:   'Das Modell wird in der Praxis geprüft, angepasst — und wird so zur eigenen Struktur der Organisation.',
+    color:     TERRA,
   },
   {
     num:       '05',
     title:     'Unabhängig machen',
     leitfrage: 'Wie bleibt es wirksam, wenn 1789 rausgeht?',
-    text:      'Wir verankern neue Strukturen so, dass Organisationen sie selbst weiterentwickeln können. Dafür braucht es Verantwortung, Routinen, Messpunkte und einen Rhythmus, in dem Anpassung Teil der Arbeit wird.',
-    wir: [
-      'Entwicklung eines Operating Rhythm',
-      'Aufbau interner Weiterentwicklungs- und Verantwortungsrollen',
-      'Befähigung von Führung und internen Transformationsrollen',
-      'Gestaltung von Reflexions-, Mess- und Anpassungsformaten',
-      'Übergabe der Arbeitsarchitektur',
-    ],
-    outputs: ['Playbook', 'Operating Rhythm', 'Verantwortungslandkarte', 'Enablement-Formate', 'Übergabe- & Iterationsmodell'],
-    outcome: 'Die Organisation kann die neue Struktur eigenständig weiterentwickeln. Veränderung wird nicht als Projekt verwaltet, sondern in die Arbeitsfähigkeit eingebettet.',
-    panel:   'overall',
-    color:   SAGE,
+    summary:   'Verantwortung, Routinen und ein Rhythmus, in dem Anpassung Teil der Arbeit wird.',
+    color:     SAGE,
   },
 ]
 
-// ── Accordion item ─────────────────────────────────────────────────────────────
-
-interface ItemProps {
-  step:       Step
-  isFirst:    boolean
-  isActive:   boolean
-  onActivate: () => void
-}
-
-function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
-  const [hovered, setHovered] = useState(false)
-  const { color } = step
-
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      aria-pressed={isActive}
-      onClick={onActivate}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onActivate() }}}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        flex:            1,
-        minHeight:       0,          /* allow flex to shrink below content size */
-        overflow:        'hidden',
-        display:         'flex',
-        flexDirection:   'column',
-        justifyContent:  'center',
-        /* All vertical spacing in svh so items scale with viewport height */
-        paddingLeft:     'calc(var(--grid-margin) - 2px)',
-        paddingRight:    'var(--grid-margin)',
-        paddingBlock:    '2svh',
-        borderLeft:      `2px solid ${isActive ? color : hovered ? wa(color, 0.35) : 'transparent'}`,
-        cursor:          'pointer',
-        outline:         'none',
-        backgroundColor: isActive ? wa(color, 0.1) : hovered ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.03)',
-        transition:      'background-color 0.3s var(--ease-standard), border-left-color 0.3s var(--ease-standard)',
-        userSelect:      'none',
-      }}
-    >
-      {/* Step number */}
-      <span style={{
-        fontFamily:    'var(--font-mono)',
-        fontSize:      'var(--text-xxs)',
-        letterSpacing: '0.18em',
-        textTransform: 'uppercase',
-        color:         color,
-        opacity:       isActive ? 1 : hovered ? 0.55 : 0.28,
-        transition:    'opacity 0.25s var(--ease-standard)',
-        marginBottom:  '0.7svh',
-        display:       'block',
-      }}>
-        {step.num}
-      </span>
-
-      {/* Title — svh-based font so it scales with height, not just width */}
-      <h3 style={{
-        fontFamily:    'var(--font-display)',
-        fontWeight:    300,
-        fontSize:      'clamp(1.1rem, 2.8svh, 2.25rem)',
-        lineHeight:    1.0,
-        letterSpacing: '-0.025em',
-        color:         isActive
-                         ? 'rgba(242,242,242,0.95)'
-                         : hovered
-                           ? 'rgba(242,242,242,0.6)'
-                           : 'rgba(242,242,242,0.3)',
-        margin:        0,
-        transition:    'color 0.3s var(--ease-standard)',
-      }}>
-        {step.title}
-      </h3>
-
-      {/* Leitfrage — collapses to zero height when inactive */}
-      <p style={{
-        fontFamily:    'var(--font-display)',
-        fontStyle:     'italic',
-        fontSize:      'clamp(0.75rem, 1.5svh, 1rem)',
-        lineHeight:    1.45,
-        color:         'rgba(242,242,242,0.55)',
-        margin:        0,
-        marginTop:     isActive ? '0.8svh' : 0,
-        maxHeight:     isActive ? '5svh' : 0,
-        overflow:      'hidden',
-        opacity:       isActive ? 1 : 0,
-        transition:    'max-height 0.4s var(--ease-entry), opacity 0.35s var(--ease-entry), margin-top 0.35s var(--ease-entry)',
-        pointerEvents: 'none',
-        maxWidth:      '36ch',
-      }}>
-        {step.leitfrage}
-      </p>
-    </div>
-  )
-}
-
-// ── Detail card ────────────────────────────────────────────────────────────────
-
-function DetailCard({ step }: { step: Step }) {
-  const pad   = 'clamp(1.5rem, 2.5vw, 2.75rem)'
-  const color = step.color
-
-  return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-
-      {/* ── Scrollable body ── */}
-      <div style={{
-        flex:          1,
-        overflowY:     'auto',
-        paddingInline: pad,
-        paddingTop:    pad,
-        paddingBottom: 'clamp(1.5rem, 2.2vw, 2.25rem)',
-        display:       'flex',
-        flexDirection: 'column',
-        gap:           'clamp(1.25rem, 2vw, 2rem)',
-      }}>
-
-        {/* Editorial quote */}
-        <blockquote style={{
-          fontFamily:  'var(--font-display)',
-          fontStyle:   'italic',
-          fontWeight:  300,
-          fontSize:    'clamp(1rem, 1.35vw, 1.25rem)',
-          lineHeight:  1.65,
-          color:       'rgba(242,242,242,0.88)',
-          borderLeft:  `2px solid ${color}`,
-          paddingLeft: '1.25rem',
-          margin:      0,
-        }}>
-          {step.text}
-        </blockquote>
-
-        {/* Was wir tun */}
-        <div>
-          <p style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      'var(--text-xxs)',
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            color:         'rgba(242,242,242,0.35)',
-            margin:        '0 0 0.75rem',
-          }}>
-            Was wir tun
-          </p>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.425rem' }}>
-            {step.wir.map((item, i) => (
-              <li key={i} style={{ display: 'flex', gap: '0.625rem', alignItems: 'baseline' }}>
-                <span style={{
-                  color:      color,
-                  fontFamily: 'var(--font-mono)',
-                  fontSize:   'var(--text-xxs)',
-                  flexShrink: 0,
-                  lineHeight: 1.7,
-                  opacity:    0.8,
-                }}>
-                  →
-                </span>
-                <span style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize:   '0.875rem',
-                  color:      'rgba(242,242,242,0.62)',
-                  lineHeight: 1.6,
-                }}>
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Typische Outputs */}
-        <div>
-          <p style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      'var(--text-xxs)',
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            color:         'rgba(242,242,242,0.35)',
-            margin:        '0 0 0.75rem',
-          }}>
-            Typische Outputs
-          </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>
-            {step.outputs.map((o, i) => (
-              <span key={i} style={{
-                fontFamily:      'var(--font-mono)',
-                fontSize:        '0.625rem',
-                letterSpacing:   '0.08em',
-                textTransform:   'uppercase',
-                color:           wa(color, 0.75),
-                backgroundColor: wa(color, 0.07),
-                border:          `1px solid ${wa(color, 0.25)}`,
-                borderRadius:    '2px',
-                paddingInline:   '0.5rem',
-                paddingBlock:    '0.3rem',
-                lineHeight:      1.5,
-              }}>
-                {o}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Outcome */}
-        <div style={{
-          paddingTop: 'clamp(1rem, 1.5vw, 1.5rem)',
-          borderTop:  '1px solid rgba(255,255,255,0.08)',
-        }}>
-          <p style={{
-            fontFamily:    'var(--font-mono)',
-            fontSize:      'var(--text-xxs)',
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            color:         color,
-            margin:        '0 0 0.5rem',
-            opacity:       0.85,
-          }}>
-            Outcome
-          </p>
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            fontSize:   'var(--text-xs)',
-            lineHeight: 1.75,
-            color:      'rgba(242,242,242,0.82)',
-            margin:     0,
-          }}>
-            {step.outcome}
-          </p>
-        </div>
-
-      </div>
-    </div>
-  )
-}
-
-// ── Main export ────────────────────────────────────────────────────────────────
-
 export function AnsatzSection() {
-  const [active, setActive] = useState(0)
-
   return (
     <div
-      className="ansatz-grid"
       style={{
+        height:          '100%',
         display:         'flex',
         flexDirection:   'column',
-        height:          '100%',   /* fills the scroll-card wrapper in page.tsx */
         overflow:        'hidden',
         backgroundColor: 'var(--color-ink)',
+        paddingBlock:    'clamp(2rem, 4svh, 4rem)',
       }}
     >
+      <Container style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
 
-      {/* ══ Row A: header — compact strip, all vertical sizes in svh ════════ */}
-      <div
-        style={{
-          flexShrink:          0,
-          display:             'grid',
-          gridTemplateColumns: '1fr 2fr',
-          paddingTop:          '1.8svh',
-          borderBottom:        '1px solid rgba(255,255,255,0.08)',
-        }}
-      >
-        {/* Left cell: tag + headline */}
-        <div style={{
-          paddingInline: 'var(--grid-margin)',
-          paddingBottom: '1.8svh',
-        }}>
-          <Tag variant="accent">Unser Ansatz</Tag>
-          <h2 style={{
-            fontFamily:    'var(--font-display)',
-            fontWeight:    300,
-            /* svh-driven so header scales with viewport height, not width */
-            fontSize:      'clamp(1rem, 2.4svh, 2.25rem)',
-            lineHeight:    1.05,
-            letterSpacing: '-0.03em',
-            color:         'rgba(242,242,242,0.92)',
-            margin:        '0.8svh 0 0',
-          }}>
-            Von Diagnose<br />zur Eigenständigkeit.
-          </h2>
-        </div>
+        {/* ── Header ────────────────────────────────────────────────────── */}
+        <header style={{ flexShrink: 0 }}>
+          <Grid className="stack-cols" style={{ alignItems: 'flex-end' }}>
+            <Col span={7}>
+              <Tag variant="accent">Unser Ansatz</Tag>
+              <h2
+                style={{
+                  fontFamily:    'var(--font-display)',
+                  fontWeight:    300,
+                  fontSize:      'clamp(1.75rem, 4svh, 4rem)',
+                  lineHeight:    1.02,
+                  letterSpacing: '-0.025em',
+                  color:         'rgba(242,242,242,0.92)',
+                  marginTop:     'clamp(1rem, 2svh, 1.75rem)',
+                }}
+              >
+                Von Diagnose<br />
+                <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
+                  zur Eigenständigkeit.
+                </em>
+              </h2>
+            </Col>
+            <Col span={5}>
+              <p
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize:   'clamp(0.8125rem, 1.55svh, 1.0625rem)',
+                  lineHeight: 1.65,
+                  color:      'rgba(242,242,242,0.5)',
+                  maxWidth:   '48ch',
+                  margin:     0,
+                }}
+              >
+                Fünf Phasen, in denen wir Organisationen von der ersten Diagnose
+                bis zur selbstständigen Weiterentwicklung begleiten.
+              </p>
+            </Col>
+          </Grid>
+        </header>
 
-        {/* Right cell: caption-size description — key to keeping header compact */}
-        <div style={{
-          paddingInline: 'var(--grid-margin)',
-          paddingBottom: '1.8svh',
-          display:       'flex',
-          alignItems:    'flex-end',
-        }}>
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            /* Reduced from text-base (20px) to xs (13px) — the large font
-               was the main reason the header ate 280px instead of ~90px */
-            fontSize:   'clamp(0.75rem, 1.4svh, 0.9375rem)',
-            lineHeight: 1.55,
-            color:      'rgba(242,242,242,0.4)',
-            margin:     0,
-            maxWidth:   '52ch',
-          }}>
-            Fünf Phasen, in denen wir Organisationen von der ersten Erkenntnis bis
-            zur selbstständigen Weiterentwicklung begleiten.
-          </p>
-        </div>
-      </div>
-
-      {/* ══ Row B: two-column body ═══════════════════════════════════════════ */}
-      <div
-        style={{
-          flex:                1,
-          display:             'grid',
-          gridTemplateColumns: '1fr 2fr',
-          minHeight:           0,
-          overflow:            'hidden',
-        }}
-      >
-
-        {/* ── Left: accordion ── */}
-        <div
-          className="ansatz-left"
+        {/* ── Steps — flex:1 fills remaining height, rows evenly distributed ── */}
+        <ol
           style={{
-            borderRight:   '1px solid rgba(255,255,255,0.08)',
-            display:       'flex',
-            flexDirection: 'column',
-            gap:           '1px',   /* dark ink shows between cards */
-            overflow:      'hidden',
+            flex:           1,
+            minHeight:      0,
+            listStyle:      'none',
+            margin:         'clamp(1.5rem, 3svh, 3rem) 0 clamp(1rem, 2svh, 2rem)',
+            padding:        0,
+            display:        'flex',
+            flexDirection:  'column',
+            justifyContent: 'space-between',
+            borderTop:      '1px solid rgba(255,255,255,0.08)',
           }}
         >
-          {STEPS.map((step, i) => (
-            <AccordionItem
+          {STEPS.map((step) => (
+            <li
               key={step.num}
-              step={step}
-              isFirst={i === 0}
-              isActive={active === i}
-              onActivate={() => setActive(i)}
-            />
+              style={{
+                display:             'grid',
+                gridTemplateColumns: 'auto minmax(0, 1fr) minmax(0, 1.4fr)',
+                gap:                 'clamp(1rem, 2vw, 2.5rem)',
+                alignItems:          'baseline',
+                paddingBlock:        'clamp(0.8rem, 1.6svh, 1.5rem)',
+                borderBottom:        '1px solid rgba(255,255,255,0.08)',
+              }}
+            >
+              {/* Number — italic display, accent colour */}
+              <span
+                aria-hidden="true"
+                style={{
+                  fontFamily:  'var(--font-display)',
+                  fontStyle:   'italic',
+                  fontWeight:  300,
+                  fontSize:    'clamp(1.5rem, 3.4svh, 2.75rem)',
+                  lineHeight:  1,
+                  color:       step.color,
+                  minWidth:    '1.5ch',
+                  textAlign:   'left',
+                }}
+              >
+                {step.num}
+              </span>
+
+              {/* Title + leitfrage */}
+              <div style={{ minWidth: 0 }}>
+                <h3
+                  style={{
+                    fontFamily:    'var(--font-display)',
+                    fontWeight:    300,
+                    fontSize:      'clamp(1.125rem, 2.4svh, 1.75rem)',
+                    lineHeight:    1.1,
+                    letterSpacing: '-0.02em',
+                    color:         'rgba(242,242,242,0.92)',
+                    margin:        0,
+                  }}
+                >
+                  {step.title}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontStyle:  'italic',
+                    fontWeight: 300,
+                    fontSize:   'clamp(0.8125rem, 1.55svh, 1rem)',
+                    lineHeight: 1.4,
+                    color:      'rgba(242,242,242,0.5)',
+                    margin:     '0.35rem 0 0',
+                  }}
+                >
+                  {step.leitfrage}
+                </p>
+              </div>
+
+              {/* Summary */}
+              <p
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize:   'clamp(0.8125rem, 1.5svh, 0.9375rem)',
+                  lineHeight: 1.6,
+                  color:      'rgba(242,242,242,0.62)',
+                  margin:     0,
+                }}
+              >
+                {step.summary}
+              </p>
+            </li>
           ))}
-        </div>
+        </ol>
 
-        {/* ── Right: detail card (top 3/4) + FVS illustration (bottom 1/4) ── */}
-        <div
-          className="ansatz-right"
-          style={{
-            display:          'grid',
-            gridTemplateRows: '2fr 1fr',
-            overflow:         'hidden',
-            backgroundColor:  'var(--color-ink)',
-          }}
-        >
-
-          {/* Detail card */}
-          <div
-            className="ansatz-detail"
-            style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
+        {/* ── CTA ───────────────────────────────────────────────────────── */}
+        <footer style={{ flexShrink: 0 }}>
+          <Link
+            href="/ansatz"
+            className="hover-line"
+            style={{
+              fontFamily:    'var(--font-mono)',
+              fontSize:      'var(--text-xxs)',
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color:         'var(--color-terra)',
+              textDecoration:'none',
+            }}
           >
-            {STEPS.map((step, i) => (
-              <div
-                key={step.num}
-                aria-hidden={active !== i}
-                style={{
-                  position:      'absolute',
-                  inset:         0,
-                  opacity:       active === i ? 1 : 0,
-                  transition:    'opacity 0.45s var(--ease-entry)',
-                  pointerEvents: active === i ? 'auto' : 'none',
-                  zIndex:        active === i ? 1 : 0,
-                }}
-              >
-                <DetailCard step={step} />
-              </div>
-            ))}
-          </div>
+            Den vollständigen Ansatz lesen →
+          </Link>
+        </footer>
 
-          {/* FVS illustration strip */}
-          <div
-            className="ansatz-image"
-            style={{ position: 'relative', overflow: 'hidden' }}
-          >
-            {STEPS.map((step, i) => (
-              <div
-                key={step.num}
-                aria-hidden={active !== i}
-                style={{
-                  position:   'absolute',
-                  inset:      0,
-                  opacity:    active === i ? 1 : 0,
-                  transition: 'opacity 0.55s var(--ease-entry)',
-                  zIndex:     active === i ? 1 : 0,
-                }}
-              >
-                <CollagePanel variant={step.panel} />
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </div>
+      </Container>
     </div>
   )
 }
