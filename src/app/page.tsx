@@ -145,15 +145,15 @@ export default function Home() {
         at the viewport bottom; both are covered together by the next card.
       */}
       <StickyScrollSection style={{ backgroundColor: 'var(--color-background)' }}>
-        <section style={{ paddingBlock: '3rem 4rem' }}>
+        <section style={{ paddingBlock: 'clamp(1.5rem, 3svh, 3rem) clamp(2rem, 4svh, 4rem)' }}>
           <Container>
 
             {/* ── Headline ── */}
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{ marginBottom: 'clamp(0.75rem, 1.5svh, 2rem)' }}>
               <Tag>DER 1789-BLICK</Tag>
-              <div style={{ marginTop: '1.75rem' }}>
-                <p style={displayStyle}>Was heute blockiert, —</p>
-                <p style={{ ...displayStyle, marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
+              <div style={{ marginTop: 'clamp(0.75rem, 1.5svh, 1.75rem)' }}>
+                <p style={{ ...displayStyle, fontSize: 'clamp(2rem, 5svh, 5rem)' }}>Was heute blockiert, —</p>
+                <p style={{ ...displayStyle, fontSize: 'clamp(2rem, 5svh, 5rem)', marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
                    hat gestern getragen.
                 </p>
               </div>
@@ -162,26 +162,26 @@ export default function Home() {
             {/* ── Intro copy ── */}
             <Grid className="stack-cols">
               <Col span={5}>
-                <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75', textAlign: 'left' }}>
+                <p className="font-body text-ink-muted" style={{ fontSize: 'clamp(0.875rem, 1.6svh, 1.25rem)', lineHeight: 1.6, textAlign: 'left' }}>
                 Jede Organisation lebt von Entscheidungen, Routinen und informalen Lösungen, die einmal funktioniert haben. Wir legen frei, welche Ordnung heute noch trägt, wo sie blockiert und was neu entschieden werden muss damit Verantwortung greift, Veränderung tragfähig wird und Wertschöpfung & Wirkung entstehen.</p>
               </Col>
             </Grid>
 
             {/* ── Pillars ── */}
-            <Grid className="stack-cols mt-10">
+            <Grid className="stack-cols" style={{ marginTop: 'clamp(0.75rem, 2svh, 2.5rem)' }}>
               {pillars.map((pillar, i) => (
                 <Col key={pillar.title} span={4}>
                   <div
                     className="card h-full flex flex-col"
-                    style={{ padding: '1.75rem', position: 'relative' }}
+                    style={{ padding: 'clamp(1rem, 2.2svh, 1.75rem)', position: 'relative' }}
                   >
                     {/* Icon — upper right corner */}
                     <div
                       aria-hidden="true"
                       style={{
                         position:      'absolute',
-                        top:           '1.25rem',
-                        right:         '1.25rem',
+                        top:           'clamp(0.75rem, 1.5svh, 1.25rem)',
+                        right:         'clamp(0.75rem, 1.5svh, 1.25rem)',
                         opacity:       1,
                         pointerEvents: 'none',
                         lineHeight:    0,
@@ -195,7 +195,7 @@ export default function Home() {
                       style={{
                         fontFamily:    'var(--font-display)',
                         fontWeight:    400,
-                        fontSize:      'clamp(1.75rem, 2.5vw, 2.5rem)',
+                        fontSize:      'clamp(1.25rem, 2.8svh, 2.5rem)',
                         lineHeight:    1.05,
                         letterSpacing: '-0.025em',
                         color:         'var(--color-ink)',
@@ -207,15 +207,15 @@ export default function Home() {
                     </h3>
 
                     {/* Body copy */}
-                    <p className="c-body" style={{ marginTop: '1rem' }}>
+                    <p className="c-body" style={{ marginTop: 'clamp(0.5rem, 1.2svh, 1rem)', fontSize: 'clamp(0.8125rem, 1.5svh, 1.0625rem)', lineHeight: 1.55 }}>
                       {pillar.body}
                     </p>
 
                     {/* Divider */}
                     <div
                       style={{
-                        marginTop:       '1.25rem',
-                        marginBottom:    '1.25rem',
+                        marginTop:       'clamp(0.75rem, 1.5svh, 1.25rem)',
+                        marginBottom:    'clamp(0.75rem, 1.5svh, 1.25rem)',
                         height:          '1px',
                         backgroundColor: 'var(--color-border)',
                       }}
