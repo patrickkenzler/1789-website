@@ -291,6 +291,19 @@
     width: 100%;
   }
 
+  /* ── AnsatzSection — 5-column phase spread, collapses to stack on tablet ── */
+  .ansatz-steps {
+    list-style:          none;
+    margin:              0;
+    padding:             0;
+    display:             grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap:                 clamp(1.5rem, 3vw, 3rem);
+  }
+  @media (max-width: 1023px) {
+    .ansatz-steps { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
   /* ── AI & Organisation — diamond + 4 dimension labels grid ─────────────── */
   .ai-grid {
     display: grid;

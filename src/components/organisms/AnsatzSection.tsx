@@ -1,15 +1,12 @@
 /**
- * AnsatzSection — editorial 5-step list
+ * AnsatzSection — editorial 5-step spread (v2)
  *
- * Replaces the previous accordion + detail-panel + illustration layout with a
- * compact editorial list that matches the rest of the home page (Hero, AI
- * section, Pillars). One row per phase:
- *   [italic-display number, accent colour]   [title + leitfrage]   [summary]
+ * Visual approach: XXL italic numbers act as the visual rhythm, each phase
+ * is its own vertical "tab" anchored by a 2px accent-coloured top stripe
+ * (BCG/Bain editorial convention). Tag-line summaries instead of paragraph
+ * descriptions keep the section scannable from across the room.
  *
- * Long-form descriptions, "Was wir tun" lists, output tags and outcomes have
- * moved to /ansatz so this section can stay one viewport-tall sticky card.
- * All vertical sizing is svh-driven so the five rows + header + CTA fit on
- * 13" laptops / iPad mirrors as well as full desktop.
+ * Full long-form content (Was wir tun, Outputs, Outcome) lives on /ansatz.
  */
 
 import Link from 'next/link'
@@ -22,46 +19,52 @@ const SAND  = 'var(--color-sand)'
 
 type Step = {
   num:       string
+  meta:      string   // single-word phase tag, e.g. "Diagnose"
   title:     string
   leitfrage: string
-  summary:   string
+  tagline:   string   // single-sentence essence — under ~10 words
   color:     string
 }
 
 const STEPS: readonly Step[] = [
   {
     num:       '01',
+    meta:      'Diagnose',
     title:     'Sichtbar machen',
     leitfrage: 'Was blockiert uns wirklich?',
-    summary:   'Wir machen sichtbar, wie die Organisation tatsächlich arbeitet — entlang realer Entscheidungen, Routinen und Reibungen.',
+    tagline:   'Reale Entscheidungen, Routinen und Reibungen sichtbar machen.',
     color:     TERRA,
   },
   {
     num:       '02',
+    meta:      'Zielbild',
     title:     'Entscheidbar machen',
-    leitfrage: 'Wie müsste unsere Organisation arbeiten, damit Strategie wirksam wird?',
-    summary:   'Aus Erkenntnis wird ein entscheidbares Zielmodell — Operating Model, Governance, Verantwortung.',
+    leitfrage: 'Wie müsste unsere Organisation arbeiten?',
+    tagline:   'Erkenntnis in ein entscheidbares Zielmodell übersetzen.',
     color:     SAGE,
   },
   {
     num:       '03',
+    meta:      'Pilot',
     title:     'Gestaltbar machen',
     leitfrage: 'Wie kommt das Modell in echte Arbeit?',
-    summary:   'Zielbilder treffen früh auf reale Situationen — in Piloten, Routinen und Entscheidungen.',
+    tagline:   'Zielbilder früh in reale Arbeitssituationen übersetzen.',
     color:     SAND,
   },
   {
     num:       '04',
+    meta:      'Praxis',
     title:     'Erprobbar machen',
     leitfrage: 'Was funktioniert wirklich?',
-    summary:   'Das Modell wird in der Praxis geprüft, angepasst — und wird so zur eigenen Struktur der Organisation.',
+    tagline:   'In der Praxis prüfen, anpassen und verankern.',
     color:     TERRA,
   },
   {
     num:       '05',
+    meta:      'Transfer',
     title:     'Unabhängig machen',
     leitfrage: 'Wie bleibt es wirksam, wenn 1789 rausgeht?',
-    summary:   'Verantwortung, Routinen und ein Rhythmus, in dem Anpassung Teil der Arbeit wird.',
+    tagline:   'Verantwortung und Rhythmus für eigenständige Weiterentwicklung.',
     color:     SAGE,
   },
 ]
@@ -75,13 +78,13 @@ export function AnsatzSection() {
         flexDirection:   'column',
         overflow:        'hidden',
         backgroundColor: 'var(--color-ink)',
-        paddingBlock:    'clamp(2rem, 4svh, 4rem)',
+        paddingBlock:    'clamp(2.5rem, 5svh, 5rem)',
       }}
     >
       <Container style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
 
         {/* ── Header ────────────────────────────────────────────────────── */}
-        <header style={{ flexShrink: 0 }}>
+        <header style={{ flexShrink: 0, marginBottom: 'clamp(2rem, 4svh, 4rem)' }}>
           <Grid className="stack-cols" style={{ alignItems: 'flex-end' }}>
             <Col span={7}>
               <Tag variant="accent">Unser Ansatz</Tag>
@@ -89,7 +92,7 @@ export function AnsatzSection() {
                 style={{
                   fontFamily:    'var(--font-display)',
                   fontWeight:    300,
-                  fontSize:      'clamp(1.75rem, 4svh, 4rem)',
+                  fontSize:      'clamp(2rem, 4.5svh, 4.5rem)',
                   lineHeight:    1.02,
                   letterSpacing: '-0.025em',
                   color:         'rgba(242,242,242,0.92)',
@@ -120,107 +123,112 @@ export function AnsatzSection() {
           </Grid>
         </header>
 
-        {/* ── Steps — flex:1 fills remaining height, rows evenly distributed ── */}
-        <ol
-          style={{
-            flex:           1,
-            minHeight:      0,
-            listStyle:      'none',
-            margin:         'clamp(1.5rem, 3svh, 3rem) 0 clamp(1rem, 2svh, 2rem)',
-            padding:        0,
-            display:        'flex',
-            flexDirection:  'column',
-            justifyContent: 'space-between',
-            borderTop:      '1px solid rgba(255,255,255,0.08)',
-          }}
-        >
+        {/* ── Step spread — 5 vertical phase tabs ───────────────────────── */}
+        <ol className="ansatz-steps" style={{ flex: 1, minHeight: 0 }}>
           {STEPS.map((step) => (
             <li
               key={step.num}
               style={{
-                display:             'grid',
-                gridTemplateColumns: 'auto minmax(0, 1fr) minmax(0, 1.4fr)',
-                gap:                 'clamp(1rem, 2vw, 2.5rem)',
-                alignItems:          'baseline',
-                paddingBlock:        'clamp(0.8rem, 1.6svh, 1.5rem)',
-                borderBottom:        '1px solid rgba(255,255,255,0.08)',
+                display:        'flex',
+                flexDirection:  'column',
+                minWidth:       0,
+                paddingTop:     'clamp(1rem, 2svh, 1.75rem)',
+                borderTop:      `2px solid ${step.color}`,
               }}
             >
-              {/* Number — italic display, accent colour */}
+              {/* Meta phase tag (mono, accent) */}
+              <span
+                style={{
+                  fontFamily:    'var(--font-mono)',
+                  fontSize:      'var(--text-xxs)',
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  color:         step.color,
+                  opacity:       0.85,
+                  display:       'block',
+                }}
+              >
+                {step.meta}
+              </span>
+
+              {/* Hero number — italic display, accent colour */}
               <span
                 aria-hidden="true"
                 style={{
-                  fontFamily:  'var(--font-display)',
-                  fontStyle:   'italic',
-                  fontWeight:  300,
-                  fontSize:    'clamp(1.5rem, 3.4svh, 2.75rem)',
-                  lineHeight:  1,
-                  color:       step.color,
-                  minWidth:    '1.5ch',
-                  textAlign:   'left',
+                  fontFamily:    'var(--font-display)',
+                  fontStyle:     'italic',
+                  fontWeight:    300,
+                  fontSize:      'clamp(2.75rem, 8svh, 6.5rem)',
+                  lineHeight:    0.95,
+                  letterSpacing: '-0.04em',
+                  color:         step.color,
+                  display:       'block',
+                  marginTop:     'clamp(0.5rem, 1svh, 1rem)',
                 }}
               >
                 {step.num}
               </span>
 
-              {/* Title + leitfrage */}
-              <div style={{ minWidth: 0 }}>
-                <h3
-                  style={{
-                    fontFamily:    'var(--font-display)',
-                    fontWeight:    300,
-                    fontSize:      'clamp(1.125rem, 2.4svh, 1.75rem)',
-                    lineHeight:    1.1,
-                    letterSpacing: '-0.02em',
-                    color:         'rgba(242,242,242,0.92)',
-                    margin:        0,
-                  }}
-                >
-                  {step.title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    fontStyle:  'italic',
-                    fontWeight: 300,
-                    fontSize:   'clamp(0.8125rem, 1.55svh, 1rem)',
-                    lineHeight: 1.4,
-                    color:      'rgba(242,242,242,0.5)',
-                    margin:     '0.35rem 0 0',
-                  }}
-                >
-                  {step.leitfrage}
-                </p>
-              </div>
+              {/* Title */}
+              <h3
+                style={{
+                  fontFamily:    'var(--font-display)',
+                  fontWeight:    300,
+                  fontSize:      'clamp(1.125rem, 2.4svh, 1.625rem)',
+                  lineHeight:    1.1,
+                  letterSpacing: '-0.02em',
+                  color:         'rgba(242,242,242,0.95)',
+                  margin:        'clamp(0.5rem, 1svh, 1rem) 0 0',
+                }}
+              >
+                {step.title}
+              </h3>
 
-              {/* Summary */}
+              {/* Leitfrage — italic supporting question */}
+              <p
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontStyle:  'italic',
+                  fontWeight: 300,
+                  fontSize:   'clamp(0.8125rem, 1.55svh, 1rem)',
+                  lineHeight: 1.4,
+                  color:      'rgba(242,242,242,0.5)',
+                  margin:     'clamp(0.4rem, 0.8svh, 0.7rem) 0 0',
+                }}
+              >
+                {step.leitfrage}
+              </p>
+
+              {/* Tagline — punchy single-line essence, pinned to bottom */}
               <p
                 style={{
                   fontFamily: 'var(--font-body)',
-                  fontSize:   'clamp(0.8125rem, 1.5svh, 0.9375rem)',
-                  lineHeight: 1.6,
-                  color:      'rgba(242,242,242,0.62)',
+                  fontSize:   'clamp(0.75rem, 1.4svh, 0.875rem)',
+                  lineHeight: 1.55,
+                  color:      'rgba(242,242,242,0.7)',
                   margin:     0,
+                  marginTop:  'auto',
+                  paddingTop: 'clamp(1rem, 2svh, 2rem)',
                 }}
               >
-                {step.summary}
+                {step.tagline}
               </p>
             </li>
           ))}
         </ol>
 
         {/* ── CTA ───────────────────────────────────────────────────────── */}
-        <footer style={{ flexShrink: 0 }}>
+        <footer style={{ flexShrink: 0, marginTop: 'clamp(1.5rem, 3svh, 3rem)' }}>
           <Link
             href="/ansatz"
             className="hover-line"
             style={{
-              fontFamily:    'var(--font-mono)',
-              fontSize:      'var(--text-xxs)',
-              letterSpacing: '0.16em',
-              textTransform: 'uppercase',
-              color:         'var(--color-terra)',
-              textDecoration:'none',
+              fontFamily:     'var(--font-mono)',
+              fontSize:       'var(--text-xxs)',
+              letterSpacing:  '0.16em',
+              textTransform:  'uppercase',
+              color:          'var(--color-terra)',
+              textDecoration: 'none',
             }}
           >
             Den vollständigen Ansatz lesen →
