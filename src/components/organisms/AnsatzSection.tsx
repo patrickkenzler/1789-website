@@ -17,6 +17,85 @@ const TERRA = 'var(--color-terra)'
 const SAGE  = 'var(--color-sage)'
 const SAND  = 'var(--color-sand)'
 
+// ─── Phase glyphs — geometric primitives matching the editorial vocabulary ──
+//
+// Each glyph is a small abstract mark, drawn with currentColor so it inherits
+// the phase's accent colour. Kept geometric (circles, squares, arcs) to sit
+// alongside the diamond in the AI section without competing with it.
+
+function GlyphSee() {        /* 01 Sichtbar — lens / focus dot */
+  return (
+    <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" strokeWidth="1.25" strokeOpacity="0.6" />
+      <circle cx="20" cy="20" r="3.25" fill="currentColor" />
+    </svg>
+  )
+}
+function GlyphTarget() {     /* 02 Entscheidbar — concentric target */
+  return (
+    <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden="true">
+      <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" strokeWidth="1.1" strokeOpacity="0.3" />
+      <circle cx="20" cy="20" r="10" fill="none" stroke="currentColor" strokeWidth="1.25" strokeOpacity="0.6" />
+      <circle cx="20" cy="20" r="3" fill="currentColor" />
+    </svg>
+  )
+}
+function GlyphFrame() {      /* 03 Gestaltbar — prototype within frame */
+  return (
+    <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden="true">
+      <rect x="5" y="5" width="30" height="30" fill="none" stroke="currentColor" strokeWidth="1.25" strokeOpacity="0.55" />
+      <rect x="14" y="14" width="12" height="12" fill="currentColor" />
+    </svg>
+  )
+}
+function GlyphLoop() {       /* 04 Erprobbar — iteration arc */
+  return (
+    <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden="true">
+      {/* 3/4 circular arc clockwise */}
+      <path
+        d="M 20 6 A 14 14 0 1 1 6 20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+      {/* Arrow head at start */}
+      <path
+        d="M 14 4 L 20 6 L 18 12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+function GlyphHandover() {   /* 05 Unabhängig — arrow leaving bracket */
+  return (
+    <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden="true">
+      {/* Open bracket on left */}
+      <path
+        d="M 14 8 L 6 8 L 6 32 L 14 32"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeOpacity="0.55"
+      />
+      {/* Arrow leaving rightward */}
+      <line x1="11" y1="20" x2="34" y2="20" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path
+        d="M 28 14 L 34 20 L 28 26"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 type Step = {
   num:       string
   meta:      string   // single-word phase tag, e.g. "Diagnose"
@@ -24,6 +103,7 @@ type Step = {
   leitfrage: string
   tagline:   string   // single-sentence essence — under ~10 words
   color:     string
+  glyph:     () => React.ReactElement
 }
 
 const STEPS: readonly Step[] = [
@@ -34,6 +114,7 @@ const STEPS: readonly Step[] = [
     leitfrage: 'Was blockiert uns wirklich?',
     tagline:   'Reale Entscheidungen, Routinen und Reibungen sichtbar machen.',
     color:     TERRA,
+    glyph:     GlyphSee,
   },
   {
     num:       '02',
@@ -42,6 +123,7 @@ const STEPS: readonly Step[] = [
     leitfrage: 'Wie müsste unsere Organisation arbeiten?',
     tagline:   'Erkenntnis in ein entscheidbares Zielmodell übersetzen.',
     color:     SAGE,
+    glyph:     GlyphTarget,
   },
   {
     num:       '03',
@@ -50,6 +132,7 @@ const STEPS: readonly Step[] = [
     leitfrage: 'Wie kommt das Modell in echte Arbeit?',
     tagline:   'Zielbilder früh in reale Arbeitssituationen übersetzen.',
     color:     SAND,
+    glyph:     GlyphFrame,
   },
   {
     num:       '04',
@@ -58,6 +141,7 @@ const STEPS: readonly Step[] = [
     leitfrage: 'Was funktioniert wirklich?',
     tagline:   'In der Praxis prüfen, anpassen und verankern.',
     color:     TERRA,
+    glyph:     GlyphLoop,
   },
   {
     num:       '05',
@@ -66,6 +150,7 @@ const STEPS: readonly Step[] = [
     leitfrage: 'Wie bleibt es wirksam, wenn 1789 rausgeht?',
     tagline:   'Verantwortung und Rhythmus für eigenständige Weiterentwicklung.',
     color:     SAGE,
+    glyph:     GlyphHandover,
   },
 ]
 
@@ -199,6 +284,27 @@ export function AnsatzSection() {
                 {step.leitfrage}
               </p>
 
+              {/* Glyph — centred in remaining space between leitfrage + tagline */}
+              <div
+                style={{
+                  flex:           1,
+                  minHeight:      0,
+                  display:        'flex',
+                  alignItems:     'center',
+                  justifyContent: 'center',
+                  paddingBlock:   'clamp(1rem, 2svh, 2rem)',
+                  color:          step.color,
+                }}
+              >
+                <div style={{
+                  width:    'clamp(2.25rem, 5.5svh, 3.75rem)',
+                  height:   'clamp(2.25rem, 5.5svh, 3.75rem)',
+                  display:  'block',
+                }}>
+                  <step.glyph />
+                </div>
+              </div>
+
               {/* Tagline — punchy single-line essence, pinned to bottom */}
               <p
                 style={{
@@ -207,8 +313,6 @@ export function AnsatzSection() {
                   lineHeight: 1.55,
                   color:      'rgba(242,242,242,0.7)',
                   margin:     0,
-                  marginTop:  'auto',
-                  paddingTop: 'clamp(1rem, 2svh, 2rem)',
                 }}
               >
                 {step.tagline}
