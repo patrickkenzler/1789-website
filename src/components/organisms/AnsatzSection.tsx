@@ -159,25 +159,24 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
       onMouseLeave={() => setHovered(false)}
       style={{
         flex:            1,
+        minHeight:       0,          /* allow flex to shrink below content size */
+        overflow:        'hidden',
         display:         'flex',
         flexDirection:   'column',
         justifyContent:  'center',
-        /* Left border offset so the 2px stripe doesn't shift content */
+        /* All vertical spacing in svh so items scale with viewport height */
         paddingLeft:     'calc(var(--grid-margin) - 2px)',
         paddingRight:    'var(--grid-margin)',
-        paddingBlock:    'clamp(2rem, 3svh, 4rem)',
-        /* 2px colour stripe — fades in on hover, full on active */
+        paddingBlock:    '2svh',
         borderLeft:      `2px solid ${isActive ? color : hovered ? wa(color, 0.35) : 'transparent'}`,
-        /* Cards separated by gap on container — no borderTop needed */
         cursor:          'pointer',
         outline:         'none',
-        /* Persistent card bg so items are always visually distinct */
         backgroundColor: isActive ? wa(color, 0.1) : hovered ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.03)',
         transition:      'background-color 0.3s var(--ease-standard), border-left-color 0.3s var(--ease-standard)',
         userSelect:      'none',
       }}
     >
-      {/* Step number — always in the step's accent colour */}
+      {/* Step number */}
       <span style={{
         fontFamily:    'var(--font-mono)',
         fontSize:      'var(--text-xxs)',
@@ -186,17 +185,17 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         color:         color,
         opacity:       isActive ? 1 : hovered ? 0.55 : 0.28,
         transition:    'opacity 0.25s var(--ease-standard)',
-        marginBottom:  '0.6rem',
+        marginBottom:  '0.7svh',
         display:       'block',
       }}>
         {step.num}
       </span>
 
-      {/* Title */}
+      {/* Title — svh-based font so it scales with height, not just width */}
       <h3 style={{
         fontFamily:    'var(--font-display)',
         fontWeight:    300,
-        fontSize:      'clamp(1.5rem, 1.9vw, 2.25rem)',
+        fontSize:      'clamp(1.1rem, 2.8svh, 2.25rem)',
         lineHeight:    1.0,
         letterSpacing: '-0.025em',
         color:         isActive
@@ -210,17 +209,19 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
         {step.title}
       </h3>
 
-      {/* Leitfrage — always rendered so height stays stable */}
+      {/* Leitfrage — collapses to zero height when inactive */}
       <p style={{
         fontFamily:    'var(--font-display)',
         fontStyle:     'italic',
-        fontSize:      'calc(var(--text-xs) * 1.2)',
-        lineHeight:    1.5,
+        fontSize:      'clamp(0.75rem, 1.5svh, 1rem)',
+        lineHeight:    1.45,
         color:         'rgba(242,242,242,0.55)',
-        margin:        '0.65rem 0 0',
+        margin:        0,
+        marginTop:     isActive ? '0.8svh' : 0,
+        maxHeight:     isActive ? '5svh' : 0,
+        overflow:      'hidden',
         opacity:       isActive ? 1 : 0,
-        transform:     isActive ? 'translateY(0)' : 'translateY(4px)',
-        transition:    'opacity 0.35s var(--ease-entry), transform 0.35s var(--ease-entry)',
+        transition:    'max-height 0.4s var(--ease-entry), opacity 0.35s var(--ease-entry), margin-top 0.35s var(--ease-entry)',
         pointerEvents: 'none',
         maxWidth:      '36ch',
       }}>
@@ -233,52 +234,18 @@ function AccordionItem({ step, isFirst, isActive, onActivate }: ItemProps) {
 // ── Detail card ────────────────────────────────────────────────────────────────
 
 function DetailCard({ step }: { step: Step }) {
-  const pad   = 'clamp(2rem, 3vw, 3.25rem)'
+  const pad   = 'clamp(1.5rem, 2.5vw, 2.75rem)'
   const color = step.color
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-
-      {/* ── Fixed header: step number + guiding question ── */}
-      <div style={{
-        paddingInline: pad,
-        paddingTop:    pad,
-        paddingBottom: 'clamp(1.25rem, 1.8vw, 1.75rem)',
-        borderBottom:  '1px solid rgba(255,255,255,0.08)',
-        flexShrink:    0,
-      }}>
-        <span style={{
-          fontFamily:    'var(--font-mono)',
-          fontSize:      'var(--text-xxs)',
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color:         color,
-          display:       'block',
-          marginBottom:  '0.5rem',
-          opacity:       0.9,
-        }}>
-          {step.num}
-        </span>
-        <p style={{
-          fontFamily:    'var(--font-display)',
-          fontStyle:     'italic',
-          fontWeight:    300,
-          fontSize:      'clamp(1.2rem, 1.7vw, 1.65rem)',
-          lineHeight:    1.35,
-          letterSpacing: '-0.025em',
-          color:         'rgba(242,242,242,0.9)',
-          margin:        0,
-        }}>
-          {step.leitfrage}
-        </p>
-      </div>
 
       {/* ── Scrollable body ── */}
       <div style={{
         flex:          1,
         overflowY:     'auto',
         paddingInline: pad,
-        paddingTop:    'clamp(1.5rem, 2.2vw, 2rem)',
+        paddingTop:    pad,
         paddingBottom: 'clamp(1.5rem, 2.2vw, 2.25rem)',
         display:       'flex',
         flexDirection: 'column',
@@ -420,47 +387,50 @@ export function AnsatzSection() {
       }}
     >
 
-      {/* ══ Row A: header — tag + headline left, description right ═══════════ */}
+      {/* ══ Row A: header — compact strip, all vertical sizes in svh ════════ */}
       <div
         style={{
           flexShrink:          0,
           display:             'grid',
           gridTemplateColumns: '1fr 2fr',
-          paddingTop:          '2.5rem',   /* wrapper sits at top:5rem, no extra nav offset */
+          paddingTop:          '1.8svh',
           borderBottom:        '1px solid rgba(255,255,255,0.08)',
         }}
       >
         {/* Left cell: tag + headline */}
         <div style={{
           paddingInline: 'var(--grid-margin)',
-          paddingBottom: '2.5rem',
+          paddingBottom: '1.8svh',
         }}>
           <Tag variant="accent">Unser Ansatz</Tag>
           <h2 style={{
             fontFamily:    'var(--font-display)',
             fontWeight:    300,
-            fontSize:      'clamp(1.5rem, 2.1vw, 2.5rem)',
+            /* svh-driven so header scales with viewport height, not width */
+            fontSize:      'clamp(1rem, 2.4svh, 2.25rem)',
             lineHeight:    1.05,
             letterSpacing: '-0.03em',
             color:         'rgba(242,242,242,0.92)',
-            margin:        '1.1rem 0 0',
+            margin:        '0.8svh 0 0',
           }}>
             Von Diagnose<br />zur Eigenständigkeit.
           </h2>
         </div>
 
-        {/* Right cell: short description */}
+        {/* Right cell: caption-size description — key to keeping header compact */}
         <div style={{
           paddingInline: 'var(--grid-margin)',
-          paddingBottom: '2.5rem',
+          paddingBottom: '1.8svh',
           display:       'flex',
           alignItems:    'flex-end',
         }}>
           <p style={{
             fontFamily: 'var(--font-body)',
-            fontSize:   'var(--text-base)',
-            lineHeight: 1.75,
-            color:      'rgba(242,242,242,0.45)',
+            /* Reduced from text-base (20px) to xs (13px) — the large font
+               was the main reason the header ate 280px instead of ~90px */
+            fontSize:   'clamp(0.75rem, 1.4svh, 0.9375rem)',
+            lineHeight: 1.55,
+            color:      'rgba(242,242,242,0.4)',
             margin:     0,
             maxWidth:   '52ch',
           }}>
@@ -488,7 +458,7 @@ export function AnsatzSection() {
             borderRight:   '1px solid rgba(255,255,255,0.08)',
             display:       'flex',
             flexDirection: 'column',
-            gap:           '2px',   /* dark ink shows between cards */
+            gap:           '1px',   /* dark ink shows between cards */
             overflow:      'hidden',
           }}
         >

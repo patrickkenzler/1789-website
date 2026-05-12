@@ -413,7 +413,7 @@ export default function Home() {
       <TestimonialsSection />
 
       {/* ─── Denk Labor ───────────────────────────────────────────────────── */}
-      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
+      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-background)' }}>
         <Container>
           <Grid>
             <Col span={5}>
@@ -550,7 +550,7 @@ export default function Home() {
       </section>
 
       {/* ─── Was wir erreichen ────────────────────────────────────────────── */}
-      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-surface)' }}>
+      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-background)' }}>
         <Container>
 
           {/* ── Headline ── */}
@@ -615,7 +615,6 @@ export default function Home() {
         className="scroll-card"
         style={{
           paddingBlock:    '8rem',
-          borderTop:       '1px solid var(--color-border)',
           overflow:        'hidden',
           backgroundColor: 'var(--color-background)',
         }}

@@ -270,23 +270,6 @@ function TestimonialCard({
           overflow:      'hidden',
         }}
       >
-        <span
-          aria-hidden
-          style={{
-            fontFamily:   'var(--font-display)',
-            fontStyle:    'italic',
-            fontSize:     '2.5rem',
-            lineHeight:   0.7,
-            color:        'var(--color-terra)',
-            marginBottom: '0.5rem',
-            display:      'block',
-            userSelect:   'none',
-            opacity:      0.85,
-          }}
-        >
-          "
-        </span>
-
         <p
           style={{
             fontFamily:    'var(--font-display)',
