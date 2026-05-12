@@ -7,10 +7,16 @@ import {
 } from '@/components/molecules/PhaseGlyph'
 
 // ─── Colours — hex so we can mix alphas inline for output chips ──────────────
+//
+// The home AnsatzSection sits on `--color-ink` and uses the *light* phase
+// variants (sand #E3DDD5, sage #B8CC8A). On this page's cream background
+// those tones disappear — sand has only ~1.1:1 contrast against cream, well
+// below the WCAG threshold. We use the *dark* variants here so every accent
+// reads on the light surface.
 
-const TERRA = '#F44D0B'
-const SAGE  = '#B8CC8A'
-const SAND  = '#E3DDD5'
+const TERRA = '#F44D0B'          /* unchanged — already high-contrast on cream */
+const SAGE  = '#8FA66A'          /* sage-dark — replaces #B8CC8A for this page */
+const SAND  = '#8B7355'          /* new sand-dark warm tan — replaces #E3DDD5 */
 
 function wa(hex: string, a: number) {
   const n = parseInt(hex.replace('#', ''), 16)
