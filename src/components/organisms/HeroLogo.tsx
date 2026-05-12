@@ -158,7 +158,9 @@ export function HeroLogo() {
             letterSpacing: '0.18em',
             textTransform: 'uppercase',
             color:         'var(--color-ink-subtle)',
-            marginTop:     'clamp(0.75rem, 2svh, 2rem)',
+            /* Matches Zone 2's paddingBottom so the eyebrow sits as far from
+               the top edge as the logo marquee sits from the bottom edge. */
+            marginTop:     'clamp(1.5rem, 3svh, 2.5rem)',
             marginBottom:  0,
             flexShrink:    0,
           }}
