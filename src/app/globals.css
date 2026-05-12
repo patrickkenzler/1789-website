@@ -291,11 +291,23 @@
     width: 100%;
   }
 
-  /* ── LaborSection — featured + thumbnail-column layout ───────────────── */
+  /* ── LaborSection — three-tier spread ────────────────────────────────── */
+  @media (max-width: 1279px) {
+    /* tablet: collapse list+newsletter under the mediums */
+    .labor-grid {
+      grid-template-columns: 5fr 4fr !important;
+    }
+    .labor-grid > :nth-child(3) {
+      grid-column: 1 / -1;
+    }
+  }
   @media (max-width: 1023px) {
     .labor-grid {
       grid-template-columns: 1fr !important;
       grid-auto-rows: auto;
+    }
+    .labor-grid > :nth-child(3) {
+      grid-column: auto;
     }
   }
   .labor-thumb:hover {
