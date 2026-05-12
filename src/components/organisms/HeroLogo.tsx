@@ -176,29 +176,33 @@ export function HeroLogo() {
             Organizational Strategy • Governance Design • Target Operating Model
           </p>
 
-          {/* Headline — three-line mixed claim */}
+          {/* Headline — locked to three lines.
+              fontSize uses a vw-driven clamp tuned so the longest line
+              ("Dazwischen entscheidet Organisation.") fits the available
+              column width (100vw − 2×grid-margin) at every breakpoint;
+              whiteSpace:nowrap guarantees each <p> stays single-line. */}
           <div
             style={{
               fontFamily:    'var(--font-display)',
               fontWeight:    300,
-              fontSize:      'clamp(2.5rem, 7vw, 9rem)',
-              lineHeight:    1.02,
+              fontSize:      'clamp(1.25rem, 5.5vw, 7rem)',
+              lineHeight:    1.05,
               letterSpacing: '-0.03em',
               color:         'var(--color-ink)',
               marginBottom:  'clamp(2rem, 4svh, 4rem)',
             }}
           >
-            <p style={{ margin: 0 }}>
+            <p style={{ margin: 0, whiteSpace: 'nowrap' }}>
               Strategie{' '}
               <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>scheitert an</em>
               {' '}Struktur.
             </p>
-            <p style={{ margin: 0 }}>
+            <p style={{ margin: 0, whiteSpace: 'nowrap' }}>
               Struktur{' '}
               <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>überholt</em>
               {' '}Strategie.
             </p>
-            <p style={{ margin: 0 }}>
+            <p style={{ margin: 0, whiteSpace: 'nowrap' }}>
               Dazwischen{' '}
               <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>entscheidet</em>
               {' '}Organisation.
