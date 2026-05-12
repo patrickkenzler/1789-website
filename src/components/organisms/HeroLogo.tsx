@@ -99,7 +99,15 @@ function GapGraphic() {
 
 export function HeroLogo() {
   return (
-    <div style={{ flex: '1', position: 'relative', overflow: 'hidden' }}>
+    <div style={{
+      flex:         '1',
+      position:     'relative',
+      overflow:     'hidden',
+      /* Match the sticky-card top radius so when the next card slides over,
+         its rounded-corner cut-outs reveal cream section BG, not the
+         terra-filled top edge of the GapGraphic SVG below. */
+      borderRadius: '1.5rem 1.5rem 0 0',
+    }}>
 
       {/* ── Full-bleed animated background ── */}
       <div
