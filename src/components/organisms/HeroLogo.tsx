@@ -148,6 +148,24 @@ export function HeroLogo() {
         }}
       >
 
+        {/* ── Zone 0: Eyebrow / topline — sits at the top of the Hero,
+             independent of the centered claim below ── */}
+        <p
+          style={{
+            fontFamily:    'var(--font-mono)',
+            fontSize:      'var(--text-xxs)',
+            fontWeight:    400,
+            letterSpacing: '0.18em',
+            textTransform: 'uppercase',
+            color:         'var(--color-ink-subtle)',
+            marginTop:     'clamp(0.75rem, 2svh, 2rem)',
+            marginBottom:  0,
+            flexShrink:    0,
+          }}
+        >
+          Organizational Strategy • Governance Design • Target Operating Model
+        </p>
+
         {/* ── Zone 1: vertically centered claim block ── */}
         <div
           style={{
@@ -160,21 +178,6 @@ export function HeroLogo() {
             paddingBottom:  'clamp(1rem, 2svh, 2rem)',
           }}
         >
-
-          {/* Eyebrow label */}
-          <p
-            style={{
-              fontFamily:    'var(--font-mono)',
-              fontSize:      'var(--text-xxs)',
-              fontWeight:    400,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color:         'var(--color-ink-subtle)',
-              marginBottom:  'clamp(1.25rem, 3svh, 2.5rem)',
-            }}
-          >
-            Organizational Strategy • Governance Design • Target Operating Model
-          </p>
 
           {/* Headline — locked to three lines.
               fontSize uses a vw-driven clamp tuned so the longest line
