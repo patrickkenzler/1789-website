@@ -114,9 +114,10 @@ export default function Home() {
 
       {/* ─── Hero ─────────────────────────────────────────────────────────── */}
       {/*
-        position:relative + overflow:hidden → SVG inside HeroLogo (absolute inset-0)
-        clips cleanly within the 100svh card. paddingTop pads the content column
-        inside HeroLogo (not the card itself) so the SVG can bleed to true top=0.
+        Inherits position:sticky from .scroll-card so it stacks like every other
+        card. overflow:hidden clips the full-bleed SVG inside HeroLogo (absolute
+        inset-0); the sticky element itself is a containing block for absolute
+        descendants, so no extra position declaration is needed.
       */}
       <section
         className="scroll-card"
@@ -126,7 +127,6 @@ export default function Home() {
           flexDirection:   'column',
           paddingTop:      '5rem', /* nav height — content inside HeroLogo adds more */
           overflow:        'hidden',
-          position:        'relative',
           backgroundColor: 'var(--color-background)',
         }}
       >
