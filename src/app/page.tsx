@@ -6,6 +6,7 @@ import { featuredCases } from '@/data/cases'
 import { HeroLogo } from '@/components/organisms/HeroLogo'
 import { AnsatzSection } from '@/components/organisms/AnsatzSection'
 import { TestimonialsSection } from '@/components/organisms/TestimonialsSection'
+import { LaborSection } from '@/components/organisms/LaborSection'
 import { StickyScrollSection } from '@/components/layout/StickyScrollSection'
 
 // ─── Pillar icons ─────────────────────────────────────────────────────────────
@@ -495,128 +496,7 @@ export default function Home() {
       <TestimonialsSection />
 
       {/* ─── Denk Labor ───────────────────────────────────────────────────── */}
-      <section className="scroll-card" style={{ paddingBlock: '7rem', backgroundColor: 'var(--color-background)' }}>
-        <Container>
-          <Grid>
-            <Col span={5}>
-              <Tag>Denk Labor</Tag>
-              <h2
-                className="mt-6 font-display font-light text-ink balance"
-                style={{ fontSize: 'var(--text-md)', lineHeight: '1.1', letterSpacing: '-0.02em' }}
-              >
-                Podcast, Publikationen & Talks
-              </h2>
-              <p className="mt-6 font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
-                Unser Denklabor — wo Organisationstheorie auf Praxis trifft.
-              </p>
-              <Link
-                href="/labor"
-                className="hover-line inline-block mt-8 font-body uppercase tracking-widest"
-                style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--color-ink-muted)' }}
-              >
-                Alle Inhalte →
-              </Link>
-            </Col>
-          </Grid>
-
-          <Grid className="stack-cols mt-16">
-            {/* ── Left: latest podcast episode with embedded player ── */}
-            <Col span={6}>
-              <div
-                className="card"
-                style={{ overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}
-              >
-                <div className="p-8 pb-5">
-                  <span className="c-eyebrow c-eyebrow--terra" style={{ marginBottom: '0.25rem' }}>
-                    ★ Aktuelle Folge · #142
-                  </span>
-                  <h3 className="c-title">
-                    Das Internet: Utopie, Infrastruktur, Schlachtfeld
-                  </h3>
-                  <p className="c-body" style={{ fontStyle: 'italic', color: 'var(--color-ink-subtle)' }}>
-                    mit Marie Kilg
-                  </p>
-                  <div className="flex gap-2 mt-4">
-                    {['Digital', 'Gesellschaft'].map((t) => <Tag key={t}>{t}</Tag>)}
-                  </div>
-                </div>
-                <div className="px-4 pb-4 mt-auto">
-                  <iframe
-                    src="https://open.spotify.com/embed/episode/5rW7kTMsBrpdNdeyRorwX9?utm_source=generator"
-                    width="100%"
-                    height="152"
-                    frameBorder="0"
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"
-                    style={{ display: 'block', borderRadius: '8px' }}
-                  />
-                </div>
-                <div className="px-8 pb-6">
-                  <Link
-                    href="/labor"
-                    className="hover-line font-body uppercase tracking-widest"
-                    style={{ fontSize: 'var(--text-xxs)', fontWeight: 500, color: 'var(--color-terra)' }}
-                  >
-                    Alle Folgen →
-                  </Link>
-                </div>
-              </div>
-            </Col>
-
-            {/* ── Right: essay + upcoming event ── */}
-            <Col span={6}>
-              <div className="flex flex-col gap-6 h-full">
-
-                {/* Essay by Human Nagafi */}
-                <Link
-                  href="/labor"
-                  className="card flex-1 block"
-                  style={{ padding: '1.75rem', textDecoration: 'none' }}
-                >
-                  <span className="c-eyebrow">
-                    Essay
-                  </span>
-                  <h3 className="c-title">
-                    Nähe als Organisationsprinzip — warum wir Corporate Therapy auf die Bühne bringen
-                  </h3>
-                  <p className="c-body" style={{ fontStyle: 'italic', color: 'var(--color-ink-subtle)' }}>
-                    Human Nagafi
-                  </p>
-                  <p className="c-meta">
-                    Essay · 8 Min · 2024
-                  </p>
-                </Link>
-
-                {/* Upcoming live event */}
-                <Link
-                  href="/labor"
-                  className="card card-terra flex-1 block"
-                  style={{ padding: '1.75rem', textDecoration: 'none' }}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="c-eyebrow c-eyebrow--terra">
-                      Live · Talk
-                    </span>
-                    <span className="font-mono text-xs" style={{ color: 'var(--color-terra)' }}>
-                      25.06.2024
-                    </span>
-                  </div>
-                  <h3 className="c-title">
-                    Corporate Therapy — Live in Frankfurt
-                  </h3>
-                  <p className="c-body">
-                    Live-Folge mit Human, Patrick &amp; Gast. Einlass ab 18 Uhr, Start 18:30 Uhr. Gespräche, Snacks &amp; Drinks.
-                  </p>
-                  <p className="c-meta">
-                    Frankfurt am Main
-                  </p>
-                </Link>
-
-              </div>
-            </Col>
-          </Grid>
-        </Container>
-      </section>
+      <LaborSection />
 
       {/* ─── Unser Ansatz — 5-step process accordion ────────────────── */}
       <section

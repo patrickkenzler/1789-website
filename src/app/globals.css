@@ -291,6 +291,17 @@
     width: 100%;
   }
 
+  /* ── LaborSection — featured + thumbnail-column layout ───────────────── */
+  @media (max-width: 1023px) {
+    .labor-grid {
+      grid-template-columns: 1fr !important;
+      grid-auto-rows: auto;
+    }
+  }
+  .labor-thumb:hover {
+    opacity: 0.78;
+  }
+
   /* ── /ansatz overview strip — 5 phase chips, collapses to 2-col on tablet ── */
   @media (max-width: 1023px) {
     .ansatz-overview { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
