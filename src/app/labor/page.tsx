@@ -167,13 +167,6 @@ export default function Labor() {
                   </span>
                 ))}
               </div>
-              <a
-                href="/podcast"
-                className="hover-line inline-block mt-10 font-body uppercase tracking-widest"
-                style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: 'rgba(242,237,230,0.5)' }}
-              >
-                Alle Podcast-Folgen →
-              </a>
             </Col>
             <Col span={7}>
               <div style={{ borderRadius: '12px', overflow: 'hidden' }}>

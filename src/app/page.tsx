@@ -471,7 +471,7 @@ export default function Home() {
                 </div>
                 <div className="px-8 pb-6">
                   <Link
-                    href="/podcast"
+                    href="/labor"
                     className="hover-line font-body uppercase tracking-widest"
                     style={{ fontSize: 'var(--text-xxs)', fontWeight: 500, color: 'var(--color-terra)' }}
                   >

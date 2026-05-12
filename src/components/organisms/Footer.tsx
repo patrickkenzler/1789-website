@@ -6,7 +6,7 @@ const NAV_ITEMS = [
   { label: 'Cases',      href: '/projekte' },
   { label: 'Leistungen', href: '/leistungen' },
   { label: 'Labor',      href: '/labor' },
-  { label: 'Podcast',    href: '/podcast' },
+  { label: 'Wir',        href: '/wir' },
 ]
 
 const MONO_LABEL: React.CSSProperties = {

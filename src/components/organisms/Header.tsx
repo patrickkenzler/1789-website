@@ -8,7 +8,7 @@ import { useScrollProgress } from '@/hooks/useScrollProgress'
 /**
  * Header — editorial split-nav
  *
- * Desktop: [Ansatz · Leistungen · Cases] [1789 logo — centered] [Labor · Podcast · Kontakt]
+ * Desktop: [Ansatz · Leistungen · Cases] [1789 logo — centered] [Labor · Wir · Kontakt]
  * Mobile:  [Logo — left] [Hamburger — right]
  *          Hamburger opens a full-screen ink overlay with large nav links.
  *
@@ -25,7 +25,7 @@ const LEFT_ITEMS = [
 
 const RIGHT_ITEMS = [
   { label: 'Labor',      href: '/labor' },
-  { label: 'Podcast',    href: '/podcast' },
+  { label: 'Wir',        href: '/wir' },
   { label: 'Kontakt',    href: '/kontakt' },
 ]
 
