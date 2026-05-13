@@ -291,6 +291,17 @@
     width: 100%;
   }
 
+  /* ── /labor subpage — bento grid + formats collapse on tablet ─────── */
+  @media (max-width: 1023px) {
+    /* Content bento grid */
+    .container-grid > div[style*="grid-template-columns: repeat(12"] > * {
+      grid-column: span 12 !important;
+    }
+    .labor-formats {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
   /* ── LaborSection — three-tier spread ────────────────────────────────── */
   @media (max-width: 1279px) {
     /* tablet: collapse list+newsletter under the mediums */
