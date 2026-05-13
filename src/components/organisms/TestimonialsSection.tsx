@@ -173,17 +173,17 @@ function TestimonialCard({
         boxShadow:       '0 0 0 1px rgba(26,23,20,0.08)',
       }}
     >
-      {/* ── Portrait — clamp height so the image stays portrait on most
-            viewports without exceeding card height (which would push the
-            quote off-screen). On the typical 1440 logical 4K viewport with
-            ~410 px wide cards, 540 px tall → aspect 0.76 (clearly portrait). */}
+      {/* ── Portrait — clamp height so the image stays portrait without
+            eating the quote band. Card width is capped at 380 px above, so
+            image 420 px ≈ aspect 1.10 (clear portrait) while leaving ~270 px
+            for the quote + signature below. */}
       <div
         className="t-card-photo"
         style={{
           position:        'relative',
           flexShrink:      0,
           width:           '100%',
-          height:          'clamp(280px, 50svh, 540px)',
+          height:          'clamp(260px, 40svh, 420px)',
           overflow:        'hidden',
           backgroundColor: 'var(--color-surface)',
         }}
@@ -278,8 +278,8 @@ function TestimonialCard({
           style={{
             fontFamily:    'var(--font-display)',
             fontStyle:     'italic',
-            fontSize:      'clamp(1rem, 1.1vw, 1.2rem)',
-            lineHeight:    1.55,
+            fontSize:      'clamp(0.9375rem, 0.95vw, 1.0625rem)',
+            lineHeight:    1.5,
             letterSpacing: '-0.01em',
             color:         'var(--color-ink-muted)',
             flex:          1,
@@ -417,10 +417,12 @@ export function TestimonialsSection() {
 
       {/* ── Card track ────────────────────────────────────────────────────── */}
       {/*
-        The outer div clips the overflow; the inner track slides via translateX.
-        Card width = 1/3 of (viewport - 2×margin - 2×gaps).
-        Step per arrow click = cardWidth + gap = the same expression + 1.5rem.
-        We express this as a CSS calc so it stays correct at any viewport width.
+        Card width is capped at 380px so cards stay portrait-shaped on wide
+        viewports — 3 cards still fit on standard desktop (3×380 + 2×24 = 1188 px),
+        and on viewports where 1/3 of the row would be narrower than 380 px we
+        fall back to that smaller value. The slot width and the slider step
+        both reference the same CSS variable, so navigation stays accurate
+        even when the cap kicks in.
       */}
       <div
         style={{
@@ -429,14 +431,15 @@ export function TestimonialsSection() {
           overflow: 'hidden',
           paddingInline: 'var(--grid-margin)',
           paddingBottom: '2.5rem',
-        }}
+          ['--testimonial-card-w' as string]: 'min(calc((100vw - 2 * var(--grid-margin) - 2 * 1.5rem) / 3), 380px)',
+        } as React.CSSProperties}
       >
         <div
           style={{
             display:    'flex',
             gap:        '1.5rem',
             height:     '100%',
-            transform:  `translateX(calc(${-offset} * ((100vw - 2 * var(--grid-margin) - 2 * 1.5rem) / 3 + 1.5rem)))`,
+            transform:  `translateX(calc(${-offset} * (var(--testimonial-card-w) + 1.5rem)))`,
             transition: 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1)',
             willChange: 'transform',
           }}
@@ -446,7 +449,7 @@ export function TestimonialsSection() {
               key={t.name}
               style={{
                 flexShrink: 0,
-                width:      'calc((100vw - 2 * var(--grid-margin) - 2 * 1.5rem) / 3)',
+                width:      'var(--testimonial-card-w)',
                 height:     '100%',
               }}
             >
