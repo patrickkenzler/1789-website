@@ -241,9 +241,9 @@ function FeaturedCard({ item }: { item: LaborItem }) {
           style={{
             fontFamily:    'var(--font-display)',
             fontWeight:    300,
-            fontSize:      'clamp(1.25rem, 2.6svh, 1.875rem)',
-            lineHeight:    1.1,
-            letterSpacing: '-0.02em',
+            fontSize:      'clamp(1.75rem, 3.6svh, 2.75rem)',
+            lineHeight:    1.05,
+            letterSpacing: '-0.025em',
             color:         'var(--color-ink)',
             margin:        0,
           }}
@@ -325,13 +325,13 @@ function MediumCard({ item }: { item: LaborItem }) {
           style={{
             fontFamily:      'var(--font-display)',
             fontWeight:      300,
-            fontSize:        'clamp(0.9375rem, 1.85svh, 1.25rem)',
-            lineHeight:      1.2,
-            letterSpacing:   '-0.015em',
+            fontSize:        'clamp(1.125rem, 2.4svh, 1.625rem)',
+            lineHeight:      1.1,
+            letterSpacing:   '-0.02em',
             color:           'var(--color-ink)',
             margin:          0,
             display:         '-webkit-box',
-            WebkitLineClamp: 2,
+            WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical',
             overflow:        'hidden',
           }}
@@ -391,9 +391,9 @@ function ListItem({ item, first }: { item: LaborItem; first: boolean }) {
         style={{
           fontFamily:      'var(--font-display)',
           fontWeight:      300,
-          fontSize:        'clamp(0.875rem, 1.6svh, 1.0625rem)',
-          lineHeight:      1.2,
-          letterSpacing:   '-0.015em',
+          fontSize:        'clamp(1rem, 1.95svh, 1.375rem)',
+          lineHeight:      1.15,
+          letterSpacing:   '-0.018em',
           color:           'var(--color-ink)',
           margin:          0,
           display:         '-webkit-box',
