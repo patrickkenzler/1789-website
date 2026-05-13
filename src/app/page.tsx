@@ -240,12 +240,22 @@ export default function Home() {
           display:       'flex',
           flexDirection: 'column',
         }}>
-          <Container style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+          {/* Container is flex-column with justify-content:center so the
+              whole group (header + intro + cards) centres vertically.
+              On 4K the leftover space splits equally above and below the
+              content — no more "everything tight at top, empty band below". */}
+          <Container style={{
+            flex:           1,
+            display:        'flex',
+            flexDirection:  'column',
+            justifyContent: 'center',
+            minHeight:      0,
+          }}>
 
             {/* ── Headline ── */}
-            <div style={{ marginBottom: 'clamp(0.75rem, 1.5svh, 2rem)' }}>
+            <div style={{ marginBottom: 'clamp(1.5rem, 3svh, 3rem)' }}>
               <Tag>DER 1789-BLICK</Tag>
-              <div style={{ marginTop: 'clamp(0.75rem, 1.5svh, 1.75rem)' }}>
+              <div style={{ marginTop: 'clamp(1.25rem, 2.5svh, 2.25rem)' }}>
                 <p style={{ ...displayStyle, fontSize: 'clamp(2rem, 5svh, 5rem)' }}>Was heute blockiert, —</p>
                 <p style={{ ...displayStyle, fontSize: 'clamp(2rem, 5svh, 5rem)', marginTop: '0.12em', fontStyle: 'italic', color: 'var(--color-terra)' }}>
                    hat gestern getragen.
@@ -262,12 +272,8 @@ export default function Home() {
             </Grid>
 
             {/* ── Pillars ── */}
-            {/* Fixed, sensible top margin instead of margin-auto distribution.
-                Cards sit below the intro with generous breathing room; any
-                remaining vertical space stays as quiet margin at the section
-                bottom, not as an empty band between header and cards. */}
             <Grid className="stack-cols" style={{
-              marginTop: 'clamp(3rem, 6svh, 5rem)',
+              marginTop: 'clamp(4rem, 7svh, 6rem)',
             }}>
               {pillars.map((pillar, i) => (
                 <Col key={pillar.title} span={4}>
