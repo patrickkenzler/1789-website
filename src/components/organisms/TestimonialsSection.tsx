@@ -105,8 +105,8 @@ const TESTIMONIALS: {
   },
 ]
 
-const VISIBLE   = 3
-const MAX_OFFSET = TESTIMONIALS.length - VISIBLE // 2
+const VISIBLE   = 4
+const MAX_OFFSET = TESTIMONIALS.length - VISIBLE // 1
 
 // ─── Arrow button ─────────────────────────────────────────────────────────────
 
@@ -173,17 +173,16 @@ function TestimonialCard({
         boxShadow:       '0 0 0 1px rgba(26,23,20,0.08)',
       }}
     >
-      {/* ── Portrait — clamp height so the image stays portrait without
-            eating the quote band. Card width is capped at 380 px above, so
-            image 420 px ≈ aspect 1.10 (clear portrait) while leaving ~270 px
-            for the quote + signature below. */}
+      {/* ── Portrait — square 1:1 aspect. Card width is capped at 460 px
+            so image fits in the available card-track height (~700 px) with
+            room for the quote band beneath. */}
       <div
         className="t-card-photo"
         style={{
           position:        'relative',
           flexShrink:      0,
           width:           '100%',
-          height:          'clamp(260px, 40svh, 420px)',
+          aspectRatio:     '1 / 1',
           overflow:        'hidden',
           backgroundColor: 'var(--color-surface)',
         }}
@@ -417,12 +416,11 @@ export function TestimonialsSection() {
 
       {/* ── Card track ────────────────────────────────────────────────────── */}
       {/*
-        Card width is capped at 380px so cards stay portrait-shaped on wide
-        viewports — 3 cards still fit on standard desktop (3×380 + 2×24 = 1188 px),
-        and on viewports where 1/3 of the row would be narrower than 380 px we
-        fall back to that smaller value. The slot width and the slider step
-        both reference the same CSS variable, so navigation stays accurate
-        even when the cap kicks in.
+        Four cards visible at once with a 460 px max width — bigger than the
+        previous 3-up / 380 px layout. On viewports where 1/4 of the row would
+        be narrower than 460 px the calc value wins (no cap). The slot width
+        and the slider step both reference the same CSS variable, so
+        navigation stays accurate even when the cap kicks in.
       */}
       <div
         style={{
@@ -431,7 +429,7 @@ export function TestimonialsSection() {
           overflow: 'hidden',
           paddingInline: 'var(--grid-margin)',
           paddingBottom: '2.5rem',
-          ['--testimonial-card-w' as string]: 'min(calc((100vw - 2 * var(--grid-margin) - 2 * 1.5rem) / 3), 380px)',
+          ['--testimonial-card-w' as string]: 'min(calc((100vw - 2 * var(--grid-margin) - 3 * 1.5rem) / 4), 460px)',
         } as React.CSSProperties}
       >
         <div
