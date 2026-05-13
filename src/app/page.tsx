@@ -262,12 +262,15 @@ export default function Home() {
             </Grid>
 
             {/* ── Pillars ── */}
+            {/* Cards keep their natural content height; the grid centres
+                vertically in the remaining flex space via margin-block:auto.
+                On tall (4K) viewports the extra room becomes generous margin
+                above and below the cards rather than stretching their
+                internal layout — no gaps between body and list. */}
             <Grid className="stack-cols" style={{
-              flex:         1,
-              minHeight:    0,
-              gridAutoRows: '1fr',
-              marginTop:    'clamp(2rem, 4svh, 4rem)',
-              alignItems:   'stretch',
+              marginTop:    'auto',
+              marginBottom: 'auto',
+              paddingTop:   'clamp(2rem, 4svh, 4rem)',
             }}>
               {pillars.map((pillar, i) => (
                 <Col key={pillar.title} span={4}>
