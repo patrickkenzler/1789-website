@@ -239,24 +239,34 @@ export function AnsatzSection() {
           ))}
         </ol>
 
-        {/* ── CTA + description ─────────────────────────────────────────
-            Link on the left, description on the right — picks up the
-            description that used to sit in the header. */}
+        {/* ── CTA — description sits above the link as a lead-in ────── */}
         <footer
           style={{
-            flexShrink:     0,
-            marginTop:      'clamp(1.5rem, 3svh, 3rem)',
-            display:        'flex',
-            alignItems:     'flex-end',
-            justifyContent: 'space-between',
-            gap:            'clamp(1rem, 2vw, 2.5rem)',
-            flexWrap:       'wrap',
+            flexShrink:    0,
+            marginTop:     'clamp(1.5rem, 3svh, 3rem)',
+            display:       'flex',
+            flexDirection: 'column',
+            gap:           'clamp(0.75rem, 1.5svh, 1.25rem)',
           }}
         >
+          <p
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize:   'clamp(0.8125rem, 1.55svh, 1.0625rem)',
+              lineHeight: 1.65,
+              color:      'rgba(242,242,242,0.5)',
+              maxWidth:   '54ch',
+              margin:     0,
+            }}
+          >
+            Fünf Phasen, in denen wir Organisationen von der ersten Diagnose
+            bis zur selbstständigen Weiterentwicklung begleiten.
+          </p>
           <Link
             href="/ansatz"
             className="hover-line"
             style={{
+              alignSelf:      'flex-start',
               fontFamily:     'var(--font-mono)',
               fontSize:       'var(--text-xxs)',
               letterSpacing:  '0.16em',
@@ -267,21 +277,6 @@ export function AnsatzSection() {
           >
             Den vollständigen Ansatz lesen →
           </Link>
-
-          <p
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize:   'clamp(0.8125rem, 1.55svh, 1.0625rem)',
-              lineHeight: 1.65,
-              color:      'rgba(242,242,242,0.5)',
-              maxWidth:   '48ch',
-              margin:     0,
-              textAlign:  'right',
-            }}
-          >
-            Fünf Phasen, in denen wir Organisationen von der ersten Diagnose
-            bis zur selbstständigen Weiterentwicklung begleiten.
-          </p>
         </footer>
 
       </Container>
