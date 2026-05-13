@@ -277,7 +277,7 @@ function FeaturedCard({ item }: { item: LaborItem }) {
   )
 }
 
-// ─── Tier 2: Medium horizontal card ───────────────────────────────────────────
+// ─── Tier 2: Medium vertical card (landscape image on top, text below) ──────
 
 function MediumCard({ item }: { item: LaborItem }) {
   return (
@@ -285,32 +285,30 @@ function MediumCard({ item }: { item: LaborItem }) {
       href={item.href}
       className="labor-thumb"
       style={{
-        flex:                1,
-        minHeight:           0,
-        display:             'grid',
-        gridTemplateColumns: 'auto 1fr',
-        gap:                 'clamp(0.85rem, 1.5vw, 1.25rem)',
-        textDecoration:      'none',
-        color:               'inherit',
-        transition:          'opacity 200ms',
+        flex:            1,
+        minHeight:       0,
+        display:         'flex',
+        flexDirection:   'column',
+        overflow:        'hidden',
+        borderRadius:    'var(--radius-sm)',
+        backgroundColor: 'var(--color-background)',
+        boxShadow:       '0 0 0 1px rgba(26,23,20,0.08)',
+        textDecoration:  'none',
+        color:           'inherit',
+        transition:      'opacity 200ms',
       }}
     >
-      <div
-        style={{
-          aspectRatio:  '1 / 1',
-          height:       '100%',
-          minHeight:    0,
-          overflow:     'hidden',
-          borderRadius: 'var(--radius-sm)',
-          flexShrink:   0,
-        }}
-      >
+      {/* Landscape teaser — half the card height */}
+      <div style={{ flex: '0 0 50%', minHeight: 0, position: 'relative' }}>
         <ItemTeaser item={item} size="small" />
       </div>
 
+      {/* Text body — fills the remaining half */}
       <div
         style={{
-          minWidth:       0,
+          flex:           1,
+          minHeight:      0,
+          padding:        'clamp(0.7rem, 1.4vw, 1.1rem)',
           display:        'flex',
           flexDirection:  'column',
           justifyContent: 'center',
