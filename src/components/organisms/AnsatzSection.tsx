@@ -95,44 +95,35 @@ export function AnsatzSection() {
     >
       <Container style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
 
-        {/* ── Header ────────────────────────────────────────────────────── */}
+        {/* ── Header — Tag + headline only ───────────────────────────────
+            Description moved to the footer next to the "Den vollständigen
+            Ansatz lesen" link, matching the pattern used in LaborSection. */}
         <header style={{ flexShrink: 0, marginBottom: 'clamp(2rem, 4svh, 4rem)' }}>
-          <Grid className="stack-cols" style={{ alignItems: 'flex-end' }}>
-            <Col span={7}>
-              <Tag variant="accent">Unser Ansatz</Tag>
-              <h2
-                style={{
-                  fontFamily:    'var(--font-display)',
-                  fontWeight:    300,
-                  fontSize:      'clamp(2rem, 4.5svh, 4.5rem)',
-                  lineHeight:    1.02,
-                  letterSpacing: '-0.025em',
-                  color:         'rgba(242,242,242,0.92)',
-                  marginTop:     'clamp(1rem, 2svh, 1.75rem)',
-                }}
-              >
-                Von Diagnose<br />
-                <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
-                  zur Eigenständigkeit.
-                </em>
-              </h2>
-            </Col>
-            <Col span={5}>
-              <p
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize:   'clamp(0.8125rem, 1.55svh, 1.0625rem)',
-                  lineHeight: 1.65,
-                  color:      'rgba(242,242,242,0.5)',
-                  maxWidth:   '48ch',
-                  margin:     0,
-                }}
-              >
-                Fünf Phasen, in denen wir Organisationen von der ersten Diagnose
-                bis zur selbstständigen Weiterentwicklung begleiten.
-              </p>
-            </Col>
-          </Grid>
+          <Tag
+            variant="default"
+            style={{
+              color:       'rgba(255,255,255,0.9)',
+              borderColor: 'rgba(255,255,255,0.45)',
+            }}
+          >
+            Unser Ansatz
+          </Tag>
+          <h2
+            style={{
+              fontFamily:    'var(--font-display)',
+              fontWeight:    300,
+              fontSize:      'clamp(2rem, 4.5svh, 4.5rem)',
+              lineHeight:    1.02,
+              letterSpacing: '-0.025em',
+              color:         'rgba(242,242,242,0.92)',
+              marginTop:     'clamp(1rem, 2svh, 1.75rem)',
+            }}
+          >
+            Von Diagnose<br />
+            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
+              zur Eigenständigkeit.
+            </em>
+          </h2>
         </header>
 
         {/* ── Step spread — 5 vertical phase tabs ───────────────────────── */}
@@ -248,8 +239,20 @@ export function AnsatzSection() {
           ))}
         </ol>
 
-        {/* ── CTA ───────────────────────────────────────────────────────── */}
-        <footer style={{ flexShrink: 0, marginTop: 'clamp(1.5rem, 3svh, 3rem)' }}>
+        {/* ── CTA + description ─────────────────────────────────────────
+            Link on the left, description on the right — picks up the
+            description that used to sit in the header. */}
+        <footer
+          style={{
+            flexShrink:     0,
+            marginTop:      'clamp(1.5rem, 3svh, 3rem)',
+            display:        'flex',
+            alignItems:     'flex-end',
+            justifyContent: 'space-between',
+            gap:            'clamp(1rem, 2vw, 2.5rem)',
+            flexWrap:       'wrap',
+          }}
+        >
           <Link
             href="/ansatz"
             className="hover-line"
@@ -264,6 +267,21 @@ export function AnsatzSection() {
           >
             Den vollständigen Ansatz lesen →
           </Link>
+
+          <p
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize:   'clamp(0.8125rem, 1.55svh, 1.0625rem)',
+              lineHeight: 1.65,
+              color:      'rgba(242,242,242,0.5)',
+              maxWidth:   '48ch',
+              margin:     0,
+              textAlign:  'right',
+            }}
+          >
+            Fünf Phasen, in denen wir Organisationen von der ersten Diagnose
+            bis zur selbstständigen Weiterentwicklung begleiten.
+          </p>
         </footer>
 
       </Container>
