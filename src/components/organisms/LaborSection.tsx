@@ -210,24 +210,30 @@ function FeaturedCard({ item }: { item: LaborItem }) {
       style={{
         display:         'flex',
         flexDirection:   'column',
-        height:          '100%',
-        minHeight:       0,
         borderRadius:    'var(--radius-md)',
         overflow:        'hidden',
         backgroundColor: 'var(--color-background)',
         boxShadow:       '0 0 0 1px rgba(26,23,20,0.08)',
         textDecoration:  'none',
         color:           'inherit',
+        alignSelf:       'center',   /* card has its own natural height — centre in column */
+        width:           '100%',
       }}
     >
-      <div style={{ flex: '0 0 56%', minHeight: 0, position: 'relative' }}>
+      {/* Teaser — fixed-height clamp so the image keeps a stable landscape
+          proportion regardless of how tall the card slot becomes on 4K. */}
+      <div style={{
+        width:      '100%',
+        height:     'clamp(280px, 40svh, 460px)',
+        flexShrink: 0,
+        position:   'relative',
+        overflow:   'hidden',
+      }}>
         <ItemTeaser item={item} size="large" />
       </div>
 
       <div
         style={{
-          flex:          1,
-          minHeight:     0,
           display:       'flex',
           flexDirection: 'column',
           padding:       'clamp(1rem, 1.8vw, 1.6rem)',
@@ -288,8 +294,6 @@ function MediumCard({ item }: { item: LaborItem }) {
       href={item.href}
       className="labor-thumb"
       style={{
-        flex:            1,
-        minHeight:       0,
         display:         'flex',
         flexDirection:   'column',
         overflow:        'hidden',
@@ -299,22 +303,27 @@ function MediumCard({ item }: { item: LaborItem }) {
         textDecoration:  'none',
         color:           'inherit',
         transition:      'opacity 200ms',
+        width:           '100%',
       }}
     >
-      {/* Landscape teaser — half the card height */}
-      <div style={{ flex: '0 0 50%', minHeight: 0, position: 'relative' }}>
+      {/* Landscape teaser — fixed-height clamp so two stacked mediums each
+          keep a stable proportion across all viewport sizes. */}
+      <div style={{
+        width:      '100%',
+        height:     'clamp(140px, 18svh, 200px)',
+        flexShrink: 0,
+        position:   'relative',
+        overflow:   'hidden',
+      }}>
         <ItemTeaser item={item} size="small" />
       </div>
 
-      {/* Text body — fills the remaining half */}
+      {/* Text body — natural height */}
       <div
         style={{
-          flex:           1,
-          minHeight:      0,
           padding:        'clamp(0.7rem, 1.4vw, 1.1rem)',
           display:        'flex',
           flexDirection:  'column',
-          justifyContent: 'center',
           gap:            '0.25rem',
         }}
       >
@@ -608,11 +617,12 @@ export function LaborSection() {
           {/* Tier 1 */}
           <FeaturedCard item={featured} />
 
-          {/* Tier 2 — stacked mediums */}
+          {/* Tier 2 — stacked mediums (centred vertically in column) */}
           <div
             style={{
               display:        'flex',
               flexDirection:  'column',
+              justifyContent: 'center',
               gap:            'clamp(0.75rem, 1.6svh, 1.25rem)',
               minHeight:      0,
             }}
