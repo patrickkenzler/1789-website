@@ -435,7 +435,6 @@ function NewsletterCard() {
   return (
     <div
       style={{
-        marginTop:       'auto',
         backgroundColor: 'var(--color-ink)',
         color:           'var(--color-background)',
         borderRadius:    'var(--radius-md)',
@@ -602,63 +601,68 @@ export function LaborSection() {
             ))}
           </div>
 
-          {/* Tier 3 — list + newsletter */}
+          {/* Tier 3 — list at top, footer+newsletter cluster pinned to the
+              bottom via marginTop:auto so the Newsletter's bottom edge
+              aligns with the Featured card's bottom on the left. */}
           <div
             style={{
               display:        'flex',
               flexDirection:  'column',
               minHeight:      0,
+              height:         '100%',
             }}
           >
-            <div style={{ flex: 1, minHeight: 0 }}>
+            <div>
               {list.map((item, i) => (
                 <ListItem key={item.title} item={item} first={i === 0} />
               ))}
             </div>
 
-            {/* Section footer block — description + Alle-Inhalte link,
-                lives directly above the Newsletter card so the section's
-                meta-info clusters at the bottom right rather than the
-                top-right header. */}
-            <div
-              style={{
-                paddingTop:    'clamp(1rem, 2svh, 1.5rem)',
-                paddingBottom: 'clamp(0.75rem, 1.5svh, 1rem)',
-                borderTop:     '1px solid var(--color-border)',
-                marginTop:     'clamp(0.75rem, 1.5svh, 1.25rem)',
-              }}
-            >
-              <p
+            {/* Bottom cluster — description + Alle-Inhalte link + newsletter.
+                marginTop:auto absorbs all free space above this cluster so
+                the newsletter card lines up with the bottom of the featured
+                card in the leftmost column. */}
+            <div style={{ marginTop: 'auto' }}>
+              <div
                 style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize:   'clamp(0.75rem, 1.35svh, 0.875rem)',
-                  lineHeight: 1.55,
-                  color:      'var(--color-ink-muted)',
-                  margin:     0,
+                  paddingTop:    'clamp(1rem, 2svh, 1.5rem)',
+                  paddingBottom: 'clamp(0.75rem, 1.5svh, 1rem)',
+                  borderTop:     '1px solid var(--color-border)',
+                  marginTop:     'clamp(0.75rem, 1.5svh, 1.25rem)',
                 }}
               >
-                Podcasts, Essays, Whitepaper und Experimente — was im
-                Hintergrund unserer Arbeit entsteht.
-              </p>
-              <Link
-                href="/labor"
-                className="hover-line"
-                style={{
-                  display:        'inline-block',
-                  marginTop:      'clamp(0.5rem, 1svh, 0.75rem)',
-                  fontFamily:     'var(--font-mono)',
-                  fontSize:       'var(--text-xxs)',
-                  letterSpacing:  '0.16em',
-                  textTransform:  'uppercase',
-                  color:          'var(--color-terra)',
-                  textDecoration: 'none',
-                }}
-              >
-                Alle Inhalte →
-              </Link>
-            </div>
+                <p
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize:   'clamp(0.75rem, 1.35svh, 0.875rem)',
+                    lineHeight: 1.55,
+                    color:      'var(--color-ink-muted)',
+                    margin:     0,
+                  }}
+                >
+                  Podcasts, Essays, Whitepaper und Experimente — was im
+                  Hintergrund unserer Arbeit entsteht.
+                </p>
+                <Link
+                  href="/labor"
+                  className="hover-line"
+                  style={{
+                    display:        'inline-block',
+                    marginTop:      'clamp(0.5rem, 1svh, 0.75rem)',
+                    fontFamily:     'var(--font-mono)',
+                    fontSize:       'var(--text-xxs)',
+                    letterSpacing:  '0.16em',
+                    textTransform:  'uppercase',
+                    color:          'var(--color-terra)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  Alle Inhalte →
+                </Link>
+              </div>
 
-            <NewsletterCard />
+              <NewsletterCard />
+            </div>
           </div>
         </div>
 
