@@ -173,13 +173,14 @@ function TestimonialCard({
         boxShadow:       '0 0 0 1px rgba(26,23,20,0.08)',
       }}
     >
-      {/* ── Portrait ──────────────────────────────────────────────────────── */}
+      {/* ── Portrait — fixed 3:4 portrait aspect (people photos) ────────── */}
       <div
         className="t-card-photo"
         style={{
           position:        'relative',
           flexShrink:      0,
-          height:          '54%',
+          width:           '100%',
+          aspectRatio:     '3 / 4',
           overflow:        'hidden',
           backgroundColor: 'var(--color-surface)',
         }}

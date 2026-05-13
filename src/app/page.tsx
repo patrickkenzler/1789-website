@@ -425,11 +425,12 @@ export default function Home() {
                     overflow:        'hidden',
                   }}
                 >
-                  {/* ── Title image slot ── */}
+                  {/* ── Title image slot — fixed 3:4 portrait aspect ── */}
                   <div
                     style={{
                       position:           'relative',
-                      height:             '55%',
+                      width:              '100%',
+                      aspectRatio:        '3 / 4',
                       flexShrink:         0,
                       overflow:           'hidden',
                       backgroundImage:    c.image ? `url(${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${c.image})` : placeholderBg,
