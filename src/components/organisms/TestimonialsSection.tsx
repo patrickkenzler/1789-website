@@ -357,6 +357,16 @@ export function TestimonialsSection() {
         overflow:        'hidden',
       }}
     >
+    {/* Inner stage — caps content at 920px and centres it on tall (4K) viewports */}
+    <div style={{
+      width:         '100%',
+      height:        '100%',
+      maxHeight:     '920px',
+      margin:        'auto 0',
+      display:       'flex',
+      flexDirection: 'column',
+      minHeight:     0,
+    }}>
       {/* ── Header ────────────────────────────────────────────────────────── */}
       <div
         style={{
@@ -441,6 +451,7 @@ export function TestimonialsSection() {
           ))}
         </div>
       </div>
+    </div>{/* end inner stage */}
     </div>
   )
 }

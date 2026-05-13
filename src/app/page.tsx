@@ -353,7 +353,7 @@ export default function Home() {
           overflow:        'hidden',
         }}
       >
-      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem', display: 'flex', flexDirection: 'column' }}>
+      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem', display: 'flex', flexDirection: 'column', maxHeight: '920px', margin: 'auto 0', width: '100%' }}>
         <Container style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           <Grid>
             <Col span={6}>
@@ -506,6 +506,8 @@ export default function Home() {
           top:             '5rem',
           height:          'calc(100svh - 5rem)',
           overflow:        'hidden',
+          display:         'flex',
+          flexDirection:   'column',
         }}
       >
         <AnsatzSection />
@@ -523,9 +525,11 @@ export default function Home() {
           paddingBlock:    'clamp(2rem, 4svh, 4rem)',
           overflow:        'hidden',
           backgroundColor: 'var(--color-background)',
+          display:         'flex',
+          flexDirection:   'column',
         }}
       >
-        <Container>
+        <Container style={{ width: '100%', height: '100%', maxHeight: '920px', margin: 'auto 0' }}>
 
           {/* ── Headline ── */}
           <div style={{ marginBottom: 'clamp(1rem, 2svh, 2.5rem)' }}>

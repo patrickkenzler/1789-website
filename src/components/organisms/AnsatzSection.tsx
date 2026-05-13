@@ -82,7 +82,10 @@ export function AnsatzSection() {
   return (
     <div
       style={{
+        width:           '100%',
         height:          '100%',
+        maxHeight:       '920px',
+        margin:          'auto 0',
         display:         'flex',
         flexDirection:   'column',
         overflow:        'hidden',

@@ -532,9 +532,11 @@ export function LaborSection() {
         paddingBlock:    'clamp(2rem, 4svh, 4rem)',
         backgroundColor: 'var(--color-background)',
         overflow:        'hidden',
+        display:         'flex',
+        flexDirection:   'column',
       }}
     >
-      <Container style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Container style={{ width: '100%', height: '100%', maxHeight: '920px', margin: 'auto 0', display: 'flex', flexDirection: 'column' }}>
 
         {/* ── Header ────────────────────────────────────────────────────── */}
         <header style={{ flexShrink: 0, marginBottom: 'clamp(1.5rem, 3svh, 2.5rem)' }}>
