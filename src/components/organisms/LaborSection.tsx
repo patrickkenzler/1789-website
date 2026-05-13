@@ -216,7 +216,7 @@ function FeaturedCard({ item }: { item: LaborItem }) {
         boxShadow:       '0 0 0 1px rgba(26,23,20,0.08)',
         textDecoration:  'none',
         color:           'inherit',
-        alignSelf:       'center',   /* card has its own natural height — centre in column */
+        alignSelf:       'start',    /* align card top with the medium / list columns */
         width:           '100%',
       }}
     >
@@ -550,7 +550,7 @@ export function LaborSection() {
         {/* ── Header — Tag + headline only ───────────────────────────────
             Description + "Alle Inhalte" moved to the bottom-right cluster
             next to the Newsletter card (see Tier 3 column below). */}
-        <header style={{ flexShrink: 0, marginBottom: 'clamp(1.5rem, 3svh, 2.5rem)' }}>
+        <header style={{ flexShrink: 0, marginBottom: 'clamp(2.5rem, 5svh, 4.5rem)' }}>
           <Tag>Denk Labor</Tag>
           <h2
             style={{
@@ -585,12 +585,14 @@ export function LaborSection() {
           {/* Tier 1 */}
           <FeaturedCard item={featured} />
 
-          {/* Tier 2 — stacked mediums (centred vertically in column) */}
+          {/* Tier 2 — stacked mediums (top-aligned, so the first medium
+              card's top sits on the same horizontal line as the featured
+              card and the first list item in tier 3) */}
           <div
             style={{
               display:        'flex',
               flexDirection:  'column',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               gap:            'clamp(0.75rem, 1.6svh, 1.25rem)',
               minHeight:      0,
             }}
