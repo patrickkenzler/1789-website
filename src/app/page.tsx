@@ -228,8 +228,19 @@ export default function Home() {
         at the viewport bottom; both are covered together by the next card.
       */}
       <StickyScrollSection style={{ backgroundColor: 'var(--color-background)' }}>
-        <section style={{ paddingBlock: 'clamp(1.5rem, 3svh, 3rem) clamp(2rem, 4svh, 4rem)' }}>
-          <Container>
+        <section style={{
+          paddingBlock:  'clamp(1.5rem, 3svh, 3rem) clamp(2rem, 4svh, 4rem)',
+          /* Fill the sticky frame so the pillar cards stretch to the bottom
+             via flex:1 — matches the Cases section's rhythm rather than
+             floating short cards right under the headline. */
+          minHeight:     'calc(100svh - 5rem)',
+          maxHeight:     '920px',  /* cap on tall 4K viewports */
+          margin:        '0 auto',
+          width:         '100%',
+          display:       'flex',
+          flexDirection: 'column',
+        }}>
+          <Container style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
 
             {/* ── Headline ── */}
             <div style={{ marginBottom: 'clamp(0.75rem, 1.5svh, 2rem)' }}>
@@ -251,7 +262,13 @@ export default function Home() {
             </Grid>
 
             {/* ── Pillars ── */}
-            <Grid className="stack-cols" style={{ marginTop: 'clamp(0.75rem, 2svh, 2.5rem)' }}>
+            <Grid className="stack-cols" style={{
+              flex:         1,
+              minHeight:    0,
+              gridAutoRows: '1fr',
+              marginTop:    'clamp(2rem, 4svh, 4rem)',
+              alignItems:   'stretch',
+            }}>
               {pillars.map((pillar, i) => (
                 <Col key={pillar.title} span={4}>
                   <div
