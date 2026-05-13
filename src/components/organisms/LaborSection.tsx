@@ -547,60 +547,28 @@ export function LaborSection() {
     >
       <Container style={{ width: '100%', height: '100%', maxHeight: '920px', margin: 'auto 0', display: 'flex', flexDirection: 'column' }}>
 
-        {/* ── Header ────────────────────────────────────────────────────── */}
+        {/* ── Header — Tag + headline only ───────────────────────────────
+            Description + "Alle Inhalte" moved to the bottom-right cluster
+            next to the Newsletter card (see Tier 3 column below). */}
         <header style={{ flexShrink: 0, marginBottom: 'clamp(1.5rem, 3svh, 2.5rem)' }}>
-          <Grid className="stack-cols" style={{ alignItems: 'flex-end' }}>
-            <Col span={7}>
-              <Tag>Denk Labor</Tag>
-              <h2
-                style={{
-                  fontFamily:    'var(--font-display)',
-                  fontWeight:    300,
-                  fontSize:      'clamp(1.75rem, 4svh, 4rem)',
-                  lineHeight:    1.02,
-                  letterSpacing: '-0.025em',
-                  color:         'var(--color-ink)',
-                  marginTop:     'clamp(1rem, 2svh, 1.75rem)',
-                }}
-              >
-                Wo Organisationstheorie<br />
-                <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
-                  auf Praxis trifft.
-                </em>
-              </h2>
-            </Col>
-            <Col span={5} style={{ paddingBottom: '0.25rem' }}>
-              <p
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize:   'clamp(0.8125rem, 1.55svh, 1.0625rem)',
-                  lineHeight: 1.65,
-                  color:      'var(--color-ink-muted)',
-                  maxWidth:   '46ch',
-                  margin:     0,
-                }}
-              >
-                Podcasts, Essays, Whitepaper und Experimente — was im Hintergrund
-                unserer Arbeit entsteht.
-              </p>
-              <Link
-                href="/labor"
-                className="hover-line"
-                style={{
-                  display:        'inline-block',
-                  marginTop:      '1rem',
-                  fontFamily:     'var(--font-mono)',
-                  fontSize:       'var(--text-xxs)',
-                  letterSpacing:  '0.16em',
-                  textTransform:  'uppercase',
-                  color:          'var(--color-terra)',
-                  textDecoration: 'none',
-                }}
-              >
-                Alle Inhalte →
-              </Link>
-            </Col>
-          </Grid>
+          <Tag>Denk Labor</Tag>
+          <h2
+            style={{
+              fontFamily:    'var(--font-display)',
+              fontWeight:    300,
+              fontSize:      'clamp(1.75rem, 4svh, 4rem)',
+              lineHeight:    1.02,
+              letterSpacing: '-0.025em',
+              color:         'var(--color-ink)',
+              marginTop:     'clamp(1rem, 2svh, 1.75rem)',
+              maxWidth:      '20ch',
+            }}
+          >
+            Wo Organisationstheorie<br />
+            <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
+              auf Praxis trifft.
+            </em>
+          </h2>
         </header>
 
         {/* ── Three-tier spread ─────────────────────────────────────────── */}
@@ -645,6 +613,49 @@ export function LaborSection() {
                 <ListItem key={item.title} item={item} first={i === 0} />
               ))}
             </div>
+
+            {/* Section footer block — description + Alle-Inhalte link,
+                lives directly above the Newsletter card so the section's
+                meta-info clusters at the bottom right rather than the
+                top-right header. */}
+            <div
+              style={{
+                paddingTop:    'clamp(1rem, 2svh, 1.5rem)',
+                paddingBottom: 'clamp(0.75rem, 1.5svh, 1rem)',
+                borderTop:     '1px solid var(--color-border)',
+                marginTop:     'clamp(0.75rem, 1.5svh, 1.25rem)',
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize:   'clamp(0.75rem, 1.35svh, 0.875rem)',
+                  lineHeight: 1.55,
+                  color:      'var(--color-ink-muted)',
+                  margin:     0,
+                }}
+              >
+                Podcasts, Essays, Whitepaper und Experimente — was im
+                Hintergrund unserer Arbeit entsteht.
+              </p>
+              <Link
+                href="/labor"
+                className="hover-line"
+                style={{
+                  display:        'inline-block',
+                  marginTop:      'clamp(0.5rem, 1svh, 0.75rem)',
+                  fontFamily:     'var(--font-mono)',
+                  fontSize:       'var(--text-xxs)',
+                  letterSpacing:  '0.16em',
+                  textTransform:  'uppercase',
+                  color:          'var(--color-terra)',
+                  textDecoration: 'none',
+                }}
+              >
+                Alle Inhalte →
+              </Link>
+            </div>
+
             <NewsletterCard />
           </div>
         </div>
