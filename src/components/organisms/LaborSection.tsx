@@ -43,6 +43,7 @@ const ITEMS: LaborItem[] = [
     meta:     '8 Min · 2024',
     intro:    'Eine Reflexion über Distanz, Vertrauen und die Frage, wieso Organisationen den Mut zur Nähe oft erst auf der Bühne finden.',
     href:     '/labor',
+    image:    '/labor/Artikel_Cover_1.jpg',
     ornament: 'E',
   },
   // ── Tier 2 — Medium ──────────────────────────────────────────────────
@@ -53,6 +54,7 @@ const ITEMS: LaborItem[] = [
     author:   'mit Marie Kilg',
     meta:     '#142 · 47 Min',
     href:     '/labor',
+    image:    '/labor/Artikel_Cover_2.webp',
     ornament: '#142',
   },
   {
@@ -62,6 +64,7 @@ const ITEMS: LaborItem[] = [
     author:   '1789 Research',
     meta:     '24 Seiten · 2024',
     href:     '/labor',
+    image:    '/labor/Artikel_Cover_3.jpg',
     ornament: 'WP',
   },
   // ── Tier 3 — List ────────────────────────────────────────────────────
