@@ -173,14 +173,17 @@ function TestimonialCard({
         boxShadow:       '0 0 0 1px rgba(26,23,20,0.08)',
       }}
     >
-      {/* ── Portrait — fixed 3:4 portrait aspect (people photos) ────────── */}
+      {/* ── Portrait — clamp height so the image stays portrait on most
+            viewports without exceeding card height (which would push the
+            quote off-screen). On the typical 1440 logical 4K viewport with
+            ~410 px wide cards, 540 px tall → aspect 0.76 (clearly portrait). */}
       <div
         className="t-card-photo"
         style={{
           position:        'relative',
           flexShrink:      0,
           width:           '100%',
-          aspectRatio:     '3 / 4',
+          height:          'clamp(280px, 50svh, 540px)',
           overflow:        'hidden',
           backgroundColor: 'var(--color-surface)',
         }}
