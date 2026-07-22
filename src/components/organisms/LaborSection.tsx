@@ -544,7 +544,7 @@ export function LaborSection() {
         flexDirection:   'column',
       }}
     >
-      <Container style={{ width: '100%', height: '100%', maxHeight: '920px', margin: 'auto 0', display: 'flex', flexDirection: 'column' }}>
+      <Container className="labor-container" style={{ width: '100%', height: '100%', maxHeight: '920px', margin: 'auto 0', display: 'flex', flexDirection: 'column' }}>
 
         {/* ── Header — Tag + headline only ───────────────────────────────
             Description + "Alle Inhalte" moved to the bottom-right cluster

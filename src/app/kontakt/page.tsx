@@ -21,9 +21,10 @@ export default function Kontakt() {
             <Col span={8}>
               <Tag>Kontakt</Tag>
               <h1
+                className="page-hero-h1"
                 style={{
                   fontFamily:    'var(--font-display)',
-                  fontWeight:    300,
+                  fontWeight:    600,
                   fontSize:      'clamp(3rem, 7vw, 7rem)',
                   lineHeight:    0.92,
                   letterSpacing: '-0.03em',
@@ -32,7 +33,7 @@ export default function Kontakt() {
                 }}
               >
                 Erstgespräch<br />
-                <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>vereinbaren.</em>
+                <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--color-terra)' }}>vereinbaren.</em>
               </h1>
             </Col>
           </Grid>
@@ -76,7 +77,7 @@ export default function Kontakt() {
                   href="mailto:hello@1789.consulting"
                   style={{
                     fontFamily:     'var(--font-display)',
-                    fontWeight:     300,
+                    fontWeight:     500,
                     fontSize:       'clamp(1.25rem, 2.5vw, 2rem)',
                     letterSpacing:  '-0.02em',
                     color:          'var(--color-ink)',

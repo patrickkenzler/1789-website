@@ -1,11 +1,9 @@
 import React from 'react'
 
-interface GridProps {
+interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   cols?: number
   gap?: string
-  className?: string
-  style?: React.CSSProperties
 }
 
 interface ColProps {
@@ -32,11 +30,12 @@ export function Container({
   )
 }
 
-export function Grid({ children, cols = 12, className = '', style }: GridProps) {
+export function Grid({ children, cols = 12, className = '', style, ...rest }: GridProps) {
   return (
     <div
       className={`grid gap-6 ${className}`}
       style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, ...style }}
+      {...rest}
     >
       {children}
     </div>

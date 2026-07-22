@@ -42,14 +42,15 @@ export function StickyScrollSection({
     const overflow = () => Math.max(0, content!.scrollHeight - stickyH())
     const dwell    = () => window.innerHeight * 0.06  // 6vh pause after content done
 
+    const isMobile = () => window.innerWidth <= 767
+
     function setSpacerHeight() {
+      if (isMobile()) { spacer!.style.height = '0'; return }
       spacer!.style.height = `${overflow() + dwell()}px`
     }
 
     function onScroll() {
-      // spacerTop = viewportH exactly when sticky starts locking.
-      // As user scrolls further, spacerTop drops below viewportH.
-      // scrolledPast tracks how far past that moment we are.
+      if (isMobile()) { content!.style.transform = ''; return }
       const spacerTop    = spacer!.getBoundingClientRect().top
       const scrolledPast = Math.max(0, window.innerHeight - spacerTop)
       const ov           = overflow()

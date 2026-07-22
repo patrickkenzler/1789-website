@@ -81,6 +81,7 @@ const STEPS: readonly Step[] = [
 export function AnsatzSection() {
   return (
     <div
+      className="ansatz-container"
       style={{
         width:           '100%',
         height:          '100%',

@@ -6,27 +6,27 @@
 @layer base {
   :root {
     /* ─── Farbe ─────────────────────────────────── */
-    --color-background:  #F2F2F2;
-    --color-surface:     #E8E8E8;
+    --color-background:  #F2EFE8;
+    --color-surface:     #E6E1D8;
     --color-border:      #2E2B28;
 
-    --color-ink:         #1A1714;
+    --color-ink:         #141210;
     --color-ink-muted:   #6B6560;
     --color-ink-subtle:  #A39E99;
 
     --color-terra:       #F44D0B;
     --color-terra-dark:  #C13A06;
-    --color-sage:        #B8CC8A;
-    --color-sage-dark:   #8FA66A;
+    --color-sage:        #4A6655;
+    --color-sage-dark:   #3A5245;
 
     --color-white:       #FFFFFF;
     --color-black:       #0D0B0A;
-    --color-sand:        #E3DDD5;
+    --color-sand:        #E5DFD5;
 
     /* ─── Typografie ─────────────────────────────── */
-    --font-display:  var(--font-cormorant), "Georgia", serif;
-    --font-heading:  var(--font-cormorant), "Georgia", serif;
-    --font-body:     var(--font-inter), "Helvetica Neue", sans-serif;
+    --font-display:  var(--font-fraunces), "Georgia", serif;
+    --font-heading:  var(--font-fraunces), "Georgia", serif;
+    --font-body:     var(--font-dm-sans), "Helvetica Neue", sans-serif;
     --font-mono:     "Courier New", monospace;
 
     /* Scale inspired by foreverday.one: H2 48px : body 20px = 2.4 : 1 ratio */

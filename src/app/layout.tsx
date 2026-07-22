@@ -1,19 +1,19 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Inter, Roboto_Flex } from 'next/font/google'
+import { Fraunces, DM_Sans, Roboto_Flex } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/organisms/Header'
 import { Footer } from '@/components/organisms/Footer'
 
-const cormorant = Cormorant_Garamond({
-  variable: '--font-cormorant',
+const fraunces = Fraunces({
+  variable: '--font-fraunces',
   subsets: ['latin'],
-  weight: ['300', '400', '600', '700'],
+  weight: ['300', '400', '500', '600', '700', '900'],
   style: ['normal', 'italic'],
   display: 'swap',
 })
 
-const inter = Inter({
-  variable: '--font-inter',
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
   subsets: ['latin'],
   weight: ['300', '400', '500', '600'],
   display: 'swap',
@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="de" className={`${cormorant.variable} ${inter.variable} ${robotoFlex.variable}`}>
+    <html lang="de" className={`${fraunces.variable} ${dmSans.variable} ${robotoFlex.variable}`}>
       <body className="antialiased bg-background text-ink">
         <Header />
         {children}

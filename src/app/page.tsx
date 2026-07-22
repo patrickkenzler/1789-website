@@ -8,6 +8,7 @@ import { AnsatzSection } from '@/components/organisms/AnsatzSection'
 import { TestimonialsSection } from '@/components/organisms/TestimonialsSection'
 import { LaborSection } from '@/components/organisms/LaborSection'
 import { StickyScrollSection } from '@/components/layout/StickyScrollSection'
+import { PillarEqualizeTopSections } from '@/components/atoms/PillarEqualizeTopSections'
 
 // ─── Pillar icons ─────────────────────────────────────────────────────────────
 
@@ -206,6 +207,7 @@ export default function Home() {
         className="scroll-card"
         style={{
           height:          '100svh',
+          minHeight:       '100svh',
           display:         'flex',
           flexDirection:   'column',
           paddingTop:      '5rem', /* nav height — content inside HeroLogo adds more */
@@ -228,13 +230,10 @@ export default function Home() {
         at the viewport bottom; both are covered together by the next card.
       */}
       <StickyScrollSection style={{ backgroundColor: 'var(--color-background)' }}>
-        <section style={{
+        <section className="sticky-section-inner" style={{
           paddingBlock:  'clamp(1.5rem, 3svh, 3rem) clamp(2rem, 4svh, 4rem)',
-          /* Fill the sticky frame so the pillar cards stretch to the bottom
-             via flex:1 — matches the Cases section's rhythm rather than
-             floating short cards right under the headline. */
           minHeight:     'calc(100svh - 5rem)',
-          maxHeight:     '920px',  /* cap on tall 4K viewports */
+          maxHeight:     '920px',
           margin:        '0 auto',
           width:         '100%',
           display:       'flex',
@@ -272,7 +271,8 @@ export default function Home() {
             </Grid>
 
             {/* ── Pillars ── */}
-            <Grid className="stack-cols" style={{
+            <PillarEqualizeTopSections />
+            <Grid data-pillar-grid="" style={{
               marginTop: 'clamp(4rem, 7svh, 6rem)',
             }}>
               {pillars.map((pillar, i) => (
@@ -296,28 +296,29 @@ export default function Home() {
                       {pillarIcons[i]}
                     </div>
 
-                    {/* Title — prominent, no number eyebrow */}
-                    <h3
-                      style={{
-                        fontFamily:    'var(--font-display)',
-                        fontWeight:    400,
-                        fontSize:      'clamp(1.25rem, 2.8svh, 2.5rem)',
-                        lineHeight:    1.05,
-                        letterSpacing: '-0.025em',
-                        color:         'var(--color-ink)',
-                        marginTop:     0,
-                        paddingRight:  '3rem', /* clear the icon */
-                      }}
-                    >
-                      {pillar.title}
-                    </h3>
+                    {/* Top section: title + body — equalized by PillarEqualizeTopSections */}
+                    <div data-pillar-top="" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <h3
+                        style={{
+                          fontFamily:    'var(--font-display)',
+                          fontWeight:    400,
+                          fontSize:      'clamp(1.25rem, 2.8svh, 2.5rem)',
+                          lineHeight:    1.05,
+                          letterSpacing: '-0.025em',
+                          color:         'var(--color-ink)',
+                          marginTop:     0,
+                          paddingRight:  '3rem', /* clear the icon */
+                        }}
+                      >
+                        {pillar.title}
+                      </h3>
 
-                    {/* Body copy */}
-                    <p className="c-body" style={{ marginTop: 'clamp(0.5rem, 1.2svh, 1rem)', fontSize: 'clamp(0.8125rem, 1.5svh, 1.0625rem)', lineHeight: 1.55 }}>
-                      {pillar.body}
-                    </p>
+                      <p className="c-body" style={{ marginTop: 'clamp(0.5rem, 1.2svh, 1rem)', fontSize: 'clamp(0.8125rem, 1.5svh, 1.0625rem)', lineHeight: 1.55 }}>
+                        {pillar.body}
+                      </p>
+                    </div>
 
-                    {/* Divider */}
+                    {/* Divider — anchored at the midpoint between top and bottom sections */}
                     <div
                       style={{
                         marginTop:       'clamp(0.75rem, 1.5svh, 1.25rem)',
@@ -327,8 +328,8 @@ export default function Home() {
                       }}
                     />
 
-                    {/* Bullet list */}
-                    <ul className="flex flex-col gap-2 mt-auto">
+                    {/* Bottom section: bullet list — fills the other half, items at bottom */}
+                    <ul className="flex flex-col gap-2" style={{ flex: 1, justifyContent: 'flex-end' }}>
                       {pillar.items.map((item) => (
                         <li key={item} className="flex items-baseline gap-2">
                           <span
@@ -376,7 +377,7 @@ export default function Home() {
           overflow:        'hidden',
         }}
       >
-      <section style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem', display: 'flex', flexDirection: 'column', maxHeight: '920px', margin: 'auto 0', width: '100%' }}>
+      <section className="scroll-card-content sticky-section-inner" style={{ flex: 1, minHeight: 0, overflow: 'hidden', paddingBlock: '3rem', display: 'flex', flexDirection: 'column', maxHeight: '920px', margin: 'auto 0', width: '100%' }}>
         <Container style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           <Grid>
             <Col span={6}>
@@ -397,7 +398,7 @@ export default function Home() {
             </Col>
           </Grid>
 
-          <Grid className="stack-cols mt-8" style={{ flex: 1, minHeight: 0, gridAutoRows: '1fr' }}>
+          <Grid className="mt-8" style={{ flex: 1, minHeight: 0, gridAutoRows: '1fr' }}>
             {featuredCases.map((c, i) => {
               const bgColors   = ['var(--color-terra)', 'rgba(255,255,255,0.06)', 'var(--color-sage)']
               const textColors = ['var(--color-background)', 'var(--color-background)', 'var(--color-ink)']
@@ -419,7 +420,7 @@ export default function Home() {
                 <Link
                   key={c.slug}
                   href={`/projekte/${c.slug}`}
-                  className="card-dark group flex flex-col cursor-pointer"
+                  className="card-dark case-card group flex flex-col cursor-pointer"
                   style={{
                     gridColumn:      'span 4',
                     backgroundColor: bg,
@@ -430,6 +431,7 @@ export default function Home() {
                 >
                   {/* ── Title image slot ── */}
                   <div
+                    className="case-img-slot"
                     style={{
                       position:           'relative',
                       height:             '55%',

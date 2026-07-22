@@ -15,8 +15,8 @@ import {
 // reads on the light surface.
 
 const TERRA = '#F44D0B'          /* unchanged — already high-contrast on cream */
-const SAGE  = '#8FA66A'          /* sage-dark — replaces #B8CC8A for this page */
-const SAND  = '#8B7355'          /* new sand-dark warm tan — replaces #E3DDD5 */
+const SAGE  = '#4A6655'          /* deep forest sage — matches updated --color-sage token */
+const SAND  = '#8B7355'          /* warm tan — replaces #E3DDD5 */
 
 function wa(hex: string, a: number) {
   const n = parseInt(hex.replace('#', ''), 16)
@@ -172,9 +172,10 @@ function HeroSection() {
           <Col span={9}>
             <Tag>Unser Ansatz</Tag>
             <h1
+              className="page-hero-h1"
               style={{
                 fontFamily:    'var(--font-display)',
-                fontWeight:    300,
+                fontWeight:    600,
                 fontSize:      'clamp(3rem, 7vw, 7rem)',
                 lineHeight:    0.95,
                 letterSpacing: '-0.03em',
@@ -183,7 +184,7 @@ function HeroSection() {
               }}
             >
               Von Diagnose<br />
-              <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
+              <em style={{ fontStyle: 'italic', color: 'var(--color-terra)', fontWeight: 400 }}>
                 zur Eigenständigkeit.
               </em>
             </h1>
@@ -259,7 +260,7 @@ function OverviewStrip() {
               <p
                 style={{
                   fontFamily: 'var(--font-display)',
-                  fontWeight: 300,
+                  fontWeight: 500,
                   fontSize:   'clamp(0.9375rem, 1.4vw, 1.25rem)',
                   lineHeight: 1.1,
                   color:      'var(--color-ink)',
@@ -345,7 +346,7 @@ function PhaseSection({ phase }: { phase: Phase }) {
             <h2
               style={{
                 fontFamily:    'var(--font-display)',
-                fontWeight:    300,
+                fontWeight:    500,
                 fontSize:      'clamp(2rem, 4vw, 3.5rem)',
                 lineHeight:    1.0,
                 letterSpacing: '-0.025em',
@@ -526,7 +527,7 @@ function ClosingCTA() {
             <h2
               style={{
                 fontFamily:    'var(--font-display)',
-                fontWeight:    300,
+                fontWeight:    600,
                 fontSize:      'clamp(2.5rem, 6vw, 5rem)',
                 lineHeight:    1,
                 letterSpacing: '-0.03em',
@@ -535,7 +536,7 @@ function ClosingCTA() {
               }}
             >
               Sprechen wir<br />
-              <em style={{ fontStyle: 'italic', opacity: 0.72 }}>über Ihren Gap.</em>
+              <em style={{ fontStyle: 'italic', fontWeight: 400, opacity: 0.82 }}>über Ihren Gap.</em>
             </h2>
             <div style={{ marginTop: '3rem', display: 'flex', justifyContent: 'center' }}>
               <Link href="/kontakt">

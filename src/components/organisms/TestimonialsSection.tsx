@@ -8,7 +8,7 @@
  * No scroll-pinning — the section behaves like every other scroll-card.
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -105,8 +105,8 @@ const TESTIMONIALS: {
   },
 ]
 
-const VISIBLE   = 4
-const MAX_OFFSET = TESTIMONIALS.length - VISIBLE // 1
+const VISIBLE_DESKTOP = 4
+const VISIBLE_MOBILE  = 1
 
 // ─── Arrow button ─────────────────────────────────────────────────────────────
 
@@ -344,7 +344,23 @@ function TestimonialCard({
 // ─── Section ──────────────────────────────────────────────────────────────────
 
 export function TestimonialsSection() {
-  const [offset, setOffset] = useState(0)
+  const [offset,   setOffset]   = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 767)
+    check()
+    window.addEventListener('resize', check, { passive: true })
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const visible   = isMobile ? VISIBLE_MOBILE : VISIBLE_DESKTOP
+  const maxOffset = TESTIMONIALS.length - visible
+  const safeOffset = Math.min(offset, maxOffset)
+
+  const cardWidth = isMobile
+    ? 'calc(100vw - 2 * var(--grid-margin))'
+    : 'min(calc((100vw - 2 * var(--grid-margin) - 3 * 1.5rem) / 4), 460px)'
 
   return (
     <div
@@ -409,8 +425,8 @@ export function TestimonialsSection() {
 
         {/* ── Arrows + counter ────────────────────────────────────────────── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingBottom: '0.25rem' }}>
-          <ArrowBtn dir="prev" disabled={offset === 0}          onClick={() => setOffset(o => Math.max(0, o - 1))} />
-          <ArrowBtn dir="next" disabled={offset === MAX_OFFSET} onClick={() => setOffset(o => Math.min(MAX_OFFSET, o + 1))} />
+          <ArrowBtn dir="prev" disabled={safeOffset === 0}          onClick={() => setOffset(o => Math.max(0, o - 1))} />
+          <ArrowBtn dir="next" disabled={safeOffset === maxOffset} onClick={() => setOffset(o => Math.min(maxOffset, o + 1))} />
         </div>
       </div>
 
@@ -423,13 +439,14 @@ export function TestimonialsSection() {
         navigation stays accurate even when the cap kicks in.
       */}
       <div
+        className="testimonials-card-track"
         style={{
           flex:     1,
           minHeight: 0,
           overflow: 'hidden',
           paddingInline: 'var(--grid-margin)',
           paddingBottom: '2.5rem',
-          ['--testimonial-card-w' as string]: 'min(calc((100vw - 2 * var(--grid-margin) - 3 * 1.5rem) / 4), 460px)',
+          ['--testimonial-card-w' as string]: cardWidth,
         } as React.CSSProperties}
       >
         <div
@@ -437,7 +454,7 @@ export function TestimonialsSection() {
             display:    'flex',
             gap:        '1.5rem',
             height:     '100%',
-            transform:  `translateX(calc(${-offset} * (var(--testimonial-card-w) + 1.5rem)))`,
+            transform:  `translateX(calc(${-safeOffset} * (var(--testimonial-card-w) + 1.5rem)))`,
             transition: 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1)',
             willChange: 'transform',
           }}

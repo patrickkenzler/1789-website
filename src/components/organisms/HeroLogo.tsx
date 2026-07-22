@@ -170,6 +170,7 @@ export function HeroLogo() {
 
         {/* ── Zone 1: vertically centered claim block ── */}
         <div
+          className="hero-center"
           style={{
             flex:           1,
             display:        'flex',
@@ -187,9 +188,10 @@ export function HeroLogo() {
               column width (100vw − 2×grid-margin) at every breakpoint;
               whiteSpace:nowrap guarantees each <p> stays single-line. */}
           <div
+            className="hero-headline"
             style={{
               fontFamily:    'var(--font-display)',
-              fontWeight:    300,
+              fontWeight:    600,
               fontSize:      'clamp(1.25rem, 5.5vw, 7rem)',
               lineHeight:    1.05,
               letterSpacing: '-0.03em',

@@ -1,5 +1,7 @@
+import Link from 'next/link'
 import { Container, Grid, Col } from '@/components/layout/Grid'
 import { Tag } from '@/components/atoms/Tag'
+import { Button } from '@/components/atoms/Button'
 import { cases } from '@/data/cases'
 
 const allTags = Array.from(new Set(cases.flatMap((c) => c.tags)))
@@ -18,82 +20,55 @@ export default function Projekte() {
   const list     = cases.slice(2)
 
   return (
-    <main className="pt-40">
+    <main>
 
-      {/* ─── Page Hero — staggered h1 ─────────────────────────────────────── */}
-      <section style={{ paddingBottom: '6rem' }}>
+      {/* ─── Page Hero ─────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          paddingTop:      'calc(5rem + 5rem)',
+          paddingBottom:   'clamp(4rem, 7vw, 6rem)',
+          backgroundColor: 'var(--color-background)',
+        }}
+      >
         <Container>
-          <Tag>Shift Cases</Tag>
-
-          {/* Staggered h1 */}
-          <div style={{ marginTop: '3rem', overflow: 'hidden' }}>
-            <div>
+          <Grid>
+            <Col span={9}>
+              <Tag>Shift Cases</Tag>
               <h1
+                className="page-hero-h1"
                 style={{
-                  display: 'inline',
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 300,
+                  fontFamily:    'var(--font-display)',
+                  fontWeight:    600,
+                  fontSize:      'clamp(3rem, 7vw, 6.5rem)',
+                  lineHeight:    0.92,
                   letterSpacing: '-0.03em',
-                  lineHeight: 0.92,
-                  color: 'var(--color-ink)',
-                  fontSize: 'clamp(3rem, 7vw, 6.5rem)',
-                  paddingLeft: '5%',
+                  color:         'var(--color-ink)',
+                  marginTop:     '1.75rem',
                 }}
               >
-                Organisationen,
+                Organisationen,{' '}
+                <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--color-terra)' }}>
+                  die den Shift gewagt haben.
+                </em>
               </h1>
-            </div>
-            <div style={{ marginTop: '0.08em', textAlign: 'right' }}>
-              <h1
+            </Col>
+          </Grid>
+          <Grid className="stack-cols" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
+            <Col span={7} start={4}>
+              <p
                 style={{
-                  display: 'inline',
-                  fontFamily: 'var(--font-display)',
-                  fontStyle: 'italic',
-                  fontWeight: 300,
-                  letterSpacing: '-0.03em',
-                  lineHeight: 0.92,
-                  color: 'var(--color-terra)',
-                  fontSize: 'clamp(3rem, 7vw, 6.5rem)',
+                  fontFamily: 'var(--font-body)',
+                  fontSize:   'var(--text-base)',
+                  lineHeight: 1.75,
+                  color:      'var(--color-ink-muted)',
+                  maxWidth:   '64ch',
                 }}
               >
-                die den Shift gewagt haben.
-              </h1>
-            </div>
-          </div>
-
-          {/* Stats + lead copy */}
-          <Grid className="mt-16">
-            <Col span={4} start={9}>
-              <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-sub)', lineHeight: '1.6' }}>
                 Jedes Engagement beginnt mit einer ehrlichen Diagnose des Gaps.
                 Was hier folgt, sind keine Erfolgsgeschichten — sondern
                 Erkenntnisse aus echter Transformation.
               </p>
             </Col>
-          </Grid>
-
-          {/* Stats row */}
-          <Grid className="mt-16">
-            {[
-              { value: '8',    label: 'Abgeschlossene Projekte' },
-              { value: '~40', label: 'Monate Ø Projektdauer' },
-              { value: '3+',   label: 'Sektoren' },
-              { value: '100%', label: 'Partizipativ entwickelt' },
-            ].map((s) => (
-              <Col key={s.label} span={3}>
-                <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '1.5rem' }}>
-                  <p
-                    className="font-display font-light text-ink"
-                    style={{ fontSize: 'var(--text-lg)', lineHeight: 1, letterSpacing: '-0.03em' }}
-                  >
-                    {s.value}
-                  </p>
-                  <p className="mt-2 font-mono text-xs tracking-widest uppercase" style={{ color: 'var(--color-ink-subtle)' }}>
-                    {s.label}
-                  </p>
-                </div>
-              </Col>
-            ))}
           </Grid>
         </Container>
       </section>
@@ -107,13 +82,7 @@ export default function Projekte() {
           >
             ★ Highlight Cases
           </p>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '1.5rem',
-            }}
-          >
+          <div className="cases-featured-grid">
             {featured.map((c) => (
               <a
                 key={c.slug}
@@ -148,8 +117,8 @@ export default function Projekte() {
                     {c.client} · {c.sector}
                   </p>
                   <h2
-                    className="font-display font-light"
-                    style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', lineHeight: '1.05', letterSpacing: '-0.02em', color: 'var(--color-background)' }}
+                    className="font-display"
+                    style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', lineHeight: '1.05', letterSpacing: '-0.02em', color: 'var(--color-background)', fontWeight: 500 }}
                   >
                     {c.title}
                   </h2>
@@ -208,8 +177,8 @@ export default function Projekte() {
             style={{ borderBottom: '1px solid var(--color-border)', paddingBottom: '1.5rem' }}
           >
             <h2
-              className="font-display font-light text-ink"
-              style={{ fontSize: 'var(--text-md)', letterSpacing: '-0.02em' }}
+              className="font-display text-ink"
+              style={{ fontSize: 'var(--text-md)', letterSpacing: '-0.02em', fontWeight: 500 }}
             >
               Alle Cases
             </h2>
@@ -251,7 +220,7 @@ export default function Projekte() {
                   <h3
                     style={{
                       fontFamily: 'var(--font-display)',
-                      fontWeight: 300,
+                      fontWeight: 500,
                       letterSpacing: '-0.02em',
                       lineHeight: 1,
                       color: 'var(--color-ink)',
@@ -300,75 +269,65 @@ export default function Projekte() {
         </Container>
       </section>
 
-      {/* ─── CTA ──────────────────────────────────────────────────────────── */}
-      <section style={{ paddingBlock: '7rem', borderTop: '1px solid var(--color-border)', overflow: 'hidden' }}>
+      {/* ─── Closing CTA ──────────────────────────────────────────────────── */}
+      <section
+        style={{
+          paddingBlock:    'clamp(5rem, 10vw, 8rem)',
+          backgroundColor: 'var(--color-terra)',
+        }}
+      >
         <Container>
-          {/* Staggered closing question */}
-          <div style={{ marginBottom: '4rem' }}>
-            <div style={{ textAlign: 'right' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 300,
-                  letterSpacing: '-0.03em',
-                  lineHeight: 0.9,
-                  color: 'var(--color-ink)',
-                  fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-                }}
-              >
-                Jede Transformation
-              </span>
-            </div>
-            <div style={{ marginTop: '0.1em' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 300,
-                  letterSpacing: '-0.03em',
-                  lineHeight: 0.9,
-                  color: 'var(--color-ink)',
-                  fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-                  paddingLeft: '14%',
-                }}
-              >
-                beginnt mit der ehrlichen
-              </span>
-            </div>
-            <div style={{ marginTop: '0.1em', textAlign: 'right' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontStyle: 'italic',
-                  fontWeight: 300,
-                  letterSpacing: '-0.03em',
-                  lineHeight: 0.9,
-                  color: 'var(--color-terra)',
-                  fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-                }}
-              >
-                Benennung des Gaps.
-              </span>
-            </div>
-          </div>
-
           <Grid>
-            <Col span={4}>
-              <p className="font-body text-ink-muted" style={{ fontSize: 'var(--text-base)', lineHeight: '1.75' }}>
-                Das Erstgespräch dient der gegenseitigen Erkenntnis.
-                Kein Pitch. Kein Sales-Deck.
+            <Col span={8} start={3} className="text-center">
+              <p
+                style={{
+                  fontFamily:    'var(--font-mono)',
+                  fontSize:      'var(--text-xxs)',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color:         'rgba(242,239,232,0.65)',
+                  margin:        0,
+                }}
+              >
+                Bereit zur Diagnose?
               </p>
-              <div className="mt-10">
-                <a
-                  href="/kontakt"
-                  className="inline-flex items-center gap-3 font-body font-medium text-xs tracking-[0.15em] uppercase px-8 py-4 transition-all duration-300"
-                  style={{
-                    backgroundColor: 'var(--color-ink)',
-                    color: 'var(--color-background)',
-                    borderRadius: 0,
-                  }}
-                >
-                  Erstgespräch anfragen
-                </a>
+              <h2
+                style={{
+                  fontFamily:    'var(--font-display)',
+                  fontWeight:    600,
+                  fontSize:      'clamp(2.5rem, 6vw, 5rem)',
+                  lineHeight:    1,
+                  letterSpacing: '-0.03em',
+                  color:         'var(--color-background)',
+                  marginTop:     '1.5rem',
+                }}
+              >
+                Jede Transformation<br />
+                <em style={{ fontStyle: 'italic', fontWeight: 400, opacity: 0.82 }}>beginnt mit dem Gap.</em>
+              </h2>
+              <p
+                style={{
+                  fontFamily:   'var(--font-body)',
+                  fontSize:     'var(--text-sub)',
+                  lineHeight:   1.7,
+                  color:        'rgba(242,239,232,0.65)',
+                  marginTop:    '1.5rem',
+                  maxWidth:     '44ch',
+                  marginInline: 'auto',
+                }}
+              >
+                Das Erstgespräch dient der gegenseitigen Erkenntnis. Kein Pitch. Kein Sales-Deck.
+              </p>
+              <div style={{ marginTop: '3rem', display: 'flex', justifyContent: 'center' }}>
+                <Link href="/kontakt">
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    style={{ borderColor: 'var(--color-background)', color: 'var(--color-background)' }}
+                  >
+                    Erstgespräch anfragen
+                  </Button>
+                </Link>
               </div>
             </Col>
           </Grid>

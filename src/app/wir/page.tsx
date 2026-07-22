@@ -59,7 +59,7 @@ function Portrait({ person }: { person: Person }) {
   const isTerra = person.accent === 'terra'
   const gradient = isTerra
     ? 'linear-gradient(135deg, rgba(244,77,11,0.85) 0%, rgba(193,58,6,0.65) 100%)'
-    : 'linear-gradient(135deg, rgba(184,204,138,0.85) 0%, rgba(143,166,106,0.7) 100%)'
+    : 'linear-gradient(135deg, rgba(74,102,85,0.85) 0%, rgba(58,82,69,0.7) 100%)'
 
   return (
     <div
@@ -148,9 +148,10 @@ export default function Wir() {
             <Col span={8}>
               <Tag>Wir</Tag>
               <h1
+                className="page-hero-h1"
                 style={{
                   fontFamily:    'var(--font-display)',
-                  fontWeight:    300,
+                  fontWeight:    600,
                   fontSize:      'clamp(3rem, 7vw, 7rem)',
                   lineHeight:    0.95,
                   letterSpacing: '-0.03em',
@@ -159,7 +160,7 @@ export default function Wir() {
                 }}
               >
                 Vier Köpfe,<br />
-                <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>eine Haltung.</em>
+                <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--color-terra)' }}>eine Haltung.</em>
               </h1>
               <p
                 style={{
@@ -225,7 +226,7 @@ export default function Wir() {
                     <h3
                       style={{
                         fontFamily:    'var(--font-display)',
-                        fontWeight:    300,
+                        fontWeight:    500,
                         fontSize:      'clamp(1.5rem, 1.9vw, 2rem)',
                         lineHeight:    1.1,
                         letterSpacing: '-0.02em',
@@ -336,7 +337,7 @@ export default function Wir() {
               <h2
                 style={{
                   fontFamily:    'var(--font-display)',
-                  fontWeight:    300,
+                  fontWeight:    500,
                   fontSize:      'clamp(2.25rem, 4vw, 4rem)',
                   lineHeight:    1.05,
                   letterSpacing: '-0.025em',
@@ -344,7 +345,7 @@ export default function Wir() {
                   marginTop:     '1.75rem',
                 }}
               >
-                Strategie und Struktur, <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>aus einem Stück.</em>
+                Strategie und Struktur, <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--color-terra)' }}>aus einem Stück.</em>
               </h2>
 
               <div

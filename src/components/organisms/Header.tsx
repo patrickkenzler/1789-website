@@ -159,7 +159,6 @@ export function Header() {
         <div
           className="show-mobile-flex"
           style={{
-            display:        'none', /* overridden by .show-mobile-flex */
             alignItems:     'center',
             justifyContent: 'space-between',
             height:         '5rem',

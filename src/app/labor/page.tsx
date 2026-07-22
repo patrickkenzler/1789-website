@@ -5,8 +5,8 @@ import { Tag } from '@/components/atoms/Tag'
 // ─── Colours ─────────────────────────────────────────────────────────────────
 
 const TERRA = '#F44D0B'
-const SAGE  = '#8FA66A'
-const INK   = '#1A1714'
+const SAGE  = '#4A6655'
+const INK   = '#141210'
 const SAND  = '#8B7355'
 
 function wa(hex: string, a: number) {
@@ -35,10 +35,10 @@ type LaborItem = {
 
 const TYPE_STYLE: Record<LaborType, { accent: string; gradient: string }> = {
   Podcast:    { accent: TERRA, gradient: `linear-gradient(135deg, ${TERRA} 0%, #C13A06 100%)` },
-  Essay:      { accent: SAGE,  gradient: `linear-gradient(150deg, #B8CC8A 0%, ${SAGE} 100%)` },
+  Essay:      { accent: SAGE,  gradient: `linear-gradient(150deg, #5C7D6B 0%, ${SAGE} 100%)` },
   Whitepaper: { accent: INK,   gradient: `linear-gradient(135deg, #2E2B28 0%, ${INK} 100%)` },
   Experiment: { accent: TERRA, gradient: `linear-gradient(120deg, ${TERRA} 0%, #B8CC8A 100%)` },
-  Prototyp:   { accent: SAGE,  gradient: `linear-gradient(135deg, #B8CC8A 0%, ${SAGE} 100%)` },
+  Prototyp:   { accent: SAGE,  gradient: `linear-gradient(135deg, #5C7D6B 0%, ${SAGE} 100%)` },
   Debatte:    { accent: TERRA, gradient: `linear-gradient(160deg, ${TERRA} 0%, #C13A06 80%)` },
   Theorie:    { accent: SAND,  gradient: `linear-gradient(135deg, #A89478 0%, ${SAND} 100%)` },
 }
@@ -286,9 +286,10 @@ function HeroSection() {
           <Col span={9}>
             <Tag>Denk Labor</Tag>
             <h1
+              className="page-hero-h1"
               style={{
                 fontFamily:    'var(--font-display)',
-                fontWeight:    300,
+                fontWeight:    600,
                 fontSize:      'clamp(2.75rem, 6.5vw, 6.5rem)',
                 lineHeight:    0.98,
                 letterSpacing: '-0.03em',
@@ -298,7 +299,7 @@ function HeroSection() {
               }}
             >
               Wo Theorie<br />
-              <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
+              <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--color-terra)' }}>
                 auf Praxis trifft.
               </em>
             </h1>
@@ -390,7 +391,7 @@ function FeaturedSection() {
             <h2
               style={{
                 fontFamily:    'var(--font-display)',
-                fontWeight:    300,
+                fontWeight:    500,
                 fontSize:      'clamp(2rem, 3.5vw, 3.25rem)',
                 lineHeight:    1.05,
                 letterSpacing: '-0.025em',
@@ -548,7 +549,7 @@ function LargeCard({ item }: { item: LaborItem }) {
         </p>
         <h3 style={{
           fontFamily:    'var(--font-display)',
-          fontWeight:    300,
+          fontWeight:    500,
           fontSize:      'clamp(1.375rem, 2vw, 1.875rem)',
           lineHeight:    1.1,
           letterSpacing: '-0.02em',
@@ -680,7 +681,7 @@ function CompactCard({ item }: { item: LaborItem }) {
         </p>
         <h4 style={{
           fontFamily:    'var(--font-display)',
-          fontWeight:    300,
+          fontWeight:    500,
           fontSize:      'clamp(1.0625rem, 1.4vw, 1.375rem)',
           lineHeight:    1.15,
           letterSpacing: '-0.018em',
@@ -775,7 +776,7 @@ function FormatsSection() {
             </p>
             <h2 style={{
               fontFamily:    'var(--font-display)',
-              fontWeight:    300,
+              fontWeight:    600,
               fontSize:      'clamp(2rem, 3.5vw, 3.5rem)',
               lineHeight:    1,
               letterSpacing: '-0.025em',
@@ -783,7 +784,7 @@ function FormatsSection() {
               margin:        0,
             }}>
               Wiederkehrende<br />
-              <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
+              <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--color-terra)' }}>
                 Auseinandersetzungen.
               </em>
             </h2>
@@ -839,7 +840,7 @@ function FormatsSection() {
                 </div>
                 <h3 style={{
                   fontFamily:    'var(--font-display)',
-                  fontWeight:    300,
+                  fontWeight:    500,
                   fontSize:      'clamp(1.5rem, 2vw, 2rem)',
                   lineHeight:    1.05,
                   letterSpacing: '-0.02em',
@@ -914,7 +915,7 @@ function NewsletterCTA() {
             </p>
             <h2 style={{
               fontFamily:    'var(--font-display)',
-              fontWeight:    300,
+              fontWeight:    500,
               fontSize:      'clamp(1.875rem, 3.5vw, 3rem)',
               lineHeight:    1.05,
               letterSpacing: '-0.025em',
@@ -922,7 +923,7 @@ function NewsletterCTA() {
               margin:        0,
             }}>
               Neue Beiträge<br />
-              <em style={{ fontStyle: 'italic', color: 'var(--color-terra)' }}>
+              <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--color-terra)' }}>
                 direkt im Postfach.
               </em>
             </h2>

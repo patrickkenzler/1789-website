@@ -59,7 +59,7 @@
     transform: translateY(0);
   }
 
-  /* ─── Mobile responsive utilities ─────────────────────────────── */
+  /* ─── Breakpoint visibility helpers ────────────────────────────── */
 
   /* Hide / show by breakpoint — 768px mobile/tablet boundary */
   .hide-mobile      { display: none; }
@@ -76,6 +76,10 @@
   .show-tablet-flex { display: none; }
   @media (min-width: 768px) and (max-width: 1023px) {
     .show-tablet-flex { display: flex; }
+    /* Hero headline — allow wrapping + scale up on tablet so the claim
+       fills the viewport width instead of shrinking with vw alone */
+    .hero-headline p { white-space: normal !important; }
+    .hero-headline   { font-size: clamp(2.5rem, 7vw, 5rem) !important; }
   }
 
   /* Desktop-only (≥ 1024px) */
@@ -84,44 +88,134 @@
     .show-desktop-grid { display: grid; }
   }
 
+  /* ─── Responsive grid system ────────────────────────────────────
+   *
+   * All Grids (via .container-grid .grid) collapse to a single
+   * column on mobile by default. Add .keep-cols to opt out.
+   *
+   * .stack-cols is kept for explicit use and remains compatible.
+   * ──────────────────────────────────────────────────────────── */
 
-  /* Collapse a CSS grid to single column on mobile */
+  .stack-cols     { grid-template-columns: 1fr !important; }
+  .stack-cols > * { grid-column: 1 / -1 !important; }
+
   @media (max-width: 767px) {
-    .stack-cols     { grid-template-columns: 1fr !important; }
-    .stack-cols > * { grid-column: 1 / -1 !important; }
 
-    /* Logo in header always fully visible on mobile */
+    /* ── Global grid collapse ── */
+    .container-grid .grid:not(.keep-cols) {
+      grid-template-columns: 1fr !important;
+    }
+    .container-grid .grid:not(.keep-cols) > * {
+      grid-column: 1 / -1 !important;
+    }
+
+    /* ── Hero headline — allow wrapping on phones ── */
+    .hero-headline p { white-space: normal !important; }
+    /* Slightly smaller floor so all three lines break cleanly */
+    .hero-headline   { font-size: clamp(1.6rem, 8.5vw, 3rem) !important; }
+
+    /* ── Subpage hero h1 — smaller floor than the clamp desktop min ── */
+    .page-hero-h1 { font-size: clamp(2rem, 9vw, 6.5rem) !important; }
+
+    /* ── Featured cases grid on /projekte ── */
+    .cases-featured-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* ── Homepage cases section — release sticky height constraints ── */
+    .scroll-card-content {
+      overflow:   visible !important;
+      max-height: none    !important;
+    }
+
+    /* ── Inner sticky sections — natural height on mobile ── */
+    .sticky-section-inner {
+      min-height: 0      !important;
+      max-height: none   !important;
+      overflow:   visible !important;
+    }
+
+    /* ── Cases card — auto height on mobile so content is never clipped ── */
+    .case-card  { height: auto !important; }
+
+    /* ── Cases image slot — fixed height so it doesn't collapse ── */
+    .case-img-slot { height: 200px !important; }
+
+    /* ── Buttons — stack on mobile when side by side ── */
+    .btn-group {
+      flex-direction: column !important;
+      align-items:    stretch !important;
+    }
+    .btn-group > * { width: 100%; text-align: center; justify-content: center; }
+
+    /* ── Logo in header — always fully visible ── */
     .header-logo-link {
       opacity:        1 !important;
       transform:      scale(1) !important;
       pointer-events: auto !important;
     }
 
-    /* Hero H1 line 2 — remove desktop indent on mobile */
+    /* ── Hero indent / split helpers ── */
     .hero-indent { padding-left: 0 !important; }
+    .hero-split  { grid-template-columns: 1fr !important; }
+    .hero-split > *:last-child {
+      border-left: none !important;
+      border-top:  none !important;
+    }
 
-    /* Systemshift accordion — single column on mobile */
+    /* ── Page section paddings ── */
+    .section-pad { padding-block: 4rem !important; }
+
+    /* ── Ansatz / systemshift layouts ── */
     .systemshift-layout { grid-template-columns: 1fr !important; }
     .systemshift-panel  { display: none !important; }
 
-    /* Hero split — stack on mobile */
-    .hero-split { grid-template-columns: 1fr !important; }
-    .hero-split > *:last-child {
-      border-left: none !important;
-      border-top: none !important;
+    /* ── Labor / Denk-Labor editorial grid ── */
+    /* flex:none stops the grid from growing into a fixed-height flex slot,
+       which compressed all 3 rows to ~232px each and caused overflow overlap */
+    .labor-grid {
+      grid-template-columns: 1fr !important;
+      flex: none !important;
+      height: auto !important;
     }
-    /* On mobile, graphic in right col gets a fixed height instead of flex-grow */
-    .hero-split > *:last-child > *:first-child { min-height: 240px; }
-
-    /* Page section paddings — reduce on mobile */
-    .section-pad { padding-block: 4rem !important; }
-
-    /* News event rows — collapse to 2-col on mobile */
-    .event-row {
-      grid-template-columns: auto 1fr !important;
-      gap: 0.75rem !important;
+    /* Remove the 920px cap on the Container so all rows (feat + medium + list) show */
+    .labor-container {
+      max-height: none !important;
+      height: auto !important;
     }
-    .event-row .event-location { display: none !important; }
+  }
+
+  /* ── Tablet adjustments (768px–1023px) ─────────────────────────── */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    /* Featured cases: 2-col stays on tablet */
+    .cases-featured-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Subpage grids: narrow cols like span={7} start={4} read fine on tablet */
+    /* but very wide text columns need a bit more breathing room */
+    .container-grid .grid:not(.keep-cols) > * { min-width: 0; }
+
+    /* Labor section: 1-col layout on tablet makes content ~1770px tall which
+       overflows the 944px sticky card. Make it a normal-flow section so all
+       content is visible. position:relative + z-index keep it above sticky
+       predecessors (static would paint below positioned elements). */
+    .scroll-card:has(.labor-container) {
+      position:      relative !important;
+      z-index:       10       !important;
+      height:        auto     !important;
+      overflow:      visible  !important;
+      margin-bottom: 0        !important;
+      animation:     none     !important;
+      transform:     none     !important;
+      will-change:   auto     !important;
+    }
+    .labor-grid {
+      flex:          none !important;
+      align-content: start !important;
+    }
+    .labor-container {
+      max-height: none !important;
+      height:     auto !important;
+    }
   }
 
   /* ─── Footer link hover states ───────────────────────────────────────────── */
@@ -291,6 +385,13 @@
     width: 100%;
   }
 
+  /* ── Featured cases 2-col grid (base = desktop, collapses in media queries above) ── */
+  .cases-featured-grid {
+    display:             grid;
+    grid-template-columns: 1fr 1fr;
+    gap:                 1.5rem;
+  }
+
   /* ── /labor subpage — bento grid + formats collapse on tablet ─────── */
   @media (max-width: 1023px) {
     /* Content bento grid */
@@ -333,7 +434,7 @@
     .ansatz-overview { grid-template-columns: 1fr !important; }
   }
 
-  /* ── AnsatzSection — 5-column phase spread, collapses to stack on tablet ── */
+  /* ── AnsatzSection — 5-column phase spread ── */
   .ansatz-steps {
     list-style:          none;
     margin:              0;
@@ -342,7 +443,25 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap:                 clamp(1.5rem, 3vw, 3rem);
   }
-  @media (max-width: 1023px) {
+  /* Tablet: 3-column grid fits all 5 phases within the sticky card's
+     viewport height, preserving the card stacking scroll effect. */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .ansatz-container {
+      max-height:   none !important;
+      overflow:     visible !important;
+      padding-block: 1.5rem !important;
+    }
+    .ansatz-container header { margin-bottom: 1rem !important; }
+    .ansatz-container footer { margin-top: 1rem !important; }
+    .ansatz-steps { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  }
+  /* Mobile: single column stack (parent scroll-card is auto-height) */
+  @media (max-width: 767px) {
+    .ansatz-container {
+      max-height: none !important;
+      overflow:   visible !important;
+      height:     auto !important;
+    }
     .ansatz-steps { grid-template-columns: 1fr; gap: 2rem; }
   }
 
@@ -428,13 +547,22 @@
 
 /* ── Testimonials: card entrance + horizontal scroll ───────────────────────── */
 
-/* Mobile: testimonials stack vertically */
+/* Mobile: testimonials — one card at a time */
 @media (max-width: 767px) {
   .testimonials-section {
     position: static !important;
     height:   auto   !important;
     overflow: visible !important;
     border-radius: 0 !important;
+  }
+  .testimonials-card-track {
+    flex:       none    !important;
+    height:     600px   !important; /* image 1:1 ~343px + text ~200px + padding */
+    min-height: 0       !important;
+    overflow:   hidden  !important; /* keep slider clip — no horizontal scroll */
+  }
+  .testimonial-card {
+    height: 100% !important;
   }
 }
 
