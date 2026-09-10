@@ -175,7 +175,7 @@ function HeroSection() {
               className="page-hero-h1"
               style={{
                 fontFamily:    'var(--font-display)',
-                fontWeight:    600,
+                fontWeight:    400,
                 fontSize:      'clamp(3rem, 7vw, 7rem)',
                 lineHeight:    0.95,
                 letterSpacing: '-0.03em',
@@ -527,7 +527,7 @@ function ClosingCTA() {
             <h2
               style={{
                 fontFamily:    'var(--font-display)',
-                fontWeight:    600,
+                fontWeight:    400,
                 fontSize:      'clamp(2.5rem, 6vw, 5rem)',
                 lineHeight:    1,
                 letterSpacing: '-0.03em',

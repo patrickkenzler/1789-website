@@ -191,7 +191,7 @@ export function HeroLogo() {
             className="hero-headline"
             style={{
               fontFamily:    'var(--font-display)',
-              fontWeight:    600,
+              fontWeight:    400,
               fontSize:      'clamp(1.25rem, 5.5vw, 7rem)',
               lineHeight:    1.05,
               letterSpacing: '-0.03em',

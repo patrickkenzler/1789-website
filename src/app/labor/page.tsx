@@ -289,7 +289,7 @@ function HeroSection() {
               className="page-hero-h1"
               style={{
                 fontFamily:    'var(--font-display)',
-                fontWeight:    600,
+                fontWeight:    400,
                 fontSize:      'clamp(2.75rem, 6.5vw, 6.5rem)',
                 lineHeight:    0.98,
                 letterSpacing: '-0.03em',
@@ -776,7 +776,7 @@ function FormatsSection() {
             </p>
             <h2 style={{
               fontFamily:    'var(--font-display)',
-              fontWeight:    600,
+              fontWeight:    400,
               fontSize:      'clamp(2rem, 3.5vw, 3.5rem)',
               lineHeight:    1,
               letterSpacing: '-0.025em',

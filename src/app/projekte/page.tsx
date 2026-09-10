@@ -38,7 +38,7 @@ export default function Projekte() {
                 className="page-hero-h1"
                 style={{
                   fontFamily:    'var(--font-display)',
-                  fontWeight:    600,
+                  fontWeight:    400,
                   fontSize:      'clamp(3rem, 7vw, 6.5rem)',
                   lineHeight:    0.92,
                   letterSpacing: '-0.03em',
@@ -294,7 +294,7 @@ export default function Projekte() {
               <h2
                 style={{
                   fontFamily:    'var(--font-display)',
-                  fontWeight:    600,
+                  fontWeight:    400,
                   fontSize:      'clamp(2.5rem, 6vw, 5rem)',
                   lineHeight:    1,
                   letterSpacing: '-0.03em',

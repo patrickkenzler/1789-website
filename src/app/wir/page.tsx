@@ -151,7 +151,7 @@ export default function Wir() {
                 className="page-hero-h1"
                 style={{
                   fontFamily:    'var(--font-display)',
-                  fontWeight:    600,
+                  fontWeight:    400,
                   fontSize:      'clamp(3rem, 7vw, 7rem)',
                   lineHeight:    0.95,
                   letterSpacing: '-0.03em',
