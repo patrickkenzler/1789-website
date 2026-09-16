@@ -246,7 +246,7 @@ export function HeroLogo() {
           style={{
             position:      'relative',
             width:         '100%',
-            height:        '60px',
+            height:        '100px',
             clipPath:      'inset(0)',
             flexShrink:    0,
             paddingBottom: 'clamp(1.5rem, 3svh, 2.5rem)',
@@ -259,7 +259,7 @@ export function HeroLogo() {
               gap:        '4rem',
               whiteSpace: 'nowrap',
               alignItems: 'center',
-              height:     '60px',
+              height:     '100px',
               animation:  'marqueeSlide 70s linear infinite',
             }}
           >
@@ -271,14 +271,14 @@ export function HeroLogo() {
                 style={{
                   display:    'inline-flex',
                   alignItems: 'center',
-                  height:     '30px',
-                  opacity:    0.32,
+                  height:     '60px',
+                  opacity:    0.45,
                   flexShrink: 0,
                 }}
                 dangerouslySetInnerHTML={{
                   __html: logo.svg.replace(
                     /<svg /,
-                    '<svg height="26" overflow="visible" style="height:26px;width:auto;display:block;overflow:visible;" '
+                    '<svg height="52" overflow="visible" style="height:52px;width:auto;display:block;overflow:visible;" '
                   ),
                 }}
               />
