@@ -104,7 +104,7 @@ export function Header() {
               justifyContent: 'center',
             }}
           >
-            <Logo1789 height={38} showSub={false} />
+            <Logo1789 height={52} showSub={true} />
           </Link>
 
           {/* Right nav */}
@@ -142,7 +142,7 @@ export function Header() {
             aria-label="1789 Innovation — zur Startseite"
             style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
           >
-            <Logo1789 height={34} showSub={false} />
+            <Logo1789 height={46} showSub={true} />
           </Link>
 
           {/* All links — right, compact */}
@@ -171,7 +171,7 @@ export function Header() {
             aria-label="1789 Innovation — zur Startseite"
             style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
           >
-            <Logo1789 height={32} showSub={false} />
+            <Logo1789 height={44} showSub={true} />
           </Link>
 
           {/* Hamburger — right */}
